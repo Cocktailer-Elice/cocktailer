@@ -1,52 +1,56 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
+import logger from './configs/winston';
+
+import globalRouter from './routers';
+import { appErrorHandler, errorHandler, errorLogger } from './middlewares';
 
 class Server {
-  public app: express.Application;
+  private readonly app: express.Application;
 
   constructor() {
     const app: express.Application = express();
     this.app = app;
   }
 
-  private setRoute() {}
-
   private setMiddleware() {
-    dotenv.config({ path: `${__dirname}/.env` });
-
     this.app.use(
       cors({
-        origin: `${process.env.URL}:${process.env.PORT}`,
-        credentials: true,
+        // 추후 프론트엔드 URL이 결정되면 세부 설정
+        // origin: `${process.env.URL}:${process.env.PORT}`,
+        // credentials: true,
       }),
     );
 
     this.app.use((req, res, next) => {
-      console.log(`✅ req has been arrived from : ${req.rawHeaders[1]}`);
+      logger.info(`✅ 요청 발신지: ${req.rawHeaders[1]}`);
       next();
     });
 
     //* json middleware
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-
-    this.setRoute();
   }
 
-  public listen() {
+  private setRouter() {
+    this.app.use('/', globalRouter);
+    this.app.use(errorLogger);
+    this.app.use(errorHandler);
+    this.app.use(appErrorHandler);
+  }
+
+  public listen(port: string) {
     this.setMiddleware();
-    this.app.listen(process.env.PORT, () => {
-      console.log(`✅ Server is on : ${process.env.URL}:${process.env.PORT}`);
-      console.log('server.ts');
-      console.log('시험중입니다');
+
+    this.setRouter();
+    this.app.listen(port, () => {
+      logger.info(
+        `💣 ${port}번 PORT에서 서버를 시작합니다. http://localhost:${port}`,
+      );
     });
   }
 }
 
-function init() {
-  const server = new Server();
-  server.listen();
-}
+const server = new Server();
 
-init();
+export default server;

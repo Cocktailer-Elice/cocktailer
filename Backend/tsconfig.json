@@ -26,7 +26,7 @@
 
     /* Modules */
     "module": "commonjs", // Module Resolution 시 import & export 방식을 사용할 수 있도록 한다.
-    // "rootDir": "./", // 소스 파일 내에서의 root 디렉토리를 지정한다.
+    "rootDir": "./", // 소스 파일 내에서의 root 디렉토리를 지정한다.
     // "moduleResolution": "node",                       // 모듈을 import할 때 require를 사용하기 위해 설정한다. import ~ from을 사용할 경우에는 주석 처리하면 된다.
     "baseUrl": "./src", // 절대경로 사용 시 시작지점이 되는 디렉토리를 지정한다.
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */

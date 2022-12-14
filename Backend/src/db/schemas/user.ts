@@ -34,7 +34,7 @@ const UserSchema: Schema = new Schema(
       default: false,
     },
   },
-  { collection: 'librarians', timestamps: true },
+  { collection: 'users', timestamps: true },
 );
 
 UserSchema.pre('save', async function () {
@@ -42,7 +42,7 @@ UserSchema.pre('save', async function () {
 
   const sequence = await sequenceCollection.findOneAndUpdate(
     {
-      collectionName: 'librarians',
+      collectionName: 'users',
     },
     { $inc: { value: 1 } },
     {

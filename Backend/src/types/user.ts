@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 
 export interface IUser extends Document {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -10,9 +10,7 @@ export interface IUser extends Document {
   certified: boolean;
 }
 
-export interface UserCreateDto {
-  name: string;
+export interface UserCookie {
+  id: string;
   email: string;
-  password: string;
-  passwordCheck: string;
 }
