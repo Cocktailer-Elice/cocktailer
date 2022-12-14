@@ -6,9 +6,6 @@
   "scripts": {
     "start": "tsc && node dist/index.js",
     "dev": "nodemon index.ts --exec ts-node",
-    "dev2": "nodemon ./src/server.ts --exec ts-node",
-    "dev3": "nodemon --watch src/ src/server.ts --exec ts-node",
-    "dev4": "nodemon",
     "build": "tsc"
   },
   "dependencies": {
