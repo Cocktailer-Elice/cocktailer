@@ -39,7 +39,8 @@ class Server {
     this.app.listen(process.env.PORT, () => {
       console.log(`✅ Server is on : ${process.env.URL}:${process.env.PORT}`);
       console.log('server.ts');
-      console.log('test');
+      console.log('시험중입니다');
+      console.log('히히ㅣ');
     });
   }
 }
