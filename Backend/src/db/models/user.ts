@@ -2,30 +2,30 @@ import { IUser, UserCreateDto } from 'types/user';
 import User from '../schemas/user';
 
 interface ILibrarianModel {
-  create(librarianInfo: LibrarianInfo): Promise<ILibrarian | null>;
-  findAll(): Promise<ILibrarian[]>;
-  findOne(librarianId: string): Promise<ILibrarian | null>;
+  create(librarianInfo: UserCreateDto): Promise<IUser | null>;
+  findAll(): Promise<IUser[]>;
+  findOne(librarianId: string): Promise<IUser | null>;
   checkEmailDuplicate(email: string): Promise<Boolean>;
 }
 
 export class LibrarianModel implements ILibrarianModel {
-  async create(librarianInfo: LibrarianInfo): Promise<ILibrarian | null> {
-    const newLibrarian = await Librarian.create(librarianInfo);
+  async create(librarianInfo: UserCreateDto): Promise<IUser | null> {
+    const newLibrarian = await User.create(librarianInfo);
     return newLibrarian;
   }
 
-  async findAll(): Promise<ILibrarian[]> {
-    const librarians: ILibrarian[] = await Librarian.find({}, '-_id -__v');
+  async findAll(): Promise<IUser[]> {
+    const librarians: IUser[] = await User.find({}, '-_id -__v');
     return librarians;
   }
 
-  async findOne(librarianId: string): Promise<ILibrarian | null> {
-    const librarian = await Librarian.findOne({ id: librarianId }, '-_id -__v');
+  async findOne(librarianId: string): Promise<IUser | null> {
+    const librarian = await User.findOne({ id: librarianId }, '-_id -__v');
     return librarian;
   }
 
   async checkEmailDuplicate(email: string): Promise<Boolean> {
-    const result = await Librarian.find({ email }).countDocuments();
+    const result = await User.find({ email }).countDocuments();
     return result === 1 ? true : false;
   }
 }
