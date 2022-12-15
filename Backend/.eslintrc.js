@@ -22,5 +22,6 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'no-console': 'warn',
+    '@typescript-eslint/no-namespace': [2, { allowDeclarations: true }],
   },
 };

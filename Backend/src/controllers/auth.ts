@@ -1,38 +1,32 @@
-import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { RequestWithCookie, IUser, UserCookie } from '../types';
-import { UserCreateDto, LoginDto } from '../dtos';
+import { Request as Req, Response as Res } from 'express';
+import { UserCookie } from '../types';
+import { UserCreateReqDto, LoginReqDto } from '../dtos';
 import AuthService from '../services/auth';
 
 class AuthController {
   private readonly authService = new AuthService();
 
-  public signUp = async (req: Req, res: Res, next: Next) => {
-    try {
-      const userInfo: UserCreateDto = req.body;
-      const signUpUserData: IUser | null = await this.authService.signup(
-        userInfo,
-      );
-
-      res.status(201).json({ data: signUpUserData, message: 'signup' });
-    } catch (error) {
-      next(error);
-    }
+  public signup = async (req: Req, res: Res) => {
+    const userInfo: UserCreateReqDto = req.body;
+    const { cookie, newUser } = await this.authService.signup(userInfo);
+    res.setHeader('Set-Cookie', [cookie]);
+    res.status(201).json(newUser.userGetResDto);
   };
 
-  public logIn = async (req: Req, res: Res, next: Next) => {
-    const userData: LoginDto = req.body;
-    const { cookie, findUser } = await this.authService.login(userData);
+  public login = async (req: Req, res: Res) => {
+    const userData: LoginReqDto = req.body;
+    const { cookie, foundUser } = await this.authService.login(userData);
 
     res.setHeader('Set-Cookie', [cookie]);
-    return res.status(200).json(findUser);
+    res.status(200).json(foundUser.userGetResDto);
   };
 
-  public logout = async (req: RequestWithCookie, res: Res, next: Next) => {
-    const userData: UserCookie = req.user;
+  public logout = async (req: Req, res: Res) => {
+    const userData = req.user as UserCookie;
     await this.authService.logout(userData);
 
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
-    return res.status(204);
+    res.status(204);
   };
 }
 

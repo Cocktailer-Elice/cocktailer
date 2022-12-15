@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { UserGetResDto } from 'dtos';
 
 export interface IUser extends Document {
   id: string;
@@ -9,9 +10,12 @@ export interface IUser extends Document {
   avatarUrl: string;
   isAdmin: boolean;
   isBartender: boolean;
+  readonly userGetResDto: UserGetResDto;
 }
 
 export interface UserCookie {
   id: string;
   email: string;
+  isAdmin: boolean;
+  isBartender: boolean;
 }

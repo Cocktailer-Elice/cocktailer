@@ -4,6 +4,8 @@ import { asyncHandler } from '../middlewares';
 
 const router: Router = Router();
 
-router.post('/signup', asyncHandler(authController.signUp));
+router.post('/signup', asyncHandler(authController.signup));
+router.post('/login', asyncHandler(authController.login));
+router.post('/logout', asyncHandler(authController.logout));
 
 export default router;

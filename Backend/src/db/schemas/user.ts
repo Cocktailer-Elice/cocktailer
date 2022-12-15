@@ -1,6 +1,6 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../../types';
-import { UserGetDto } from '../../dtos';
+import { UserGetResDto } from '../../dtos';
 
 const UserSchema: Schema = new Schema(
   {
@@ -26,6 +26,14 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    birthday: {
+      type: Date,
+      required: true,
+    },
+    tel: {
+      type: String,
+      required: true,
+    },
     avatarUrl: {
       type: String,
       default: '{수정예정}',
@@ -45,7 +53,7 @@ const UserSchema: Schema = new Schema(
   { collection: 'users', timestamps: true },
 );
 
-UserSchema.virtual('userInfo').get(function (this: UserGetDto) {
+UserSchema.virtual('userInfo').get(function (this: UserGetResDto) {
   return {
     name: this.name,
     email: this.email,

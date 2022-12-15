@@ -1,53 +1,62 @@
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { IUser, IToken, TokenData, UserCookie } from '../types';
-import { UserCreateDto, LoginDto } from '../dtos';
+import { UserCreateReqDto, LoginReqDto } from '../dtos';
 import { userModel } from '../db';
 import { AppError, errorNames } from '../middlewares';
 
 class AuthService {
   private readonly userModel = userModel;
 
-  public async signup(userCreateDto: UserCreateDto): Promise<IUser | null> {
-    const { email, password } = userCreateDto;
+  public async signup(
+    userCreateDto: UserCreateReqDto,
+  ): Promise<{ cookie: string; newUser: IUser }> {
+    const { email, password, alchol } = userCreateDto;
 
-    const isEmailExist = await this.checkEmailDuplicate(email);
-    if (isEmailExist) {
+    const isEmailDuplicate = await this.checkEmailDuplicate(email);
+    if (isEmailDuplicate) {
       throw new AppError(errorNames.inputError, 400, '이메일 중복');
     }
 
     const hashedPassword = await hash(password, 12);
-    const newUser: IUser | null = await this.userModel.create({
+    const newUser: IUser = await this.userModel.create({
       ...userCreateDto,
       password: hashedPassword,
     });
 
-    return newUser;
+    const tokenData = this.createToken(newUser);
+    const cookie = this.createCookie(tokenData);
+
+    return { cookie, newUser };
   }
 
   public async login(
-    userData: LoginDto,
-  ): Promise<{ cookie: string; findUser: IUser }> {
+    userData: LoginReqDto,
+  ): Promise<{ cookie: string; foundUser: IUser }> {
     const { email, password } = userData;
-    const findUser: IUser | null = await this.userModel.findOne(email);
-    if (!findUser)
+    const foundUser: IUser | null = await this.userModel.findOne(email);
+    if (!foundUser)
       throw new AppError(
         errorNames.inputError,
         400,
-        `이메일에 해당하는 유저 없음`,
+        `이메일 또는 비밀번호 재확인`,
       );
 
     const isPasswordMatching: boolean = await compare(
       password,
-      findUser.password,
+      foundUser.password,
     );
     if (!isPasswordMatching)
-      throw new AppError(errorNames.inputError, 400, '비밀번호 불일치');
+      throw new AppError(
+        errorNames.inputError,
+        400,
+        '이메일 또는 비밀번호 재확인',
+      );
 
-    const tokenData = this.createToken(findUser);
+    const tokenData = this.createToken(foundUser);
     const cookie = this.createCookie(tokenData);
 
-    return { cookie, findUser };
+    return { cookie, foundUser };
   }
 
   public async logout(userData: UserCookie): Promise<IUser> {
@@ -60,8 +69,11 @@ class AuthService {
   }
 
   public createToken(user: IUser): IToken {
-    const tokenData: TokenData = { id: user.id };
-    const secretKey: string = process.env.ACCESS_KEY!;
+    const tokenData: TokenData = {
+      id: user.id,
+      isAdmin: user.isAdmin,
+    };
+    const secretKey: string = process.env.ACCESS_KEY as string;
     const expiresIn: number = +process.env.ACCESS_EXPIRE!;
 
     return {
