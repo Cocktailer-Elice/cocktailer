@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import CocktailFlavor from '../../components/Cockcipe/Detail/CocktailFlavor';
 import CocktailName from '../../components/Cockcipe/Detail/CocktailName';
 import CocktailTitleImg from '../../components/Cockcipe/Detail/CocktailTitleImg';
@@ -10,13 +11,22 @@ const DetailContainer = () => {
   return (
     <div>
       <CocktailTitleImg />
-      <CocktailName />
-      <CocktailFlavor />
-      <RecipeChart />
-      <LikeBtn />
-      <ShareBtn />
+      <ContentContainer>
+        <CocktailName />
+        <CocktailFlavor />
+        <RecipeChart />
+        <LikeBtn />
+        <ShareBtn />
+      </ContentContainer>
     </div>
   );
 };
 
 export default DetailContainer;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
