@@ -1,11 +1,9 @@
 import React from 'react';
-import RecipeListItem from '../../components/Cockcipe/RecipeListItem';
+import RecipeListItem from '../../components/Cockcipe/List/RecipeListItem';
 
 const ListContainer = () => {
   return (
     <div>
-      <RecipeListItem />
-      <RecipeListItem />
       <RecipeListItem />
     </div>
   );
