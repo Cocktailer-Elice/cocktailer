@@ -9,6 +9,6 @@ export const generateUploadURL = async (filename: string, folder: string) => {
   };
   const command = new PutObjectCommand(params);
 
-  const signedURL = await getSignedUrl(s3, command, { expiresIn: 180 });
+  const signedURL = await getSignedUrl(s3, command, { expiresIn: 600 });
   return signedURL;
 };

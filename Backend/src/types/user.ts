@@ -5,9 +5,10 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password: string;
-  profile: string;
   nickname: string;
-  certified: boolean;
+  avatarUrl: string;
+  isAdmin: boolean;
+  isBartender: boolean;
 }
 
 export interface UserCookie {

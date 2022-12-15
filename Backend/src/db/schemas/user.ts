@@ -1,11 +1,13 @@
 import { Schema, model, connection } from 'mongoose';
-import { IUser } from 'types/user';
+import { IUser } from '../../types';
+import { UserGetDto } from '../../dtos';
 
 const UserSchema: Schema = new Schema(
   {
     id: {
       type: Number,
       required: false,
+      unique: true,
     },
     name: {
       type: String,
@@ -14,28 +16,45 @@ const UserSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      index: true,
       unique: true,
     },
     password: {
       type: String,
       required: true,
     },
-    profilePicUrl: {
-      type: String,
-      default: 'https://profiles.s3.ap-northeast-2.amazonaws.com/{수정예정}',
-    },
     nickname: {
       type: String,
       required: true,
     },
-    certified: {
+    avatarUrl: {
+      type: String,
+      default: '{수정예정}',
+    },
+    isAdmin: {
       type: Boolean,
       default: false,
+    },
+    isBartender: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
     },
   },
   { collection: 'users', timestamps: true },
 );
+
+UserSchema.virtual('userInfo').get(function (this: UserGetDto) {
+  return {
+    name: this.name,
+    email: this.email,
+    nickname: this.nickname,
+    avatarUrl: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.avatarUrl}`,
+    isAdmin: this.isAdmin,
+    isBartender: this.isBartender,
+  };
+});
 
 UserSchema.pre('save', async function () {
   const sequenceCollection = connection.collection('sequences');
