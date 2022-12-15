@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/Home/HomePage';
 
 const Router = () => {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<div>Hello world!</div>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/join" element={<div>join</div>} />
           <Route path="/login" element={<div>login</div>} />
           <Route path="/mypage" element={<div>mypage</div>} />
