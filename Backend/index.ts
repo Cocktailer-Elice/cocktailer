@@ -2,6 +2,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
+import recipeRouter from './src/routers/recipe';
+
 class Server {
   public app: express.Application;
 
@@ -10,7 +12,9 @@ class Server {
     this.app = app;
   }
 
-  private setRoute() {}
+  private setRoute() {
+    this.app.use('/recipe', recipeRouter);
+  }
 
   private setMiddleware() {
     dotenv.config({ path: `${__dirname}/.env` });
@@ -27,7 +31,6 @@ class Server {
       next();
     });
 
-    //* json middleware
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
