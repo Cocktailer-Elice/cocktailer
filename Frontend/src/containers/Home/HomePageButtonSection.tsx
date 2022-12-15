@@ -1,9 +1,11 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const HomePageButtonSection = () => {
   return (
     <HomePageButtonSectionWrapper>
       <span>홈 페이지 섹션</span>
+      <Link to="/cockgorithm">칵고리즘</Link>
     </HomePageButtonSectionWrapper>
   );
 };
