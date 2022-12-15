@@ -1,7 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const ApplyBtn = styled.div`
+  border: 1px solid black;
+`;
 
 const RecipeApplyBtn = () => {
-  return <div>RecipeApplyBtn</div>;
+  return <ApplyBtn>나만의 레시피 등록하기</ApplyBtn>;
 };
 
 export default RecipeApplyBtn;
