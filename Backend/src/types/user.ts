@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { UserGetResDto } from 'dtos';
+import { UserGetResDto } from '@/types';
 
 export interface IUser extends Document {
   id: string;

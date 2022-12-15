@@ -3,7 +3,7 @@ export interface TokenData {
   isAdmin: boolean;
 }
 
-export interface IToken {
+export interface Token {
   token: string;
   expiresIn: number;
 }

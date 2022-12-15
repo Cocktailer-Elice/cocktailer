@@ -23,14 +23,14 @@
     "module": "commonjs", // Module Resolution 시 import & export 방식을 사용할 수 있도록 한다.
     "rootDir": "./", // 소스 파일 내에서의 root 디렉토리를 지정한다.
     // "moduleResolution": "node", // 모듈을 import할 때 require를 사용하기 위해 설정한다. import ~ from을 사용할 경우에는 주석 처리하면 된다.
-    "baseUrl": "./src", // 절대경로 사용 시 시작지점이 되는 디렉토리를 지정한다.
+    "baseUrl": "../", // 절대경로 사용 시 시작지점이 되는 디렉토리를 지정한다.
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": ["./node_modules/@types", "./src/customType"], // Custom Type을 지정하기 위해 별도 파일을 생성하여 사용할 수 있도록 설정.
     // "types": [],                                      /* Specify type package names to be included without being referenced in a source file. */
     // "allowUmdGlobalAccess": true /* Allow accessing UMD globals from modules. */,
     // "moduleSuffixes": [],                             /* List of file name suffixes to search when resolving a module. */
-    // "resolveJsonModule": true,                        /* Enable importing .json files. */
+    // "resolveJsonModule": true,                       /* Enable importing .json files. */
     // "noResolve": true,                                /* Disallow 'import's, 'require's or '<reference>'s from expanding the number of files TypeScript should add to a project. */
 
     /* JavaScript Support */

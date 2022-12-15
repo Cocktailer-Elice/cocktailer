@@ -1,4 +1,13 @@
-export interface UserCreateReqDto {
+export interface User {
+  name: string;
+  email: string;
+  nickname: string;
+  avatarUrl: string;
+  isAdmin: boolean;
+  isBartender: boolean;
+}
+
+export interface UserCreateData {
   name: string;
   email: string;
   password: string;
@@ -6,13 +15,4 @@ export interface UserCreateReqDto {
   birthday: string;
   tel: string;
   alchol: string;
-}
-
-export interface UserGetResDto {
-  name: string;
-  email: string;
-  nickname: string;
-  avatarUrl: string;
-  isAdmin: boolean;
-  isBartender: boolean;
 }
