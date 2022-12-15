@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchRecipeInput from '../../components/Cockcipe/List/SearchRecipeInput';
-
-const Container = styled.div``;
+import SearchCocktailInput from '../../components/Cockcipe/List/SearchCocktailInput';
 
 const InputContainer = () => {
   return (
-    <div>
-      <SearchRecipeInput />
-    </div>
+    <Container>
+      <SearchCocktailInput />
+    </Container>
   );
 };
 
 export default InputContainer;
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

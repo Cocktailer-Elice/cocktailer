@@ -1,18 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import RecipeApplyBtn from '../../components/Cockcipe/List/RecipeApplyBtn';
-
-const Container = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
+import CocktailApplyBtn from '../../components/Cockcipe/List/CocktailApplyBtn';
 
 const ApplyContainer = () => {
   return (
     <Container>
-      <RecipeApplyBtn />
+      <CocktailApplyBtn />
     </Container>
   );
 };
 
 export default ApplyContainer;
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

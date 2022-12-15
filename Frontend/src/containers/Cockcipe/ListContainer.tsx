@@ -1,10 +1,10 @@
 import React from 'react';
-import RecipeListItem from '../../components/Cockcipe/List/RecipeListItem';
+import CocktailListItem from '../../components/Cockcipe/List/CocktailListItem';
 
 const ListContainer = () => {
   return (
     <div>
-      <RecipeListItem />
+      <CocktailListItem />
     </div>
   );
 };

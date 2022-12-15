@@ -1,18 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ThumbnailBox = styled.div`
-  border: 1px solid black;
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-`;
-
-const Category = styled.p`
-  font-size: 15px;
-`;
-
-const RecipeListItem = () => {
+const CocktailListItem = () => {
   return (
     <>
       <Category>카테고리1</Category>
@@ -37,4 +26,14 @@ const RecipeListItem = () => {
   );
 };
 
-export default RecipeListItem;
+export default CocktailListItem;
+const ThumbnailBox = styled.div`
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+`;
+
+const Category = styled.p`
+  font-size: 15px;
+`;
