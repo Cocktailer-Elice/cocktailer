@@ -23,7 +23,7 @@ class Server {
     );
 
     this.app.use((req, res, next) => {
-      logger.info(`✅ 요청 발신지: ${req.rawHeaders[1]}`);
+      logger.info(`✅ 요청 발신지: ${req.rawHeaders[3]}`);
       next();
     });
 

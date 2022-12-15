@@ -8,7 +8,7 @@ const alignColorsAndTime = winston.format.combine(
     label: '[LOGGER]',
   }),
   winston.format.timestamp({
-    format: '`YY-MM-DD HH:MM:SS',
+    format: 'YY-MM-DD HH:MM:SS',
   }),
   winston.format.printf(
     (info) => `[${info.timestamp}] | [${info.level}] | ${info.message}`,

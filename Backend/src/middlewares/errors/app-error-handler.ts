@@ -1,3 +1,4 @@
+import logger from '../../configs/winston';
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 
 class AppError extends Error {
@@ -22,13 +23,8 @@ const appErrorHandler = (
     'ko-KR',
   )} ${now.toLocaleTimeString('ko-KR')}`;
 
-  console.log(
-    '\x1b[33m%s\x1b[0m',
-    err.name,
-    timestamp,
-    req.url,
-    req.method,
-    err.stack,
+  logger.error(
+    `${err.name} ${timestamp} ${req.url} ${req.method} ${err.stack}`,
   );
   const {
     status = 500,

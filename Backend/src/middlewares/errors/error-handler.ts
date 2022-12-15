@@ -10,7 +10,7 @@ const errorHandler = (err: Error, req: Req, res: Res, next: Next) => {
   const timestamp = `${now.toLocaleDateString(
     'ko-KR',
   )} ${now.toLocaleTimeString('ko-KR')}`;
-  logger.error('\x1b[41m%s\x1b[0m', err.name, timestamp, req.url, err.stack);
+  logger.error(`${err.name} ${timestamp} ${req.url} ${err.stack}`);
   return res.status(500).json({ message: err.message });
 };
 
