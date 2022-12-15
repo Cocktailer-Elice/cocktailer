@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { UserGetResDto } from '@/types';
+import { User } from '../dtos';
 
 export interface IUser extends Document {
   id: string;
@@ -10,7 +10,7 @@ export interface IUser extends Document {
   avatarUrl: string;
   isAdmin: boolean;
   isBartender: boolean;
-  readonly userGetResDto: UserGetResDto;
+  readonly userGetResDto: User;
 }
 
 export interface UserCookie {

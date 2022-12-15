@@ -1,16 +1,16 @@
 import { IUser } from '../../types';
-import { UserCreateReqDto } from '../../dtos';
+import { UserCreateData } from '../../dtos';
 import User from '../schemas/user';
 
 interface IUserModel {
-  create(userCreateDto: UserCreateReqDto): Promise<IUser>;
+  create(userCreateDto: UserCreateData): Promise<IUser>;
   findAll(): Promise<IUser[]>;
   findOne(userId: string): Promise<IUser | null>;
   checkEmailDuplicate(email: string): Promise<number>;
 }
 
 export class UserModel implements IUserModel {
-  async create(userCreateDto: UserCreateReqDto): Promise<IUser> {
+  async create(userCreateDto: UserCreateData): Promise<IUser> {
     const newUser = await User.create(userCreateDto);
     return newUser;
   }

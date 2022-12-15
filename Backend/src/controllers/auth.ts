@@ -1,13 +1,13 @@
 import { Request as Req, Response as Res } from 'express';
 import { UserCookie } from '../types';
-import { UserCreateReqDto, LoginReqDto } from '../dtos';
+import { UserCreateData, LoginReqDto } from '../dtos';
 import AuthService from '../services/auth';
 
 class AuthController {
   private readonly authService = new AuthService();
 
   public signup = async (req: Req, res: Res) => {
-    const userInfo: UserCreateReqDto = req.body;
+    const userInfo: UserCreateData = req.body;
     const { cookie, newUser } = await this.authService.signup(userInfo);
     res.setHeader('Set-Cookie', [cookie]);
     res.status(201).json(newUser.userGetResDto);

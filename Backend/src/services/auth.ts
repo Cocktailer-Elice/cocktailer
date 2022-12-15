@@ -1,7 +1,7 @@
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { IUser, IToken, TokenData, UserCookie } from '../types';
-import { UserCreateReqDto, LoginReqDto } from '../dtos';
+import { IUser, Token, TokenData, UserCookie } from '../types';
+import { UserCreateData, LoginReqDto } from '../dtos';
 import { userModel } from '../db';
 import { AppError, errorNames } from '../middlewares';
 
@@ -9,7 +9,7 @@ class AuthService {
   private readonly userModel = userModel;
 
   public async signup(
-    userCreateDto: UserCreateReqDto,
+    userCreateDto: UserCreateData,
   ): Promise<{ cookie: string; newUser: IUser }> {
     const { email, password, alchol } = userCreateDto;
 
@@ -68,7 +68,7 @@ class AuthService {
     return user;
   }
 
-  public createToken(user: IUser): IToken {
+  public createToken(user: IUser): Token {
     const tokenData: TokenData = {
       id: user.id,
       isAdmin: user.isAdmin,
@@ -82,7 +82,7 @@ class AuthService {
     };
   }
 
-  public createCookie(tokenData: IToken): string {
+  public createCookie(tokenData: Token): string {
     const { token, expiresIn } = tokenData;
     return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn};`;
   }
