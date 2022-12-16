@@ -1,9 +1,11 @@
 export interface TokenData {
   id: string;
+  email: string;
   isAdmin: boolean;
+  isBartender: boolean;
 }
 
-export interface Token {
+export interface IToken {
   token: string;
-  expiresIn: number;
+  expiresIn: string;
 }

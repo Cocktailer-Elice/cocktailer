@@ -1,6 +1,6 @@
 import { Request as Req, Response as Res } from 'express';
 import { UserCookie } from '../types';
-import { UserCreateData, LoginReqDto } from '../dtos';
+import { UserCreateData, LoginReqData } from 'types';
 import AuthService from '../services/auth';
 
 class AuthController {
@@ -14,7 +14,7 @@ class AuthController {
   };
 
   public login = async (req: Req, res: Res) => {
-    const userData: LoginReqDto = req.body;
+    const userData: LoginReqData = req.body;
     const { cookie, foundUser } = await this.authService.login(userData);
 
     res.setHeader('Set-Cookie', [cookie]);
@@ -26,7 +26,7 @@ class AuthController {
     await this.authService.logout(userData);
 
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
-    res.status(204);
+    res.sendStatus(204);
   };
 }
 

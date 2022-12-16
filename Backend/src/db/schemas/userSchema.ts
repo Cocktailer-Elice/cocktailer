@@ -1,6 +1,6 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../../types';
-import { User } from '../../dtos';
+import { User } from 'types';
 
 const UserSchema: Schema = new Schema(
   {
@@ -53,7 +53,7 @@ const UserSchema: Schema = new Schema(
   { collection: 'users', timestamps: true },
 );
 
-UserSchema.virtual('userInfo').get(function (this: User) {
+UserSchema.virtual('userGetResDto').get(function (this: User) {
   return {
     name: this.name,
     email: this.email,
