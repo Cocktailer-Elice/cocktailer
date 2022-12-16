@@ -14,7 +14,6 @@ const HomeSubCarouselWrapper = styled.div`
   border: 1px solid gray;
   padding: 10px;
   margin-bottom: 10px;
-  box-sizing: border-box;
 `;
 
 export default HomeSubCarousel;
