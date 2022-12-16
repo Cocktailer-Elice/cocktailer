@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CocktailApplyBtn = () => {
-  return <ApplyBtn>나만의 레시피 등록하기</ApplyBtn>;
+  const handleMoveApply = (event: React.MouseEvent<HTMLDivElement>) => {
+    window.location.href = '/cockcipe/apply';
+  };
+  return <ApplyBtn onClick={handleMoveApply}>나만의 레시피 등록하기</ApplyBtn>;
 };
 
 export default CocktailApplyBtn;
