@@ -14,13 +14,13 @@ export const HeaderHamburgerButton = ({
   };
 
   return (
-    <HamburgerButtonWrapper onClick={handleMenuClick}>
+    <HamburgerButton onClick={handleMenuClick}>
       <MenuIcon />
-    </HamburgerButtonWrapper>
+    </HamburgerButton>
   );
 };
 
-const HamburgerButtonWrapper = styled.div`
+const HamburgerButton = styled.div`
   width: 70px;
   height: 100%;
   display: flex;

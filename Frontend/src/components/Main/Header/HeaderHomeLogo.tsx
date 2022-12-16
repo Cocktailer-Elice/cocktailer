@@ -3,15 +3,15 @@ import { Link } from 'react-router-dom';
 
 export const HeaderHomeLogo = () => {
   return (
-    <HomeLogoWrapper>
+    <HomeLogo>
       <Link to="/">
         <HomeLogoImage />
       </Link>
-    </HomeLogoWrapper>
+    </HomeLogo>
   );
 };
 
-const HomeLogoWrapper = styled.div`
+const HomeLogo = styled.div`
   width: calc(100% - 70px);
   display: flex;
   justify-content: center;
