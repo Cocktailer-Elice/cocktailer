@@ -1,5 +1,4 @@
 import Router from './Router';
-
 import styled from 'styled-components';
 
 import { createGlobalStyle } from 'styled-components';
@@ -14,8 +13,17 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
   }
+  
   body {
     
+  }
+  
+  a {
+    text-decoration: none;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
   }
 `;
 
