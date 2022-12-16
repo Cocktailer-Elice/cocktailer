@@ -23,6 +23,8 @@ class CoctailController {
     try {
       const recipeId = Number(req.query.myrecipe);
 
+      console.log(recipeId);
+
       const getRecipeData = await this.recipeService.getRecipe(recipeId);
 
       res.status(200).json({ getRecipeData: getRecipeData });

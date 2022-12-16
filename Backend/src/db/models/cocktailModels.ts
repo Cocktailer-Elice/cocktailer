@@ -25,6 +25,7 @@ export class RecipeModel implements ICocktailModel {
 
   async findOne(recipeId: number): Promise<ICocktail | null> {
     const myRecipe = await Cocktail.findOne({ id: recipeId }, '-_id -__v');
+    console.log(myRecipe);
 
     return myRecipe;
   }
