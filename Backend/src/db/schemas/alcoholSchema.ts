@@ -3,7 +3,7 @@ import { ICocktail } from '../../types';
 import { CocktailGetResDto } from 'types';
 import { boolean } from 'joi';
 
-const CocktailSchema: Schema = new Schema(
+const AlcoholSchema: Schema = new Schema(
   {
     id: {
       type: Number,
@@ -53,10 +53,10 @@ const CocktailSchema: Schema = new Schema(
       garnish: [],
     },
   },
-  { collection: 'cocktails', timestamps: true },
+  { collection: 'alcohols', timestamps: true },
 );
 
-CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
+AlcoholSchema.virtual('alcoholInfo').get(function (this: CocktailGetResDto) {
   return {
     cocktailName: this.cocktailName,
     cocktailCategory: this.cocktailCategory,
@@ -67,12 +67,12 @@ CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
   };
 });
 
-CocktailSchema.pre('save', async function () {
+AlcoholSchema.pre('save', async function () {
   const sequenceCollection = connection.collection('sequences');
 
   const sequence = await sequenceCollection.findOneAndUpdate(
     {
-      collectionName: 'cocktails',
+      collectionName: 'alcohols',
     },
     { $inc: { value: 1 } },
     {
@@ -85,4 +85,4 @@ CocktailSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<ICocktail>('cocktails', CocktailSchema);
+export default model<ICocktail>('alcohols', AlcoholSchema);

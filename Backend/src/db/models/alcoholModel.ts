@@ -2,14 +2,13 @@ import { ICocktail } from '../../types';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import Cocktail from '../schemas/cocktailSchema';
 
-interface ICocktailModel {
-  // collection(collectionName: string): Promise<ICocktail | null>;
+interface IAlcoholModel {
   create(cocktailCreateDto: CocktailCreateReqDto): Promise<ICocktail | null>;
   findAll(): Promise<ICocktail[]>;
   findOne(cocktailId: number): Promise<ICocktail | null>;
 }
 
-export class CocktailModel implements ICocktailModel {
+export class AlcoholModel implements IAlcoholModel {
   async create(
     recipeCreateDto: CocktailCreateReqDto,
   ): Promise<ICocktail | null> {
@@ -31,6 +30,6 @@ export class CocktailModel implements ICocktailModel {
   }
 }
 
-const cocktailModel = new CocktailModel();
+const alcoholModel = new AlcoholModel();
 
-export { ICocktailModel, cocktailModel };
+export { IAlcoholModel, alcoholModel };
