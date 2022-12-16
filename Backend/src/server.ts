@@ -9,7 +9,7 @@ import {
   errorHandler,
   errorLogger,
   notFoundErrorHandler,
-} from './middlewares';
+} from './routers/middlewares';
 
 class Server {
   private readonly app: express.Application;
