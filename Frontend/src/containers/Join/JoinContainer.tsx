@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet';
-import JoinForm from '../../components/Join/JoinForm';
+import JoinFormWrapper from '../../components/Join/JoinFormWrapper';
+import JoinHeader from '../../components/Join/JoinHeader';
 
 const JoinContainer = () => {
   return (
@@ -7,7 +8,8 @@ const JoinContainer = () => {
       <Helmet>
         <title>Cocktailer | 회원가입</title>
       </Helmet>
-      <JoinForm></JoinForm>
+      <JoinHeader></JoinHeader>
+      <JoinFormWrapper></JoinFormWrapper>
     </>
   );
 };
