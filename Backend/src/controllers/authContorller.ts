@@ -1,5 +1,6 @@
+import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
-import { UserCreateData, LoginReqData } from 'types';
+import { LoginReqData } from 'authDto';
 import AuthService from '../services/authService';
 
 class AuthController {
