@@ -9,12 +9,12 @@ interface DrawerPageButtonProps {
 export const DrawerPageButton = ({ pageName, link }: DrawerPageButtonProps) => {
   return (
     <Link to={link}>
-      <PageButtonWrapper>{pageName}</PageButtonWrapper>
+      <PageButton>{pageName}</PageButton>
     </Link>
   );
 };
 
-const PageButtonWrapper = styled.div`
+const PageButton = styled.div`
   width: 100%;
   height: 60px;
   display: flex;

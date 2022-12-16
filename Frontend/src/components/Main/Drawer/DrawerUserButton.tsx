@@ -9,12 +9,12 @@ interface DrawerUserButtonProps {
 export const DrawerUserButton = ({ pageName, link }: DrawerUserButtonProps) => {
   return (
     <Link to={link}>
-      <UserButtonWrapper>{pageName}</UserButtonWrapper>
+      <UserButton>{pageName}</UserButton>
     </Link>
   );
 };
 
-const UserButtonWrapper = styled.div`
+const UserButton = styled.div`
   width: 80px;
   height: 30px;
   display: flex;

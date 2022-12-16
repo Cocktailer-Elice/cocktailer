@@ -16,18 +16,18 @@ export const Drawer = ({ setMenuClicked }: DrawerProps) => {
 
   return (
     <DrawerWrapper>
-      <DrawerUserSectionWrapper>
+      <DrawerUserSection>
         <DrawerUserButton pageName="로그인" link="/login" />
         <DrawerUserButton pageName="회원가입" link="/join" />
-        <DrawerCloseButtonWrapper onClick={handleCloseButtonClick}>
+        <DrawerCloseButton onClick={handleCloseButtonClick}>
           <CloseIcon />
-        </DrawerCloseButtonWrapper>
-      </DrawerUserSectionWrapper>
-      <DrawerPageSectionWrapper>
+        </DrawerCloseButton>
+      </DrawerUserSection>
+      <DrawerPageSection>
         <DrawerPageButton pageName="칵시피" link="/cockcipe" />
         <DrawerPageButton pageName="칵플로우" link="/cockflow" />
         <DrawerPageButton pageName="칵고리즘" link="/cockgorithm" />
-      </DrawerPageSectionWrapper>
+      </DrawerPageSection>
     </DrawerWrapper>
   );
 };
@@ -42,7 +42,7 @@ const DrawerWrapper = styled.div`
   z-index: 1;
 `;
 
-const DrawerUserSectionWrapper = styled.div`
+const DrawerUserSection = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
@@ -52,14 +52,14 @@ const DrawerUserSectionWrapper = styled.div`
   background-color: white;
 `;
 
-const DrawerPageSectionWrapper = styled.div`
+const DrawerPageSection = styled.div`
   width: 100%;
   height: calc(100% - 50px);
   border: 1px solid gray;
   background-color: white;
 `;
 
-const DrawerCloseButtonWrapper = styled.div`
+const DrawerCloseButton = styled.div`
   width: 50px;
   height: 50px;
   display: flex;
