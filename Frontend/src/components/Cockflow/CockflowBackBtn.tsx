@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Right = styled.div`
   text-align: right;
-  padding: 15px;
+  padding: 15px 0;
 `
 
 const CockflowBackBtn = () => {

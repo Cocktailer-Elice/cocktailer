@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 const NavLink = styled(Link)`
   position: relative;
-  margin-left: 14.9px;
-  margin-bottom: 14.9px;
   border-radius: 5px;
   overflow: hidden;
   &::after {
@@ -34,8 +32,8 @@ const Title = styled.div`
 `
 
 const ImgWrap = styled.div`
-  width: 140px;
-  height: 150px;
+  width: 120px;
+  height: 125px;
 `
 
 const Img = styled.img`
