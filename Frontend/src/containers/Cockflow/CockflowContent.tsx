@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import CockflowHeader from '../../components/Cockflow/CockflowHeader'
 import CockflowBackBtn from '../../components/Cockflow/CockflowBackBtn'
 import CockflowEnrollBox from '../../components/Cockflow/CockflowEnrollBox'
@@ -17,7 +16,5 @@ const CockflowComment = () => {
     </>
   )
 }
-
-CockflowComment.propTypes = {}
 
 export default CockflowComment

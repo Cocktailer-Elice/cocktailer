@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +10,5 @@ const CockflowBackBtn = () => {
     </>
   )
 }
-
-CockflowBackBtn.propTypes = {}
 
 export default CockflowBackBtn

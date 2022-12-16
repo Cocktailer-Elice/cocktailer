@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 // interface Container {
@@ -21,10 +20,6 @@ const CockflowHeader = () => {
   return (
     <H3>cock-flow</H3>
   )
-}
-
-CockflowHeader.propTypes = {
-
 }
 
 export default CockflowHeader

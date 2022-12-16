@@ -1,6 +1,5 @@
 import { useState } from 'react'
 // { ChangeEvent, FormEvent, FormEvent, KeyboardEvent, MouseEvent, useState }
-import PropTypes from 'prop-types'
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
@@ -31,7 +30,5 @@ const CockflowEnroll = () => {
     </>
   )
 }
-
-CockflowEnroll.propTypes = {}
 
 export default CockflowEnroll

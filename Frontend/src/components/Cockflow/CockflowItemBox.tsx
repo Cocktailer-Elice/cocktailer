@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -54,7 +53,5 @@ const CockflowItemBox = ({imgSrc = 'https://cdn.pixabay.com/photo/2013/02/21/19/
 
   )
 }
-
-CockflowItemBox.propTypes = {}
 
 export default CockflowItemBox

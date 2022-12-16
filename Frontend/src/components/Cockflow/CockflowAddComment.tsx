@@ -1,5 +1,3 @@
-// { ChangeEvent, FormEvent, FormEvent, KeyboardEvent, MouseEvent, useState }
-import PropTypes from 'prop-types'
 import Button from '@mui/material/Button';
 import CockflowBoxTitle from '../../components/Cockflow/CockflowBoxTitle'
 
@@ -15,7 +13,5 @@ const CockflowAddComment = () => {
     </>
   )
 }
-
-CockflowAddComment.propTypes = {}
 
 export default CockflowAddComment
