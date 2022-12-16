@@ -22,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
     "reflect-metadata": "^0.1.13",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "dataTypes": "./src/types"
   },
   "devDependencies": {
     "@types/node": "^18.11.14",

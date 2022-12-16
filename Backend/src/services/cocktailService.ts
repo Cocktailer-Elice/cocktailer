@@ -1,7 +1,7 @@
 import { ICocktail } from '../types';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import { cocktailModel } from '../db';
-import { AppError, errorNames } from '../middlewares';
+import { AppError, errorNames } from '../routers/middlewares';
 import { Collection } from 'mongoose';
 
 /* 간결하게 작성 */

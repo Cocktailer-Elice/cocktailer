@@ -1,4 +1,4 @@
-import logger from '../../configs/winston';
+import logger from '../../../configs/winston';
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 
 class AppError extends Error {

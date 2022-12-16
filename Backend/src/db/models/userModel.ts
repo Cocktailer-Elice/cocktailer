@@ -1,4 +1,4 @@
-import { IUser, UserInfo } from '../../types';
+import { IUser, UserInfo } from '../types';
 import User from '../schemas/userSchema';
 
 interface IUserModel {

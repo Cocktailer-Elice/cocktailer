@@ -1,7 +1,6 @@
-import { isLoggedIn } from './../middlewares/auth/isLoggedIn';
+import { isLoggedIn, asyncHandler, createUserValidator } from './middlewares';
 import { Router } from 'express';
 import { authController } from '../controllers';
-import { asyncHandler, createUserValidator } from '../middlewares';
 
 const router: Router = Router();
 

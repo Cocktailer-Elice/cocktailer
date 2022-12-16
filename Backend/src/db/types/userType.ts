@@ -21,10 +21,3 @@ export interface UserInfo {
   password: string;
   nickname: string;
 }
-
-export interface UserCookie {
-  id: string;
-  email: string;
-  isAdmin: boolean;
-  isBartender: boolean;
-}

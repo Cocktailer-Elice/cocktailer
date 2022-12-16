@@ -1,4 +1,4 @@
-import { UserCookie } from '../types';
+import { UserCookie } from '../../types';
 
 declare global {
   namespace Express {

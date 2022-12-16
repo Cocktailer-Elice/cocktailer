@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
-import { asyncHandler } from '../middlewares';
+import { asyncHandler } from './middlewares';
 
 const cocktailRouter: Router = Router();
 

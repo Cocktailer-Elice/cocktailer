@@ -1,10 +1,11 @@
 import { tokenConfig } from '../configs/env';
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
-import { IUser, IToken, TokenData, UserCookie } from '../types';
+import { IUser } from '../db/types';
+import { Token, TokenData, UserCookie } from '../routers/middlewares/types';
 import { UserCreateData, LoginReqData } from 'types';
 import { userModel } from '../db';
-import { AppError, errorNames } from '../middlewares';
+import { AppError, errorNames } from '../routers/middlewares';
 
 class AuthService {
   private readonly userModel = userModel;
@@ -140,7 +141,7 @@ class AuthService {
     return;
   }
 
-  private createToken(user: IUser): IToken {
+  private createToken(user: IUser): Token {
     const tokenData: TokenData = {
       id: user.id,
       email: user.email,
@@ -156,7 +157,7 @@ class AuthService {
     };
   }
 
-  private createCookie(tokenData: IToken): string {
+  private createCookie(tokenData: Token): string {
     const { token, expiresIn } = tokenData;
     return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn};`;
   }

@@ -1,5 +1,4 @@
 import { Request as Req, Response as Res } from 'express';
-import { UserCookie } from '../types';
 import { UserCreateData, LoginReqData } from 'types';
 import AuthService from '../services/authService';
 
@@ -28,7 +27,7 @@ class AuthController {
   };
 
   public logout = async (req: Req, res: Res) => {
-    const userData = req.user as UserCookie;
+    const userData = req.user;
     await this.authService.logout(userData);
 
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
