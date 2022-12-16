@@ -1,20 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/Home/HomePage';
+import { CockcipeRouter } from './routes/CockcipeRouter';
+import { CockflowRouter } from './routes/CockflowRouter';
+import { CockgorithmRouter } from './routes/CockgorithmRouter';
+import { MainRouter } from './routes/MainRouter';
+import { UserRouter } from './routes/UserRouter';
 
 const Router = () => {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<div>Hello world!</div>} />
-          <Route path="/join" element={<div>join</div>} />
-          <Route path="/login" element={<div>login</div>} />
-          <Route path="/mypage" element={<div>mypage</div>} />
-          <Route path="/cockgorithm" element={<div>cockgorithm</div>} />
-          <Route path="/cockflow" element={<div>cockflow</div>} />
-          <Route path="/cockcipe" element={<div>cockcipe</div>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <MainRouter />
+      <UserRouter />
+      <CockflowRouter />
+      <CockgorithmRouter />
+      <CockcipeRouter />
+    </BrowserRouter>
   );
 };
 
