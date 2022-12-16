@@ -1,7 +1,7 @@
 import React from 'react';
-
+import AddIcon from '@mui/icons-material/Add';
 const AddRecipeBtn = () => {
-  return <div>AddRecipeBtn</div>;
+  return <AddIcon />;
 };
 
 export default AddRecipeBtn;
