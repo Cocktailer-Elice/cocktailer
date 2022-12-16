@@ -1,10 +1,12 @@
+import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import { Center } from '../../components/Cockflow/CockflowStyle';
 
 
 const CockflowEnrollBtns = () => {
     return (
-        <div>
+        <Center>
             {
                 window.location.pathname === '/cockflow/new'
                 ?
@@ -17,7 +19,7 @@ const CockflowEnrollBtns = () => {
                 </>
                 : null
             }
-        </div>
+        </Center>
     )
 
 }

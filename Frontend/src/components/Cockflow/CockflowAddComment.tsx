@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button';
 import CockflowBoxTitle from '../../components/Cockflow/CockflowBoxTitle'
 import styled from 'styled-components';
+import { Center } from '../../components/Cockflow/CockflowStyle';
 
 const TextBox = styled.textarea`
   width: 100%;
@@ -8,6 +9,7 @@ const TextBox = styled.textarea`
   border-color: rgba(0, 0, 0, 0.23);
   resize: none;
 `
+
 // 댓글 박스
 const CockflowAddComment = () => {
   return (
@@ -15,7 +17,9 @@ const CockflowAddComment = () => {
       <CockflowBoxTitle />
       <TextBox name="" id="" value="" placeholder='답글입력' onChange={() => { }}>
       </TextBox>
-      <Button variant="contained">등록하기</Button>
+      <Center>
+        <Button variant="contained">등록하기</Button>
+      </Center>
     </>
   )
 }
