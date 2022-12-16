@@ -24,7 +24,7 @@ const HomePageButtonSectionWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: yellow;
+  border: 1px solid gray;
   padding: 30px;
   margin-bottom: 10px;
   box-sizing: border-box;
