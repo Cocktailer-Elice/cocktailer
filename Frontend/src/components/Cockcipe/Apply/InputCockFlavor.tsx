@@ -1,7 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
 
 const InputCockFlavor = () => {
-  return <div>InputCockFlavor</div>;
+  return <></>;
 };
 
 export default InputCockFlavor;

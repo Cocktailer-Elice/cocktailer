@@ -1,16 +1,21 @@
 import React from 'react';
-import InputCockDegree from '../../../components/Cockcipe/Apply/InputCockDegree';
+import styled from 'styled-components';
+
 import InputCockFlavor from '../../../components/Cockcipe/Apply/InputCockFlavor';
-import InputCockName from '../../../components/Cockcipe/Apply/InputCockName';
+import InputCockInfo from '../../../components/Cockcipe/Apply/InputCockInfo';
 
 const InputCockContainer = () => {
   return (
     <div>
-      <InputCockName />
+      <CockInfoBox>
+        <InputCockInfo name="칵테일명" />
+        <br />
+        <InputCockInfo name="칵테일 도수" />
+      </CockInfoBox>
       <InputCockFlavor />
-      <InputCockDegree />
     </div>
   );
 };
 
 export default InputCockContainer;
+const CockInfoBox = styled.div``;
