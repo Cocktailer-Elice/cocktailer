@@ -5,6 +5,7 @@ interface Iingredients {
 }
 
 export interface CocktailCreateReqDto {
+  id: number;
   cocktailName: string;
   cocktailCategory: string;
   cocktailFlavor: string[];

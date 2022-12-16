@@ -1,6 +1,6 @@
 import { userModel } from '../db';
-import { AppError, errorNames } from '../middlewares';
-import { IUser } from '../types';
+import { AppError, errorNames } from '../routers/middlewares';
+import { IUser } from '../db/types';
 
 class UserService {
   private readonly userModel = userModel;

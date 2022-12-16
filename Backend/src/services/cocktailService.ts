@@ -1,29 +1,27 @@
-import { ICocktail } from '../types';
+import { Cocktail } from './types';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
-import { recipeModel } from '../db';
-import { AppError, errorNames } from '../middlewares';
+import { cocktailModel } from '../db';
+import { AppError, errorNames } from '../routers/middlewares';
+import { Collection } from 'mongoose';
 
 /* 간결하게 작성 */
-class RecipeService {
-  private readonly recipeModel = recipeModel;
+class CocktailService {
+  private readonly cocktailModel = cocktailModel;
 
-  public async createRecipe(
-    recipeCreateDto: CocktailCreateReqDto,
-  ): Promise<ICocktail | null> {
-    const data: ICocktail | null = await this.recipeModel.create({
-      ...recipeCreateDto,
+  public async createCocktail(
+    cocktailCreateDto: CocktailCreateReqDto,
+  ): Promise<Cocktail | null> {
+    const data: Cocktail | null = await this.cocktailModel.create({
+      ...cocktailCreateDto,
     });
-
     return data;
   }
 
-  public async getRecipe(recipeGetDto: number): Promise<ICocktail | null> {
-    const recipeId = recipeGetDto;
-
-    const data = await this.recipeModel.findOne(recipeId);
+  public async getCocktail(cocktailId: number): Promise<Cocktail | null> {
+    const data = await this.cocktailModel.findOne(cocktailId);
 
     return data;
   }
 }
 
-export default RecipeService;
+export default CocktailService;

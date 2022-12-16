@@ -1,2 +1,3 @@
-export * from './auth';
+export * from './authContorller';
 export * from './userController';
+export * from './postController';
