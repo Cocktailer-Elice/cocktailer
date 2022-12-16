@@ -24,7 +24,6 @@ function App() {
     <StyledApp>
       <Helmet></Helmet>
       <GlobalStyles></GlobalStyles>
-      <Header></Header>
       <Router></Router>
     </StyledApp>
   );
