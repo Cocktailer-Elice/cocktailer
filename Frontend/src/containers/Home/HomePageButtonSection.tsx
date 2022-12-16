@@ -27,7 +27,6 @@ const HomePageButtonSectionWrapper = styled.div`
   border: 1px solid gray;
   padding: 30px;
   margin-bottom: 10px;
-  box-sizing: border-box;
 `;
 
 export default HomePageButtonSection;
