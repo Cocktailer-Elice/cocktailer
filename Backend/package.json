@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "dev": "tsc-watch --onSuccess 'node dist/index.js'",
+    "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "build": "tsc"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
-    "nodemon": "^2.0.20",
     "reflect-metadata": "^0.1.13",
     "winston": "^3.8.2"
   },
@@ -41,7 +40,6 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.20",
     "prettier": "^2.8.1",
     "ts-node": "^10.9.1",
     "tsc-watch": "^6.0.0",
