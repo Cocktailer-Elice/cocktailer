@@ -1,29 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CocktailListItem = () => {
-  return (
-    <>
-      <Category>카테고리1</Category>
-      <div style={{ display: 'flex' }}>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-      </div>
-      <Category>카테고리2</Category>
-      <div style={{ display: 'flex' }}>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-      </div>
-      <Category>카테고리3</Category>
-      <div style={{ display: 'flex' }}>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-        <ThumbnailBox>레시피 사진</ThumbnailBox>
-      </div>
-    </>
-  );
+interface Props {
+  id: number;
+}
+
+const CocktailListItem = ({ id }: Props) => {
+  const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
+    console.log(event);
+    window.location.href = `/detail`;
+  };
+  return <ThumbnailBox onClick={handleDetailPage}>레시피 사진</ThumbnailBox>;
 };
 
 export default CocktailListItem;
@@ -32,8 +19,4 @@ const ThumbnailBox = styled.div`
   width: 100px;
   height: 100px;
   margin: 10px;
-`;
-
-const Category = styled.p`
-  font-size: 15px;
 `;

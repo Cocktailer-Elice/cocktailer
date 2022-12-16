@@ -1,7 +1,34 @@
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import styled from 'styled-components';
+import { useState } from 'react';
+
 const SearchCocktailInput = () => {
-  return <SearchIcon fontSize="large" />;
+  const [active, setActive] = useState<boolean>(false);
+  const handleSearch = () => {
+    setActive(!active);
+  };
+  return (
+    <Search>
+      {active ? (
+        <TextField
+          id="standard-basic"
+          placeholder="search..."
+          variant="standard"
+          style={{}}
+        />
+      ) : null}
+      <SearchIcon fontSize="large" onClick={handleSearch} />
+    </Search>
+  );
 };
 
 export default SearchCocktailInput;
+
+const Search = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  border-radius: 5px;
+  width: 100%;
+  margin-left: 0px;
+`;
