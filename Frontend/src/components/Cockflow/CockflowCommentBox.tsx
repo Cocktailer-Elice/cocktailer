@@ -5,10 +5,8 @@ import CockflowBoxTitle from '../../components/Cockflow/CockflowBoxTitle'
 const CockflowComment = () => {
   return (
     <>
-      <CockflowBoxTitle />
-      <div>
-        <textarea name="" id="" value="입력된 댓글 내용" placeholder='' readOnly></textarea>
-      </div>
+      <CockflowBoxTitle replied={3} />
+      <div>입력된 댓글 내용 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos dicta nobis dolore suscipit itaque dolor!</div>
       <Button variant="contained">채택하기</Button>
     </>
   )

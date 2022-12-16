@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
-import Button from '@mui/material/Button';
+import CockflowBackBtn from '../../components/Cockflow/CockflowBackBtn'
 import CockflowHeader from '../../components/Cockflow/CockflowHeader'
 import CockflowItemBox from '../../components/Cockflow/CockflowItemBox'
 
@@ -19,9 +19,7 @@ const CockflowList = () => {
   return (
     <>
       <CockflowHeader />
-      <Link to='/cockflow/new'>
-        <Button variant="contained">질문하기</Button>
-      </Link>
+      <CockflowBackBtn></CockflowBackBtn>
       <List>
         {/* 임시로 */}
         <Item><CockflowItemBox/></Item>

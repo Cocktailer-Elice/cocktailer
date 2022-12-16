@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 const NavLink = styled(Link)`
   position: relative;
   margin-left: 14.9px;
+  margin-bottom: 14.9px;
+  border-radius: 5px;
+  overflow: hidden;
   &::after {
     content: '';
     display: block;

@@ -8,7 +8,7 @@ const CockflowEnroll = () => {
     <>
         <CockflowHeader />
         <CockflowBackBtn />
-        <CockflowEnrollBox />
+        <CockflowEnrollBox actived={false} />
         <CockflowEnrollBtns />
     </>
   )
