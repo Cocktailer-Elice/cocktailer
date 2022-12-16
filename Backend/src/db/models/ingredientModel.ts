@@ -2,7 +2,7 @@ import { Ingredient } from '../../services/types';
 import { IngredientCreateReqDto } from 'types';
 import IngredientSchema from '../schemas/ingredientSchema';
 
-interface IngredientModelSet {
+interface IngredientInterface {
   create(
     ingredientCreateDto: IngredientCreateReqDto,
   ): Promise<Ingredient | null>;
@@ -10,7 +10,7 @@ interface IngredientModelSet {
   findOne(IngredientId: number): Promise<Ingredient | null>;
 }
 
-export class IngredientModel implements IngredientModelSet {
+export class IngredientModel implements IngredientInterface {
   async create(
     ingredientCreateDto: IngredientCreateReqDto,
   ): Promise<Ingredient | null> {
@@ -40,4 +40,4 @@ export class IngredientModel implements IngredientModelSet {
 
 const ingredientModel = new IngredientModel();
 
-export { IngredientModelSet, ingredientModel };
+export { IngredientInterface, ingredientModel };

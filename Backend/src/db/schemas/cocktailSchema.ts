@@ -3,6 +3,8 @@ import { Cocktail } from '../../services/types';
 import { CocktailGetResDto } from 'types';
 import { boolean } from 'joi';
 
+//참조 https://www.notion.so/90143a86ded04b23b0094946940de37d
+
 const CocktailSchema: Schema = new Schema(
   {
     id: {
@@ -12,6 +14,7 @@ const CocktailSchema: Schema = new Schema(
     },
 
     owner: {
+      //작성자 이름
       type: String,
       require: true,
     },
@@ -22,11 +25,13 @@ const CocktailSchema: Schema = new Schema(
     },
 
     cocktailCategory: {
+      //검토필요
       type: String,
       required: true,
     },
 
     official: {
+      // admin 이 생성하는 '국제 바텐더 협회' 공식 레시피 (어드민만 추가 가능)
       type: Boolean,
       default: false,
       require: true,
@@ -50,6 +55,7 @@ const CocktailSchema: Schema = new Schema(
     },
 
     cocktailProducts: {
+      //이 방식은 폐기하게 될것이나 IngredientSchema등으로 대체 될 것.
       alcohol: [],
       drink: [],
       garnish: [],

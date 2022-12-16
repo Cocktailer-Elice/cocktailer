@@ -2,6 +2,8 @@ import { Schema, model, connection } from 'mongoose';
 import { Ingredient } from '../../services/types';
 import { IngredientCreateReqDto } from 'types';
 
+//참조 https://www.notion.so/90143a86ded04b23b0094946940de37d
+
 const IngredientSchema: Schema = new Schema(
   {
     id: {
