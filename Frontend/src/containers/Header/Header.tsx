@@ -1,15 +1,22 @@
 import styled from 'styled-components';
+import { HeaderHomeLogo } from '../../components/Header/HeaderHomeLogo';
+import { HeaderHamburgerButton } from './../../components/Header/HeaderHamburgerButton';
 
 const Header = () => {
-  return <HeaderWrapper>헤더</HeaderWrapper>;
+  return (
+    <HeaderWrapper>
+      <HeaderHamburgerButton />
+      <HeaderHomeLogo />
+    </HeaderWrapper>
+  );
 };
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  height: 70px;
+  height: 50px;
   background-color: #fff;
   border: 1px solid #ddd;
-  box-sizing: border-box;
+  display: flex;
 `;
 
 export default Header;
