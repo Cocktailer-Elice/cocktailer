@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { HeaderHomeLogo } from '../../components/Header/HeaderHomeLogo';
-import { HeaderHamburgerButton } from './../../components/Header/HeaderHamburgerButton';
+import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
+import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
 
 const Header = () => {
   return (

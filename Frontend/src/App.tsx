@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { reset } from 'styled-reset';
-import Header from './containers/Header/Header';
+import Header from './containers/Main/Header/Header';
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -36,6 +36,7 @@ const StyledApp = styled.div`
   background-color: #fff;
   border: 1px solid #ddd;
   margin: auto;
+  position: relative;
 `;
 
 export default App;
