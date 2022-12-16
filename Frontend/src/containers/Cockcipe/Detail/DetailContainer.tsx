@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import CocktailChart from '../../components/Cockcipe/Detail/CocktailChart';
-import CocktailFlavor from '../../components/Cockcipe/Detail/CocktailFlavor';
-import CocktailName from '../../components/Cockcipe/Detail/CocktailName';
-import CocktailTitleImg from '../../components/Cockcipe/Detail/CocktailTitleImg';
-import LikeBtn from '../../components/Cockcipe/Detail/LikeBtn';
-import ShareBtn from '../../components/Cockcipe/Detail/ShareBtn';
+import CocktailChart from '../../../components/Cockcipe/Detail/CocktailChart';
+import CocktailFlavor from '../../../components/Cockcipe/Detail/CocktailFlavor';
+import CocktailName from '../../../components/Cockcipe/Detail/CocktailName';
+import CocktailTitleImg from '../../../components/Cockcipe/Detail/CocktailTitleImg';
+import LikeBtn from '../../../components/Cockcipe/Detail/LikeBtn';
+import ShareBtn from '../../../components/Cockcipe/Detail/ShareBtn';
 
 const DetailContainer = () => {
   return (

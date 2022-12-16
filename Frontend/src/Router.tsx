@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import CockApplyPage from './pages/Cockcipe/CockApplyPage';
 import CockcipePage from './pages/Cockcipe/CockcipePage';
 import CockDetailPage from './pages/Cockcipe/CockDetailPage';
 
@@ -15,6 +16,7 @@ const Router = () => {
           <Route path="/cockflow" element={<div>cockflow</div>} />
           <Route path="/cockcipe" element={<CockcipePage />} />
           <Route path="/cockcipe/detail" element={<CockDetailPage />} />
+          <Route path="/cockcipe/apply" element={<CockApplyPage />} />
         </Routes>
       </BrowserRouter>
     </div>

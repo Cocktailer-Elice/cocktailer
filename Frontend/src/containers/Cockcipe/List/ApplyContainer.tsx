@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchCocktailInput from '../../components/Cockcipe/List/SearchCocktailInput';
+import CocktailApplyBtn from '../../../components/Cockcipe/List/CocktailApplyBtn';
 
-const InputContainer = () => {
+const ApplyContainer = () => {
   return (
     <Container>
-      <SearchCocktailInput />
+      <CocktailApplyBtn />
     </Container>
   );
 };
 
-export default InputContainer;
+export default ApplyContainer;
 const Container = styled.div`
   display: flex;
   justify-content: flex-end;

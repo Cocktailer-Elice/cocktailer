@@ -1,5 +1,5 @@
 import React from 'react';
-import CocktailListItem from '../../components/Cockcipe/List/CocktailListItem';
+import CocktailListItem from '../../../components/Cockcipe/List/CocktailListItem';
 import styled from 'styled-components';
 
 // useEffect 데이터 get 후 칵테일 리스트 map 출력
