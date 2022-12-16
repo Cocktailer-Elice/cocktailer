@@ -7,6 +7,8 @@ export const UserRouter = () => {
     <Routes>
       <Route path="/login" element={<Login></Login>} />
       <Route path="/join" element={<Join></Join>} />
+      <Route path="/find-email" element={<div>찾기</div>} />
+      <Route path="/find-password" element={<div>찾기</div>} />
     </Routes>
   );
 };
