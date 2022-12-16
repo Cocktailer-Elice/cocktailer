@@ -6,7 +6,7 @@ const CockflowBackBtn = () => {
   return (
     <>
       <Link to='/cockflow'>
-        <Button variant="text">목록</Button>
+        <Button variant="contained">목록</Button>
       </Link>
     </>
   )
