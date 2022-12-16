@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
 import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
+import { Drawer } from './../Drawer/Drawer';
+import { useState } from 'react';
 
 const Header = () => {
+  const [menuClicked, setMenuClicked] = useState(false);
+
   return (
     <HeaderWrapper>
-      <HeaderHamburgerButton />
+      <HeaderHamburgerButton setMenuClicked={setMenuClicked} />
       <HeaderHomeLogo />
+      {menuClicked ? <Drawer setMenuClicked={setMenuClicked} /> : <></>}
     </HeaderWrapper>
   );
 };

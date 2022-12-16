@@ -1,9 +1,20 @@
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Dispatch, SetStateAction } from 'react';
 
-export const HeaderHamburgerButton = () => {
+interface HeaderHamburgerButtonProps {
+  setMenuClicked: Dispatch<SetStateAction<boolean>>;
+}
+
+export const HeaderHamburgerButton = ({
+  setMenuClicked,
+}: HeaderHamburgerButtonProps) => {
+  const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    setMenuClicked(true);
+  };
+
   return (
-    <HamburgerButtonWrapper>
+    <HamburgerButtonWrapper onClick={handleMenuClick}>
       <MenuIcon />
     </HamburgerButtonWrapper>
   );
@@ -12,8 +23,8 @@ export const HeaderHamburgerButton = () => {
 const HamburgerButtonWrapper = styled.div`
   width: 70px;
   height: 100%;
-  background-color: greenyellow;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid gray;
 `;
