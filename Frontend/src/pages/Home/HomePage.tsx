@@ -19,7 +19,8 @@ const HomePageWrapper = styled.div`
   width: 100%;
   height: calc(100vh - 70px);
   padding: 5px;
-  background-color: red;
+  box-sizing: border-box;
+  border: 1px solid gray;
 `;
 
 export default HomePage;

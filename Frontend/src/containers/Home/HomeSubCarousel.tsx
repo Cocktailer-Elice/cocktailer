@@ -11,7 +11,7 @@ const HomeSubCarousel = () => {
 const HomeSubCarouselWrapper = styled.div`
   width: 100%;
   height: 20%;
-  background-color: green;
+  border: 1px solid gray;
   padding: 10px;
   margin-bottom: 10px;
 `;
