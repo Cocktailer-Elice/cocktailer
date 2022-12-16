@@ -1,7 +1,7 @@
 import { Request as Req, Response as Res } from 'express';
 import { UserCookie } from '../types';
 import { UserCreateData, LoginReqData } from 'types';
-import AuthService from '../services/auth';
+import AuthService from '../services/authService';
 
 class AuthController {
   private readonly authService = new AuthService();
@@ -11,6 +11,12 @@ class AuthController {
     const { cookie, newUser } = await this.authService.signup(userInfo);
     res.setHeader('Set-Cookie', [cookie]);
     res.status(201).json(newUser.userGetResDto);
+  };
+
+  public checkEmailDuplicate = async (req: Req, res: Res) => {
+    const { email } = req.body;
+    await this.authService.checkEmailDuplicate(email);
+    res.sendStatus(204);
   };
 
   public login = async (req: Req, res: Res) => {

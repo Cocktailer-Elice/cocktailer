@@ -1,4 +1,4 @@
-import { IUser } from './../types/user';
+import { IUser } from '../types/userType';
 import { Request as Req, Response as Res } from 'express';
 import UserService from '../services/userService';
 

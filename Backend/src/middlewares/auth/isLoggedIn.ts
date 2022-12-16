@@ -1,4 +1,4 @@
-import { IUser, UserCookie } from '../../types/user';
+import { IUser, UserCookie } from '../../types/userType';
 import { errorNames } from '../errors/error-names';
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import { verify } from 'jsonwebtoken';

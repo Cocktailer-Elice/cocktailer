@@ -1,4 +1,4 @@
-import { tokenConfig } from './../configs/env';
+import { tokenConfig } from '../configs/env';
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { IUser, IToken, TokenData, UserCookie } from '../types';
@@ -14,10 +14,7 @@ class AuthService {
   ): Promise<{ cookie: string; newUser: IUser }> {
     const { email, password, alcohol } = userCreateData;
 
-    const isEmailDuplicate = await this.checkEmailDuplicate(email);
-    if (isEmailDuplicate) {
-      throw new AppError(errorNames.inputError, 400, '이메일 중복');
-    }
+    await this.checkEmailDuplicate(email);
 
     let nickname = await this.createNickname(alcohol);
     let isNicknameDuplicate = await this.checkNicknameDuplicate(nickname);
@@ -50,16 +47,7 @@ class AuthService {
         `이메일 또는 비밀번호 재확인`,
       );
 
-    const isPasswordMatching: boolean = await compare(
-      password,
-      foundUser.password,
-    );
-    if (!isPasswordMatching)
-      throw new AppError(
-        errorNames.inputError,
-        400,
-        '이메일 또는 비밀번호 재확인',
-      );
+    await this.checkPassword(password, foundUser.password);
 
     const tokenData = this.createToken(foundUser);
     const cookie = this.createCookie(tokenData);
@@ -76,7 +64,7 @@ class AuthService {
     return;
   }
 
-  private async checkEmailDuplicate(email: string): Promise<number> {
+  public async checkEmailDuplicate(email: string): Promise<void> {
     const result = await this.userModel.checkEmailDuplicate(email);
     if (result) {
       throw new AppError(
@@ -85,15 +73,35 @@ class AuthService {
         '이메일 중복',
       );
     }
-    return result;
+    return;
   }
 
   private async createNickname(alcohol: string): Promise<string> {
     if (alcohol === 'Random') {
-      const randomSet = ['Gin', 'Vodka', 'Rum', 'Whiskey', 'Tequila', 'Brandy'];
-      const randomCount = Math.floor(Math.random() * randomSet.length);
-      alcohol = randomSet[randomCount];
+      const randomAlcoholSet = [
+        '진',
+        '보드카',
+        '럼',
+        '위스키',
+        '데낄라',
+        '브랜디',
+      ];
+      const randomNumberCount = Math.floor(
+        Math.random() * randomAlcoholSet.length,
+      );
+      alcohol = randomAlcoholSet[randomNumberCount];
     }
+
+    const randomDecoSet = [
+      '사랑스런',
+      '달콤한',
+      '죽음의',
+      '귀여운',
+      '나의 사랑',
+      '나의 웬수',
+    ];
+    const randomDecoCount = Math.floor(Math.random() * randomDecoSet.length);
+    const decorator = randomDecoSet[randomDecoCount];
 
     let randomNumber = '';
     for (let digit = 0; digit <= 3; digit++) {
@@ -101,7 +109,7 @@ class AuthService {
       randomNumber += '' + randomNumberDigit;
     }
 
-    const nickname = `${alcohol}#${+randomNumber}`;
+    const nickname = `${decorator} ${alcohol} #${+randomNumber}`;
 
     return nickname;
   }
@@ -116,6 +124,20 @@ class AuthService {
       );
     }
     return result;
+  }
+
+  private async checkPassword(
+    password: string,
+    hashedPassword: string,
+  ): Promise<void> {
+    const isPasswordMatching = await compare(password, hashedPassword);
+    if (!isPasswordMatching)
+      throw new AppError(
+        errorNames.inputError,
+        400,
+        '이메일 또는 비밀번호 재확인',
+      );
+    return;
   }
 
   private createToken(user: IUser): IToken {

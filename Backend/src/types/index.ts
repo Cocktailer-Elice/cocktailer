@@ -1,4 +1,4 @@
-export * from './auth';
-export * from './user';
+export * from './authType';
+export * from './userType';
 export * from './async-function';
 export * from './cocktailType';
