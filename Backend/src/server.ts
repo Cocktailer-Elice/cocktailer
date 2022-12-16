@@ -1,9 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import logger from './configs/winston';
+import cookieParser from 'cookie-parser';
 
 import globalRouter from './routers';
-import { appErrorHandler, errorHandler, errorLogger } from './middlewares';
+import {
+  appErrorHandler,
+  errorHandler,
+  errorLogger,
+  notFoundErrorHandler,
+} from './middlewares';
 
 class Server {
   private readonly app: express.Application;
@@ -30,12 +36,14 @@ class Server {
     //* json middleware
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser());
   }
 
   private setRouter() {
     this.app.use('/', globalRouter);
     this.app.use(errorLogger);
     this.app.use(errorHandler);
+    this.app.use(notFoundErrorHandler);
     this.app.use(appErrorHandler);
   }
 

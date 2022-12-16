@@ -1,4 +1,4 @@
-export * from './models/user';
-export * from './schemas/user';
+export * from './models/userModel';
+export * from './schemas/userSchema';
 export * from './schemas/cocktailSchema';
 export * from './models/cocktailModels';
