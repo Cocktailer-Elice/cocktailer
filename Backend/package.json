@@ -4,8 +4,9 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/Backend/index.js",
     "dev": "tsc-watch --onSuccess 'node dist/Backend/index.js'",
+    "dev2": "tsc-watch --onSuccess \"node ./dist/Backend/index.js\" ",
     "build": "tsc"
   },
   "dependencies": {
