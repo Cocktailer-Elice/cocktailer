@@ -16,7 +16,6 @@ const HomePageButtonSectionWrapper = styled.div`
   background-color: yellow;
   padding: 10px;
   margin-bottom: 10px;
-  box-sizing: border-box;
 `;
 
 export default HomePageButtonSection;

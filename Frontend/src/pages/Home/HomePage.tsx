@@ -19,7 +19,6 @@ const HomePageWrapper = styled.div`
   width: 100%;
   height: calc(100vh - 70px);
   padding: 5px;
-  box-sizing: border-box;
   background-color: red;
 `;
 
