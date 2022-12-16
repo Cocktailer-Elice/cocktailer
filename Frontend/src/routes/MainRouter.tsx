@@ -6,7 +6,6 @@ export const MainRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/drawer" element={<Drawer />} />
     </Routes>
   );
 };
