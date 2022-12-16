@@ -1,5 +1,5 @@
 import { ICocktail } from '../../types';
-import { CocktailCreateReqDto, CocktailGetResDto } from '../../dtos';
+import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import Cocktail from '../schemas/cocktailSchema';
 
 interface ICocktailModel {

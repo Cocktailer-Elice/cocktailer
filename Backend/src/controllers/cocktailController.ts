@@ -1,6 +1,6 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import { ICocktail } from '../types';
-import { CocktailCreateReqDto, CocktailGetResDto } from '../dtos';
+import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import RecipeService from '../services/cocktailService';
 
 class CoctailController {

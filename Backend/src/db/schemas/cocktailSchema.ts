@@ -1,6 +1,6 @@
 import { Schema, model, connection } from 'mongoose';
 import { ICocktail } from '../../types';
-import { CocktailGetResDto } from '../../dtos';
+import { CocktailGetResDto } from 'types';
 
 const CocktailSchema: Schema = new Schema(
   {
