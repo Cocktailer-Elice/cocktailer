@@ -1,10 +1,15 @@
 import styled from 'styled-components';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export const HeaderHamburgerButton = () => {
-  return <HeaderHamburgerButtonWrapper>햄버거</HeaderHamburgerButtonWrapper>;
+  return (
+    <HamburgerButtonWrapper>
+      <MenuIcon />
+    </HamburgerButtonWrapper>
+  );
 };
 
-const HeaderHamburgerButtonWrapper = styled.div`
+const HamburgerButtonWrapper = styled.div`
   width: 70px;
   height: 100%;
   background-color: greenyellow;
