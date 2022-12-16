@@ -1,44 +1,34 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { ICocktail } from '../types';
+import { Cocktail } from '../services/types';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import CocktailService from '../services/cocktailService';
 
 class CoctailController {
   private readonly cocktailService = new CocktailService();
 
-  public createMyCocktail = async (req: Req, res: Res, next: Next) => {
-    try {
-      const cocktailInfo: CocktailCreateReqDto = req.body;
+  public createCocktail = async (req: Req, res: Res, next: Next) => {
+    const cocktailInfo: CocktailCreateReqDto = req.body;
 
-      /*
+    /*
       if(role === 'admin' && role !== 'user' && role !== 'bartender'){
         cocktailInfo.official = true;
       }
       */
 
-      const createCocktailData: ICocktail | null =
-        await this.cocktailService.createCocktail(cocktailInfo);
+    const createCocktailData: Cocktail | null =
+      await this.cocktailService.createCocktail(cocktailInfo);
 
-      res
-        .status(200)
-        .json({ data: createCocktailData, message: 'cocktailCreated' });
-    } catch (error) {
-      next(error);
-    }
+    res
+      .status(200)
+      .json({ data: createCocktailData, message: 'cocktailCreated' });
   };
 
-  public getMyCocktail = async (req: Req, res: Res, next: Next) => {
-    try {
-      const cocktailId = Number(req.query.mycocktail);
+  public getCocktail = async (req: Req, res: Res, next: Next) => {
+    const cocktailId = Number(req.query.cocktail);
 
-      const getCocktailData = await this.cocktailService.getCocktail(
-        cocktailId,
-      );
+    const getCocktailData = await this.cocktailService.getCocktail(cocktailId);
 
-      res.status(200).json({ getCocktailData: getCocktailData });
-    } catch (error) {
-      next(error);
-    }
+    res.status(200).json({ getCocktailData: getCocktailData });
   };
 }
 

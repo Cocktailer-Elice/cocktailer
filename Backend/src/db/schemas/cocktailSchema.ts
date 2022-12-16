@@ -1,5 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
-import { ICocktail } from '../../types';
+import { Cocktail } from '../../services/types';
 import { CocktailGetResDto } from 'types';
 import { boolean } from 'joi';
 
@@ -10,10 +10,17 @@ const CocktailSchema: Schema = new Schema(
       required: false,
       unique: true,
     },
+
+    owner: {
+      type: String,
+      require: true,
+    },
+
     cocktailName: {
       type: String,
       required: true,
     },
+
     cocktailCategory: {
       type: String,
       required: true,
@@ -23,11 +30,6 @@ const CocktailSchema: Schema = new Schema(
       type: Boolean,
       default: false,
       require: true,
-    },
-
-    bartender: {
-      type: String,
-      require: false,
     },
 
     cocktailFlavor: [
@@ -85,4 +87,4 @@ CocktailSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<ICocktail>('cocktails', CocktailSchema);
+export default model<Cocktail>('cocktails', CocktailSchema);
