@@ -6,7 +6,6 @@ const UserSchema: Schema = new Schema(
   {
     id: {
       type: Number,
-      required: false,
       unique: true,
     },
     name: {
@@ -24,7 +23,7 @@ const UserSchema: Schema = new Schema(
     },
     nickname: {
       type: String,
-      required: true,
+      unique: true,
     },
     birthday: {
       type: Date,
