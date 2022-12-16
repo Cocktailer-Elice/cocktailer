@@ -22,7 +22,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
   }
 
-  input:focus, text:focus {
+  input:focus, textarea:focus {
     outline: none;
   }
 `;
