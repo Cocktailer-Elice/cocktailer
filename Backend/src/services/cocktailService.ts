@@ -1,4 +1,4 @@
-import { ICocktail } from '../types';
+import { Cocktail } from './types';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import { cocktailModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
@@ -10,16 +10,14 @@ class CocktailService {
 
   public async createCocktail(
     cocktailCreateDto: CocktailCreateReqDto,
-  ): Promise<ICocktail | null> {
-    const data: ICocktail | null = await this.cocktailModel.create({
+  ): Promise<Cocktail | null> {
+    const data: Cocktail | null = await this.cocktailModel.create({
       ...cocktailCreateDto,
     });
     return data;
   }
 
-  public async getCocktail(recipeGetDto: number): Promise<ICocktail | null> {
-    const cocktailId = recipeGetDto;
-
+  public async getCocktail(cocktailId: number): Promise<Cocktail | null> {
     const data = await this.cocktailModel.findOne(cocktailId);
 
     return data;

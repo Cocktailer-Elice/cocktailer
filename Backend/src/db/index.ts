@@ -1,7 +1,7 @@
 export * from './models/userModel';
-export * from './models/cocktailModels';
-export * from './models/alcoholModel';
+export * from './models/cocktailModel';
+export * from './models/ingredientModel';
 
 export * from './schemas/userSchema';
 export * from './schemas/cocktailSchema';
-export * from './schemas/alcoholSchema';
+export * from './schemas/ingredientSchema';
