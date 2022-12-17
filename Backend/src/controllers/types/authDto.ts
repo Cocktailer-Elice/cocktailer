@@ -1,6 +1,4 @@
-declare module 'authDto' {
-  export interface LoginReqData {
-    email: string;
-    password: string;
-  }
+export interface LoginReqData {
+  email: string;
+  password: string;
 }

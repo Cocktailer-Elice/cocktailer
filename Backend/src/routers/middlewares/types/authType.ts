@@ -11,7 +11,7 @@ export interface Token {
 }
 
 export interface UserCookie {
-  id: string;
+  userId: string;
   email: string;
   isAdmin: boolean;
   isBartender: boolean;

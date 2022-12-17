@@ -1,8 +1,7 @@
-import { tokenConfig } from '../configs/env';
+import { authContants } from './utils/constants';
 import { hash, compare } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
 import { IUser } from '../db/types';
-import { Token, TokenData, UserCookie } from '../routers/middlewares/types';
+import { UserCookie } from '../routers/middlewares/types';
 import { UserCreateData, LoginReqData } from 'types';
 import { userModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
@@ -10,9 +9,7 @@ import { AppError, errorNames } from '../routers/middlewares';
 class AuthService {
   private readonly userModel = userModel;
 
-  public async signup(
-    userCreateData: UserCreateData,
-  ): Promise<{ cookie: string; newUser: IUser }> {
+  public async signup(userCreateData: UserCreateData): Promise<IUser> {
     const { email, password, alcohol } = userCreateData;
 
     await this.checkEmailDuplicate(email);
@@ -29,16 +26,10 @@ class AuthService {
       password: hashedPassword,
       nickname,
     });
-
-    const tokenData = this.createToken(newUser);
-    const cookie = this.createCookie(tokenData);
-
-    return { cookie, newUser };
+    return newUser;
   }
 
-  public async login(
-    userData: LoginReqData,
-  ): Promise<{ cookie: string; foundUser: IUser }> {
+  public async login(userData: LoginReqData): Promise<IUser> {
     const { email, password } = userData;
     const foundUser: IUser | null = await this.userModel.findByEmail(email);
     if (!foundUser)
@@ -50,15 +41,12 @@ class AuthService {
 
     await this.checkPassword(password, foundUser.password);
 
-    const tokenData = this.createToken(foundUser);
-    const cookie = this.createCookie(tokenData);
-
-    return { cookie, foundUser };
+    return foundUser;
   }
 
   public async logout(userData: UserCookie): Promise<void> {
-    const { id } = userData;
-    const foundUser: IUser | null = await this.userModel.findById(id);
+    const { userId } = userData;
+    const foundUser: IUser | null = await this.userModel.findById(userId);
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, `존재하지 않는 유저`);
     }
@@ -79,28 +67,14 @@ class AuthService {
 
   private async createNickname(alcohol: string): Promise<string> {
     if (alcohol === 'Random') {
-      const randomAlcoholSet = [
-        '진',
-        '보드카',
-        '럼',
-        '위스키',
-        '데낄라',
-        '브랜디',
-      ];
+      const randomAlcoholSet = authContants.RANDOM_ALCOHOL_SET;
       const randomNumberCount = Math.floor(
         Math.random() * randomAlcoholSet.length,
       );
       alcohol = randomAlcoholSet[randomNumberCount];
     }
 
-    const randomDecoSet = [
-      '사랑스런',
-      '달콤한',
-      '죽음의',
-      '귀여운',
-      '나의 사랑',
-      '나의 웬수',
-    ];
+    const randomDecoSet = authContants.RANDOM_DECO_SET;
     const randomDecoCount = Math.floor(Math.random() * randomDecoSet.length);
     const decorator = randomDecoSet[randomDecoCount];
 
@@ -115,7 +89,7 @@ class AuthService {
     return nickname;
   }
 
-  private async checkNicknameDuplicate(nickname: string): Promise<number> {
+  private async checkNicknameDuplicate(nickname: string): Promise<boolean> {
     const result = await this.userModel.checkNicknameDuplicate(nickname);
     if (result) {
       throw new AppError(
@@ -139,27 +113,6 @@ class AuthService {
         '이메일 또는 비밀번호 재확인',
       );
     return;
-  }
-
-  private createToken(user: IUser): Token {
-    const tokenData: TokenData = {
-      id: user.id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      isBartender: user.isBartender,
-    };
-    const secretKey: string = tokenConfig.ACCESS_KEY as string;
-    const expiresIn: string = tokenConfig.ACCESS_EXPIRE as string;
-
-    return {
-      expiresIn,
-      token: sign(tokenData, secretKey, { expiresIn }),
-    };
-  }
-
-  private createCookie(tokenData: Token): string {
-    const { token, expiresIn } = tokenData;
-    return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn};`;
   }
 }
 

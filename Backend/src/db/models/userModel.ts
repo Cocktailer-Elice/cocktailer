@@ -5,7 +5,7 @@ interface IUserModel {
   create(userInfo: UserInfo): Promise<IUser>;
   findAll(): Promise<IUser[]>;
   findById(userId: string): Promise<IUser | null>;
-  checkEmailDuplicate(email: string): Promise<number>;
+  checkEmailDuplicate(email: string): Promise<boolean>;
 }
 
 export class UserModel implements IUserModel {
@@ -29,14 +29,14 @@ export class UserModel implements IUserModel {
     return user;
   }
 
-  async checkEmailDuplicate(email: string): Promise<number> {
+  async checkEmailDuplicate(email: string): Promise<boolean> {
     const result = await User.find({ email }).countDocuments();
-    return result;
+    return result ? true : false;
   }
 
-  async checkNicknameDuplicate(nickname: string): Promise<number> {
+  async checkNicknameDuplicate(nickname: string): Promise<boolean> {
     const result = await User.find({ nickname }).countDocuments();
-    return result;
+    return result ? true : false;
   }
 }
 

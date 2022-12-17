@@ -1,4 +1,4 @@
-export interface IPost {
+export interface ICockflow {
   id: string;
   owner: string;
   title: string;
@@ -6,7 +6,7 @@ export interface IPost {
   comments: string[];
 }
 
-export interface PostInfo {
+export interface CockflowInfo {
   owner: string;
   title: string;
   content: string;

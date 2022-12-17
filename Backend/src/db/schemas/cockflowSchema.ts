@@ -1,5 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
-import { IPost } from '../types';
+import { ICockflow } from '../types';
 
 const PostSchema: Schema = new Schema(
   {
@@ -26,9 +26,10 @@ const PostSchema: Schema = new Schema(
     ],
     deletedAt: {
       type: Date,
+      default: null,
     },
   },
-  { collection: 'posts', timestamps: true },
+  { collection: 'cockflows', timestamps: true },
 );
 
 PostSchema.pre('save', async function () {
@@ -36,7 +37,7 @@ PostSchema.pre('save', async function () {
 
   const sequence = await sequenceCollection.findOneAndUpdate(
     {
-      collectionName: 'posts',
+      collectionName: 'cockflows',
     },
     { $inc: { value: 1 } },
     {
@@ -49,4 +50,4 @@ PostSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<IPost>('posts', PostSchema);
+export default model<ICockflow>('cockflows', PostSchema);
