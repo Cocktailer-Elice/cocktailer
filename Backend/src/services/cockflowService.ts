@@ -1,9 +1,9 @@
-import { CockflowInfo } from '../db/types/cockflowType';
+import { CockflowInfo } from '../services';
 import { ICockflow, cockflowModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 
 class CockflowService {
-  private readonly cockflowModel = cockflowModel;
+  private readonly cockflowModel = cockflowModel.Mongo;
 
   public async createCockflow(cockflowInfo: CockflowInfo) {
     const newPost = await this.cockflowModel.create(cockflowInfo);
@@ -32,7 +32,7 @@ class CockflowService {
   }
 
   public async softDeleteCockflow(cockflowId: string, userId: string) {
-    const cockflow = await cockflowModel.findById(cockflowId);
+    const cockflow = await this.cockflowModel.findById(cockflowId);
 
     if (!cockflow) {
       throw new AppError(
@@ -49,8 +49,8 @@ class CockflowService {
         '권한 없는 사용자',
       );
     }
-    const result = await cockflowModel.softDelete(cockflowId);
-    if (!result.acknowledged) {
+    const result = await this.cockflowModel.softDelete(cockflowId);
+    if (!result.acknowledged || !result.modifiedCount) {
       throw new AppError(errorNames.databaseError, 500, '서버 에러');
     }
     return;

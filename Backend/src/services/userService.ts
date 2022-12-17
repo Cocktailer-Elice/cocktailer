@@ -3,7 +3,7 @@ import { AppError, errorNames } from '../routers/middlewares';
 import { IUser } from '../db/types';
 
 class UserService {
-  private readonly userModel = userModel;
+  private readonly userModel = userModel.Mongo;
 
   public async getUserById(id: string): Promise<IUser | null> {
     const founduser: IUser | null = await this.userModel.findById(id);

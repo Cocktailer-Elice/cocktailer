@@ -1,4 +1,4 @@
-import { CockflowInfo } from '../db';
+import { CockflowInfo } from '../services';
 import { Request as Req, Response as Res } from 'express';
 import CockflowService from '../services/cockflowService';
 import { cockflowContants } from './utils/constants';

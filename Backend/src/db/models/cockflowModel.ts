@@ -1,53 +1,49 @@
-import { ICockflow, CockflowInfo } from '../types';
+import { ICockflowMongoModel, ICockflowModel } from './../types/cockflowType';
+import { CockflowInfo } from '../../services';
+import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
-import { UpdateWriteOpResult } from 'mongoose';
 
-interface ICockflowModel {
-  create(postInfo: CockflowInfo): Promise<ICockflow>;
-  getByRequest(
-    request: number,
-    cockflowsPerRequest: number,
-  ): Promise<ICockflow[]>;
-  findByUserId(postId: string): Promise<ICockflow[]>;
-  findById(postId: string): Promise<ICockflow | null>;
-  softDelete(cockflowId: string): Promise<UpdateWriteOpResult>;
-}
-
-export class CockflowModel implements ICockflowModel {
-  public async create(postInfo: CockflowInfo): Promise<ICockflow> {
-    const newPost = await Cockflow.create(postInfo);
-    return newPost;
+class MongoModel implements ICockflowMongoModel {
+  public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
+    const newcockflow = await Cockflow.create(cockflowInfo);
+    return newcockflow;
   }
 
   public async getByRequest(
     request: number,
     cockflowsPerRequest: number,
   ): Promise<ICockflow[]> {
-    const cockflows = await Cockflow.find({ deletedAt: null })
+    const filter = { deletedAt: null };
+    const option = { sort: { createdAt: -1 } };
+    const cockflows = await Cockflow.find(filter, {}, option)
       .skip((request - 1) * cockflowsPerRequest)
       .limit(cockflowsPerRequest);
     return cockflows;
   }
 
   public async getTotalRequest(cockflowsPerRequest: number) {
-    const cockflowsCount = await Cockflow.countDocuments({ deletedAt: null });
+    const filter = { deletedAt: null };
+    const cockflowsCount = await Cockflow.countDocuments(filter);
     const totalPage = Math.ceil(cockflowsCount / cockflowsPerRequest);
     return totalPage;
   }
 
   public async findByUserId(userId: string): Promise<ICockflow[]> {
-    const posts: ICockflow[] = await Cockflow.find(
-      { owner: userId },
-      '-_id -__v -updatedAt -deletedAt',
+    const filter = { owner: userId };
+    const projection = '-_id -__v -updatedAt -deletedAt';
+    const option = { sort: { createdAt: -1 } };
+    const cockflows: ICockflow[] = await Cockflow.find(
+      filter,
+      projection,
+      option,
     );
-    return posts;
+    return cockflows;
   }
 
   public async findById(cockflowId: string): Promise<ICockflow | null> {
-    const cockflow = await Cockflow.findOne(
-      { id: cockflowId },
-      '-_id -__v -updatedAt',
-    );
+    const filter = { id: cockflowId };
+    const projection = '-_id -__v -updatedAt';
+    const cockflow = await Cockflow.findOne(filter, projection);
     return cockflow;
   }
 
@@ -57,6 +53,10 @@ export class CockflowModel implements ICockflowModel {
     const result = await Cockflow.updateOne(filter, update);
     return result;
   }
+}
+
+export class CockflowModel implements ICockflowModel {
+  Mongo = new MongoModel();
 }
 
 const cockflowModel = new CockflowModel();

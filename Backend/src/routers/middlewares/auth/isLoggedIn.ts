@@ -8,35 +8,39 @@ import { tokenConfig } from '../../../configs/env';
 
 export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
   const secretKey = tokenConfig.ACCESS_KEY as string;
-  const Authorization = req.cookies.Authorization;
+  const token = req.cookies.Authorization;
 
-  if (!Authorization) {
+  if (!token) {
     throw new AppError(
       errorNames.authenticationError,
       400,
-      'Auhorization 헤더 없음',
+      'Authorization 헤더 없음',
     );
   }
 
-  if (Authorization) {
-    const decodedData = (await verify(Authorization, secretKey)) as TokenData;
-    const userId = decodedData.id;
-    const foundUser = await userModel.findById(userId);
-
-    if (!foundUser) {
-      throw new AppError(
-        errorNames.authenticationError,
-        401,
-        '해당하는 유저 없음',
-      );
-    }
-    req.user = {
-      userId: foundUser.id,
-      email: foundUser.email,
-      isAdmin: foundUser.isAdmin,
-      isBartender: foundUser.isBartender,
-    };
-
-    next();
+  let decodedData;
+  try {
+    decodedData = verify(token, secretKey) as TokenData;
+  } catch (err: any) {
+    return res.status(419).json({ message: err.message });
   }
+
+  const userId = (decodedData as TokenData).id;
+  const foundUser = await userModel.Mongo.findById(userId);
+
+  if (!foundUser) {
+    throw new AppError(
+      errorNames.authenticationError,
+      401,
+      '해당하는 유저 없음',
+    );
+  }
+  req.user = {
+    userId: foundUser.id,
+    email: foundUser.email,
+    isAdmin: foundUser.isAdmin,
+    isBartender: foundUser.isBartender,
+  };
+
+  next();
 };

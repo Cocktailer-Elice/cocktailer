@@ -7,7 +7,7 @@ import { userModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 
 class AuthService {
-  private readonly userModel = userModel;
+  private readonly userModel = userModel.Mongo;
 
   public async signup(userCreateData: UserCreateData): Promise<IUser> {
     const { email, password, alcohol } = userCreateData;

@@ -5,10 +5,6 @@ export interface CockflowCreateReqDto {
   content: string;
 }
 
-export interface CockflowUpdateReqDto extends CockflowCreateReqDto {
-  id: string;
-}
-
 export interface Cockflow {
   nickname: string;
   title: string;
