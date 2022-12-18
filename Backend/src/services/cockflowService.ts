@@ -21,7 +21,7 @@ class CockflowService {
     return cockflows;
   }
 
-  public async getCockflowById(cockflowId: string): Promise<ICockflow | null> {
+  public async getCockflowById(cockflowId: string) {
     const foundCockflow: ICockflow | null = await this.cockflowModel.findById(
       cockflowId,
     );

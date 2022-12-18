@@ -45,6 +45,18 @@ class AuthController {
     res.sendStatus(204);
   };
 
+  public generateAuthCode = async (req: Req, res: Res) => {
+    const { tel } = req.body;
+    const code = await this.authService.generateAuthCode(tel);
+    res.status(202).json(code);
+  };
+
+  public validateAuthCode = async (req: Req, res: Res) => {
+    const { tel, code } = req.body;
+    await this.authService.validateAuthCode(tel, code);
+    res.sendStatus(204);
+  };
+
   private createToken(user: IUser): Token {
     const tokenData: TokenData = {
       id: user.id,

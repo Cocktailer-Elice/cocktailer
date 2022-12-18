@@ -12,5 +12,7 @@ router.post(
 router.post('/email-check', asyncHandler(authController.checkEmailDuplicate));
 router.post('/login', asyncHandler(authController.login));
 router.post('/logout', isLoggedIn, asyncHandler(authController.logout));
+router.post('/auth', asyncHandler(authController.generateAuthCode));
+router.post('/validate-code', asyncHandler(authController.validateAuthCode));
 
 export default router;
