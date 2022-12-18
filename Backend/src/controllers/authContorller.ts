@@ -48,9 +48,10 @@ class AuthController {
   public generateAuthCode = async (req: Req, res: Res) => {
     const { tel } = req.body;
     const code = await this.authService.generateAuthCode(tel);
-    res.status(202).json(code);
+    res.status(202).json({ code });
   };
 
+  // 서버에서 검증하는 게 맞다,,, But, 협의 후 구현하자,,,
   public validateAuthCode = async (req: Req, res: Res) => {
     const { tel, code } = req.body;
     await this.authService.validateAuthCode(tel, code);
@@ -75,6 +76,7 @@ class AuthController {
 
   private createCookie(tokenData: Token): string {
     const { token, expiresIn } = tokenData;
+    // HTTPS 적용 후 secure 옵션도 설정할 것! secure;
     return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn};`;
   }
 }

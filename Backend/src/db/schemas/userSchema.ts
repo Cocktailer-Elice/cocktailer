@@ -49,7 +49,7 @@ const UserSchema: Schema = new Schema(
       type: Date,
     },
   },
-  { collection: 'users', timestamps: true },
+  { collection: 'users', timestamps: true, versionKey: false },
 );
 
 UserSchema.virtual('userGetResDto').get(function (this: User) {

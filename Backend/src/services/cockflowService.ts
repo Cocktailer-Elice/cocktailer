@@ -1,5 +1,5 @@
 import { CockflowInfo } from '../services';
-import { ICockflow, cockflowModel } from '../db';
+import { cockflowModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 
 class CockflowService {
@@ -21,17 +21,20 @@ class CockflowService {
     return cockflows;
   }
 
-  public async getCockflowById(cockflowId: string) {
-    const foundCockflow: ICockflow | null = await this.cockflowModel.findById(
-      cockflowId,
-    );
+  public async getCockflowById(cockflowId: number) {
+    const foundCockflow = await this.cockflowModel.findById(cockflowId);
     if (!foundCockflow)
       throw new AppError(errorNames.inputError, 400, `존재하지 않는 칵플로우`);
-
+    if (foundCockflow.deletedAt)
+      throw new AppError(
+        errorNames.resourceNotFoundError,
+        400,
+        '삭제된 칵플로우',
+      );
     return foundCockflow;
   }
 
-  public async softDeleteCockflow(cockflowId: string, userId: string) {
+  public async softDeleteCockflow(cockflowId: number, userId: number) {
     const cockflow = await this.cockflowModel.findById(cockflowId);
 
     if (!cockflow) {

@@ -8,7 +8,7 @@ const CockflowSchema: Schema = new Schema(
       unique: true,
     },
     owner: {
-      type: String,
+      type: Number,
       required: true,
     },
     title: {
@@ -19,17 +19,12 @@ const CockflowSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    comments: [
-      {
-        type: String,
-      },
-    ],
     deletedAt: {
       type: Date,
       default: null,
     },
   },
-  { collection: 'cockflows', timestamps: true },
+  { collection: 'cockflows', timestamps: true, versionKey: false },
 );
 
 CockflowSchema.pre('save', async function () {

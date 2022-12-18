@@ -23,14 +23,14 @@ class CockflowController {
 
   public getCockflowById = async (req: Req, res: Res) => {
     const { cockflowId } = req.params;
-    const cockflow = await this.cockflowService.getCockflowById(cockflowId);
+    const cockflow = await this.cockflowService.getCockflowById(+cockflowId);
     res.status(200).json(cockflow);
   };
 
   public softDeleteCockflow = async (req: Req, res: Res) => {
     const { cockflowId } = req.params;
     const { userId } = req.user;
-    await this.cockflowService.softDeleteCockflow(cockflowId, userId);
+    await this.cockflowService.softDeleteCockflow(+cockflowId, userId);
     res.sendStatus(204);
   };
 }

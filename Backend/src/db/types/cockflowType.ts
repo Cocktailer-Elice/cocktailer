@@ -11,9 +11,9 @@ export interface ICockflowMongoModel {
     request: number,
     cockflowsPerRequest: number,
   ): Promise<ICockflow[]>;
-  findByUserId(userId: string): Promise<ICockflow[]>;
-  findById(cockflowId: string): Promise<ICockflow | null>;
-  softDelete(cockflowId: string): Promise<UpdateWriteOpResult>;
+  findByUserId(userId: number): Promise<ICockflow[]>;
+  findById(cockflowId: number): Promise<ICockflow>;
+  softDelete(cockflowId: number): Promise<UpdateWriteOpResult>;
 }
 
 export interface ICockflow {
@@ -21,5 +21,5 @@ export interface ICockflow {
   owner: string;
   title: string;
   content: string;
-  comments: string[];
+  deletedAt: Date | null;
 }

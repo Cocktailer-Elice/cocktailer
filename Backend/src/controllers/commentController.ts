@@ -1,4 +1,3 @@
-import { CommentInfo } from '../services';
 import { Request as Req, Response as Res } from 'express';
 import CommentService from '../services/commentService';
 
@@ -6,8 +5,9 @@ class CommentController {
   private readonly commentService = new CommentService();
 
   public createComment = async (req: Req, res: Res) => {
-    const owner = req.user.userId;
-    const commentInfo: CommentInfo = { ...req.body, owner };
+    const { userId } = req.user;
+    const { cockflowId } = req.params;
+    const commentInfo = { ...req.body, cockflowId, owner: userId };
     const newComment = await this.commentService.createComment(commentInfo);
     res.status(201).json(newComment);
   };

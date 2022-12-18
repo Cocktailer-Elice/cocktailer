@@ -4,7 +4,11 @@ import { IComment } from '../types';
 const CommentSchema: Schema = new Schema(
   {
     owner: {
-      type: String,
+      type: Number,
+      required: true,
+    },
+    cockflowId: {
+      type: Number,
       required: true,
     },
     content: {
@@ -20,7 +24,7 @@ const CommentSchema: Schema = new Schema(
       type: Boolean,
     },
   },
-  { collection: 'comments', timestamps: true },
+  { collection: 'comments', timestamps: true, versionKey: false },
 );
 
 export default model<IComment>('comments', CommentSchema);

@@ -28,7 +28,7 @@ class MongoModel implements ICockflowMongoModel {
     return totalPage;
   }
 
-  public async findByUserId(userId: string): Promise<ICockflow[]> {
+  public async findByUserId(userId: number): Promise<ICockflow[]> {
     const filter = { owner: userId };
     const projection = '-_id -__v -updatedAt -deletedAt';
     const option = { sort: { createdAt: -1 } };
@@ -40,14 +40,82 @@ class MongoModel implements ICockflowMongoModel {
     return cockflows;
   }
 
-  public async findById(cockflowId: string): Promise<ICockflow | null> {
-    const filter = { id: cockflowId };
-    const projection = '-_id -__v -updatedAt';
-    const cockflow = await Cockflow.findOne(filter, projection);
-    return cockflow;
-  }
+  public findById = async (cockflowId: number): Promise<ICockflow> => {
+    const cockflow = await Cockflow.aggregate([
+      {
+        $match: {
+          id: cockflowId,
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'owner',
+          foreignField: 'id',
+          as: 'owner',
+        },
+      },
+      {
+        $unwind: {
+          path: '$owner',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: 'comments',
+          localField: 'id',
+          foreignField: 'cockflowId',
+          as: 'comments',
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'comments.owner',
+          foreignField: 'id',
+          as: 'commentsOwner',
+        },
+      },
+      {
+        $unwind: {
+          path: '$comments.writer',
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $unset: [
+          '_id',
+          'updatedAt',
+          'owner._id',
+          'owner.name',
+          'owner.email',
+          'owner.password',
+          'owner.birthday',
+          'owner.tel',
+          'owner.avatarUrl',
+          'owner.isAdmin',
+          'owner.updatedAt',
+          'comments.owner',
+          'comments.updatedAt',
+          'comments.cockflowId',
+          'commentsOwner._id',
+          'commentsOwner.name',
+          'commentsOwner.email',
+          'commentsOwner.password',
+          'commentsOwner.birthday',
+          'commentsOwner.tel',
+          'commentsOwner.avatarUrl',
+          'commentsOwner.createdAt',
+          'commentsOwner.updatedAt',
+          'commentsOwner.isAdmin',
+        ],
+      },
+    ]);
+    return cockflow[0];
+  };
 
-  public async softDelete(cockflowId: string) {
+  public async softDelete(cockflowId: number) {
     const filter = { id: cockflowId };
     const update = { deletedAt: Date.now() };
     const result = await Cockflow.updateOne(filter, update);
