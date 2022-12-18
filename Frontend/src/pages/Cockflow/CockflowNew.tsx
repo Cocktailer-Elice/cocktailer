@@ -1,12 +1,11 @@
-import CockflowEnroll from '../../containers/Cockflow/CockflowEnroll'
-import { Container } from '../../components/Cockflow/CockflowStyle'
+import { CockflowEnroll } from '../../containers/Cockflow/CockflowEnroll';
+import { Container } from '../../components/Cockflow/style';
+  
+export const CockflowNew = () => {
+  return (
+    <Container>
+      <CockflowEnroll />
+    </Container>
+  );
+};
 
-const CockflowNew = () => {
-    return (
-      <Container>
-        <CockflowEnroll />
-      </Container>
-  )
-}
-
-export default CockflowNew
