@@ -1,13 +1,14 @@
+import { IUserMongoModel } from './../db/types/userType';
 import { authContants } from './utils/constants';
 import { hash, compare } from 'bcrypt';
 import { IUser } from '../db/types';
 import { UserCookie } from '../routers/middlewares/types';
 import { UserCreateData, LoginReqData } from 'types';
-import { userModel } from '../db';
+import { userModel } from '../db/models/userModel';
 import { AppError, errorNames } from '../routers/middlewares';
 
 class AuthService {
-  private readonly userModel = userModel.Mongo;
+  private readonly userModel: IUserMongoModel = userModel.Mongo;
 
   public async signup(userCreateData: UserCreateData): Promise<IUser> {
     const { email, password, alcohol } = userCreateData;

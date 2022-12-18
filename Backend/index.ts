@@ -1,8 +1,8 @@
 import 'dotenv/config';
-import './src/configs/db';
+import './src/mongodb';
 import server from './src/server';
 
-const PORT = process.env.PORT || '8000';
+const PORT = process.env.PORT as string;
 
 function init() {
   server.listen(PORT);

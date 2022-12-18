@@ -1,7 +1,7 @@
 import { Schema, model, connection } from 'mongoose';
 import { ICockflow } from '../types';
 
-const PostSchema: Schema = new Schema(
+const CockflowSchema: Schema = new Schema(
   {
     id: {
       type: Number,
@@ -32,7 +32,7 @@ const PostSchema: Schema = new Schema(
   { collection: 'cockflows', timestamps: true },
 );
 
-PostSchema.pre('save', async function () {
+CockflowSchema.pre('save', async function () {
   const sequenceCollection = connection.collection('sequences');
 
   const sequence = await sequenceCollection.findOneAndUpdate(
@@ -50,4 +50,4 @@ PostSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<ICockflow>('cockflows', PostSchema);
+export default model<ICockflow>('cockflows', CockflowSchema);

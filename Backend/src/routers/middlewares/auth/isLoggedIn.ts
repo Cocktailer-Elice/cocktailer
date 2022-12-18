@@ -4,10 +4,11 @@ import { TokenData } from '../types';
 import { errorNames } from '../errors/error-names';
 import { userModel } from '../../../db/models/userModel';
 import { AppError } from '../errors';
-import { tokenConfig } from '../../../configs/env';
+
+const ACCESS_KEY = process.env.ACCESS_KEY;
 
 export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
-  const secretKey = tokenConfig.ACCESS_KEY as string;
+  const secretKey = ACCESS_KEY as string;
   const token = req.cookies.Authorization;
 
   if (!token) {

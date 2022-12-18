@@ -6,6 +6,7 @@ export interface IUserMongoModel {
   create(userInfo: UserInfo): Promise<IUser>;
   findAll(): Promise<IUser[]>;
   findById(userId: string): Promise<IUser | null>;
+  findByEmail(email: string): Promise<IUser | null>;
   checkEmailDuplicate(email: string): Promise<boolean>;
   checkNicknameDuplicate(nickname: string): Promise<boolean>;
 }

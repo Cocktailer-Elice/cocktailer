@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import logger from './configs/winston';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+
+import logger from './winston';
 
 import globalRouter from './routers';
 import {
@@ -34,6 +36,7 @@ class Server {
     });
 
     //* json middleware
+    this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());

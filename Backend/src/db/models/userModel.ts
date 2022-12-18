@@ -1,9 +1,9 @@
-import { IUserMongoModel, IUserModel } from './../types/userType';
+import { IUserMongoModel, IUserModel } from '../types';
 import { UserInfo } from '../../services/types';
 import { IUser } from '../types';
 import User from '../schemas/userSchema';
 
-export class Mongo implements IUserMongoModel {
+export class UserMongoModel implements IUserMongoModel {
   async create(userInfo: UserInfo): Promise<IUser> {
     const newUser = await User.create(userInfo);
     return newUser;
@@ -43,7 +43,7 @@ export class Mongo implements IUserMongoModel {
 }
 
 export class UserModel implements IUserModel {
-  Mongo = new Mongo();
+  Mongo = new UserMongoModel();
 }
 
 const userModel = new UserModel();

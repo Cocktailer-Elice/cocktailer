@@ -1,11 +1,13 @@
 import { sign } from 'jsonwebtoken';
-import { tokenConfig } from './../configs/env';
 import { Token, TokenData } from './../routers/middlewares/types/authType';
 import { IUser } from './../db/types/userType';
 import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
 import { LoginReqData } from 'types';
 import AuthService from '../services/authService';
+
+const ACCESS_KEY = process.env.ACCESS_KEY;
+const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE;
 
 class AuthController {
   private readonly authService = new AuthService();
@@ -50,8 +52,8 @@ class AuthController {
       isAdmin: user.isAdmin,
       isBartender: user.isBartender,
     };
-    const secretKey: string = tokenConfig.ACCESS_KEY as string;
-    const expiresIn: string = tokenConfig.ACCESS_EXPIRE as string;
+    const secretKey: string = ACCESS_KEY as string;
+    const expiresIn: string = ACCESS_EXPIRE as string;
 
     return {
       expiresIn,
