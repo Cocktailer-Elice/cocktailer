@@ -2,8 +2,8 @@ import { S3Client } from '@aws-sdk/client-s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
-const S3_ID = process.env.AWS_ID;
-const S3_SECRET = process.env.AWS_SECRET;
+const S3_ID = process.env.S3_ID;
+const S3_SECRET = process.env.S3_SECRET;
 
 const s3 = new S3Client({
   region: 'ap-northeast-2',
@@ -17,6 +17,7 @@ export const generateUploadURL = async (folder: string) => {
   const params = {
     Bucket: 'cocktailer',
     Key: `${folder}/${Date.now()}`,
+    ACL: 'public-read',
   };
   const command = new PutObjectCommand(params);
 
