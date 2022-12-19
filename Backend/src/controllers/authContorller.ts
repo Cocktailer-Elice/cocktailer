@@ -1,13 +1,29 @@
+import { AppError, errorNames } from '../routers/middlewares';
 import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
 import { LoginReqData } from 'types';
 import AuthService from '../services/authService';
-import { createToken, createCookie } from './utils';
+import { createToken, createCookie, checkRequestBody } from './utils';
 
 class AuthController {
   private readonly authService = new AuthService();
 
   public signup = async (req: Req, res: Res) => {
+    const token = req.cookies.Authorization;
+    if (token) {
+      throw new AppError(errorNames.businessError, 400, '비정상적 접근');
+    }
+    const { name, email, password, passwordCheck, birthday, tel, alcohol } =
+      req.body;
+    checkRequestBody(
+      name,
+      email,
+      password,
+      passwordCheck,
+      birthday,
+      tel,
+      alcohol,
+    );
     const userInfo: UserCreateData = req.body;
     const newUser = await this.authService.signup(userInfo);
 
@@ -19,11 +35,14 @@ class AuthController {
 
   public checkEmailDuplicate = async (req: Req, res: Res) => {
     const { email } = req.body;
+    checkRequestBody(email);
     await this.authService.checkEmailDuplicate(email);
     res.sendStatus(204);
   };
 
   public login = async (req: Req, res: Res) => {
+    const { email, password } = req.body;
+    checkRequestBody(email, password);
     const userData: LoginReqData = req.body;
     const foundUser = await this.authService.login(userData);
     const tokenData = createToken(foundUser);
@@ -42,6 +61,7 @@ class AuthController {
 
   public generateAuthCode = async (req: Req, res: Res) => {
     const { tel } = req.body;
+    checkRequestBody(tel);
     await this.authService.checkTelDuplicate(tel);
     await this.authService.generateAuthCode(tel);
     res.status(202).json();
@@ -49,6 +69,7 @@ class AuthController {
 
   public validateAuthCode = async (req: Req, res: Res) => {
     const { tel, code } = req.body;
+    checkRequestBody(tel, code);
     await this.authService.validateAuthCode(tel, code);
     res.sendStatus(204);
   };
