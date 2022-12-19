@@ -1,6 +1,7 @@
 import { Alert, Button } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { EmailValidation } from '../../constants/regex';
 
 interface LoginFormData {
   email: string;
@@ -32,7 +33,7 @@ const LoginFormWrapper = () => {
             {...register('email', {
               required: '이메일을 입력해 주세요.',
               pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                value: EmailValidation,
                 message: '이메일 형식이 맞지 않습니다.',
               },
             })}
