@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 
-const CocktailListItem = ({ id, name }: Props) => {
+export const CocktailListItem = ({ id, name }: Props) => {
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event);
 
@@ -19,7 +19,6 @@ const CocktailListItem = ({ id, name }: Props) => {
   );
 };
 
-export default CocktailListItem;
 const ThumbnailBox = styled.div`
   border: 1px solid black;
   width: 100px;

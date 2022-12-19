@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import CocktailListItem from '../../../components/Cockcipe/List/CocktailListItem';
+import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailListItem';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from 'swiper';
+import { Navigation } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -15,7 +15,7 @@ interface Data {
   id: string;
   category: string;
 }
-const ListContainer = () => {
+export const ListContainer = () => {
   const [cockOneList, setCockOneList] = useState<Data[]>([]);
   const [cockTwoList, setCockTwoList] = useState<Data[]>([]);
   const [cockThreeList, setCockThreeList] = useState<Data[]>([]);
@@ -81,7 +81,6 @@ const ListContainer = () => {
   );
 };
 
-export default ListContainer;
 const Category = styled.p`
   font-size: 15px;
 `;

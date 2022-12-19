@@ -1,5 +1,5 @@
 import React from 'react';
-import DetailContainer from '../../containers/Cockcipe/Detail/DetailContainer';
+import { DetailContainer } from '../../containers/Cockcipe/Detail/DetailContainer';
 
 const CockDetailPage = () => {
   return (

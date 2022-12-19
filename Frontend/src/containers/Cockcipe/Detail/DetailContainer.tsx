@@ -1,11 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CocktailChart from '../../../components/Cockcipe/Detail/CocktailChart';
-import CocktailName from '../../../components/Cockcipe/Detail/CocktailName';
-import CocktailTitleImg from '../../../components/Cockcipe/Detail/CocktailTitleImg';
-import LikeBtn from '../../../components/Cockcipe/Detail/LikeBtn';
-import ShareBtn from '../../../components/Cockcipe/Detail/ShareBtn';
+import { CocktailChart } from '../../../components/Cockcipe/Detail/CocktailChart';
+import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
+import { LikeBtn } from '../../../components/Cockcipe/Detail/LikeBtn';
+import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
 
 interface Recipe {
   ingredient: string;
@@ -20,7 +19,7 @@ export interface ICocktail {
   recipe: Recipe[];
 }
 
-const DetailContainer = () => {
+export const DetailContainer = () => {
   const url = window.location.pathname;
   const cocktailId = url.split('/')[3];
 
@@ -36,16 +35,13 @@ const DetailContainer = () => {
 
   useEffect(() => {
     axios.get('/src/containers/Cockcipe/Detail/data.json').then((res) => {
-      console.log(res.data.cocktail);
-      console.log(cocktailId);
       setCocktail(res.data.cocktail);
     });
   }, []);
   return (
     <>
-      <CocktailTitleImg />
       <ContentContainer>
-        <CocktailName cocktail={cocktailInfo} />
+        <CocktailInfomation cocktail={cocktailInfo} />
         <CocktailChart />
         <LikeBtn />
         <ShareBtn />
@@ -53,8 +49,6 @@ const DetailContainer = () => {
     </>
   );
 };
-
-export default DetailContainer;
 
 const ContentContainer = styled.div`
   display: flex;
