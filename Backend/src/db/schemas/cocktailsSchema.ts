@@ -19,13 +19,14 @@ const CocktailSchema: Schema = new Schema(
       require: true,
     },
 
-    cocktailName: {
+    category: {
+      // 진, 보드카 등의 Base 주류가 들어가게됨 하이볼,
+      // https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=alice_cd&logNo=220300532648
       type: String,
-      required: true,
+      require: true,
     },
 
-    cocktailCategory: {
-      //검토필요
+    name: {
       type: String,
       required: true,
     },
@@ -37,41 +38,56 @@ const CocktailSchema: Schema = new Schema(
       require: true,
     },
 
-    cocktailFlavor: [
+    flavor: [
       {
         type: String,
         required: true,
       },
     ],
 
-    cocktailDegree: {
+    degree: {
       type: Number,
       required: true,
     },
 
-    cocktailImgUrl: {
+    img: {
       type: String,
       required: true,
     },
 
-    cocktailProducts: {
-      //이 방식은 폐기하게 될것이나 IngredientSchema등으로 대체 될 것.
-      alcohol: [],
-      drink: [],
-      garnish: [],
+    //[    직접입력    ]  [     직접입력     ]  [    직접입력   ]
+
+    liquid: {
+      type: Object,
+      require: true,
+    },
+
+    ratio: {
+      type: Object,
+      require: true,
+    },
+
+    content: {
+      type: String,
+      require: true,
     },
   },
+
   { collection: 'cocktails', timestamps: true },
 );
 
 CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
   return {
-    cocktailName: this.cocktailName,
-    cocktailCategory: this.cocktailCategory,
-    cocktailFlavor: this.cocktailFlavor,
-    cocktailDegree: this.cocktailDegree,
-    cocktailImgUrl: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.cocktailImgUrl}`,
-    cocktailProducts: this.cocktailProducts,
+    owner: this.owner,
+    category: this.category,
+    name: this.name,
+    official: this.official,
+    flavor: this.flavor,
+    degree: this.degree,
+    img: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.img}`,
+    liquid: this.liquid,
+    ratio: this.ratio,
+    content: this.content,
   };
 });
 
