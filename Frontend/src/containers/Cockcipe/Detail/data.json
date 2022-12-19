@@ -1,15 +1,12 @@
 {
-  "data": {
+  "cocktail": {
     "name": "test",
     "id": 1,
     "img": "",
+    "category": "category1",
     "flavor": ["sweet", "yummy", "good"],
     "degree": 34.5,
     "likes": 1,
-    "recipe": {
-      "jin": 20,
-      "tonic": 50,
-      "coke": 100
-    }
+    "recipe": [{ "jin": 20 }, { "tonic": 50 }, { "vodka": 20 }]
   }
 }

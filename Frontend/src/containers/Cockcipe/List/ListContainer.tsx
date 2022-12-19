@@ -7,6 +7,7 @@ import { Pagination, Navigation } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 // useEffect 데이터 get 후 칵테일 리스트 map 출력
 interface Data {
   name: string;
@@ -20,15 +21,16 @@ const ListContainer = () => {
   const [cockThreeList, setCockThreeList] = useState<Data[]>([]);
   useEffect(() => {
     axios.get('/src/containers/Cockcipe/List/data.json').then((res) => {
-      console.log(res.data);
       for (let key in res.data) {
-        console.log(res.data[key]);
-        res.data[key].map((item: Data) => {});
+        res.data[key].map((item: Data) => {
+          if (item.category === 'cate1')
+            setCockOneList((prev) => [...prev, item]);
+          if (item.category === 'cate2')
+            setCockTwoList((prev) => [...prev, item]);
+          if (item.category === 'cate3')
+            setCockThreeList((prev) => [...prev, item]);
+        });
       }
-      // res.data.data.map((item: Data) => {
-      //   console.log(item);
-      //   setCockList((prev) => [...prev, item]);
-      // });
     });
   }, []);
   return (
@@ -40,7 +42,41 @@ const ListContainer = () => {
         navigation
         loop={true}
         modules={[Navigation]}
-      ></Swiper>
+      >
+        {cockOneList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem key={idx} name={item.name} id={item.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Category>카테고리2</Category>
+      <Swiper
+        slidesPerView={3}
+        spaceBetween={10}
+        navigation
+        loop={true}
+        modules={[Navigation]}
+      >
+        {cockTwoList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem key={idx} name={item.name} id={item.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Category>카테고리3</Category>
+      <Swiper
+        slidesPerView={3}
+        spaceBetween={10}
+        navigation
+        loop={true}
+        modules={[Navigation]}
+      >
+        {cockThreeList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem key={idx} name={item.name} id={item.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </>
   );
 };

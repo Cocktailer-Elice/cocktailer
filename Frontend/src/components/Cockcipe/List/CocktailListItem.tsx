@@ -9,7 +9,8 @@ interface Props {
 const CocktailListItem = ({ id, name }: Props) => {
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event);
-    window.location.href = `/cockcipe/detail`;
+
+    window.location.href = `/cockcipe/detail/${id}`;
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>

@@ -7,7 +7,7 @@ export const CockcipeRouter = () => {
   return (
     <Routes>
       <Route path="/cockcipe" element={<CockcipePage />} />
-      <Route path="/cockcipe/detail" element={<CockDetailPage />} />
+      <Route path="/cockcipe/detail/:id" element={<CockDetailPage />} />
       <Route path="/cockcipe/apply" element={<CockApplyPage />} />
     </Routes>
   );
