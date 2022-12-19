@@ -9,6 +9,8 @@ class CoctailController {
   public createCocktail = async (req: Req, res: Res, next: Next) => {
     const cocktailInfo: CocktailCreateReqDto = req.body;
 
+    console.log(cocktailInfo);
+
     /*
       if(role === 'admin' && role !== 'user' && role !== 'bartender'){
         cocktailInfo.official = true;
@@ -24,9 +26,13 @@ class CoctailController {
   };
 
   public getCocktail = async (req: Req, res: Res, next: Next) => {
-    const cocktailId = Number(req.query.cocktail);
+    const id = Number(req.params.id);
+    const category = String(req.query.category);
 
-    const getCocktailData = await this.cocktailService.getCocktail(cocktailId);
+    const getCocktailData = await this.cocktailService.getCocktail(
+      id,
+      category,
+    );
 
     res.status(200).json({ getCocktailData: getCocktailData });
   };
