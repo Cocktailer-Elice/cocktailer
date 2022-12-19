@@ -1,5 +1,5 @@
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
-import { CockflowBackBtn } from '../../components/Cockflow/CockflowBackBtn';
+import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
 import { CockflowEnrollBox } from '../../components/Cockflow/CockflowEnrollBox';
 import { CockflowAddComment } from '../../components/Cockflow/CockflowAddComment';
 import { CockflowCommentBox } from '../../components/Cockflow/CockflowCommentBox';
@@ -10,7 +10,7 @@ export const CockflowContent = () => {
     <>
       <CockflowHeader />
       <P5>
-        <CockflowBackBtn />
+        <CockflowLinkBtn link='/cockflow' title='목록' />
         <CockflowEnrollBox />
         <br />
         <CockflowAddComment />
