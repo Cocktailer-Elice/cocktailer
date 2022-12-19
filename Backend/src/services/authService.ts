@@ -1,8 +1,7 @@
-import { IUser } from './../db/types/userType';
+import { Cookie } from './../routers/middlewares/types/authType';
 import { createNickname } from './utils/createNickname';
 import { createRandomNumber, sendAuthCodeMessage } from './utils';
 import { hash, compare } from 'bcrypt';
-import { UserCookie } from '../routers/middlewares/types';
 import { UserCreateData, LoginReqData } from 'types';
 import { userModel } from '../db/models/userModel';
 import { AppError, errorNames } from '../routers/middlewares';
@@ -12,9 +11,10 @@ class AuthService {
   private readonly userModel = userModel.Mongo;
 
   public async signup(userCreateData: UserCreateData) {
-    const { email, password, alcohol } = userCreateData;
+    const { email, password, alcohol, tel } = userCreateData;
 
     await this.checkEmailDuplicate(email);
+    await this.checkTelDuplicate(tel);
 
     let nickname = await createNickname(alcohol);
     let isNicknameDuplicate = await this.checkNicknameDuplicate(nickname);
@@ -33,14 +33,15 @@ class AuthService {
 
   public async login(userData: LoginReqData) {
     const { email, password } = userData;
-    const foundUser = await this.userModel.findByEmail(email);
+    const filter = { email };
+    const foundUser = await this.userModel.findByFilter(filter);
     if (!foundUser || !(await compare(password, foundUser.password))) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
     return foundUser;
   }
 
-  public async logout(userData: UserCookie) {
+  public async logout(userData: Cookie) {
     const { userId } = userData;
     const foundUser = await this.userModel.findById(userId);
     if (!foundUser) {
@@ -82,12 +83,12 @@ class AuthService {
     return;
   };
 
-  public async validatePassword(email: string, password: string) {
-    const user = (await this.userModel.findByEmail(email)) as IUser;
-    const isPasswordMatching = await compare(password, user.password);
-    if (!isPasswordMatching)
-      throw new AppError(errorNames.inputError, 400, '비밀번호 재확인');
-    return;
+  public async checkTelDuplicate(tel: string) {
+    const result = await this.userModel.checkTelDuplicate(tel);
+    if (result) {
+      throw new AppError(errorNames.DuplicationError, 400, '전화번호 중복');
+    }
+    return result;
   }
 
   private async checkNicknameDuplicate(nickname: string) {

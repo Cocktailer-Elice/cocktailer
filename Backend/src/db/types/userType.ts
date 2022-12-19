@@ -5,14 +5,20 @@ import { User } from 'types';
 export interface IUserMongoModel {
   create(userInfo: UserInfo): Promise<IUser>;
   findAll(): Promise<IUser[]>;
-  findById(userId: string): Promise<IUser | null>;
-  findByEmail(email: string): Promise<IUser | null>;
+  findByFilter(filter: FindOneFilter): Promise<IUser | null>;
   checkEmailDuplicate(email: string): Promise<boolean>;
   checkNicknameDuplicate(nickname: string): Promise<boolean>;
 }
 
 export interface IUserModel {
   Mongo: IUserMongoModel;
+}
+
+export interface FindOneFilter {
+  id?: number;
+  name?: string;
+  email?: string;
+  tel?: string;
 }
 
 export interface IUser extends Document {

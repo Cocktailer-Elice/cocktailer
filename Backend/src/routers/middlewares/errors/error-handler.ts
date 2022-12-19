@@ -11,7 +11,7 @@ const errorHandler = (err: Error, req: Req, res: Res, next: Next) => {
     'ko-KR',
   )} ${now.toLocaleTimeString('ko-KR')}`;
   logger.error(`${err.name} ${timestamp} ${req.url} ${err.stack}`);
-  return res.status(500).json({ message: err.message });
+  return res.status(500).json({ message: '서버 에러' });
 };
 
 export { errorHandler };

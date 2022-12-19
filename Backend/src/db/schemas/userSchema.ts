@@ -32,6 +32,7 @@ const UserSchema: Schema = new Schema(
     tel: {
       type: String,
       required: true,
+      unique: true,
     },
     avatarUrl: {
       type: String,

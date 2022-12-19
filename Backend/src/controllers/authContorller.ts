@@ -42,6 +42,7 @@ class AuthController {
 
   public generateAuthCode = async (req: Req, res: Res) => {
     const { tel } = req.body;
+    await this.authService.checkTelDuplicate(tel);
     await this.authService.generateAuthCode(tel);
     res.status(202).json();
   };
@@ -49,13 +50,6 @@ class AuthController {
   public validateAuthCode = async (req: Req, res: Res) => {
     const { tel, code } = req.body;
     await this.authService.validateAuthCode(tel, code);
-    res.sendStatus(204);
-  };
-
-  public validatePassword = async (req: Req, res: Res) => {
-    const { password } = req.body;
-    const { email } = req.user;
-    await this.authService.validatePassword(email, password);
     res.sendStatus(204);
   };
 }

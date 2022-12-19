@@ -1,4 +1,4 @@
-import { Token, TokenData } from '../../routers/middlewares/types/authType';
+import { Token, Cookie } from '../../routers/middlewares/types/authType';
 import { IUser } from '../../db';
 import { sign } from 'jsonwebtoken';
 
@@ -6,9 +6,10 @@ const ACCESS_KEY = process.env.ACCESS_KEY;
 const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE;
 
 export const createToken = (user: IUser): Token => {
-  const tokenData: TokenData = {
-    id: user.id,
+  const tokenData: Cookie = {
+    userId: user.id,
     email: user.email,
+    nickname: user.nickname,
     isAdmin: user.isAdmin,
     isBartender: user.isBartender,
   };

@@ -1,7 +1,6 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import { verify } from 'jsonwebtoken';
-import { TokenData } from '../types';
-import { userModel } from '../../../db/models/userModel';
+import { Cookie } from '../types';
 
 const ACCESS_KEY = process.env.ACCESS_KEY;
 
@@ -10,28 +9,28 @@ export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
   const token = req.cookies.Authorization;
 
   if (!token) {
-    return res.status(401).json({ message: 'Authorization 헤더 없음' });
+    return res.status(401).json({ message: '로그인 필요' });
   }
 
   let decodedData;
   try {
-    decodedData = verify(token, secretKey) as TokenData;
+    decodedData = verify(token, secretKey) as Cookie;
   } catch (err: any) {
     return res.status(419).json({ message: '만료 또는 손상된 토큰' });
   }
 
-  const userId = (decodedData as TokenData).id;
-  const foundUser = await userModel.Mongo.findById(userId);
+  // const userId = (decodedData as TokenData).id;
+  // const foundUser = await userModel.Mongo.findById(userId);
 
-  if (!foundUser) {
-    return res.status(401).json({ message: '해당하는 유저 없음' });
-  }
+  // if (!foundUser) {
+  //   return res.status(401).json({ message: '해당하는 유저 없음' });
+  // }
   req.user = {
-    userId: foundUser.id,
-    email: foundUser.email,
-    nickname: foundUser.nickname,
-    isAdmin: foundUser.isAdmin,
-    isBartender: foundUser.isBartender,
+    userId: decodedData.userId,
+    email: decodedData.email,
+    nickname: decodedData.nickname,
+    isAdmin: decodedData.isAdmin,
+    isBartender: decodedData.isBartender,
   };
 
   next();

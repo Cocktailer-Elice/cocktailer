@@ -16,9 +16,5 @@ router.post('/validate-code', asyncHandler(authController.validateAuthCode));
 
 router.use(isLoggedIn);
 router.post('/logout', asyncHandler(authController.logout));
-router.post(
-  '/validate-password',
-  asyncHandler(authController.validatePassword),
-);
 
 export default router;

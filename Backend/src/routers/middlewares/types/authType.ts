@@ -1,6 +1,7 @@
-export interface TokenData {
-  id: string;
+export interface Cookie {
+  userId: string;
   email: string;
+  nickname: string;
   isAdmin: boolean;
   isBartender: boolean;
 }
@@ -8,12 +9,4 @@ export interface TokenData {
 export interface Token {
   token: string;
   expiresIn: string;
-}
-
-export interface UserCookie {
-  userId: string;
-  email: string;
-  nickname: string;
-  isAdmin: boolean;
-  isBartender: boolean;
 }
