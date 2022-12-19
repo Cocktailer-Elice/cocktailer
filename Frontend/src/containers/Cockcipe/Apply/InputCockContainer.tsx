@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import InputCockFlavor from '../../../components/Cockcipe/Apply/InputCockFlavor';
-import InputCockInfo from '../../../components/Cockcipe/Apply/InputCockInfo';
+import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
+import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
 
-const InputCockContainer = () => {
+export const InputCockContainer = () => {
   return (
     <div>
       <CockInfoBox>
@@ -17,5 +17,4 @@ const InputCockContainer = () => {
   );
 };
 
-export default InputCockContainer;
 const CockInfoBox = styled.div``;

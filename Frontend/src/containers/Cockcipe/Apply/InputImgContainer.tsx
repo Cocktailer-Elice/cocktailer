@@ -1,12 +1,10 @@
 import React from 'react';
-import InputTitleImg from '../../../components/Cockcipe/Apply/InputTitleImg';
+import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
 
-const InputImgContainer = () => {
+export const InputImgContainer = () => {
   return (
     <div>
       <InputTitleImg />
     </div>
   );
 };
-
-export default InputImgContainer;

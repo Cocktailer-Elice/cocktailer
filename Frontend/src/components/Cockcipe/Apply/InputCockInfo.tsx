@@ -5,7 +5,7 @@ interface Props {
   name: string;
 }
 
-const InputCockInfo = ({ name }: Props) => {
+export const InputCockInfo = ({ name }: Props) => {
   return (
     <>
       <label htmlFor="input_name">{name}</label>
@@ -13,8 +13,6 @@ const InputCockInfo = ({ name }: Props) => {
     </>
   );
 };
-
-export default InputCockInfo;
 
 const Input = styled.input`
   width: 20;

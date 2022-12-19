@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
-const InputTitleImg = () => {
+export const InputTitleImg = () => {
   const [files, setFiles] = useState<File | null>(null);
   const [imgSrc, setImgsrc] = useState<string>();
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,5 @@ const InputTitleImg = () => {
     </>
   );
 };
-
-export default InputTitleImg;
 
 const PreviewImg = styled.div``;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputRecipe = () => {
+export const InputRecipe = () => {
   return (
     <>
       <label htmlFor="input_re">재료 이름</label>
@@ -10,5 +10,3 @@ const InputRecipe = () => {
     </>
   );
 };
-
-export default InputRecipe;

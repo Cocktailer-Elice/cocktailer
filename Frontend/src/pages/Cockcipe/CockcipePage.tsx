@@ -4,7 +4,7 @@ import { ApplyContainer } from '../../containers/Cockcipe/List/ApplyContainer';
 import { InputContainer } from '../../containers/Cockcipe/List/InputContainer';
 import { ListContainer } from '../../containers/Cockcipe/List/ListContainer';
 
-const CockcipePage = () => {
+export const CockcipePage = () => {
   return (
     <>
       <InputContainer />
@@ -13,5 +13,3 @@ const CockcipePage = () => {
     </>
   );
 };
-
-export default CockcipePage;

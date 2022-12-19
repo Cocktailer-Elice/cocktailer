@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const InputCockFlavor = () => {
+export const InputCockFlavor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tag, setTag] = useState<string | null>('');
   const [tagList, setTagList] = useState<string[]>([]);
@@ -53,8 +53,6 @@ const InputCockFlavor = () => {
     </>
   );
 };
-
-export default InputCockFlavor;
 
 const TagBox = styled.div`
   display: flex;
