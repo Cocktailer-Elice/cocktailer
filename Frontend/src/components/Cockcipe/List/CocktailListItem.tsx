@@ -21,7 +21,7 @@ export const CocktailListItem = ({ id, name }: Props) => {
 
 const ThumbnailBox = styled.div`
   border: 1px solid black;
-  width: 100px;
+  width: auto;
   height: 100px;
   margin: 10px;
 `;

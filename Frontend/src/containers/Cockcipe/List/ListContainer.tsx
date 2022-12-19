@@ -36,13 +36,7 @@ export const ListContainer = () => {
   return (
     <>
       <Category>카테고리1</Category>
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={10}
-        navigation
-        loop={true}
-        modules={[Navigation]}
-      >
+      <Swiper slidesPerView={3} loop={true}>
         {cockOneList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem key={idx} name={item.name} id={item.id} />
@@ -50,13 +44,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>카테고리2</Category>
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={10}
-        navigation
-        loop={true}
-        modules={[Navigation]}
-      >
+      <Swiper slidesPerView={3} loop={true}>
         {cockTwoList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem key={idx} name={item.name} id={item.id} />
@@ -64,13 +52,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>카테고리3</Category>
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={10}
-        navigation
-        loop={true}
-        modules={[Navigation]}
-      >
+      <Swiper slidesPerView={3} loop={true}>
         {cockThreeList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem key={idx} name={item.name} id={item.id} />
