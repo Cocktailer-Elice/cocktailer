@@ -28,7 +28,7 @@ export const authAndUserValidator = (req: Req, res: Res, next: Next) => {
   });
   if (result?.error) {
     console.log(result.error);
-    return res.status(400).json('정상적인 경로로 접근해주세요 :(');
+    return res.status(400).json({ message: '비정상적인 접근' });
   }
   next();
 };
