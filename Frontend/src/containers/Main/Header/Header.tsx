@@ -8,18 +8,32 @@ export const Header = () => {
   const [menuClicked, setMenuClicked] = useState(false);
 
   return (
-    <HeaderWrapper>
-      <HeaderHamburgerButton setMenuClicked={setMenuClicked} />
-      <HeaderHomeLogo />
+    <Container>
+      <LeftSection>
+        <HeaderHamburgerButton setMenuClicked={setMenuClicked} />
+      </LeftSection>
+      <RightSection>
+        <HeaderHomeLogo />
+      </RightSection>
       {menuClicked ? <Drawer setMenuClicked={setMenuClicked} /> : <></>}
-    </HeaderWrapper>
+    </Container>
   );
 };
 
-const HeaderWrapper = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 50px;
   background-color: #fff;
   border: 1px solid #ddd;
   display: flex;
+`;
+
+const LeftSection = styled.div`
+  width: 70px;
+  height: 100%;
+`;
+
+const RightSection = styled.div`
+  width: calc(100% - 70px);
+  height: 100%;
 `;
