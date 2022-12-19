@@ -1,0 +1,15 @@
+{
+  "data": {
+    "name": "test",
+    "id": 1,
+    "img": "",
+    "flavor": ["sweet", "yummy", "good"],
+    "degree": 34.5,
+    "likes": 1,
+    "recipe": {
+      "jin": 20,
+      "tonic": 50,
+      "coke": 100
+    }
+  }
+}
