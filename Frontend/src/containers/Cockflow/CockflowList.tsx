@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CockflowBackBtn } from '../../components/Cockflow/CockflowBackBtn';
+import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
 import { CockflowItemBox } from '../../components/Cockflow/CockflowItemBox';
 import { P5 } from '../../components/Cockflow/style';
@@ -21,7 +21,7 @@ export const CockflowList = () => {
   return (
     <P5>
       <CockflowHeader />
-      <CockflowBackBtn></CockflowBackBtn>
+      <CockflowLinkBtn link="/cockflow/new" title="질문하기" />
       <List>
         {/* 임시로 */}
         <Item><CockflowItemBox /></Item>
