@@ -11,10 +11,9 @@ const HomeMainCarousel = () => {
 const HomeMainCarouselWrapper = styled.div`
   width: 100%;
   height: 20%;
-  background-color: orange;
+  border: 1px solid gray;
   padding: 10px;
   margin-bottom: 10px;
-  box-sizing: border-box;
 `;
 
 export default HomeMainCarousel;

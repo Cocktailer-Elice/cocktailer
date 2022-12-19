@@ -1,12 +1,14 @@
 import { Container } from '@mui/material';
-import LoginForm from '../../components/Login/LoginForm';
+import Finds from '../../components/Login/Finds';
+import LoginFormWrapper from '../../components/Login/LoginFormWrapper';
 import LoginHeader from '../../components/Login/LoginHeader';
 
 const LoginContainer = () => {
   return (
     <Container>
       <LoginHeader></LoginHeader>
-      <LoginForm></LoginForm>
+      <LoginFormWrapper></LoginFormWrapper>
+      <Finds></Finds>
     </Container>
   );
 };
