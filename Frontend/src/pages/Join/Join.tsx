@@ -1,11 +1,9 @@
-import JoinContainer from '../../containers/Join/JoinContainer';
+import { JoinContainer } from '../../containers/Join/JoinContainer';
 
-const Join = () => {
+export const Join = () => {
   return (
     <>
       <JoinContainer></JoinContainer>
     </>
   );
 };
-
-export default Join;
