@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MenuIcon from '@mui/icons-material/Menu';
+import HamburgerIcon from '@mui/icons-material/Menu';
 import { Dispatch, SetStateAction } from 'react';
 
 interface HeaderHamburgerButtonProps {
@@ -15,13 +15,13 @@ export const HeaderHamburgerButton = ({
 
   return (
     <HamburgerButton onClick={handleMenuClick}>
-      <MenuIcon />
+      <HamburgerIcon />
     </HamburgerButton>
   );
 };
 
 const HamburgerButton = styled.div`
-  width: 70px;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
