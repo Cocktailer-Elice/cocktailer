@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 // interface Container {
 //   margin?: string;
@@ -14,12 +14,10 @@ const H3 = styled.div`
   padding: 40px;
   border-bottom: 1px solid #ddd;
   letter-spacing: 3.5px;
-`
+`;
 
-const CockflowHeader = () => {
+export const CockflowHeader = () => {
   return (
     <H3>cock-flow</H3>
-  )
-}
-
-export default CockflowHeader
+  );
+};

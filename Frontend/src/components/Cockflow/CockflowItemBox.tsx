@@ -15,7 +15,7 @@ const NavLink = styled(Link)`
     bottom: 0;
     background: rgba(0,0,0,0.3);  
   }
-`
+`;
 
 const Title = styled.div`
   position: absolute;
@@ -29,29 +29,26 @@ const Title = styled.div`
   text-align: center;
   line-height: 1.5;
   font-size: 12px;
-`
+`;
 
 const ImgWrap = styled.div`
   width: 120px;
   height: 125px;
-`
+`;
 
 const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`
+`;
 
-const CockflowItemBox = ({imgSrc = 'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg'}) => {
+export const CockflowItemBox = ({ imgSrc = 'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg' }) => {
   return (
     <NavLink to='/cockflow/detail'>
       <Title>이미지 제목들</Title>
       <ImgWrap>
-        <Img src={imgSrc}/>  
+        <Img src={imgSrc} />
       </ImgWrap>
     </NavLink>
-
-  )
-}
-
-export default CockflowItemBox
+  );
+};
