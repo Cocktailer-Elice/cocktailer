@@ -68,7 +68,7 @@ class AuthService {
       throw new AppError(errorNames.businessError, 500, '문자 전송 실패');
     }
     await redisCache.SETEX(tel, 300, code);
-    return code;
+    return;
   };
 
   public validateAuthCode = async (tel: string, code: string) => {

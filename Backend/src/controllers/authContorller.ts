@@ -42,8 +42,8 @@ class AuthController {
 
   public generateAuthCode = async (req: Req, res: Res) => {
     const { tel } = req.body;
-    const code = await this.authService.generateAuthCode(tel);
-    res.status(202).json({ code });
+    await this.authService.generateAuthCode(tel);
+    res.status(202).json();
   };
 
   public validateAuthCode = async (req: Req, res: Res) => {

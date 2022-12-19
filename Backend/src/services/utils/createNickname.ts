@@ -14,7 +14,7 @@ export const createNickname = async (alcohol: string) => {
   const randomDecoCount = Math.floor(Math.random() * randomDecoSet.length);
   const decorator = randomDecoSet[randomDecoCount];
 
-  const randomNumber = createRandomNumber(6, true);
+  const randomNumber = createRandomNumber(4, true);
 
   const nickname = `${decorator} ${alcohol} #${randomNumber}`;
 
