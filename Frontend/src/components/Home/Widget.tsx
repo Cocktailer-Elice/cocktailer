@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
-interface HomePageButtonProps {
+interface WidgetProps {
   pageName: string;
 }
 
-const HomePageButton = ({ pageName }: HomePageButtonProps) => {
-  return <HomePageButtonWrapper>{pageName}</HomePageButtonWrapper>;
+const Widget = ({ pageName }: WidgetProps) => {
+  return <WidgetWrapper>{pageName}</WidgetWrapper>;
 };
 
-const HomePageButtonWrapper = styled.div`
+const WidgetWrapper = styled.div`
   width: 60px;
   height: 60px;
   display: flex;
@@ -20,4 +20,4 @@ const HomePageButtonWrapper = styled.div`
   background-color: white;
 `;
 
-export default HomePageButton;
+export default Widget;
