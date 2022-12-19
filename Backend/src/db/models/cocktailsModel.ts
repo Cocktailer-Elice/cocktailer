@@ -1,11 +1,17 @@
 import { Cocktail } from '../../services/types/cocktailType';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
-//import { cocktailsQuery } from './queries/cocktailsQuery';
 import CocktailSchema from '../schemas/cocktailsSchema';
+import { cocktailQueries } from '../queries/cocktailsQuery';
 
 interface CocktailInterface {
   create(cocktailCreateDto: CocktailCreateReqDto): Promise<Cocktail | null>;
-  findAll(queries: string): Promise<Cocktail[]>;
+
+  findAll(
+    queries: string,
+    id: number | null,
+    category: string | null,
+  ): Promise<Cocktail[]>;
+
   findOne(
     cocktailId: number | string,
     category: string,
@@ -21,106 +27,17 @@ export class CocktailModel implements CocktailInterface {
     return newMyCocktail;
   }
 
-  async findAll(queries: string): Promise<Cocktail[]> {
-    const cocktails: Cocktail[] = await CocktailSchema.aggregate([
-      {
-        $facet: {
-          sweet: [
-            {
-              $match: {
-                category: 'sweet',
-              },
-            },
-            {
-              $limit: 6,
-            },
-            {
-              $sort: {
-                createdAt: -1,
-              },
-            },
-          ],
-          dry: [
-            {
-              $match: {
-                category: 'dry',
-              },
-            },
-            {
-              $limit: 6,
-            },
-            {
-              $sort: {
-                createdAt: -1,
-              },
-            },
-          ],
-          refreshing: [
-            {
-              $match: {
-                category: 'refreshing',
-              },
-            },
-            {
-              $limit: 6,
-            },
-            {
-              $sort: {
-                createdAt: -1,
-              },
-            },
-          ],
-          fruit: [
-            {
-              $match: {
-                category: 'fruit',
-              },
-            },
-            {
-              $limit: 6,
-            },
-            {
-              $sort: {
-                createdAt: -1,
-              },
-            },
-          ],
-          smoothie: [
-            {
-              $match: {
-                category: 'smoothie',
-              },
-            },
-            {
-              $limit: 6,
-            },
-            {
-              $sort: {
-                createdAt: -1,
-              },
-            },
-          ],
-          hot: [
-            {
-              $match: {
-                category: 'hot',
-              },
-            },
-            {
-              $limit: 6,
-            },
-            {
-              $sort: {
-                createdAt: -1,
-              },
-            },
-          ],
-        },
-      },
-    ]);
+  public findAll = async (
+    queries: string,
+    id: number | null,
+    category: string | null,
+  ): Promise<Cocktail[]> => {
+    const res = cocktailQueries(queries, id, category);
+
+    const cocktails = await CocktailSchema.aggregate([Object(res)]);
 
     return cocktails;
-  }
+  };
 
   async findOne(
     cocktailId: number,

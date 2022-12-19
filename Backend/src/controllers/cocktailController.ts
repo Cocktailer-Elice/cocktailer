@@ -26,8 +26,8 @@ class CoctailController {
   };
 
   public getCocktail = async (req: Req, res: Res, next: Next) => {
-    const id = Number(req.params.id);
-    const category = String(req.query.category);
+    const id = req.params.id ? Number(req.params.id) : null;
+    const category = req.query.category ? String(req.query.category) : null;
 
     const getCocktailData = await this.cocktailService.getCocktail(
       id,

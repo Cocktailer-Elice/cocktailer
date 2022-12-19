@@ -2,11 +2,11 @@ import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
 import { asyncHandler } from './middlewares';
 
-const cocktailRouter: Router = Router();
+const cocktailsRouter: Router = Router();
 
-cocktailRouter.post('/', asyncHandler(cocktailController.createCocktail));
+cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
 
-cocktailRouter.get('/', asyncHandler(cocktailController.getCocktail)); // query 조회(category)
-cocktailRouter.get('/:id', asyncHandler(cocktailController.getCocktail)); // params 조회(id)
+cocktailsRouter.get('/', asyncHandler(cocktailController.getCocktail)); // query 조회(category)
+cocktailsRouter.get('/:id', asyncHandler(cocktailController.getCocktail)); // params 조회(id)
 
-export default cocktailRouter;
+export default cocktailsRouter;
