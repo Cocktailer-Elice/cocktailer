@@ -11,8 +11,8 @@ const router = Router();
 
 router.use('/auth', authRouter);
 router.use('/users', userRouter);
-router.use('/cocktails', cocktailRouter);
-router.use('/cockflow/', cockflowRouter);
+router.use('/cocktails', cocktailsRouter);
+router.use('/cockflow', cockflowRouter);
 router.use('/cockflow/:cockflowId/comments', commentRouter);
 router.post('/image-upload', asyncHandler(generatePresignedUrl));
 
