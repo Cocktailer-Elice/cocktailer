@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const HomeMainCarousel = () => {
+export const HomeMainCarousel = () => {
   return (
     <MainCarousel>
       <span>홈 메인 캐러셀</span>
@@ -14,5 +14,3 @@ const MainCarousel = styled.div`
   border: 1px solid gray;
   padding: 10px;
 `;
-
-export default HomeMainCarousel;

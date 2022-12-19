@@ -4,7 +4,7 @@ interface WidgetProps {
   pageName: string;
 }
 
-const Widget = ({ pageName }: WidgetProps) => {
+export const Widget = ({ pageName }: WidgetProps) => {
   return <WidgetWrapper>{pageName}</WidgetWrapper>;
 };
 
@@ -19,5 +19,3 @@ const WidgetWrapper = styled.div`
   font-size: 12px;
   background-color: white;
 `;
-
-export default Widget;

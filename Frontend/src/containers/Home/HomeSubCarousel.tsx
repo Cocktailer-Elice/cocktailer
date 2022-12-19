@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const HomeSubCarousel = () => {
+export const HomeSubCarousel = () => {
   return (
     <SubCarousel>
       <span>홈 서브 캐러셀</span>
@@ -14,5 +14,3 @@ const SubCarousel = styled.div`
   border: 1px solid gray;
   padding: 10px;
 `;
-
-export default HomeSubCarousel;

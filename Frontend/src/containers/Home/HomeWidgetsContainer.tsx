@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Widget from '../../components/Home/Widget';
+import { Widget } from '../../components/Home/Widget';
 
-const HomeWidgetsContainer = () => {
+export const HomeWidgetsContainer = () => {
   return (
     <Container>
       <Link to="/cockcipe">
@@ -28,5 +28,3 @@ const Container = styled.div`
   border: 1px solid gray;
   padding: 30px;
 `;
-
-export default HomeWidgetsContainer;

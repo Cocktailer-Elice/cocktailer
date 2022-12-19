@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-import HomeWidgetsContainer from '../../containers/Home/HomeWidgetsContainer';
-import HomeSubCarousel from '../../containers/Home/HomeSubCarousel';
-import HomeMainCarousel from '../../containers/Home/HomeMainCarousel';
+import { HomeWidgetsContainer } from '../../containers/Home/HomeWidgetsContainer';
+import { HomeSubCarousel } from '../../containers/Home/HomeSubCarousel';
+import { HomeMainCarousel } from '../../containers/Home/HomeMainCarousel';
 
-const Home = () => {
+export const Home = () => {
   return (
     <Container>
       <Section>
@@ -37,5 +37,3 @@ const Section = styled.div`
   border: 1px solid gray;
   margin-bottom: 10px;
 `;
-
-export default Home;
