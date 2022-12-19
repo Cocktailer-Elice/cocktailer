@@ -15,32 +15,32 @@ interface Data {
   category: string;
 }
 const ListContainer = () => {
-  const [cockList, setCockList] = useState<Data[]>([]);
+  const [cockOneList, setCockOneList] = useState<Data[]>([]);
+  const [cockTwoList, setCockTwoList] = useState<Data[]>([]);
+  const [cockThreeList, setCockThreeList] = useState<Data[]>([]);
   useEffect(() => {
     axios.get('/src/containers/Cockcipe/List/data.json').then((res) => {
-      console.log(res.data.data);
-      res.data.data.map((item: Data) => {
-        console.log(item);
-        setCockList((prev) => [...prev, item]);
-      });
+      console.log(res.data);
+      for (let key in res.data) {
+        console.log(res.data[key]);
+        res.data[key].map((item: Data) => {});
+      }
+      // res.data.data.map((item: Data) => {
+      //   console.log(item);
+      //   setCockList((prev) => [...prev, item]);
+      // });
     });
   }, []);
   return (
     <>
-      <Category>카테고리 1</Category>
+      <Category>카테고리1</Category>
       <Swiper
         slidesPerView={3}
         spaceBetween={10}
         navigation
         loop={true}
         modules={[Navigation]}
-      >
-        {cockList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      ></Swiper>
     </>
   );
 };
