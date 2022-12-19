@@ -4,7 +4,7 @@ import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHam
 import { Drawer } from './../Drawer/Drawer';
 import { useState } from 'react';
 
-const Header = () => {
+export const Header = () => {
   const [menuClicked, setMenuClicked] = useState(false);
 
   return (
@@ -23,5 +23,3 @@ const HeaderWrapper = styled.div`
   border: 1px solid #ddd;
   display: flex;
 `;
-
-export default Header;
