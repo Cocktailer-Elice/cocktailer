@@ -3,11 +3,16 @@ export interface CommentCreateReqDto {
 }
 
 export interface Comment {
-  id: string;
-  nickname: string;
+  _id: string;
+  owner: {
+    id: number;
+    nickname: string;
+    isBartender: false;
+  };
   content: string;
+  nickname: string;
   adopted: boolean;
-  isBartender: boolean;
+  // subComments: subComments[]; 대댓글은 추가 기능으로 일단 보류
 }
 
 export interface Comments {

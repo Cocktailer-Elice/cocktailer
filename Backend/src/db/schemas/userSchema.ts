@@ -54,11 +54,11 @@ const UserSchema: Schema = new Schema(
 
 UserSchema.virtual('userGetResDto').get(function (this: User) {
   return {
+    id: this.id,
     name: this.name,
     email: this.email,
     nickname: this.nickname,
     avatarUrl: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.avatarUrl}`,
-    isAdmin: this.isAdmin,
     isBartender: this.isBartender,
   };
 });

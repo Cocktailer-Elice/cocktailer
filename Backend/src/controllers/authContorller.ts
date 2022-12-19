@@ -1,13 +1,8 @@
-import { sign } from 'jsonwebtoken';
-import { Token, TokenData } from './../routers/middlewares/types/authType';
-import { IUser } from './../db/types/userType';
 import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
 import { LoginReqData } from 'types';
 import AuthService from '../services/authService';
-
-const ACCESS_KEY = process.env.ACCESS_KEY;
-const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE;
+import { createToken, createCookie } from './utils';
 
 class AuthController {
   private readonly authService = new AuthService();
@@ -16,8 +11,8 @@ class AuthController {
     const userInfo: UserCreateData = req.body;
     const newUser = await this.authService.signup(userInfo);
 
-    const tokenData = this.createToken(newUser);
-    const cookie = this.createCookie(tokenData);
+    const tokenData = createToken(newUser);
+    const cookie = createCookie(tokenData);
     res.setHeader('Set-Cookie', [cookie]);
     res.status(201).json(newUser.userGetResDto);
   };
@@ -31,8 +26,8 @@ class AuthController {
   public login = async (req: Req, res: Res) => {
     const userData: LoginReqData = req.body;
     const foundUser = await this.authService.login(userData);
-    const tokenData = this.createToken(foundUser);
-    const cookie = this.createCookie(tokenData);
+    const tokenData = createToken(foundUser);
+    const cookie = createCookie(tokenData);
     res.setHeader('Set-Cookie', [cookie]);
     res.status(200).json(foundUser.userGetResDto);
   };
@@ -51,34 +46,18 @@ class AuthController {
     res.status(202).json({ code });
   };
 
-  // 서버에서 검증하는 게 맞다,,, But, 협의 후 구현하자,,,
   public validateAuthCode = async (req: Req, res: Res) => {
     const { tel, code } = req.body;
     await this.authService.validateAuthCode(tel, code);
     res.sendStatus(204);
   };
 
-  private createToken(user: IUser): Token {
-    const tokenData: TokenData = {
-      id: user.id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      isBartender: user.isBartender,
-    };
-    const secretKey: string = ACCESS_KEY as string;
-    const expiresIn: string = ACCESS_EXPIRE as string;
-
-    return {
-      expiresIn,
-      token: sign(tokenData, secretKey, { expiresIn }),
-    };
-  }
-
-  private createCookie(tokenData: Token): string {
-    const { token, expiresIn } = tokenData;
-    // HTTPS 적용 후 secure 옵션도 설정할 것! secure;
-    return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn};`;
-  }
+  public validatePassword = async (req: Req, res: Res) => {
+    const { password } = req.body;
+    const { email } = req.user;
+    await this.authService.validatePassword(email, password);
+    res.sendStatus(204);
+  };
 }
 
 const authController = new AuthController();

@@ -1,10 +1,10 @@
 // 서버에 유저 정보를 요청하면 받게 될 데이터
 export interface User {
+  id: number;
   name: string;
   email: string;
   nickname: string;
   avatarUrl: string;
-  isAdmin: boolean;
   isBartender: boolean;
 }
 
