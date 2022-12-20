@@ -17,11 +17,15 @@ class CocktailService {
     return data;
   }
 
-  //
+  public async lists() {
+    const data = await this.cocktailModel.lists();
+    return data;
+  }
 
   public async getCocktail(
     id: number | null,
     category: string | null,
+    official: string | null,
   ): Promise<Cocktail | Cocktail[]> {
     /*
     id x / category x / = 각 카테고리마다 n개씩
@@ -30,13 +34,21 @@ class CocktailService {
     id o / category o / = 해당 id 칵테일 가져오기
     */
 
+    console.log(id, category);
     //
     const data =
       id === null && category === null
-        ? await this.cocktailModel.findAll('main', null, null)
+        ? await this.cocktailModel.findAll('main', null, null, official)
         : Number.isInteger(id)
-        ? await this.cocktailModel.findAll('id', id, null)
-        : await this.cocktailModel.findAll('category', null, category);
+        ? await this.cocktailModel.findAll('id', id, null, official)
+        : await this.cocktailModel.findAll(
+            'category',
+            null,
+            category,
+            official,
+          );
+
+    //책임 분리 //반복되는 함수 : 공통으로 뽑아서 사용
 
     if (data === null) {
       throw new AppError(errorNames.inputError, 400, '존재하지 않는 칵테일');
