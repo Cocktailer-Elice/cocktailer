@@ -1,0 +1,55 @@
+import axios from 'axios';
+import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
+
+const InputBox = styled.input`
+    width: 100%;
+    padding: 16.5px 14px;
+    border-color: rgba(0, 0, 0, 0.23);
+    resize: none;
+`;
+
+const TextBox = styled.textarea`
+    width: 100%;
+    padding: 16.5px 14px;
+    border-color: rgba(0, 0, 0, 0.23);
+    resize: none;
+`;
+
+const gets = async (data: any) => {
+    await axios.post('http://localhost:8000/cockflow', data)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  
+export const CockflowGetPost = () => {
+    const { register, handleSubmit, reset } = useForm();
+    const onSubmit = (data: any) => {
+      alert(JSON.stringify(data));
+      gets(data);
+      reset();
+    };
+  
+    return (
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+    <div>
+    <InputBox
+        type="text"
+        {...register("title")}
+        readOnly={false}
+        placeholder="질문 제목을 입력해주세요" />
+    <TextBox
+        {...register("content")}
+        readOnly={false}
+        placeholder='질문 내용을 입력해주세요' />
+    </div>
+    <CockflowEnrollBtns />
+    </form>
+)
+}
