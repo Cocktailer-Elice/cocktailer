@@ -15,37 +15,49 @@ export const Drawer = ({ setMenuClicked }: DrawerProps) => {
   };
 
   return (
-    <Container>
-      <TopSection>
-        <TopLeftSection>
-          <UserPageButtonContainer>
-            <DrawerUserPageButton pageName="로그인" link="/login" />
-            <DrawerUserPageButton pageName="회원가입" link="/join" />
-          </UserPageButtonContainer>
-        </TopLeftSection>
-        <TopRightSection>
-          <CloseButtonWrap onClick={handleCloseButtonClick}>
-            <CloseButton />
-          </CloseButtonWrap>
-        </TopRightSection>
-      </TopSection>
-      <BottomSection>
-        <DrawerContentPageButton pageName="칵시피" link="/cockcipe" />
-        <DrawerContentPageButton pageName="칵플로우" link="/cockflow" />
-        <DrawerContentPageButton pageName="칵고리즘" link="/cockgorithm" />
-      </BottomSection>
-    </Container>
+    <Dimmed onClick={handleCloseButtonClick}>
+      <DrawerContainer>
+        <TopSection>
+          <TopLeftSection>
+            <UserPageButtonContainer>
+              <DrawerUserPageButton pageName="로그인" link="/login" />
+              <DrawerUserPageButton pageName="회원가입" link="/join" />
+            </UserPageButtonContainer>
+          </TopLeftSection>
+          <TopRightSection>
+            <CloseButtonWrap onClick={handleCloseButtonClick}>
+              <CloseButton />
+            </CloseButtonWrap>
+          </TopRightSection>
+        </TopSection>
+        <BottomSection>
+          <DrawerContentPageButton pageName="칵시피" link="/cockcipe" />
+          <DrawerContentPageButton pageName="칵플로우" link="/cockflow" />
+          <DrawerContentPageButton pageName="칵고리즘" link="/cockgorithm" />
+        </BottomSection>
+      </DrawerContainer>
+    </Dimmed>
   );
 };
 
-const Container = styled.div`
+const Dimmed = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+`;
+
+const DrawerContainer = styled.div`
   width: 300px;
   height: 100%;
   border: 1px solid gray;
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 1;
+  z-index: 2;
 `;
 
 const TopSection = styled.div`
