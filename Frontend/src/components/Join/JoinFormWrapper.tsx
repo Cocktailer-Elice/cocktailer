@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { Alert, Button } from '@mui/material';
+import {
+  EmailValidation,
+  PasswordValidation,
+  TelValidation,
+} from '../../constants/regex';
 
 interface Errors {
   email: {
@@ -46,7 +51,7 @@ const JoinFormWrapper = () => {
             {...register('email', {
               required: '이메일을 입력해주세요.',
               pattern: {
-                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+                value: EmailValidation,
                 message: '이메일 형식이 맞지 않습니다.',
               },
             })}
@@ -92,8 +97,7 @@ const JoinFormWrapper = () => {
                 message: '16자 이하의 비밀번호를 입력해 주세요.',
               },
               pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
+                value: PasswordValidation,
                 message:
                   '특수문자(@ ! $ * ? &) 1자, 대문자 1자, 숫자 1자 이상을 섞어 입력해 주세요.',
               },
@@ -123,8 +127,7 @@ const JoinFormWrapper = () => {
                 message: '16자 이하의 비밀번호를 입력해 주세요.',
               },
               pattern: {
-                value:
-                  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
+                value: PasswordValidation,
                 message:
                   '특수문자(@ ! $ * ? &) 1자, 대문자 1자, 숫자 1자 이상을 섞어 입력해 주세요.',
               },
@@ -163,7 +166,7 @@ const JoinFormWrapper = () => {
             {...register('tel', {
               required: '휴대전화번호를 입력해주세요.',
               pattern: {
-                value: /^\d{3}-\d{3,4}-\d{4}$/,
+                value: TelValidation,
                 message: '전화번호 형식이 맞지 않습니다.',
               },
             })}
