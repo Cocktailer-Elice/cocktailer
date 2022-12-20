@@ -69,7 +69,7 @@ const Dimmed = styled.div`
 const DrawerContainer = styled.div`
   width: 300px;
   height: 100vh;
-  border: 1px solid red;
+  border: 1px solid gray;
   position: absolute;
   background-color: white;
   left: -1px;
@@ -80,14 +80,14 @@ const DrawerContainer = styled.div`
 const TopSection = styled.div`
   width: 100%;
   height: 80px;
-  border: 1px solid orange;
+  border: 1px solid gray;
   display: flex;
 `;
 
 const TopLeftSection = styled.div`
   width: calc(100% - 50px);
   height: 100%;
-  border: 1px solid yellow;
+  border: 1px solid gray;
 `;
 
 const TopRightSection = styled.div`
