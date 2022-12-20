@@ -20,7 +20,9 @@ class UserService {
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, '해당하는 이메일 없음');
     }
-    return foundUser.email;
+    const { email } = foundUser;
+    const blurredEmail = `${email.slice(0, 5)}****@${email.split('@')[1]}`;
+    return blurredEmail;
   };
 
   public verifyUser = async (name: string, email: string, tel: string) => {
@@ -32,14 +34,16 @@ class UserService {
     return;
   };
 
-  public async validatePassword(email: string, password: string) {
+  public validatePassword = async (email: string, password: string) => {
     const filter = { email };
     const user = (await this.userModel.findByFilter(filter)) as IUser;
     const isPasswordMatching = await compare(password, user.password);
     if (!isPasswordMatching)
       throw new AppError(errorNames.inputError, 400, '비밀번호 재확인');
     return;
-  }
+  };
+
+  public changePassword = async (userId: number, password: string) => {};
 }
 
 export default UserService;

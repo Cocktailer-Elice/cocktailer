@@ -18,4 +18,6 @@ router.post(
   '/validate-password',
   asyncHandler(userController.validatePassword),
 );
+router.patch('/change-password', asyncHandler(userController.changePassword));
+
 export default router;

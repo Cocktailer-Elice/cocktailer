@@ -35,6 +35,10 @@ class AuthController {
   public login = async (req: Req, res: Res) => {
     const { email, password } = req.body;
     checkReqBody(email, password);
+    const token = req.cookies.Authorization;
+    if (token) {
+      throw new AppError(errorNames.businessError, 400, '비정상적 접근');
+    }
     const userData: LoginReqData = req.body;
     const foundUser = await this.authService.login(userData);
     const tokenData = createToken(foundUser);
@@ -44,10 +48,9 @@ class AuthController {
   };
 
   public logout = async (req: Req, res: Res) => {
-    const userData = req.user;
-    await this.authService.logout(userData);
-
-    res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
+    // const userData = req.user;
+    // await this.authService.logout(userData);
+    res.setHeader('Set-Cookie', ['Authorization=; Max-age=0; path=/']);
     res.sendStatus(204);
   };
 
