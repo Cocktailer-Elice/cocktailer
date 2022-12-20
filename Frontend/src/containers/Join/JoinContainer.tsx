@@ -1,17 +1,15 @@
 import { Helmet } from 'react-helmet';
-import JoinFormWrapper from '../../components/Join/JoinFormWrapper';
-import JoinHeader from '../../components/Join/JoinHeader';
+import { JoinForm } from '../../components/Join/JoinForm';
+import { FormHeading } from '../../components/UserForm/styles';
 
-const JoinContainer = () => {
+export const JoinContainer = () => {
   return (
     <>
       <Helmet>
         <title>Cocktailer | 회원가입</title>
       </Helmet>
-      <JoinHeader></JoinHeader>
-      <JoinFormWrapper></JoinFormWrapper>
+      <FormHeading>회원가입</FormHeading>
+      <JoinForm />
     </>
   );
 };
-
-export default JoinContainer;
