@@ -15,7 +15,8 @@ export const Drawer = ({ setMenuClicked }: DrawerProps) => {
   };
 
   return (
-    <Dimmed onClick={handleCloseButtonClick}>
+    <>
+      <Dimmed onClick={handleCloseButtonClick}></Dimmed>
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
@@ -36,7 +37,7 @@ export const Drawer = ({ setMenuClicked }: DrawerProps) => {
           <DrawerContentPageButton pageName="칵고리즘" link="/cockgorithm" />
         </BottomSection>
       </DrawerContainer>
-    </Dimmed>
+    </>
   );
 };
 
