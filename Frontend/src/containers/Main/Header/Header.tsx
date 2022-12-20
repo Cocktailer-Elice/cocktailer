@@ -5,17 +5,21 @@ import { Drawer } from './../Drawer/Drawer';
 import { useState } from 'react';
 
 export const Header = () => {
-  const [menuClicked, setMenuClicked] = useState(false);
+  const [drawer, setDrawer] = useState(false);
+
+  const toggleDrawer = () => {
+    setDrawer((curr) => !curr);
+  };
 
   return (
     <Container>
       <LeftSection>
-        <HeaderHamburgerButton setMenuClicked={setMenuClicked} />
+        <HeaderHamburgerButton toggleDrawer={toggleDrawer} />
       </LeftSection>
       <RightSection>
         <HeaderHomeLogo />
       </RightSection>
-      {menuClicked ? <Drawer setMenuClicked={setMenuClicked} /> : <></>}
+      {drawer ? <Drawer toggleDrawer={toggleDrawer} /> : <></>}
     </Container>
   );
 };

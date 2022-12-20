@@ -1,40 +1,55 @@
 import styled from 'styled-components';
 import CloseButton from '@mui/icons-material/Close';
-import { Dispatch, SetStateAction } from 'react';
 
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 
 interface DrawerProps {
-  setMenuClicked: Dispatch<SetStateAction<boolean>>;
+  toggleDrawer: () => void;
 }
 
-export const Drawer = ({ setMenuClicked }: DrawerProps) => {
-  const handleCloseButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setMenuClicked(false);
-  };
-
+export const Drawer = ({ toggleDrawer }: DrawerProps) => {
   return (
     <>
-      <Dimmed onClick={handleCloseButtonClick}></Dimmed>
+      <Dimmed onClick={toggleDrawer}></Dimmed>
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              <DrawerUserPageButton pageName="로그인" link="/login" />
-              <DrawerUserPageButton pageName="회원가입" link="/join" />
+              <DrawerUserPageButton
+                pageName="로그인"
+                link="/login"
+                toggleDrawer={toggleDrawer}
+              />
+              <DrawerUserPageButton
+                pageName="회원가입"
+                link="/join"
+                toggleDrawer={toggleDrawer}
+              />
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
-            <CloseButtonWrap onClick={handleCloseButtonClick}>
+            <CloseButtonWrap onClick={toggleDrawer}>
               <CloseButton />
             </CloseButtonWrap>
           </TopRightSection>
         </TopSection>
         <BottomSection>
-          <DrawerContentPageButton pageName="칵시피" link="/cockcipe" />
-          <DrawerContentPageButton pageName="칵플로우" link="/cockflow" />
-          <DrawerContentPageButton pageName="칵고리즘" link="/cockgorithm" />
+          <DrawerContentPageButton
+            pageName="칵시피"
+            link="/cockcipe"
+            toggleDrawer={toggleDrawer}
+          />
+          <DrawerContentPageButton
+            pageName="칵플로우"
+            link="/cockflow"
+            toggleDrawer={toggleDrawer}
+          />
+          <DrawerContentPageButton
+            pageName="칵고리즘"
+            link="/cockgorithm"
+            toggleDrawer={toggleDrawer}
+          />
         </BottomSection>
       </DrawerContainer>
     </>
