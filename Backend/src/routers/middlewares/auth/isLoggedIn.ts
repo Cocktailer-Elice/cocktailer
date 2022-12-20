@@ -19,7 +19,7 @@ export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
     return res.status(419).json({ message: '만료 또는 손상된 토큰' });
   }
 
-  // const userId = (decodedData as TokenData).id;
+  // const { userId } = decodedData as Cookie;
   // const foundUser = await userModel.Mongo.findById(userId);
 
   // if (!foundUser) {

@@ -27,7 +27,7 @@ class CockflowController {
     res.status(200).json(cockflow);
   };
 
-  public softDeleteCockflow = async (req: Req, res: Res) => {
+  public deleteCockflow = async (req: Req, res: Res) => {
     const { cockflowId } = req.params;
     const { userId } = req.user;
     await this.cockflowService.softDeleteCockflow(+cockflowId, userId);
