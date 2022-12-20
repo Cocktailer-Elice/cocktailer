@@ -18,16 +18,15 @@ export const InputTitleImg = () => {
       // 업로드
       const formData = new FormData();
       formData.append('image', file);
-      await axios
+      axios
         .post('http://localhost:8000/image-upload', {
           folder: 'seeun-test',
-          formData,
         })
         .then((res) => {
           console.log(res);
           axios
-            .put(`${res.data}`, {
-              header: {
+            .put(`${res.data}`, file, {
+              headers: {
                 'Content-Type': file.type,
               },
             })
