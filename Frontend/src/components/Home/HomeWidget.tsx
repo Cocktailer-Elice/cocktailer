@@ -4,11 +4,11 @@ interface WidgetProps {
   pageName: string;
 }
 
-export const Widget = ({ pageName }: WidgetProps) => {
-  return <WidgetWrapper>{pageName}</WidgetWrapper>;
+export const HomeWidget = ({ pageName }: WidgetProps) => {
+  return <Widget>{pageName}</Widget>;
 };
 
-const WidgetWrapper = styled.div`
+const Widget = styled.div`
   width: 60px;
   height: 60px;
   display: flex;

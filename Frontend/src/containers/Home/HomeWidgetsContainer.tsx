@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Widget } from '../../components/Home/Widget';
+import { HomeWidget } from '../../components/Home/HomeWidget';
 
 export const HomeWidgetsContainer = () => {
   return (
     <Container>
       <Link to="/cockcipe">
-        <Widget pageName="칵시피" />
+        <HomeWidget pageName="칵시피" />
       </Link>
       <Link to="/cockflow">
-        <Widget pageName="칵플로우" />
+        <HomeWidget pageName="칵플로우" />
       </Link>
       <Link to="/cockgorithm">
-        <Widget pageName="칵고리즘" />
+        <HomeWidget pageName="칵고리즘" />
       </Link>
     </Container>
   );
