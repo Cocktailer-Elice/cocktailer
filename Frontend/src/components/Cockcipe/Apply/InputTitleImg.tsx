@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
@@ -17,6 +18,21 @@ export const InputTitleImg = () => {
       // 업로드
       const formData = new FormData();
       formData.append('image', file);
+      await axios
+        .post('http://localhost:8000/image-upload', {
+          folder: 'seeun-test',
+          formData,
+        })
+        .then((res) => {
+          console.log(res);
+          axios
+            .put(`${res.data}`, {
+              header: {
+                'Content-Type': file.type,
+              },
+            })
+            .then((res) => console.log(res.status));
+        });
     }
   };
   return (
