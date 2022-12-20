@@ -1,3 +1,4 @@
+import { authAndUserValidator } from './middlewares';
 import { isLoggedIn } from './middlewares/auth/isLoggedIn';
 import { Router } from 'express';
 import { userController } from '../controllers';
@@ -5,6 +6,7 @@ import { asyncHandler } from './middlewares';
 
 const router: Router = Router();
 
+router.use(authAndUserValidator);
 router.get('/', asyncHandler(userController.getUserById));
 router.post('/find-email', asyncHandler(userController.findUserEmail));
 router.post('/send-code', userController.generateAuthCode);
@@ -16,4 +18,6 @@ router.post(
   '/validate-password',
   asyncHandler(userController.validatePassword),
 );
+router.patch('/change-password', asyncHandler(userController.changePassword));
+
 export default router;

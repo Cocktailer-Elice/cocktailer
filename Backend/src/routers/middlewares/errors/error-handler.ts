@@ -6,11 +6,7 @@ const errorHandler = (err: Error, req: Req, res: Res, next: Next) => {
   if (err instanceof AppError) {
     return next(err);
   }
-  const now = new Date();
-  const timestamp = `${now.toLocaleDateString(
-    'ko-KR',
-  )} ${now.toLocaleTimeString('ko-KR')}`;
-  logger.error(`${err.name} ${timestamp} ${req.url} ${err.stack}`);
+  logger.error(`${req.url} ${req.method} ${err.stack}`);
   return res.status(500).json({ message: '서버 에러' });
 };
 

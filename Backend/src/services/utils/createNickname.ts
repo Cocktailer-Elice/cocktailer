@@ -2,7 +2,7 @@ import { authContants } from './constants';
 import { createRandomNumber } from './createRandomNumber';
 
 export const createNickname = async (alcohol: string) => {
-  if (alcohol === 'Random') {
+  if (alcohol === '랜덤') {
     const randomAlcoholSet = authContants.RANDOM_ALCOHOL_SET;
     const randomNumberCount = Math.floor(
       Math.random() * randomAlcoholSet.length,
