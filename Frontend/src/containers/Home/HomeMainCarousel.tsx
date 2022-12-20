@@ -1,19 +1,16 @@
 import styled from 'styled-components';
 
-const HomeMainCarousel = () => {
+export const HomeMainCarousel = () => {
   return (
-    <HomeMainCarouselWrapper>
+    <MainCarousel>
       <span>홈 메인 캐러셀</span>
-    </HomeMainCarouselWrapper>
+    </MainCarousel>
   );
 };
 
-const HomeMainCarouselWrapper = styled.div`
+const MainCarousel = styled.div`
   width: 100%;
-  height: 20%;
+  height: 100%;
   border: 1px solid gray;
   padding: 10px;
-  margin-bottom: 10px;
 `;
-
-export default HomeMainCarousel;
