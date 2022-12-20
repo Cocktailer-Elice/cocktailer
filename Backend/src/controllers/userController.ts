@@ -10,8 +10,9 @@ class UserController {
   private readonly authService = new AuthService();
 
   public getUserById = async (req: Req, res: Res) => {
-    const { id } = req.params;
-    const foundUser = await this.userService.getUserById(id);
+    const { userId } = req.user;
+    const requestUserId = req.params.userId;
+    const foundUser = await this.userService.getUserById(userId, requestUserId);
     res.status(200).json((foundUser as IUser).userGetResDto);
   };
 
@@ -49,6 +50,13 @@ class UserController {
     checkReqBody(password, newPassword);
     const { userId } = req.user;
     await this.userService.changePassword(userId, password, newPassword);
+    res.sendStatus(204);
+  };
+
+  public softDeleteUser = async (req: Req, res: Res) => {
+    const { userId } = req.user;
+    const requestUserId = req.params.userId;
+    await this.userService.softDeleteUser(userId, requestUserId);
     res.sendStatus(204);
   };
 }
