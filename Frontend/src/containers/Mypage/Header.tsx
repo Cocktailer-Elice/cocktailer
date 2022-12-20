@@ -41,16 +41,16 @@ export const Header = () => {
           variant="outlined"
           type="button"
           sx={{ width: 'max-content', marginBottom: '2px' }}
-          onClick={() => navigate('/mypage/edit')}
+          onClick={() => navigate('/mypage/edit-avatar')}
         >
-          개인정보 수정
+          아바타 변경
         </Button>
         <Button
           size="small"
           variant="outlined"
           type="button"
           sx={{ width: 'max-content' }}
-          onClick={() => navigate('/mypage/password-edit')}
+          onClick={() => navigate('/mypage/edit-password')}
         >
           비밀번호 변경
         </Button>

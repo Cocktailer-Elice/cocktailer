@@ -4,14 +4,17 @@ import { FindEmail } from '../pages/Finds/FindEmail';
 import { FindPassword } from '../pages/Finds/FindPassword';
 import { Join } from '../pages/Join/Join';
 import { Login } from '../pages/Login/Login';
+import { EditAvatar } from '../pages/Mypage/Edit/EditAvatar';
+import { EditPassword } from '../pages/Mypage/Edit/EditPassword';
+import { BartenderApply } from '../pages/Mypage/BartenderApply';
 
 export const UserRouter = () => {
   return (
     <Routes>
       <Route path="/mypage" element={<Mypage />} />
-      <Route path="/mypage/edit" element={<div>개인정보 수정</div>} />
-      <Route path="/mypage/password-edit" element={<div>비밀번호 변경</div>} />
-      <Route path="/pro-apply" element={<div>바텐더 인증 신청</div>} />
+      <Route path="/mypage/edit-avatar" element={<EditAvatar />} />
+      <Route path="/mypage/edit-password" element={<EditPassword />} />
+      <Route path="/bartender-apply" element={<BartenderApply />} />
       <Route path="/login" element={<Login />} />
       <Route path="/join" element={<Join />} />
       <Route path="/find-email" element={<FindEmail />} />
