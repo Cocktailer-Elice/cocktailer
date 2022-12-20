@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState, useEffect } from 'react';
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
 import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
@@ -34,13 +35,22 @@ export const CockflowContent = () => {
     content: '',
     adopted: false
   }]);
+
+  const [pageNum, setPageNum] = useState(1)
   
   useEffect(() => {
     //axios.get 호출
-    // axios.get(`http://localhost:8000/cockflow/?q=1`)
-    //   .then(res => setData(res.data.data));
-    setData(mockData1.comments)
-  }, []);
+    // axios.get(`http://localhost:8000/cockflow/?q=${pageNum}`)
+    // .then(res => {
+    //   setData(res.data.data);
+    //   setPageNum((prev => prev + 1));
+    // });
+
+    setData(mockData1.comments);
+  }, [pageNum]);
+
+  //  무한스크롤 - yarn add react-intersection-observer
+
   return (
     <>
       <CockflowHeader />

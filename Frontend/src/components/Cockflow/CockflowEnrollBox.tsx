@@ -1,6 +1,7 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const ContWrap = styled.div`
   // border: 1px solid #ddd;
@@ -14,14 +15,7 @@ const TitleWrap = styled.div`
   padding: 16.5px 15px;
   border: none;
   border-bottom: 1px solid #ddd;
-  resize: none;
 `
-
-const InputBox = styled.input`
-  display: inline-block;
-  width: 100%;
-  padding: 16.5px 15px;
-`;
 
 const TextBox = styled.textarea`
   width: 100%;
@@ -50,30 +44,84 @@ const mockData = {
 }
 
 export const CockflowEnrollBox = ({ actived = true }) => {
-  const [title, setTitle] = useState('');
-  const [data, setData] = useState({})
+  let params = useParams();
 
-  const [content, setContent] = useState('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque ex vitae ullam? Nihil et, debitis nobis aliquam voluptas possimus illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?');
+  const [flowtitle, setFlowtitle] = useState('');
+  const [data, setData] = useState({
+    nickname: '',
+    isBartender: false,
+    title: '',
+    content: '',
+    createdAt: '',
+  })
+
+  const [flowContent, setFlowcontent] = useState('Lorem, ipsum dolor sit amet consectetur adipisicing elit. Atque ex vitae ullam? Nihil et, debitis nobis aliquam voluptas possimus illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?illum a exercitationem animi corrupti veritatis unde eaque nesciunt quasi odio?');
+  const [comments, setComments] = useState({
+    comments: [],
+    commentsOwner: []
+  })
+
+  const _id = params.cockflowId;
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/cockflow/12`)
-      .then(res => {
+    console.log(_id)
+    // axios.get(`http://localhost:8000/cockflow/${_id}`)
+    //   .then(res => {
+    //     console.log(res);
+    //     const newData =  {
+    //       nickname: res.owner.nickname,
+    //       isBartender: res.owner.isBartender,
+    //       title: res.title,
+    //       content: res.content,
+    //       createdAt: (res.owner.createdAt).split('T')[0],
+    //     }
 
-        console.log(res);
-      });
-    
-  }, [])
+    //     const newComment = {
+    //       comments: res.comments,
+    //       commentsOwner: res.commentsOwner
+    //     }
 
+    //     setData(newData);
+    //     setComments(newComment)
+    //   });
+
+    const newData = {
+      nickname: mockData.owner.nickname,
+      isBartender: mockData.owner.isBartender,
+      title: mockData.title,
+      content: mockData.content,
+      createdAt: (mockData.owner.createdAt).split('T')[0],
+    };
+
+    const newComment = {
+      comments: mockData.comments,
+      commentsOwner: mockData.commentsOwner
+    };
+
+    setData(newData);
+    setComments(newComment);
+
+  }, [_id]);
+  
+  let { nickname, isBartender, title, content, createdAt } = data;
+  
   return (
     <ContWrap>
       <form>
         <TitleWrap>
+          <div>{title}</div>
           <div>
-            <InputBox type="text" value={title} onChange={(e) => {setTitle(e.target.value)}} readOnly={actived} placeholder="질문 제목을 입력해주세요" />
+            <span>작성자</span>
+            <span>{nickname}</span>
+            <span>뱃지 {isBartender}</span>
+          </div><br/>
+          <div>
+            <span>(+)조회수</span>
+            <span>생성날짜</span>
+            <span>{createdAt}</span>
           </div>
-          <span>조회수</span>
         </TitleWrap>
-        <TextBox name="" id="" value={content} onChange={(e) => {setContent(e.target.value)}} readOnly={actived} placeholder='질문 내용을 입력해주세요'></TextBox>
+        <TextBox name="" id="" value={content} onChange={(e) => {setFlowcontent(e.target.value)}} readOnly={actived} />
       </form>
     </ContWrap>
   );

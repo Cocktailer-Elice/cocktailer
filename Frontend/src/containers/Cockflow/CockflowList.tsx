@@ -20,43 +20,68 @@ const Item = styled.li`
 `;
 
 const mockData1 = [
-    {
-      id: '1',
-      title: 'string1',
-    }, {
-      id: '2',
-      title: 'string2',
-    }, {
-      id: '3',
-      title: 'string3',
-    }, {
-      id: '4',
-      title: 'string4',
-    },{
-      id: '5',
-      title: 'string4',
-    },{
-      id: '6',
-      title: 'string4',
-    },{
-      id: '7',
-      title: 'string4',
-    },{
-      id: '8',
-      title: 'string4',
-    },{
-      id: '9',
-      title: 'string4',
-    },{
-      id: '10',
-      title: 'string4',
-    },{
-      id: '11',
-      title: 'string4',
-    },{
-      id: '12',
-      title: 'string4',
-    }
+  {
+    id: '1',
+    title: 'string1',
+  }, {
+    id: '2',
+    title: 'string2',
+  }, {
+    id: '3',
+    title: 'string3',
+  }, {
+    id: '4',
+    title: 'string4',
+  },{
+    id: '5',
+    title: 'string4',
+  },{
+    id: '6',
+    title: 'string4',
+  },{
+    id: '7',
+    title: 'string4',
+  },{
+    id: '8',
+    title: 'string4',
+  },{
+    id: '9',
+    title: 'string4',
+  },{
+    id: '10',
+    title: 'string4',
+  },{
+    id: '11',
+    title: 'string4',
+  },{
+    id: '12',
+    title: 'string4',
+  }
+]
+
+const imsiData1 = [
+  {
+      "_id": "639f1573a10b5da4bacac17c",
+      "id": 4,
+      "owner": 79,
+      "title": "칵플로우 테스트",
+      "content": "오늘 홍대 근처에서 소개팅이 있는데 분위기 좋은 칵테일바 추천해주실 분 계신가요~?",
+      "comments": [],
+      "deletedAt": null,
+      "createdAt": "2022-12-18T13:28:19.385Z",
+      "updatedAt": "2022-12-18T13:28:19.385Z",
+      "__v": 0
+  },
+  {
+    "_id": "63a15e59117f359863eccece",
+    "id": 6,
+    "owner": 92,
+    "title": "칵플로우 테스트",
+    "content": "오늘 홍대 근처에서 소개팅이 있는데 분위기 좋은 칵테일바 추천해주실 분 계신가요~?",
+    "deletedAt": null,
+    "createdAt": "2022-12-20T07:03:53.633Z",
+    "updatedAt": "2022-12-20T07:03:53.633Z"
+  }
 ]
 
 const imgArr = [
@@ -77,10 +102,20 @@ export const CockflowList = () => {
   }]);
 
   useEffect(() => {
-    //axios.get 호출
+    // axios.get 호출
     // axios.get(`http://localhost:8000/cockflow/?q=1`)
-    //   .then(res => setData(res.data.data));
-    setData(mockData1)
+    //   .then(res => {
+    //     const newData = [{
+    //       id: id,
+    //       title: title,
+    //     }]
+    //     setData(res.data.data);
+    //   });
+    // setData([{
+    //   id: 'id',
+    //   title: 'title',
+    // }])
+    setData(mockData1);
   }, []);
 
   return (
@@ -92,17 +127,6 @@ export const CockflowList = () => {
               <Item>
                 <CockflowItemBox key={item.id} id={item.id} title={item.title}
                   content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}/>
-              </Item>
-            )
-          }
-        )}
-      </List>
-      <List>
-        {data.map((item, index) => {return (
-              <Item>
-                <CockflowItemBox key={item.id} id={item.id} title={item.title}
-                  content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}
-                />
               </Item>
             )
           }
