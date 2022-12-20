@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
-import CockflowBoxTitle from '../../components/Cockflow/CockflowBoxTitle'
-import { Right } from '../../components/Cockflow/CockflowStyle'
+import { Right } from './style';
+import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
 
 const Comment = styled.div`
   padding: 15px;
   line-height: 1.8;
-`
+`;
 
 // 댓글 박스
-const CockflowComment = () => {
+export const CockflowCommentBox = () => {
   return (
     <>
       <CockflowBoxTitle replied={3} />
@@ -22,7 +22,5 @@ const CockflowComment = () => {
         <Button variant="contained">채택하기</Button>
       </Right>
     </>
-  )
-}
-
-export default CockflowComment
+  );
+};
