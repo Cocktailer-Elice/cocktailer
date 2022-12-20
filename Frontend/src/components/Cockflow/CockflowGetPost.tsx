@@ -36,20 +36,19 @@ export const CockflowGetPost = () => {
     };
   
     return (
-
-        <form onSubmit={handleSubmit(onSubmit)}>
-    <div>
-    <InputBox
-        type="text"
-        {...register("title")}
-        readOnly={false}
-        placeholder="질문 제목을 입력해주세요" />
-    <TextBox
-        {...register("content")}
-        readOnly={false}
-        placeholder='질문 내용을 입력해주세요' />
-    </div>
-    <CockflowEnrollBtns />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <InputBox
+            type="text"
+            {...register("title")}
+            readOnly={false}
+            placeholder="질문 제목을 입력해주세요" />
+          <TextBox
+            {...register("content")}
+            readOnly={false}
+            placeholder='질문 내용을 입력해주세요' />
+        </div>
+        <CockflowEnrollBtns />
     </form>
-)
+  )
 }

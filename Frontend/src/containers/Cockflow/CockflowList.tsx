@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import axios from 'axios'
 import styled from 'styled-components';
 import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
@@ -101,9 +100,9 @@ export const CockflowList = () => {
       <List>
         {data.map((item, index) => {return (
               <Item>
-            <CockflowItemBox key={item.id} id={item.id} title={item.title}
-              content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}
-            />
+                <CockflowItemBox key={item.id} id={item.id} title={item.title}
+                  content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}
+                />
               </Item>
             )
           }
