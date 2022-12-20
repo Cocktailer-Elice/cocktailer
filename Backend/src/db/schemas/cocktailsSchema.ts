@@ -14,8 +14,8 @@ const CocktailSchema: Schema = new Schema(
     },
 
     owner: {
-      //작성자 이름
-      type: String,
+      //작성자 id값
+      type: Number,
       require: true,
     },
 
@@ -55,8 +55,6 @@ const CocktailSchema: Schema = new Schema(
       required: true,
     },
 
-    //[    직접입력    ]  [     직접입력     ]  [    직접입력   ]
-
     liquid: {
       type: Object,
       require: true,
@@ -71,9 +69,14 @@ const CocktailSchema: Schema = new Schema(
       type: String,
       require: true,
     },
+
+    likes: {
+      type: Number,
+      default: 0,
+    },
   },
 
-  { collection: 'cocktails', timestamps: true },
+  { collection: 'cocktails', timestamps: true, versionKey: false },
 );
 
 CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {

@@ -1,7 +1,7 @@
 import { userModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 import { IUser } from '../db/types';
-import { compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 
 class UserService {
   private readonly userModel = userModel.Mongo;
@@ -43,7 +43,23 @@ class UserService {
     return;
   };
 
-  public changePassword = async (userId: number, password: string) => {};
+  public changePassword = async (
+    userId: number,
+    password: string,
+    newPassword: string,
+  ) => {
+    const filter = { id: userId };
+    const user = (await this.userModel.findByFilter(filter)) as IUser;
+    const isPasswordMatching = await compare(password, user.password);
+    if (!isPasswordMatching) {
+      throw new AppError(errorNames.inputError, 400, '비밀번호 재확인');
+    }
+
+    const hashedPassword = await hash(newPassword, 12);
+    const update = { password: hashedPassword };
+    await this.userModel.update(filter, update);
+    return;
+  };
 }
 
 export default UserService;

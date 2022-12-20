@@ -4,9 +4,13 @@ import Joi from 'joi';
 const authAndUserSchema = Joi.object({
   name: Joi.string().min(2).max(20),
   email: Joi.string().email({ minDomainSegments: 2 }),
-  password: Joi.string(),
+  password: Joi.string().pattern(
+    new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
+    ),
+  ),
   passwordCheck: Joi.ref('password'),
-  tel: Joi.string(),
+  tel: Joi.string().pattern(/^\d{3}\d{3,4}\d{4}$/),
   birthday: Joi.string(),
   alcohol: Joi.string().valid(
     '랜덤',

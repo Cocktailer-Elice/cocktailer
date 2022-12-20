@@ -48,7 +48,7 @@ class UserController {
     const { password, newPassword } = req.body;
     checkReqBody(password, newPassword);
     const { userId } = req.user;
-    await this.userService.changePassword(userId, password);
+    await this.userService.changePassword(userId, password, newPassword);
     res.sendStatus(204);
   };
 }

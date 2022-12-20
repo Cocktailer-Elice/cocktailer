@@ -1,4 +1,9 @@
-import { IUserMongoModel, IUserModel, FindOneFilter } from '../types';
+import {
+  IUserMongoModel,
+  IUserModel,
+  FindOneFilter,
+  UpdateOneFilter,
+} from '../types';
 import { UserInfo } from '../../services/types';
 import { IUser } from '../types';
 import User from '../schemas/userSchema';
@@ -27,6 +32,11 @@ export class UserMongoModel implements IUserMongoModel {
   ): Promise<IUser | null> => {
     const foundUser = await User.findOne(filter);
     return foundUser;
+  };
+
+  public update = async (filter: FindOneFilter, update: UpdateOneFilter) => {
+    const result = await User.updateOne(filter, update);
+    return result;
   };
 
   public checkEmailDuplicate = async (email: string): Promise<boolean> => {

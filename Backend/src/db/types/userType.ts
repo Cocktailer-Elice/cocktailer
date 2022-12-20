@@ -21,6 +21,11 @@ export interface FindOneFilter {
   tel?: string;
 }
 
+export interface UpdateOneFilter {
+  password?: string;
+  avatarUrl?: string;
+}
+
 export interface IUser extends Document {
   id: string;
   name: string;
