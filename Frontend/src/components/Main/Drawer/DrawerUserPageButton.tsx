@@ -1,20 +1,23 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-interface DrawerUserButtonProps {
+interface DrawerUserPageButtonProps {
   pageName: string;
   link: string;
 }
 
-export const DrawerUserButton = ({ pageName, link }: DrawerUserButtonProps) => {
+export const DrawerUserPageButton = ({
+  pageName,
+  link,
+}: DrawerUserPageButtonProps) => {
   return (
     <Link to={link}>
-      <UserButton>{pageName}</UserButton>
+      <UserPageButton>{pageName}</UserPageButton>
     </Link>
   );
 };
 
-const UserButton = styled.div`
+const UserPageButton = styled.div`
   width: 80px;
   height: 30px;
   display: flex;

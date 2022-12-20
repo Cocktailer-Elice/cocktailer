@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import CloseIcon from '@mui/icons-material/Close';
+import CloseButton from '@mui/icons-material/Close';
 import { Dispatch, SetStateAction } from 'react';
 
-import { DrawerUserButton } from '../../../components/Main/Drawer/DrawerUserButton';
-import { DrawerPageButton } from './../../../components/Main/Drawer/DrawerPageButton';
+import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
+import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 
 interface DrawerProps {
   setMenuClicked: Dispatch<SetStateAction<boolean>>;
@@ -15,24 +15,30 @@ export const Drawer = ({ setMenuClicked }: DrawerProps) => {
   };
 
   return (
-    <DrawerWrapper>
-      <DrawerUserSection>
-        <DrawerUserButton pageName="로그인" link="/login" />
-        <DrawerUserButton pageName="회원가입" link="/join" />
-        <DrawerCloseButton onClick={handleCloseButtonClick}>
-          <CloseIcon />
-        </DrawerCloseButton>
-      </DrawerUserSection>
-      <DrawerPageSection>
-        <DrawerPageButton pageName="칵시피" link="/cockcipe" />
-        <DrawerPageButton pageName="칵플로우" link="/cockflow" />
-        <DrawerPageButton pageName="칵고리즘" link="/cockgorithm" />
-      </DrawerPageSection>
-    </DrawerWrapper>
+    <Container>
+      <TopSection>
+        <TopLeftSection>
+          <UserPageButtonContainer>
+            <DrawerUserPageButton pageName="로그인" link="/login" />
+            <DrawerUserPageButton pageName="회원가입" link="/join" />
+          </UserPageButtonContainer>
+        </TopLeftSection>
+        <TopRightSection>
+          <CloseButtonWrap onClick={handleCloseButtonClick}>
+            <CloseButton />
+          </CloseButtonWrap>
+        </TopRightSection>
+      </TopSection>
+      <BottomSection>
+        <DrawerContentPageButton pageName="칵시피" link="/cockcipe" />
+        <DrawerContentPageButton pageName="칵플로우" link="/cockflow" />
+        <DrawerContentPageButton pageName="칵고리즘" link="/cockgorithm" />
+      </BottomSection>
+    </Container>
   );
 };
 
-const DrawerWrapper = styled.div`
+const Container = styled.div`
   width: 300px;
   height: 100%;
   border: 1px solid gray;
@@ -42,9 +48,38 @@ const DrawerWrapper = styled.div`
   z-index: 1;
 `;
 
-const DrawerUserSection = styled.div`
+const TopSection = styled.div`
   width: 100%;
   height: 50px;
+  border: 1px solid gray;
+  background-color: white;
+  display: flex;
+`;
+
+const TopLeftSection = styled.div`
+  width: calc(100% - 50px);
+  height: 100%;
+  border: 1px solid gray;
+  background-color: white;
+`;
+
+const TopRightSection = styled.div`
+  width: 50px;
+  height: 100%;
+  border: 1px solid gray;
+  background-color: white;
+`;
+
+const BottomSection = styled.div`
+  width: 100%;
+  height: calc(100% - 50px);
+  border: 1px solid gray;
+  background-color: white;
+`;
+
+const UserPageButtonContainer = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -52,17 +87,12 @@ const DrawerUserSection = styled.div`
   background-color: white;
 `;
 
-const DrawerPageSection = styled.div`
+const CloseButtonWrap = styled.div`
   width: 100%;
-  height: calc(100% - 50px);
-  border: 1px solid gray;
-  background-color: white;
-`;
-
-const DrawerCloseButton = styled.div`
-  width: 50px;
-  height: 50px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid gray;
+  background-color: white;
 `;
