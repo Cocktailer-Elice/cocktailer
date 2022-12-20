@@ -21,7 +21,7 @@ export const App = () => {
 
 const AppLayout = styled.div`
   width: 480px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   border: 1px solid #ddd;
   margin: auto;
