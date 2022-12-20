@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const InputBox = styled.input`
@@ -16,11 +17,13 @@ const TextBox = styled.textarea`
 
 
 export const CockflowEnrollBox = ({ actived = true }) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   return (
     <>
       <div>
-        <InputBox type="text" value="" onChange={() => { }} readOnly={actived} placeholder="질문 제목을 입력해주세요" />
-        <TextBox name="" id="" value="" onChange={() => { }} readOnly={actived} placeholder='질문 내용을 입력해주세요'></TextBox>
+        <InputBox type="text" value={title} onChange={(e) => {setTitle(e.target.value)}} readOnly={actived} placeholder="질문 제목을 입력해주세요" />
+        <TextBox name="" id="" value={content} onChange={(e) => {setContent(e.target.value)}} readOnly={actived} placeholder='질문 내용을 입력해주세요'></TextBox>
       </div>
     </>
   );

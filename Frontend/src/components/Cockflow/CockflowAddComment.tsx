@@ -14,7 +14,7 @@ const TextBox = styled.textarea`
 export const CockflowAddComment = () => {
   return (
     <>
-      <CockflowBoxTitle />
+      <CockflowBoxTitle smallTitle="답글 달기" />
       <TextBox name="" id="" value="" placeholder='답글입력' onChange={() => { }}>
       </TextBox>
       <Center>
