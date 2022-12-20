@@ -14,7 +14,7 @@ export const HeaderHamburgerButton = ({
 
   return (
     <HamburgerButton onClick={handleHamburgerButtonClick}>
-      <HamburgerIcon />
+      <CustomHamburgerIcon />
     </HamburgerButton>
   );
 };
@@ -26,4 +26,9 @@ const HamburgerButton = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid gray;
+`;
+
+const CustomHamburgerIcon = styled(HamburgerIcon)`
+  width: 35px;
+  height: 35px;
 `;

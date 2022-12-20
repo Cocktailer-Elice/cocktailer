@@ -69,40 +69,37 @@ const Dimmed = styled.div`
 const DrawerContainer = styled.div`
   width: 300px;
   height: 100vh;
-  border: 1px solid gray;
+  border: 1px solid red;
   position: absolute;
-  left: 0;
+  background-color: white;
+  left: -1px;
   top: 0;
   z-index: 11;
 `;
 
 const TopSection = styled.div`
   width: 100%;
-  height: 50px;
-  border: 1px solid gray;
-  background-color: white;
+  height: 80px;
+  border: 1px solid orange;
   display: flex;
 `;
 
 const TopLeftSection = styled.div`
   width: calc(100% - 50px);
   height: 100%;
-  border: 1px solid gray;
-  background-color: white;
+  border: 1px solid yellow;
 `;
 
 const TopRightSection = styled.div`
   width: 50px;
   height: 100%;
   border: 1px solid gray;
-  background-color: white;
 `;
 
 const BottomSection = styled.div`
   width: 100%;
   height: calc(100% - 50px);
   border: 1px solid gray;
-  background-color: white;
 `;
 
 const UserPageButtonContainer = styled.div`
@@ -112,7 +109,6 @@ const UserPageButtonContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   border: 1px solid gray;
-  background-color: white;
 `;
 
 const CloseButtonWrap = styled.div`
@@ -122,5 +118,4 @@ const CloseButtonWrap = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid gray;
-  background-color: white;
 `;
