@@ -15,6 +15,7 @@
     "@mui/material": "^5.11.0",
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
     "@mui/styled-engine-sc": "^5.11.0",
+    "@reduxjs/toolkit": "^1.9.1",
     "@types/react-helmet": "^6.1.6",
     "axios": "^1.2.1",
     "react": "^18.2.0",
@@ -22,6 +23,8 @@
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.40.0",
     "react-router-dom": "^6.4.5",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.2",
     "styled-reset": "^4.4.4",
     "yup": "^0.32.11"
   },
