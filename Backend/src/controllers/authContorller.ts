@@ -48,8 +48,6 @@ class AuthController {
   };
 
   public logout = async (req: Req, res: Res) => {
-    // const userData = req.user;
-    // await this.authService.logout(userData);
     res.setHeader('Set-Cookie', ['Authorization=; Max-age=0; path=/']);
     res.sendStatus(204);
   };

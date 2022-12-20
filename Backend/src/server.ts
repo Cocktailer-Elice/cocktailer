@@ -43,7 +43,7 @@ class Server {
   }
 
   private setRouter() {
-    this.app.use('/', globalRouter);
+    this.app.use('/api', globalRouter);
     this.app.use(errorLogger);
     this.app.use(errorHandler);
     this.app.use(notFoundErrorHandler);
