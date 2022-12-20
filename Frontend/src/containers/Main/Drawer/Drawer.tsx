@@ -63,7 +63,7 @@ const Dimmed = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const DrawerContainer = styled.div`
@@ -73,7 +73,7 @@ const DrawerContainer = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 2;
+  z-index: 11;
 `;
 
 const TopSection = styled.div`

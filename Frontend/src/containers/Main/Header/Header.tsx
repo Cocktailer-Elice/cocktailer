@@ -32,7 +32,7 @@ const Container = styled.div`
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
 `;
 
 const LeftSection = styled.div`
