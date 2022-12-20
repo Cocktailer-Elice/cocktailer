@@ -11,6 +11,9 @@ export const UserRouter = () => {
       <Route path="/find-email" element={<div>찾기</div>} />
       <Route path="/find-password" element={<div>찾기</div>} />
       <Route path="/mypage" element={<Mypage />} />
+      <Route path="/mypage/edit" element={<div>개인정보 수정</div>} />
+      <Route path="/mypage/password-edit" element={<div>비밀번호 변경</div>} />
+      <Route path="/pro-apply" element={<div>바텐더 인증 신청</div>} />
     </Routes>
   );
 };
