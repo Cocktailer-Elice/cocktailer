@@ -30,6 +30,9 @@ const Container = styled.div`
   background-color: #fff;
   border: 1px solid #ddd;
   display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
 const LeftSection = styled.div`

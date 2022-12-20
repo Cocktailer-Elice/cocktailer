@@ -58,7 +58,7 @@ export const Drawer = ({ toggleDrawer }: DrawerProps) => {
 
 const Dimmed = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.1);
   position: absolute;
   left: 0;
@@ -68,7 +68,7 @@ const Dimmed = styled.div`
 
 const DrawerContainer = styled.div`
   width: 300px;
-  height: 100%;
+  height: 100vh;
   border: 1px solid gray;
   position: absolute;
   left: 0;
