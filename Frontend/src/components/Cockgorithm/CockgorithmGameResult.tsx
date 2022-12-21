@@ -9,7 +9,7 @@ interface CockgorithmGameResultProps {
 export const CockgorithmGameResult = ({
   cocktailInfo,
 }: CockgorithmGameResultProps) => {
-  return <GameResult>받은 칵테일 정보 : {cocktailInfo}</GameResult>;
+  return <GameResult>"{cocktailInfo}"를 추천드려요!</GameResult>;
 };
 
 const GameResult = styled.div`
@@ -18,5 +18,6 @@ const GameResult = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: brown;
+  color: whitesmoke;
+  background-color: tomato;
 `;

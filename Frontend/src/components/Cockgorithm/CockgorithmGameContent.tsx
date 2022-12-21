@@ -21,7 +21,7 @@ export const CockgorithmGameContent = ({
             addUserAnswer('1'); // 추후 유저의 응답을 세세하게 저장하려면 변경
           }}
         >
-          선택1
+          YES
         </ChoiceButton>
         <ChoiceButton
           onClick={() => {
@@ -29,7 +29,7 @@ export const CockgorithmGameContent = ({
             addUserAnswer('2'); // 추후 유저의 응답을 세세하게 저장하려면 변경
           }}
         >
-          선택2
+          NO
         </ChoiceButton>
       </ChoiceButtonContainer>
     </GameContent>
