@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { string } from 'yup';
 
 interface CockgorithmGameResultProps {
   cocktailInfo: string;
