@@ -6,8 +6,11 @@ import { compare, hash } from 'bcrypt';
 class UserService {
   private readonly userModel = userModel.Mongo;
 
-  public getUserById = async (id: string) => {
-    const founduser: IUser | null = await this.userModel.findById(id);
+  public getUserById = async (userId: number, requestUserId: string) => {
+    if (userId !== +requestUserId) {
+      throw new AppError(errorNames.authorizationError, 403, '권한 없는 유저');
+    }
+    const founduser: IUser | null = await this.userModel.findById(userId);
     if (!founduser)
       throw new AppError(errorNames.inputError, 400, `존재하지 않는 유저`);
 
@@ -52,12 +55,40 @@ class UserService {
     const user = (await this.userModel.findByFilter(filter)) as IUser;
     const isPasswordMatching = await compare(password, user.password);
     if (!isPasswordMatching) {
-      throw new AppError(errorNames.inputError, 400, '비밀번호 재확인');
+      throw new AppError(errorNames.inputError, 400, '비정상적인 접근');
     }
 
     const hashedPassword = await hash(newPassword, 12);
     const update = { password: hashedPassword };
     await this.userModel.update(filter, update);
+    return;
+  };
+
+  public changeAvatarUrl = async (
+    userId: number,
+    requestUserId: string,
+    avatarUrl: string,
+  ) => {
+    if (userId !== +requestUserId) {
+      throw new AppError(errorNames.authorizationError, 403, '권한 없는 유저');
+    }
+    const filter = { id: userId };
+    const user = (await this.userModel.findByFilter(filter)) as IUser;
+    if (user.id !== userId) {
+      throw new AppError(errorNames.authorizationError, 403, '권한 없는 유저');
+    }
+    const update = { avatarUrl };
+    await this.userModel.update(filter, update);
+    return;
+  };
+
+  public softDeleteUser = async (userId: number, requestUserId: string) => {
+    if (userId !== +requestUserId) {
+      throw new AppError(errorNames.authorizationError, 403, '권한 없는 유저');
+    }
+    const filter = { id: userId };
+    const update = { deletedAt: Date.now() };
+    await this.userModel.softDelete(filter, update);
     return;
   };
 }

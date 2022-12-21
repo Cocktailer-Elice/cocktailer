@@ -5,10 +5,24 @@ export interface CockflowCreateReqDto {
   content: string;
 }
 
-export interface Cockflow {
-  nickname: string;
+interface CockflowPreview {
+  cockflowId: string;
+  title: string;
+}
+
+export interface GetCockflowsResData {
+  cockflows: CockflowPreview[];
+  maxRequest: number;
+}
+
+export interface CockflowGetResData {
+  owner: {
+    id: number;
+    nickname: string;
+    isBartender: boolean;
+  };
   title: string;
   content: string;
-  comments: Comment[];
   createdAt: Date;
+  comments: Comment[];
 }

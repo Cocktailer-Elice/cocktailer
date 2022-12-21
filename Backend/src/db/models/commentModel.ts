@@ -1,10 +1,13 @@
+import { SubCommentInfo } from './../../services/types/commentType';
 import { ICommentMongoModel, ICommentModel } from './../types/commentType';
 import { CommentInfo } from '../../services';
 import { IComment } from '../types';
 import Comment from '../schemas/commentSchema';
 
 class MongoModel implements ICommentMongoModel {
-  public async create(commentInfo: CommentInfo): Promise<IComment> {
+  public async create(
+    commentInfo: CommentInfo | SubCommentInfo,
+  ): Promise<IComment> {
     const newcomment = await Comment.create(commentInfo);
     return newcomment;
   }
@@ -18,8 +21,8 @@ class MongoModel implements ICommentMongoModel {
   }
 
   public async findById(commentId: string): Promise<IComment | null> {
-    const filter = { id: commentId };
-    const projection = '-_id -__v -createdAt -updatedAt';
+    const filter = { _id: commentId };
+    const projection = '-createdAt -updatedAt';
     const comment = await Comment.findOne(filter, projection);
     return comment;
   }

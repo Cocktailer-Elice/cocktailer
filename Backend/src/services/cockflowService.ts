@@ -10,15 +10,21 @@ class CockflowService {
     return newPost;
   }
 
-  public async getCockflowsByRequest(cockflowsPerRequest: number) {
-    const request = await this.cockflowModel.getTotalRequest(
+  public async getCockflowsByRequest(
+    scroll: number,
+    cockflowsPerRequest: number,
+  ) {
+    const maxRequest = await this.cockflowModel.getTotalRequest(
       cockflowsPerRequest,
     );
+    if (scroll > maxRequest) {
+      throw new AppError(errorNames.inputError, 400, '비정상적인 접근');
+    }
     const cockflows = await this.cockflowModel.getByRequest(
-      request,
+      scroll,
       cockflowsPerRequest,
     );
-    return cockflows;
+    return { cockflows, maxRequest };
   }
 
   public async getCockflowById(cockflowId: number) {
@@ -34,7 +40,7 @@ class CockflowService {
     return foundCockflow;
   }
 
-  public async softDeleteCockflow(cockflowId: number, userId: number) {
+  public async deleteCockflow(cockflowId: number, userId: number) {
     const cockflow = await this.cockflowModel.findById(cockflowId);
 
     if (!cockflow) {
@@ -45,7 +51,7 @@ class CockflowService {
       );
     }
 
-    if (cockflow.owner !== userId.toString()) {
+    if (cockflow.owner !== userId) {
       throw new AppError(
         errorNames.authorizationError,
         403,

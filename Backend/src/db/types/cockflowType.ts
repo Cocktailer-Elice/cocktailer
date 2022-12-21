@@ -18,7 +18,7 @@ export interface ICockflowMongoModel {
 
 export interface ICockflow {
   id: string;
-  owner: string;
+  owner: number;
   title: string;
   content: string;
   deletedAt: Date | null;

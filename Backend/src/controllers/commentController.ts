@@ -43,6 +43,20 @@ class CommentController {
     await this.commentService.deleteComment(commentId, userId);
     res.sendStatus(204);
   };
+
+  public addSubcomment = async (req: Req, res: Res) => {
+    const { cockflowId, commentId } = req.params;
+    const { userId } = req.user;
+    const commentInfo = {
+      ...req.body,
+      owner: userId,
+      cockflowId: +cockflowId,
+      isSubComment: true,
+      parentCommentId: commentId,
+    };
+    await this.commentService.addSubcomment(commentInfo);
+    res.sendStatus(204);
+  };
 }
 
 const commentController = new CommentController();

@@ -7,6 +7,7 @@ const router: Router = Router({ mergeParams: true });
 
 router.use(isLoggedIn);
 router.post('/', asyncHandler(commentController.createComment));
+router.post('/:commentId', asyncHandler(commentController.addSubcomment));
 router.put('/:commentId', asyncHandler(commentController.updateComment));
 router.patch('/:commentId', asyncHandler(commentController.adoptComment));
 router.patch(

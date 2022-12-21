@@ -15,13 +15,14 @@ const CommentSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    subcomments: [
-      {
-        type: String,
-      },
-    ],
-    isSubcomment: {
+    isAdopted: {
       type: Boolean,
+    },
+    isSubComment: {
+      type: Boolean,
+    },
+    parentCommentId: {
+      type: String,
     },
   },
   { collection: 'comments', timestamps: true, versionKey: false },
