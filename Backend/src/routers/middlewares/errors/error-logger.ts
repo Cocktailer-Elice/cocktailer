@@ -1,6 +1,6 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import fs from 'fs';
-import logger from '../../../configs/winston';
+import logger from '../../../winston';
 
 function errorLogger(error: Error, req: Req, res: Res, next: Next) {
   const now = new Date();

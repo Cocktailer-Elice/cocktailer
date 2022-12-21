@@ -1,7 +1,6 @@
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
+import { CockflowGetPost } from '../../components/Cockflow/CockflowGetPost'
 import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
-import { CockflowEnrollBox } from '../../components/Cockflow/CockflowEnrollBox';
-import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
 import { P5 } from '../../components/Cockflow/style';
 
 export const CockflowEnroll = () => {
@@ -9,8 +8,7 @@ export const CockflowEnroll = () => {
     <P5>
       <CockflowHeader />
       <CockflowLinkBtn link="/cockflow" title="목록" />
-      <CockflowEnrollBox actived={false} />
-      <CockflowEnrollBtns />
+      <CockflowGetPost />
     </P5>
   );
 };

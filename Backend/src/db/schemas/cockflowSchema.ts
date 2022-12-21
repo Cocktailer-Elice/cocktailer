@@ -1,14 +1,14 @@
 import { Schema, model, connection } from 'mongoose';
-import { IPost } from '../types';
+import { ICockflow } from '../types';
 
-const PostSchema: Schema = new Schema(
+const CockflowSchema: Schema = new Schema(
   {
     id: {
       type: Number,
       unique: true,
     },
     owner: {
-      type: String,
+      type: Number,
       required: true,
     },
     title: {
@@ -19,24 +19,20 @@ const PostSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    comments: [
-      {
-        type: String,
-      },
-    ],
     deletedAt: {
       type: Date,
+      default: null,
     },
   },
-  { collection: 'posts', timestamps: true },
+  { collection: 'cockflows', timestamps: true, versionKey: false },
 );
 
-PostSchema.pre('save', async function () {
+CockflowSchema.pre('save', async function () {
   const sequenceCollection = connection.collection('sequences');
 
   const sequence = await sequenceCollection.findOneAndUpdate(
     {
-      collectionName: 'posts',
+      collectionName: 'cockflows',
     },
     { $inc: { value: 1 } },
     {
@@ -49,4 +45,4 @@ PostSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<IPost>('posts', PostSchema);
+export default model<ICockflow>('cockflows', CockflowSchema);
