@@ -30,7 +30,6 @@ export const InputCockFlavor = () => {
   return (
     <>
       <p>Flavor</p>
-
       <TagBox>
         {tagList?.map((tagItem, index) => {
           return (
@@ -95,7 +94,6 @@ const TagItem = styled.div`
 `;
 const TagInput = styled.input`
   display: inline-flex;
-  min-width: 150px;
   background: transparent;
   border: none;
   outline: none;

@@ -35,16 +35,44 @@ export const InputTitleImg = () => {
     }
   };
   return (
-    <>
-      <div>
-        <label htmlFor="input_img">대표 사진 등록하기</label>
-        <input type="file" id="input_img" onChange={onChooseImg} />
-      </div>
+    <ImgContainer>
+      <>
+        <label htmlFor="input_img">
+          <InsertImg>대표 사진 등록</InsertImg>
+        </label>
+        <input
+          type="file"
+          id="input_img"
+          style={{ display: 'none' }}
+          onChange={onChooseImg}
+        />
+      </>
       <PreviewImg>
         {imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />}
       </PreviewImg>
-    </>
+    </ImgContainer>
   );
 };
 
 const PreviewImg = styled.div``;
+
+const ImgContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const InsertImg = styled.div`
+  border: #087f5b solid 5px;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px;
+
+  &:hover {
+    color: white;
+    border: #38d9a9 solid 5px;
+    background-color: #38d9a9;
+  }
+`;

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 export const ApplyButton = () => {
-  return <Apply>ApplyBtn</Apply>;
+  return <Apply>등록하기</Apply>;
 };
 
 const Apply = styled.div`
