@@ -3,7 +3,6 @@ export const cockflowQueries = {
     {
       $match: {
         id: cockflowId,
-        deletedAt: null,
       },
     },
     {
@@ -51,19 +50,25 @@ export const cockflowQueries = {
         as: 'comments',
         pipeline: [
           {
-            $project: {
-              cockflowId: 0,
-              createdAt: 0,
-              updatedAt: 0,
-              deletedAt: 0,
+            $match: {
+              isSubComment: null,
             },
           },
         ],
       },
     },
     {
+      $project: {
+        'comments.cockflowId': 0,
+        'comments.createdAt': 0,
+        'comments.updatedAt': 0,
+      },
+    },
+    {
       $unwind: {
         path: '$comments',
+        preserveNullAndEmptyArrays: true,
+        includeArrayIndex: 'commentsCount',
       },
     },
     {
@@ -94,37 +99,7 @@ export const cockflowQueries = {
     {
       $unwind: {
         path: '$comments.owner',
-      },
-    },
-    {
-      $set: {
-        'comments.idString': {
-          $toString: '$comments._id',
-        },
-      },
-    },
-    {
-      $lookup: {
-        from: 'comments',
-        localField: 'comments.idString',
-        foreignField: 'parentCommentId',
-        as: 'comments.subComments',
-        pipeline: [
-          {
-            $project: {
-              cockflowId: 0,
-              createdAt: 0,
-              updatedAt: 0,
-              deletedAt: 0,
-              isSubComment: 0,
-            },
-          },
-        ],
-      },
-    },
-    {
-      $match: {
-        'comments.isSubComment': null,
+        preserveNullAndEmptyArrays: true,
       },
     },
     {
@@ -147,6 +122,98 @@ export const cockflowQueries = {
         },
         comments: {
           $push: '$comments',
+        },
+        commentsCount: {
+          $last: '$commentsCount',
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: 'comments',
+        localField: 'id',
+        foreignField: 'cockflowId',
+        as: 'subComments',
+        pipeline: [
+          {
+            $match: {
+              isSubComment: true,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $project: {
+        'subComments.isSubComment': 0,
+        'subComments.cockflowId': 0,
+        'subComments.createdAt': 0,
+        'subComments.updatedAt': 0,
+      },
+    },
+    {
+      $unwind: {
+        path: '$subComments',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'subComments.owner',
+        foreignField: 'id',
+        as: 'subComments.owner',
+        pipeline: [
+          {
+            $project: {
+              _id: 0,
+              name: 0,
+              email: 0,
+              password: 0,
+              birthday: 0,
+              avatarUrl: 0,
+              isAdmin: 0,
+              createdAt: 0,
+              updatedAt: 0,
+              deletedAt: 0,
+              tel: 0,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $unwind: {
+        path: '$subComments.owner',
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $group: {
+        _id: '$id',
+        id: {
+          $first: '$id',
+        },
+        owner: {
+          $first: '$owner',
+        },
+        title: {
+          $first: '$title',
+        },
+        content: {
+          $first: '$content',
+        },
+        createdAt: {
+          $first: '$createdAt',
+        },
+        comments: {
+          $first: '$comments',
+        },
+        subComments: {
+          $push: '$subComments',
+        },
+        commentsCount: {
+          $first: '$commentsCount',
         },
       },
     },

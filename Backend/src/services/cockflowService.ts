@@ -1,3 +1,4 @@
+import { formatCockflow } from './utils/formatCockflowUtil';
 import { CockflowInfo } from '../services';
 import { cockflowModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
@@ -29,15 +30,12 @@ class CockflowService {
 
   public async getCockflowById(cockflowId: number) {
     const foundCockflow = await this.cockflowModel.findById(cockflowId);
-    if (!foundCockflow)
+
+    if (!foundCockflow) {
       throw new AppError(errorNames.inputError, 400, `존재하지 않는 칵플로우`);
-    if (foundCockflow.deletedAt)
-      throw new AppError(
-        errorNames.resourceNotFoundError,
-        400,
-        '삭제된 칵플로우',
-      );
-    return foundCockflow;
+    }
+
+    return formatCockflow(foundCockflow);
   }
 
   public async deleteCockflow(cockflowId: number, userId: number) {

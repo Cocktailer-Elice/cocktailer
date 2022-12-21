@@ -1,3 +1,4 @@
+import { GetCockflowServiceDto } from './../../services/types/cockflowType';
 import { cockflowQueries } from './../queries/cockflowQuery';
 import { ICockflowMongoModel, ICockflowModel } from './../types/cockflowType';
 import { CockflowInfo } from '../../services';
@@ -42,7 +43,9 @@ class MongoModel implements ICockflowMongoModel {
     return cockflows;
   }
 
-  public findById = async (cockflowId: number): Promise<ICockflow> => {
+  public findById = async (
+    cockflowId: number,
+  ): Promise<GetCockflowServiceDto> => {
     const cockflow = await Cockflow.aggregate(
       cockflowQueries.findById(cockflowId),
     );

@@ -1,3 +1,4 @@
+import { GetCockflowServiceDto } from './../../services/types/cockflowType';
 import { CockflowInfo } from 'Backend/src/services';
 import { UpdateWriteOpResult } from 'mongoose';
 
@@ -12,7 +13,7 @@ export interface ICockflowMongoModel {
     cockflowsPerRequest: number,
   ): Promise<ICockflow[]>;
   findByUserId(userId: number): Promise<ICockflow[]>;
-  findById(cockflowId: number): Promise<ICockflow>;
+  findById(cockflowId: number): Promise<GetCockflowServiceDto>;
   softDelete(cockflowId: number): Promise<UpdateWriteOpResult>;
 }
 
