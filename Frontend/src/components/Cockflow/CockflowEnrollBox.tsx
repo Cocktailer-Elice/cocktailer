@@ -109,16 +109,14 @@ export const CockflowEnrollBox = ({ actived = true }) => {
     <ContWrap>
       <form>
         <TitleWrap>
-          <div>{title}</div>
+          <div>{title}</div><br/>
           <div>
-            <span>작성자</span>
-            <span>{nickname}</span>
-            <span>뱃지 {isBartender}</span>
+            <span>{nickname} </span>
+            <span>badge {isBartender}</span>
+            <span>{createdAt}</span>
           </div><br/>
           <div>
-            <span>(+)조회수</span>
-            <span>생성날짜</span>
-            <span>{createdAt}</span>
+            {/* <span>(+)조회수</span> */}
           </div>
         </TitleWrap>
         <TextBox name="" id="" value={content} onChange={(e) => {setFlowcontent(e.target.value)}} readOnly={actived} />
