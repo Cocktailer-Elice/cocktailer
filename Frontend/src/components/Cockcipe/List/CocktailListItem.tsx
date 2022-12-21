@@ -2,21 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  id: number;
+  id: string;
+  name: string;
 }
 
-const CocktailListItem = ({ id }: Props) => {
+export const CocktailListItem = ({ id, name }: Props) => {
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event);
-    window.location.href = `/cockcipe/detail`;
+
+    window.location.href = `/cockcipe/detail/${id}`;
   };
-  return <ThumbnailBox onClick={handleDetailPage}>레시피 사진</ThumbnailBox>;
+  return (
+    <ThumbnailBox onClick={handleDetailPage}>
+      레시피 사진<p>{id}</p>
+    </ThumbnailBox>
+  );
 };
 
-export default CocktailListItem;
 const ThumbnailBox = styled.div`
   border: 1px solid black;
-  width: 100px;
+  width: auto;
   height: 100px;
   margin: 10px;
 `;
