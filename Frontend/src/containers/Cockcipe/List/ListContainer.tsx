@@ -14,46 +14,72 @@ interface Data {
   img: string;
   id: string;
   category: string;
+  official: boolean;
 }
 export const ListContainer = () => {
-  const [cockOneList, setCockOneList] = useState<Data[]>([]);
-  const [cockTwoList, setCockTwoList] = useState<Data[]>([]);
-  const [cockThreeList, setCockThreeList] = useState<Data[]>([]);
+  const [dryList, setDryList] = useState<Data[]>([]);
+  const [refreshList, setRefreshList] = useState<Data[]>([]);
+  const [fruitList, setFruitList] = useState<Data[]>([]);
+  const [sweetList, setSweetList] = useState<Data[]>([]);
+  const [smoothieList, setSmoothList] = useState<Data[]>([]);
+  const [hotList, setHotList] = useState<Data[]>([]);
+
   useEffect(() => {
-    axios.get('/src/containers/Cockcipe/List/data.json').then((res) => {
-      for (let key in res.data) {
-        res.data[key].map((item: Data) => {
-          if (item.category === 'cate1')
-            setCockOneList((prev) => [...prev, item]);
-          if (item.category === 'cate2')
-            setCockTwoList((prev) => [...prev, item]);
-          if (item.category === 'cate3')
-            setCockThreeList((prev) => [...prev, item]);
-        });
-      }
+    axios.get('http://localhost:8000/api/cocktails/lists').then((res) => {
+      console.log(res.data.lists[0]);
+      setDryList(res.data.lists[0]['dry']);
+      setRefreshList(res.data.lists[0]['refreshing']);
+      setFruitList(res.data.lists[0]['fruit']);
+      setSweetList(res.data.lists[0]['refreshing']);
+      setSmoothList(res.data.lists[0]['smoothie']);
+      setHotList(res.data.lists[0]['hot']);
     });
   }, []);
   return (
     <>
-      <Category>카테고리1</Category>
+      <Category>드라이 칵테일</Category>
       <Swiper slidesPerView={3} loop={true}>
-        {cockOneList?.map((item, idx) => (
+        {dryList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem key={idx} name={item.name} id={item.id} />
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>카테고리2</Category>
+      <Category>리프레싱 칵테일</Category>
       <Swiper slidesPerView={3} loop={true}>
-        {cockTwoList?.map((item, idx) => (
+        {refreshList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem key={idx} name={item.name} id={item.id} />
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>카테고리3</Category>
+      <Category>프루트 칵테일</Category>
       <Swiper slidesPerView={3} loop={true}>
-        {cockThreeList?.map((item, idx) => (
+        {fruitList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem key={idx} name={item.name} id={item.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Category>스위트 칵테일</Category>
+      <Swiper slidesPerView={3} loop={true}>
+        {sweetList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem key={idx} name={item.name} id={item.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Category>스무디 칵테일</Category>
+      <Swiper slidesPerView={3} loop={true}>
+        {smoothieList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem key={idx} name={item.name} id={item.id} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      <Category>핫 칵테일</Category>
+      <Swiper slidesPerView={3} loop={true}>
+        {hotList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem key={idx} name={item.name} id={item.id} />
           </SwiperSlide>

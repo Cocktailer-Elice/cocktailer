@@ -14,7 +14,7 @@ export const CocktailListItem = ({ id, name }: Props) => {
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
-      레시피 사진<p>{id}</p>
+      {id}는{name}
     </ThumbnailBox>
   );
 };

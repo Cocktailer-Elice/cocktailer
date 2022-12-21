@@ -32,9 +32,12 @@ export const DetailContainer = () => {
   });
 
   useEffect(() => {
-    axios.get('/src/containers/Cockcipe/Detail/data.json').then((res) => {
-      setCocktail(res.data.cocktail);
-    });
+    // axios.get('/src/containers/Cockcipe/Detail/data.json').then((res) => {
+    //   setCocktail(res.data.cocktail);
+    // });
+    axios
+      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
+      .then((res) => console.log(res));
   }, []);
   return (
     <>
