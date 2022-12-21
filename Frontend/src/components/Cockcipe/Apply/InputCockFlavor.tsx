@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-export const InputCockFlavor = () => {
+export const InputCockFlavor = ({ setFlavor }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tag, setTag] = useState<string | null>('');
   const [tagList, setTagList] = useState<string[]>([]);
@@ -14,12 +14,12 @@ export const InputCockFlavor = () => {
     const newTag = inputRef.current?.value;
     if (newTag?.length !== 0 && e.key === 'Enter') {
       setTagList((item) => [...item, newTag]);
+      setFlavor((item) => [...item, newTag]);
       setTag('');
     }
   };
 
   const deleteTagItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-    // console.log(event.target.parentElement.firstChild.innerText);
     const deleteTagItem = event.target.parentElement.firstChild.innerText;
     const filteredTagList = tagList?.filter(
       (tagItem) => tagItem !== deleteTagItem,
