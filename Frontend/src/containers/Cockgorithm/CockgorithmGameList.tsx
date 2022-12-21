@@ -2,17 +2,25 @@ import styled from 'styled-components';
 
 interface CockgorithmGameListProps {
   toggleModal: () => void;
+  changeSelectedGame: (gameTitle: string) => void;
 }
 
 const Games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5', 'Game6', 'Game7'];
 
 export const CockgorithmGameList = ({
   toggleModal,
+  changeSelectedGame,
 }: CockgorithmGameListProps) => {
   return (
     <GameList>
       {Games.map((game, index) => (
-        <Game key={index} onClick={toggleModal}>
+        <Game
+          key={index}
+          onClick={() => {
+            toggleModal();
+            changeSelectedGame(game);
+          }}
+        >
           {game}
         </Game>
       ))}

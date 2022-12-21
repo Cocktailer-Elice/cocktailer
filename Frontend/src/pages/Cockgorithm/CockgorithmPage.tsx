@@ -5,15 +5,27 @@ import { useState } from 'react';
 
 export const CockgorithmPage = () => {
   const [modal, setModal] = useState(false);
+  const [seletedGame, setSelectedGame] = useState('');
 
   const toggleModal = () => {
     setModal((curr) => !curr);
   };
 
+  const changeSelectedGame = (gameTitle: string) => {
+    setSelectedGame(gameTitle);
+  };
+
   return (
     <Container>
-      <CockgorithmGameList toggleModal={toggleModal} />
-      {modal ? <CockgorithmModal toggleModal={toggleModal} /> : <></>}
+      <CockgorithmGameList
+        toggleModal={toggleModal}
+        changeSelectedGame={changeSelectedGame}
+      />
+      {modal ? (
+        <CockgorithmModal gameTitle={seletedGame} toggleModal={toggleModal} />
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };

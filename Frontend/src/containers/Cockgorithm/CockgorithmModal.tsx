@@ -4,10 +4,14 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 
 interface CockgorithmModalProps {
+  gameTitle: string;
   toggleModal: () => void;
 }
 
-export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
+export const CockgorithmModal = ({
+  gameTitle,
+  toggleModal,
+}: CockgorithmModalProps) => {
   const [questionCounter, setQuestionCounter] = useState(1);
 
   const increaseQuestionCounter = () => {
@@ -19,7 +23,7 @@ export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
       <Dimmed onClick={toggleModal} />
       <Modal>
         <MainSection>
-          <GameTitle>게임 타이틀</GameTitle>
+          <GameTitle>게임 타이틀 : {gameTitle}</GameTitle>
           {questionCounter < 4 ? (
             <CockgorithmGameContent
               increaseQuestionCounter={increaseQuestionCounter}
