@@ -8,7 +8,7 @@ export const errorNames = {
   databaseError: `DB 에러`,
   objectCreationError: `Object Creation Error`,
   resourceNotFoundError: `Resource Not Found Error`,
-  resourceDuplicationError: `리소스 중복 에러`,
+  DuplicationError: `리소스 중복 에러`,
   remoteStorageError: `클라우드 스토리지 에러`,
   requestValidationError: `Request Validation Error`,
 };
