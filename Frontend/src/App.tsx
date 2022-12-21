@@ -1,35 +1,25 @@
-import Router from './Router';
-
 import styled from 'styled-components';
-
-import { createGlobalStyle } from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { reset } from 'styled-reset';
-import Header from './containers/Main/Header/Header';
+import { BrowserRouter } from 'react-router-dom';
 
-const GlobalStyles = createGlobalStyle`
-  ${reset}
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  body {
-    
-  }
-`;
+import { GlobalStyles } from './GlobalStyles';
+import { Header } from './containers/Main/Header/Header';
+import { Router } from './Router';
 
-function App() {
+export const App = () => {
   return (
-    <StyledApp>
-      <Helmet></Helmet>
-      <GlobalStyles></GlobalStyles>
-      <Router></Router>
-    </StyledApp>
+    <AppLayout>
+      <Helmet />
+      <GlobalStyles />
+      <BrowserRouter>
+        <Header />
+        <Router />
+      </BrowserRouter>
+    </AppLayout>
   );
-}
+};
 
-const StyledApp = styled.div`
+const AppLayout = styled.div`
   width: 480px;
   height: 100vh;
   background-color: #fff;
@@ -37,5 +27,3 @@ const StyledApp = styled.div`
   margin: auto;
   position: relative;
 `;
-
-export default App;

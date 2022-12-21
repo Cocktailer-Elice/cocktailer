@@ -11,7 +11,7 @@ const SequenceSchema = new Schema(
       default: 0,
     },
   },
-  { collection: 'sequences' },
+  { collection: 'sequences', versionKey: false },
 );
 
 const SequenceModel = model('sequences', SequenceSchema);
