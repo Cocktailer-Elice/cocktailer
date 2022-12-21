@@ -7,6 +7,7 @@ import { Navigation } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { MorePageBtn } from '../../../components/Cockcipe/List/MorePageBtn';
 
 // useEffect 데이터 get 후 칵테일 리스트 map 출력
 interface Data {
@@ -38,6 +39,7 @@ export const ListContainer = () => {
   return (
     <>
       <Category>드라이 칵테일</Category>
+      <MorePageBtn />
       <Swiper slidesPerView={3} loop={true}>
         {dryList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -46,6 +48,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>리프레싱 칵테일</Category>
+      <MorePageBtn />
       <Swiper slidesPerView={3} loop={true}>
         {refreshList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -54,6 +57,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>프루트 칵테일</Category>
+      <MorePageBtn />
       <Swiper slidesPerView={3} loop={true}>
         {fruitList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -62,6 +66,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>스위트 칵테일</Category>
+      <MorePageBtn />
       <Swiper slidesPerView={3} loop={true}>
         {sweetList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -70,6 +75,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>스무디 칵테일</Category>
+      <MorePageBtn />
       <Swiper slidesPerView={3} loop={true}>
         {smoothieList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -78,6 +84,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>핫 칵테일</Category>
+      <MorePageBtn />
       <Swiper slidesPerView={3} loop={true}>
         {hotList?.map((item, idx) => (
           <SwiperSlide key={idx}>
