@@ -2,19 +2,35 @@ import styled from 'styled-components';
 
 interface CockgorithmGameContentProps {
   question: string;
+  addUserAnswer: (answer: string) => void;
   increaseQuestionCounter: () => void;
 }
 
 export const CockgorithmGameContent = ({
   question,
+  addUserAnswer,
   increaseQuestionCounter,
 }: CockgorithmGameContentProps) => {
   return (
     <GameContent>
       <Question>{question}</Question>
       <ChoiceButtonContainer>
-        <ChoiceButton onClick={increaseQuestionCounter}>선택1</ChoiceButton>
-        <ChoiceButton onClick={increaseQuestionCounter}>선택2</ChoiceButton>
+        <ChoiceButton
+          onClick={() => {
+            increaseQuestionCounter();
+            addUserAnswer('1');
+          }}
+        >
+          선택1
+        </ChoiceButton>
+        <ChoiceButton
+          onClick={() => {
+            increaseQuestionCounter();
+            addUserAnswer('2');
+          }}
+        >
+          선택2
+        </ChoiceButton>
       </ChoiceButtonContainer>
     </GameContent>
   );

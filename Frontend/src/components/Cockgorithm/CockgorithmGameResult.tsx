@@ -1,7 +1,15 @@
 import styled from 'styled-components';
+import { string } from 'yup';
 
-export const CockgorithmGameResult = () => {
-  return <GameResult>게임결과</GameResult>;
+interface CockgorithmGameResultProps {
+  cocktailInfo: string;
+  // cocktail schema로 업데이트
+}
+
+export const CockgorithmGameResult = ({
+  cocktailInfo,
+}: CockgorithmGameResultProps) => {
+  return <GameResult>받은 칵테일 정보 : {cocktailInfo}</GameResult>;
 };
 
 const GameResult = styled.div`

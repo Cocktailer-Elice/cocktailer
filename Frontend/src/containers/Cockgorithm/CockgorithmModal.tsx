@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
+import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 
 interface CockgorithmModalProps {
   gameTitle: string;
@@ -15,9 +17,35 @@ export const CockgorithmModal = ({
   toggleModal,
 }: CockgorithmModalProps) => {
   const [questionCounter, setQuestionCounter] = useState(0);
+  const [userAnswer, setUserAnswer] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [cocktailInfo, setCocktailInfo] = useState(''); // 서버로부터 받아온 cocktail이 저장되는 state
+
+  useEffect(() => {
+    if (questionCounter === 4) {
+      setLoading(true);
+      setTimeout(() => {
+        // 로딩 처리
+        setLoading(false);
+
+        // 유저가 선택한 응답 들을 서버로 전달
+        console.log('유저 응답', userAnswer);
+
+        // 서버로부터 받아온 cocktail을 받아옴
+        const cocktail = '마티니 블루';
+
+        // 받아온 cocktail을 state로 관리
+        setCocktailInfo(cocktail);
+      }, 2000);
+    }
+  }, [questionCounter]);
 
   const increaseQuestionCounter = () => {
     setQuestionCounter((curr) => curr + 1);
+  };
+
+  const addUserAnswer = (answer: string) => {
+    setUserAnswer((curr) => [...curr, answer]);
   };
 
   return (
@@ -26,13 +54,16 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {gameTitle}</GameTitle>
-          {questionCounter < 3 ? (
+          {questionCounter < 4 ? (
             <CockgorithmGameContent
               question={questions[questionCounter]}
+              addUserAnswer={addUserAnswer}
               increaseQuestionCounter={increaseQuestionCounter}
             />
+          ) : loading ? (
+            <CockgorithmGameLoading />
           ) : (
-            <CockgorithmGameResult />
+            <CockgorithmGameResult cocktailInfo={cocktailInfo} />
           )}
         </MainSection>
         <CloseButton onClick={toggleModal} />
