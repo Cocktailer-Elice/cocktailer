@@ -1,166 +1,102 @@
-import { tokenConfig } from '../configs/env';
+import { createNickname } from './utils/createNickname';
+import { createRandomNumber, sendAuthCodeMessage } from './utils';
 import { hash, compare } from 'bcrypt';
-import { sign } from 'jsonwebtoken';
-import { IUser } from '../db/types';
-import { Token, TokenData, UserCookie } from '../routers/middlewares/types';
 import { UserCreateData, LoginReqData } from 'types';
-import { userModel } from '../db';
+import { userModel } from '../db/models/userModel';
 import { AppError, errorNames } from '../routers/middlewares';
+import redisCache from '../redis';
 
 class AuthService {
-  private readonly userModel = userModel;
+  private readonly userModel = userModel.Mongo;
 
-  public async signup(
-    userCreateData: UserCreateData,
-  ): Promise<{ cookie: string; newUser: IUser }> {
-    const { email, password, alcohol } = userCreateData;
+  public signup = async (userCreateData: UserCreateData) => {
+    const { email, password, alcohol, tel } = userCreateData;
 
     await this.checkEmailDuplicate(email);
+    await this.checkTelDuplicate(tel);
 
-    let nickname = await this.createNickname(alcohol);
+    let nickname = await createNickname(alcohol);
     let isNicknameDuplicate = await this.checkNicknameDuplicate(nickname);
     while (isNicknameDuplicate) {
-      nickname = await this.createNickname(alcohol);
+      nickname = await createNickname(alcohol);
       isNicknameDuplicate = await this.checkNicknameDuplicate(nickname);
     }
     const hashedPassword = await hash(password, 12);
-    const newUser: IUser = await this.userModel.create({
+    const newUser = await this.userModel.create({
       ...userCreateData,
       password: hashedPassword,
       nickname,
     });
+    return newUser;
+  };
 
-    const tokenData = this.createToken(newUser);
-    const cookie = this.createCookie(tokenData);
-
-    return { cookie, newUser };
-  }
-
-  public async login(
-    userData: LoginReqData,
-  ): Promise<{ cookie: string; foundUser: IUser }> {
+  public login = async (userData: LoginReqData) => {
     const { email, password } = userData;
-    const foundUser: IUser | null = await this.userModel.findByEmail(email);
-    if (!foundUser)
-      throw new AppError(
-        errorNames.inputError,
-        400,
-        `이메일 또는 비밀번호 재확인`,
-      );
-
-    await this.checkPassword(password, foundUser.password);
-
-    const tokenData = this.createToken(foundUser);
-    const cookie = this.createCookie(tokenData);
-
-    return { cookie, foundUser };
-  }
-
-  public async logout(userData: UserCookie): Promise<void> {
-    const { id } = userData;
-    const foundUser: IUser | null = await this.userModel.findById(id);
-    if (!foundUser) {
-      throw new AppError(errorNames.inputError, 400, `존재하지 않는 유저`);
+    const filter = { email };
+    const foundUser = await this.userModel.findByFilter(filter);
+    if (!foundUser || !(await compare(password, foundUser.password))) {
+      throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
-    return;
-  }
+    return foundUser;
+  };
 
-  public async checkEmailDuplicate(email: string): Promise<void> {
+  // public async logout(userData: Cookie) {
+  //   const { userId } = userData;
+  //   const foundUser = await this.userModel.findById(userId);
+  //   if (!foundUser) {
+  //     throw new AppError(errorNames.inputError, 400, `존재하지 않는 유저`);
+  //   }
+  //   return;
+  // }
+
+  public checkEmailDuplicate = async (email: string) => {
     const result = await this.userModel.checkEmailDuplicate(email);
     if (result) {
-      throw new AppError(
-        errorNames.resourceDuplicationError,
-        400,
-        '이메일 중복',
-      );
-    }
-    return;
-  }
-
-  private async createNickname(alcohol: string): Promise<string> {
-    if (alcohol === 'Random') {
-      const randomAlcoholSet = [
-        '진',
-        '보드카',
-        '럼',
-        '위스키',
-        '데낄라',
-        '브랜디',
-      ];
-      const randomNumberCount = Math.floor(
-        Math.random() * randomAlcoholSet.length,
-      );
-      alcohol = randomAlcoholSet[randomNumberCount];
-    }
-
-    const randomDecoSet = [
-      '사랑스런',
-      '달콤한',
-      '죽음의',
-      '귀여운',
-      '나의 사랑',
-      '나의 웬수',
-    ];
-    const randomDecoCount = Math.floor(Math.random() * randomDecoSet.length);
-    const decorator = randomDecoSet[randomDecoCount];
-
-    let randomNumber = '';
-    for (let digit = 0; digit <= 3; digit++) {
-      const randomNumberDigit = Math.floor(Math.random() * 10);
-      randomNumber += '' + randomNumberDigit;
-    }
-
-    const nickname = `${decorator} ${alcohol} #${+randomNumber}`;
-
-    return nickname;
-  }
-
-  private async checkNicknameDuplicate(nickname: string): Promise<number> {
-    const result = await this.userModel.checkNicknameDuplicate(nickname);
-    if (result) {
-      throw new AppError(
-        errorNames.resourceDuplicationError,
-        400,
-        '이메일 중복',
-      );
+      throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
     }
     return result;
-  }
+  };
 
-  private async checkPassword(
-    password: string,
-    hashedPassword: string,
-  ): Promise<void> {
-    const isPasswordMatching = await compare(password, hashedPassword);
-    if (!isPasswordMatching)
-      throw new AppError(
-        errorNames.inputError,
-        400,
-        '이메일 또는 비밀번호 재확인',
-      );
+  public generateAuthCode = async (tel: string) => {
+    if (await redisCache.exists(tel)) {
+      redisCache.del(tel);
+    }
+    const code = createRandomNumber(6, false) as string;
+    const response = await sendAuthCodeMessage(tel, code);
+
+    if (response.status !== 202) {
+      throw new AppError(errorNames.businessError, 500, '문자 전송 실패');
+    }
+    await redisCache.SETEX(tel, 300, code);
     return;
-  }
+  };
 
-  private createToken(user: IUser): Token {
-    const tokenData: TokenData = {
-      id: user.id,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      isBartender: user.isBartender,
-    };
-    const secretKey: string = tokenConfig.ACCESS_KEY as string;
-    const expiresIn: string = tokenConfig.ACCESS_EXPIRE as string;
+  public validateAuthCode = async (tel: string, code: string) => {
+    const matchedCode = await redisCache.get(tel);
+    if (!matchedCode) {
+      throw new AppError(errorNames.authenticationError, 401, '인증 시간 초과');
+    }
+    if (matchedCode === code) {
+      await redisCache.del(tel);
+    }
+    return;
+  };
 
-    return {
-      expiresIn,
-      token: sign(tokenData, secretKey, { expiresIn }),
-    };
-  }
+  public checkTelDuplicate = async (tel: string) => {
+    const result = await this.userModel.checkTelDuplicate(tel);
+    if (result) {
+      throw new AppError(errorNames.DuplicationError, 400, '전화번호 중복');
+    }
+    return result;
+  };
 
-  private createCookie(tokenData: Token): string {
-    const { token, expiresIn } = tokenData;
-    return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn};`;
-  }
+  private checkNicknameDuplicate = async (nickname: string) => {
+    const result = await this.userModel.checkNicknameDuplicate(nickname);
+    if (result) {
+      throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
+    }
+    return result;
+  };
 }
 
 export default AuthService;

@@ -6,10 +6,14 @@ interface Ingredients {
 
 export interface Cocktail {
   id: number;
-  cocktailName: string;
-  cocktailCategory: string;
-  cocktailFlavor: string[];
-  cocktailDegree: number;
-  cocktailImgUrl: string; //칵테일 이미지 url
-  cocktailProducts: Ingredients;
+  owner: string;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  liquid: object;
+  ratio: object;
+  content: string;
 }

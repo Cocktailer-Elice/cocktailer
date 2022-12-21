@@ -10,7 +10,7 @@ export const CockflowEnrollBtns = () => {
                 window.location.pathname === '/cockflow/new'
                     ?
                     <>
-                        <Button variant="contained">등록하기</Button>
+                        <Button type='submit' variant="contained">등록하기</Button>
                         &nbsp;&nbsp;
                         <Link to='/cockflow'>
                             <Button variant="outlined">취소하기</Button>
