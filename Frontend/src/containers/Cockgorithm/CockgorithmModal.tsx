@@ -8,11 +8,13 @@ interface CockgorithmModalProps {
   toggleModal: () => void;
 }
 
+const questions = ['질문1', '질문2', '질문3', '질문4'];
+
 export const CockgorithmModal = ({
   gameTitle,
   toggleModal,
 }: CockgorithmModalProps) => {
-  const [questionCounter, setQuestionCounter] = useState(1);
+  const [questionCounter, setQuestionCounter] = useState(0);
 
   const increaseQuestionCounter = () => {
     setQuestionCounter((curr) => curr + 1);
@@ -24,8 +26,9 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {gameTitle}</GameTitle>
-          {questionCounter < 4 ? (
+          {questionCounter < 3 ? (
             <CockgorithmGameContent
+              question={questions[questionCounter]}
               increaseQuestionCounter={increaseQuestionCounter}
             />
           ) : (

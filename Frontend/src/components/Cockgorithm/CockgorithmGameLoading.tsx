@@ -6,7 +6,7 @@ export const CockgorithmGameLoading = () => {
 
 const Loading = styled.div`
   width: 100%;
-  height: 100%;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;

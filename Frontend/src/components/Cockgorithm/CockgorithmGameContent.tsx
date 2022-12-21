@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 
 interface CockgorithmGameContentProps {
+  question: string;
   increaseQuestionCounter: () => void;
 }
 
 export const CockgorithmGameContent = ({
+  question,
   increaseQuestionCounter,
 }: CockgorithmGameContentProps) => {
   return (
     <GameContent>
-      <Question>Q1. 질문내용</Question>
+      <Question>{question}</Question>
       <ChoiceButtonContainer>
-        <ChoiceButton>선택1</ChoiceButton>
-        <ChoiceButton>선택2</ChoiceButton>
+        <ChoiceButton onClick={increaseQuestionCounter}>선택1</ChoiceButton>
+        <ChoiceButton onClick={increaseQuestionCounter}>선택2</ChoiceButton>
       </ChoiceButtonContainer>
     </GameContent>
   );
