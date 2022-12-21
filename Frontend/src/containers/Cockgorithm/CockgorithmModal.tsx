@@ -7,7 +7,7 @@ interface CockgorithmModalProps {
 export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
   return (
     <>
-      <Dimmed />
+      <Dimmed onClick={toggleModal} />
       <Modal></Modal>
     </>
   );

@@ -12,7 +12,7 @@ export const CockgorithmPage = () => {
 
   return (
     <Container>
-      <CockgorithmGameList />
+      <CockgorithmGameList toggleModal={toggleModal} />
       {modal ? <CockgorithmModal toggleModal={toggleModal} /> : <></>}
     </Container>
   );
