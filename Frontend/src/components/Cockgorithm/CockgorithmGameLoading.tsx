@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
 export const CockgorithmGameLoading = () => {
-  return <>게임로딩</>;
+  return <Loading>결과 로딩중..</Loading>;
 };
+
+const Loading = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: midnightblue;
+`;
