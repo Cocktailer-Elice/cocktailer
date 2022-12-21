@@ -1,3 +1,4 @@
+import { SubCommentInfo } from './types/commentType';
 import { CommentInfo } from '../services';
 import { commentModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
@@ -60,6 +61,17 @@ class CommentService {
     const result = await this.commentModel.deleteById(commentId);
     if (!result.acknowledged || !result.deletedCount)
       throw new AppError(errorNames.databaseError, 500, '서버 에러');
+    return;
+  };
+
+  public addSubcomment = async (subcommentInfo: SubCommentInfo) => {
+    console.log(subcommentInfo);
+    const comment = await this.commentModel.findById(
+      subcommentInfo.parentCommentId,
+    );
+    if (!comment)
+      throw new AppError(errorNames.inputError, 400, '해당하는 댓글 없음');
+    await this.commentModel.create(subcommentInfo);
     return;
   };
 }

@@ -65,7 +65,7 @@ const imsiData1 = [
       "id": 4,
       "owner": 79,
       "title": "칵플로우 테스트",
-      "content": "오늘 홍대 근처에서 소개팅이 있는데 분위기 좋은 칵테일바 추천해주실 분 계신가요~?",
+      "content": "오렌지주스 + 말리부랑 잘 어울리는 술이 뭘까요?",
       "comments": [],
       "deletedAt": null,
       "createdAt": "2022-12-18T13:28:19.385Z",
@@ -77,7 +77,7 @@ const imsiData1 = [
     "id": 6,
     "owner": 92,
     "title": "칵플로우 테스트",
-    "content": "오늘 홍대 근처에서 소개팅이 있는데 분위기 좋은 칵테일바 추천해주실 분 계신가요~?",
+    "content": "오렌지주스 + 말리부랑 잘 어울리는 술이 뭘까요?",
     "deletedAt": null,
     "createdAt": "2022-12-20T07:03:53.633Z",
     "updatedAt": "2022-12-20T07:03:53.633Z"
@@ -101,22 +101,20 @@ export const CockflowList = () => {
     title: '',
   }]);
 
+  const [pageNum, setPageNum] = useState(1)
+  
   useEffect(() => {
-    // axios.get 호출
-    // axios.get(`http://localhost:8000/cockflow/?q=1`)
-    //   .then(res => {
-    //     const newData = [{
-    //       id: id,
-    //       title: title,
-    //     }]
-    //     setData(res.data.data);
-    //   });
-    // setData([{
-    //   id: 'id',
-    //   title: 'title',
-    // }])
+    
+    //axios.get 호출
+    // axios.get(`http://localhost:8000/cockflow/?q=${pageNum}`)
+    // .then(res => {
+    //   setData(res.data.data);
+    //   setPageNum((prev => prev + 1));
+    // });
+
     setData(mockData1);
-  }, []);
+    //  무한스크롤 - yarn add react-intersection-observer
+  }, [pageNum]);
 
   return (
     <P5>

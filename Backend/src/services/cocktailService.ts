@@ -2,7 +2,6 @@ import { Cocktail } from './types';
 import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import { cocktailModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
-import { Collection } from 'mongoose';
 
 /* 간결하게 작성 */
 class CocktailService {
@@ -22,10 +21,21 @@ class CocktailService {
     return data;
   }
 
+  public async findId(id: number) {
+    const data = await this.cocktailModel.findId(id);
+
+    return data;
+  }
+
+  public async findCategory(category: string, official: boolean | null) {
+    const data = await this.cocktailModel.findCategory(category, official);
+    return data;
+  }
+
   public async getCocktail(
     id: number | null,
     category: string | null,
-    official: string | null,
+    official: boolean | null,
   ): Promise<Cocktail | Cocktail[]> {
     /*
     id x / category x / = 각 카테고리마다 n개씩

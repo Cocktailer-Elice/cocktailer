@@ -14,11 +14,13 @@ class CockflowController {
   };
 
   public getCockflows = async (req: Req, res: Res) => {
+    const scroll = req.query.q ? req.query.q : 1;
     const cockflowsPerRequest = cockflowContants.COCKFLOWS_PER_REQUEST;
-    const cockflows = await this.cockflowService.getCockflowsByRequest(
+    const result = await this.cockflowService.getCockflowsByRequest(
+      +scroll,
       cockflowsPerRequest,
     );
-    res.status(200).json(cockflows);
+    res.status(200).json(result);
   };
 
   public getCockflowById = async (req: Req, res: Res) => {
@@ -30,7 +32,7 @@ class CockflowController {
   public deleteCockflow = async (req: Req, res: Res) => {
     const { cockflowId } = req.params;
     const { userId } = req.user;
-    await this.cockflowService.softDeleteCockflow(+cockflowId, userId);
+    await this.cockflowService.deleteCockflow(+cockflowId, userId);
     res.sendStatus(204);
   };
 }

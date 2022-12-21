@@ -5,10 +5,26 @@ export interface CockflowCreateReqDto {
   content: string;
 }
 
-export interface Cockflow {
-  nickname: string;
+interface CockflowPreview {
+  cockflowId: string;
+  title: string;
+}
+
+export interface GetCockflowsResData {
+  cockflows: CockflowPreview[];
+  maxRequest: number;
+}
+
+export interface CockflowGetResData {
+  id: number;
+  owner: {
+    id: number;
+    nickname: string;
+    isBartender: boolean;
+  };
   title: string;
   content: string;
-  comments: Comment[];
+  // view: number; 조회수는 구현 예정
   createdAt: Date;
+  comments: Comment[];
 }

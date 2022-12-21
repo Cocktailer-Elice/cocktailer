@@ -34,27 +34,16 @@ class AuthService {
     const { email, password } = userData;
     const filter = { email };
     const foundUser = await this.userModel.findByFilter(filter);
+    if (!foundUser) {
+      throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
+    }
+    // if (!foundUser.deletedAt) {
+    //   throw new AppError(errorNames.authenticationError, 400, '탈퇴한 유저');
+    // }
     if (!foundUser || !(await compare(password, foundUser.password))) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
     return foundUser;
-  };
-
-  // public async logout(userData: Cookie) {
-  //   const { userId } = userData;
-  //   const foundUser = await this.userModel.findById(userId);
-  //   if (!foundUser) {
-  //     throw new AppError(errorNames.inputError, 400, `존재하지 않는 유저`);
-  //   }
-  //   return;
-  // }
-
-  public checkEmailDuplicate = async (email: string) => {
-    const result = await this.userModel.checkEmailDuplicate(email);
-    if (result) {
-      throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
-    }
-    return result;
   };
 
   public generateAuthCode = async (tel: string) => {
@@ -82,8 +71,18 @@ class AuthService {
     return;
   };
 
+  public checkEmailDuplicate = async (email: string) => {
+    const filter = { email };
+    const result = await this.userModel.checkDuplicate(filter);
+    if (result) {
+      throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
+    }
+    return result;
+  };
+
   public checkTelDuplicate = async (tel: string) => {
-    const result = await this.userModel.checkTelDuplicate(tel);
+    const filter = { tel };
+    const result = await this.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '전화번호 중복');
     }
@@ -91,7 +90,8 @@ class AuthService {
   };
 
   private checkNicknameDuplicate = async (nickname: string) => {
-    const result = await this.userModel.checkNicknameDuplicate(nickname);
+    const filter = { nickname };
+    const result = await this.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
     }
