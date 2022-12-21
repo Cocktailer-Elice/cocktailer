@@ -1,15 +1,33 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
+import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 
 interface CockgorithmModalProps {
   toggleModal: () => void;
 }
 
 export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
+  const [questionCounter, setQuestionCounter] = useState(1);
+
+  const increaseQuestionCounter = () => {
+    setQuestionCounter((curr) => curr + 1);
+  };
+
   return (
     <>
       <Dimmed onClick={toggleModal} />
       <Modal>
-        <MainSection></MainSection>
+        <MainSection>
+          <GameTitle>게임 타이틀</GameTitle>
+          {questionCounter < 4 ? (
+            <CockgorithmGameContent
+              increaseQuestionCounter={increaseQuestionCounter}
+            />
+          ) : (
+            <CockgorithmGameResult />
+          )}
+        </MainSection>
         <CloseButton onClick={toggleModal} />
       </Modal>
     </>
@@ -44,9 +62,19 @@ const MainSection = styled.div`
   min-height: 450px;
   background-color: skyblue;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
+`;
+
+const GameTitle = styled.div`
+  background-color: blue;
+  height: 20px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CloseButton = styled.div`

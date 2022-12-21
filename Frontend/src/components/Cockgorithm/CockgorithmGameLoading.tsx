@@ -1,5 +1,5 @@
 import styled from 'styled-components';
 
-export const CockgorithmGameResult = () => {
-  return <></>;
+export const CockgorithmGameLoading = () => {
+  return <>게임로딩</>;
 };
