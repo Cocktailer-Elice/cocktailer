@@ -6,21 +6,28 @@ interface Iingredients {
 
 export interface CocktailCreateReqDto {
   id: number;
-  cocktailName: string;
-  cocktailCategory: string;
-  cocktailFlavor: string[];
-  cocktailDegree: number;
-  cocktailImgUrl: string;
-  cocktailProducts: Iingredients;
+  owner: string;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  liquid: object;
+  ratio: object;
+  content: string;
 }
 
 export interface CocktailGetResDto {
   id: number;
-  cocktailName: string;
-  cocktailCategory: string;
-  cocktailFlavor: string[];
-  cocktailDegree: number;
-  cocktailImgUrl: string;
-  cocktailProducts: Iingredients;
-  cocktailLikes: number;
+  owner: string;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  liquid: object;
+  ratio: object;
+  content: string;
 }
