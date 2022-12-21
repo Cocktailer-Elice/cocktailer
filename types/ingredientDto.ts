@@ -2,7 +2,7 @@ export  interface IngredientCreateReqDto {
     id: number;
 
 }
-export interface AlcoholGetResDto {
+export interface IngredientGetResDto {
     id: number;
 
 }
