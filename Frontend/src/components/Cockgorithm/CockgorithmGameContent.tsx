@@ -18,7 +18,7 @@ export const CockgorithmGameContent = ({
         <ChoiceButton
           onClick={() => {
             increaseQuestionCounter();
-            addUserAnswer('1');
+            addUserAnswer('1'); // 추후 유저의 응답을 세세하게 저장하려면 변경
           }}
         >
           선택1
@@ -26,7 +26,7 @@ export const CockgorithmGameContent = ({
         <ChoiceButton
           onClick={() => {
             increaseQuestionCounter();
-            addUserAnswer('2');
+            addUserAnswer('2'); // 추후 유저의 응답을 세세하게 저장하려면 변경
           }}
         >
           선택2

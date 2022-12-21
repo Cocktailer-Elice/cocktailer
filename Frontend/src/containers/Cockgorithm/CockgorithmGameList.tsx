@@ -5,6 +5,8 @@ interface CockgorithmGameListProps {
   changeSelectedGame: (gameTitle: string) => void;
 }
 
+// 기본 구현 : 프론트에서 배열로 관리
+// 심화 구현 : 서버로부터 받음
 const Games = ['Game1', 'Game2', 'Game3', 'Game4', 'Game5', 'Game6', 'Game7'];
 
 export const CockgorithmGameList = ({

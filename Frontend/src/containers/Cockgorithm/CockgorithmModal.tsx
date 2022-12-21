@@ -10,6 +10,8 @@ interface CockgorithmModalProps {
   toggleModal: () => void;
 }
 
+// 기본 구현 : 프론트에서 배열로 관리
+// 심화 구현 : 서버로부터 받음
 const questions = ['질문1', '질문2', '질문3', '질문4'];
 
 export const CockgorithmModal = ({
@@ -23,19 +25,21 @@ export const CockgorithmModal = ({
 
   useEffect(() => {
     if (questionCounter === 4) {
+      // 로딩 시작
       setLoading(true);
+
+      // 유저가 선택한 응답들을 서버로 전달
+      console.log('유저 응답', userAnswer);
+
+      // 서버로부터 받아온 cocktail을 받아옴
+      const cocktail = '마티니 블루';
+
+      // 받아온 cocktail을 state로 관리
+      setCocktailInfo(cocktail);
+
+      // 2초 후 로딩 종료
       setTimeout(() => {
-        // 로딩 처리
         setLoading(false);
-
-        // 유저가 선택한 응답 들을 서버로 전달
-        console.log('유저 응답', userAnswer);
-
-        // 서버로부터 받아온 cocktail을 받아옴
-        const cocktail = '마티니 블루';
-
-        // 받아온 cocktail을 state로 관리
-        setCocktailInfo(cocktail);
       }, 2000);
     }
   }, [questionCounter]);
