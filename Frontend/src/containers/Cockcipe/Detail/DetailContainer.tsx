@@ -14,7 +14,8 @@ export interface ICocktail {
   flavor: string[];
   degree: number;
   likes: number;
-  recipe: Recipe[];
+  content: string;
+  ratio: Recipe[];
 }
 
 export const DetailContainer = () => {
@@ -28,16 +29,17 @@ export const DetailContainer = () => {
     flavor: [],
     degree: 0,
     likes: 0,
-    recipe: [],
+    content: '',
+    ratio: [],
   });
 
   useEffect(() => {
-    // axios.get('/src/containers/Cockcipe/Detail/data.json').then((res) => {
-    //   setCocktail(res.data.cocktail);
-    // });
     axios
       .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
-      .then((res) => console.log(res));
+      .then((res) => {
+        console.log(res);
+        setCocktail(res.data.cocktail[0]);
+      });
   }, []);
   return (
     <>
