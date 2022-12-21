@@ -8,7 +8,10 @@ export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
   return (
     <>
       <Dimmed onClick={toggleModal} />
-      <Modal></Modal>
+      <Modal>
+        <MainSection></MainSection>
+        <CloseButton onClick={toggleModal} />
+      </Modal>
     </>
   );
 };
@@ -16,11 +19,14 @@ export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
 const Modal = styled.div`
   width: 450px;
   min-height: 60%;
-  background-color: yellow;
   position: fixed;
   top: 20%;
-  padding: 20px;
-  z-index: 1;
+  padding: 30px;
+  z-index: 11;
+  background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Dimmed = styled.div`
@@ -31,4 +37,26 @@ const Dimmed = styled.div`
   left: 0;
   top: 0;
   z-index: 10;
+`;
+
+const MainSection = styled.div`
+  width: 100%;
+  min-height: 450px;
+  background-color: skyblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const CloseButton = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `;

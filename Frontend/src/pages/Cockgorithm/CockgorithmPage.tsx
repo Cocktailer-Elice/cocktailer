@@ -4,7 +4,7 @@ import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmG
 import { useState } from 'react';
 
 export const CockgorithmPage = () => {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
     setModal((curr) => !curr);
@@ -20,7 +20,7 @@ export const CockgorithmPage = () => {
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: red;
   display: flex;
   justify-content: center;
