@@ -9,19 +9,21 @@ class CoctailController {
   public createCocktail = async (req: Req, res: Res, next: Next) => {
     const cocktailInfo: CocktailCreateReqDto = req.body;
 
-    const createCocktailData: Cocktail | null =
+    const createCocktailData: number =
       await this.cocktailService.createCocktail(cocktailInfo);
 
     res.status(200).json({ data: createCocktailData });
   };
 
   public getLists = async (req: Req, res: Res, next: Next) => {
+    console.log('list');
     const lists = await this.cocktailService.lists();
 
     res.status(200).json({ lists: lists });
   };
 
   public findId = async (req: Req, res: Res, next: Next) => {
+    console.log('id');
     const id = Number(req.params.id);
 
     const cocktail = await this.cocktailService.findId(id);
@@ -30,6 +32,7 @@ class CoctailController {
   };
 
   public findCategory = async (req: Req, res: Res, next: Next) => {
+    console.log('category');
     const category = String(req.query.category);
 
     const official = Boolean(req.query.official);
@@ -41,6 +44,23 @@ class CoctailController {
 
     res.status(200).json({ categoryLists: categoryLists });
   };
+
+  public search = async (req: Req, res: Res, next: Next) => {
+    console.log('search');
+    //const { keyword, category, official } = req.query;
+    const keyword = String(req.query.keyword);
+    const category = String(req.query.category);
+    const official = Boolean(req.query.official === 'true');
+
+    const serchList = await this.cocktailService.search(
+      String(keyword),
+      String(category),
+      Boolean(official),
+    );
+    res.status(200).json({ serchList: serchList });
+  };
+
+  /*///////////////////////////////////////////////////////////////// */
 
   public getCocktail = async (req: Req, res: Res, next: Next) => {
     const id = req.params.id ? Number(req.params.id) : null;

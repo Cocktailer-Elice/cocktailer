@@ -87,7 +87,7 @@ CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
     official: this.official,
     flavor: this.flavor,
     degree: this.degree,
-    img: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.img}`,
+    img: `https://profiles.s3.ap-northeast-2.amazonaws.com/세은님이랑 얘기/${this.img}`,
     liquid: this.liquid,
     ratio: this.ratio,
     content: this.content,

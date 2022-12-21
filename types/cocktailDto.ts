@@ -13,7 +13,6 @@ export interface CocktailCreateReqDto {
   flavor: string;
   degree: number;
   img: string;
-  liquid: object;
   ratio: object;
   content: string;
 }

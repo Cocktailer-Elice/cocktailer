@@ -10,6 +10,8 @@ cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
 
 cocktailsRouter.get('/', asyncHandler(cocktailController.findCategory));
 
+cocktailsRouter.get('/search', asyncHandler(cocktailController.search));
+
 cocktailsRouter.get('/:id', asyncHandler(cocktailController.findId));
 
 export default cocktailsRouter;

@@ -1,16 +1,9 @@
-export const cocktailQueries = (
-  id: number | null,
-  category: string | null,
-  official: boolean | null,
-) => {
-  console.log('쿼리', id, category, official);
-
-  const listsArray = ['sweet', 'dry', 'refreshing', 'fruit', 'smoothie', 'hot'];
-
-  const $facet: any = {};
-
-  if (id === null && category === null) {
-    listsArray.map((e) => {
+export const cocktailQueries = (reqData: object) => {
+  /*   전체 6개 리스트   */
+  if (!('id' in reqData) && !('category' in reqData)) {
+    const $facet: any = {};
+    const Array = ['sweet', 'dry', 'refreshing', 'fruit', 'smoothie', 'hot'];
+    Array.map((e) => {
       $facet[e] = [
         { $match: { category: e, official: true } },
         { $limit: 6 },
@@ -22,23 +15,26 @@ export const cocktailQueries = (
     return { $facet: $facet };
   }
 
-  if (typeof id === 'number') {
-    return [
-      { $match: { id: id } },
-      { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
-    ];
-  }
+  const makeMatchForm = () => {
+    const obj: any = {};
+    if ('id' in reqData) obj.id = reqData.id;
+    if ('category' in reqData && reqData.category !== 'undefined') {
+      obj.category = reqData.category;
+    }
 
-  if (typeof category === 'string') {
-    return [
-      {
-        $match: {
-          category: category,
-          official: official !== null ? official : false,
-        },
-      },
-      { $sort: { createdAt: -1 } },
-      { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
-    ];
-  }
+    if ('keyword' in reqData) obj.name = { $regex: reqData.keyword };
+    if ('official' in reqData) obj.official = reqData.official;
+
+    return obj;
+  };
+
+  console.log(makeMatchForm());
+
+  return [
+    {
+      $match: makeMatchForm(),
+    },
+    { $sort: { createdAt: -1 } },
+    { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+  ];
 };

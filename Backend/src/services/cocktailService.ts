@@ -9,10 +9,11 @@ class CocktailService {
 
   public async createCocktail(
     cocktailCreateDto: CocktailCreateReqDto,
-  ): Promise<Cocktail | null> {
-    const data: Cocktail | null = await this.cocktailModel.create({
+  ): Promise<number> {
+    const data: number = await this.cocktailModel.create({
       ...cocktailCreateDto,
     });
+
     return data;
   }
 
@@ -27,8 +28,14 @@ class CocktailService {
     return data;
   }
 
-  public async findCategory(category: string, official: boolean | null) {
+  public async findCategory(category: string, official: true | false) {
     const data = await this.cocktailModel.findCategory(category, official);
+    return data;
+  }
+
+  public async search(keyword: string, category: string, official: boolean) {
+    console.log(official);
+    const data = await this.cocktailModel.search(keyword, category, official);
     return data;
   }
 
@@ -44,8 +51,6 @@ class CocktailService {
     id o / category o / = 해당 id 칵테일 가져오기
     */
 
-    console.log(id, category);
-    //
     const data =
       id === null && category === null
         ? await this.cocktailModel.findAll('main', null, null, official)

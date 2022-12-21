@@ -4,7 +4,7 @@ import CocktailSchema from '../schemas/cocktailsSchema';
 import { cocktailQueries } from '../queries/cocktailsQuery';
 
 interface CocktailInterface {
-  create(cocktailCreateDto: CocktailCreateReqDto): Promise<Cocktail | null>;
+  create(cocktailCreateDto: CocktailCreateReqDto): Promise<number>;
 
   lists(): Promise<Cocktail[]>;
 
@@ -21,17 +21,16 @@ interface CocktailInterface {
 }
 
 export class CocktailModel implements CocktailInterface {
-  async create(
-    cocktailCreateDto: CocktailCreateReqDto,
-  ): Promise<Cocktail | null> {
-    const newMyCocktail = await CocktailSchema.create(cocktailCreateDto);
+  async create(cocktailCreateDto: CocktailCreateReqDto): Promise<number> {
+    const newMyCocktail: Partial<Cocktail> = await CocktailSchema.create(
+      cocktailCreateDto,
+    );
 
-    return newMyCocktail;
+    return Number(newMyCocktail.id);
   }
 
   public lists = async (): Promise<Cocktail[]> => {
-    console.log('lists사용');
-    const queries = cocktailQueries(null, null, true);
+    const queries = cocktailQueries({ official: true });
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -41,7 +40,7 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public findId = async (id: number): Promise<Cocktail[]> => {
-    const queries = cocktailQueries(id, null, null);
+    const queries = cocktailQueries({ id: id });
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -52,9 +51,12 @@ export class CocktailModel implements CocktailInterface {
 
   public findCategory = async (
     category: string,
-    official: boolean | null,
+    official: true | false,
   ): Promise<Cocktail[]> => {
-    const queries = cocktailQueries(null, category, official);
+    const queries = cocktailQueries({
+      category: category,
+      official: official,
+    });
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -63,13 +65,36 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
+  public async search(
+    keyword: string,
+    category: string,
+    official: boolean,
+  ): Promise<Cocktail[]> {
+    const queries = cocktailQueries({
+      keyword: keyword,
+      category: category,
+      official: official,
+    });
+
+    const result: Cocktail[] = await CocktailSchema.aggregate([
+      Object(queries),
+    ]);
+
+    return result;
+  }
+
+  /* 아래 내용 이제 안쓸듯 */
   public findAll = async (
     queries: string,
     id: number | null,
     category: string | null,
     official: boolean | null,
   ): Promise<Cocktail[]> => {
-    const result = cocktailQueries(id, category, official);
+    const result = cocktailQueries({
+      id: id,
+      category: category,
+      official: official,
+    });
     console.log(result);
 
     const cocktails = await CocktailSchema.aggregate([
