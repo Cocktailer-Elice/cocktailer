@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ApplyBtn = () => {
-  return <Apply>ApplyBtn</Apply>;
+export const ApplyButton = () => {
+  return <Apply>등록하기</Apply>;
 };
-
-export default ApplyBtn;
 
 const Apply = styled.div`
   background-color: #4c6ef5;

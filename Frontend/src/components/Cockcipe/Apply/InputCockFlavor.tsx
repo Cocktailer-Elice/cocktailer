@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const InputCockFlavor = () => {
+export const InputCockFlavor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tag, setTag] = useState<string | null>('');
   const [tagList, setTagList] = useState<string[]>([]);
@@ -30,7 +30,6 @@ const InputCockFlavor = () => {
   return (
     <>
       <p>Flavor</p>
-
       <TagBox>
         {tagList?.map((tagItem, index) => {
           return (
@@ -53,8 +52,6 @@ const InputCockFlavor = () => {
     </>
   );
 };
-
-export default InputCockFlavor;
 
 const TagBox = styled.div`
   display: flex;
@@ -97,7 +94,6 @@ const TagItem = styled.div`
 `;
 const TagInput = styled.input`
   display: inline-flex;
-  min-width: 150px;
   background: transparent;
   border: none;
   outline: none;
