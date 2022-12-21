@@ -5,17 +5,30 @@ import { LoginReqData } from '../../../../types';
 import { UserInput } from '../UserForm/UserInput';
 import { Button } from '@mui/material';
 import { LoginSchema } from './LoginSchema';
+import { userLogin } from '../../store/authActions';
+import { useAppDispatch } from '../../store/store';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginChecker } from '../../utils/loginChecker';
 
 export const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const methods = useForm<LoginReqData>({
     resolver: yupResolver(LoginSchema),
     mode: 'onChange',
   });
+  const isLoggedIn = loginChecker();
   const { handleSubmit, reset } = methods;
   const onSubmitHandler = (data: LoginReqData) => {
-    console.log(data);
+    dispatch(userLogin(data));
     reset();
   };
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navigate, isLoggedIn]);
   return (
     <FormProvider {...methods}>
       <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
