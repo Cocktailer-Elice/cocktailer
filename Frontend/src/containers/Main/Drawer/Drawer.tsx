@@ -60,7 +60,7 @@ const Dimmed = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.1);
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   z-index: 10;
