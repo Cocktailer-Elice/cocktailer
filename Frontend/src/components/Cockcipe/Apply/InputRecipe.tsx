@@ -22,25 +22,7 @@ export const InputRecipe = ({ kind }: Props) => {
   return (
     <>
       <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
-      <RecipeContainer>
-        <FormControl
-          variant="standard"
-          sx={{
-            width: '100px',
-            marginRight: '10px',
-          }}
-        >
-          <InputLabel>재료 선택</InputLabel>
-          <Select label="카테고리">
-            <MenuItem>앱솔루트</MenuItem>
-            <MenuItem>보드카</MenuItem>
-            <MenuItem>잭다니엘</MenuItem>
-            <MenuItem>발렌타인</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField label="용량" variant="standard" type="number" />
-        <AddIcon onClick={handleAddRecipe} />
-      </RecipeContainer>
+      <AddIcon onClick={handleAddRecipe} />
       {count &&
         count.map((item, idx) => (
           <RecipeContainer key={idx}>
@@ -60,7 +42,6 @@ export const InputRecipe = ({ kind }: Props) => {
               </Select>
             </FormControl>
             <TextField label="용량" variant="standard" type="number" />
-            <AddIcon onClick={handleAddRecipe} />
           </RecipeContainer>
         ))}
     </>
@@ -77,23 +58,3 @@ const RecipeHeader = styled.div`
   font-size: 20px;
   margin-right: 10px;
 `;
-
-const AddStr = `<RecipeContainer>
-<FormControl
-  variant="standard"
-  sx={{
-    width: '100px',
-    marginRight: '10px',
-  }}
->
-  <InputLabel>재료 선택</InputLabel>
-  <Select label="카테고리">
-    <MenuItem>앱솔루트</MenuItem>
-    <MenuItem>보드카</MenuItem>
-    <MenuItem>잭다니엘</MenuItem>
-    <MenuItem>발렌타인</MenuItem>
-  </Select>
-</FormControl>
-<TextField label="용량" variant="standard" type="number" />
-<AddIcon onClick={handleAddRecipe} />
-</RecipeContainer>`;
