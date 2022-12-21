@@ -7,6 +7,7 @@ import { Login } from '../pages/Login/Login';
 import { EditAvatar } from '../pages/Mypage/Edit/EditAvatar';
 import { EditPassword } from '../pages/Mypage/Edit/EditPassword';
 import { BartenderApply } from '../pages/Mypage/BartenderApply';
+import { Logout } from '../pages/Logout/Logout';
 
 export const UserRouter = () => {
   return (
@@ -19,6 +20,7 @@ export const UserRouter = () => {
       <Route path="/join" element={<Join />} />
       <Route path="/find-email" element={<FindEmail />} />
       <Route path="/find-password" element={<FindPassword />} />
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   );
 };
