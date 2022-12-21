@@ -11,7 +11,7 @@ interface DrawerProps {
 export const Drawer = ({ toggleDrawer }: DrawerProps) => {
   return (
     <>
-      <Dimmed onClick={toggleDrawer}></Dimmed>
+      <Dimmed onClick={toggleDrawer} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
