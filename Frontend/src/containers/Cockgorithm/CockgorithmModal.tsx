@@ -4,22 +4,19 @@ import { useState, useEffect } from 'react';
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
+import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
 
 interface CockgorithmModalProps {
-  gameTitle: string;
   toggleModal: () => void;
+  seletedGame: IGame;
 }
 
-// 기본 구현 : 프론트에서 배열로 관리
-// 심화 구현 : 서버로부터 받음
-const questions = ['질문1', '질문2', '질문3', '질문4'];
-
 export const CockgorithmModal = ({
-  gameTitle,
   toggleModal,
+  seletedGame,
 }: CockgorithmModalProps) => {
   const [questionCounter, setQuestionCounter] = useState(0);
-  const [userAnswer, setUserAnswer] = useState<string[]>([]);
+  const [userSelectedOptions, setUserSelectedOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [cocktailInfo, setCocktailInfo] = useState(''); // 서버로부터 받아온 cocktail이 저장되는 state
 
@@ -29,7 +26,7 @@ export const CockgorithmModal = ({
       setLoading(true);
 
       // 유저가 선택한 응답들을 서버로 전달
-      console.log('유저 응답', userAnswer);
+      console.log('유저 응답', userSelectedOptions);
 
       // 서버로부터 받아온 cocktail을 받아옴
       const cocktail = '마티니 블루';
@@ -48,8 +45,8 @@ export const CockgorithmModal = ({
     setQuestionCounter((curr) => curr + 1);
   };
 
-  const addUserAnswer = (answer: string) => {
-    setUserAnswer((curr) => [...curr, answer]);
+  const addUserSelectedOption = (answer: string) => {
+    setUserSelectedOptions((curr) => [...curr, answer]);
   };
 
   return (
@@ -57,11 +54,12 @@ export const CockgorithmModal = ({
       <Dimmed onClick={toggleModal} />
       <Modal>
         <MainSection>
-          <GameTitle>게임 타이틀 : {gameTitle}</GameTitle>
+          <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
           {questionCounter < 4 ? (
             <CockgorithmGameContent
-              question={questions[questionCounter]}
-              addUserAnswer={addUserAnswer}
+              selectedGame={seletedGame}
+              questionCounter={questionCounter}
+              addUserSelectedOption={addUserSelectedOption}
               increaseQuestionCounter={increaseQuestionCounter}
             />
           ) : loading ? (

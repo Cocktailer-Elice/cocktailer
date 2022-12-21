@@ -1,37 +1,38 @@
 import styled from 'styled-components';
 
+import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+
 interface CockgorithmGameContentProps {
-  question: string;
-  addUserAnswer: (answer: string) => void;
+  selectedGame: IGame;
+  questionCounter: number;
+  addUserSelectedOption: (answer: string) => void;
   increaseQuestionCounter: () => void;
 }
 
 export const CockgorithmGameContent = ({
-  question,
-  addUserAnswer,
+  selectedGame,
+  questionCounter,
+  addUserSelectedOption,
   increaseQuestionCounter,
 }: CockgorithmGameContentProps) => {
   return (
     <GameContent>
-      <Question>{question}</Question>
-      <ChoiceButtonContainer>
-        <ChoiceButton
-          onClick={() => {
-            increaseQuestionCounter();
-            addUserAnswer('1'); // 추후 유저의 응답을 세세하게 저장하려면 변경
-          }}
-        >
-          YES
-        </ChoiceButton>
-        <ChoiceButton
-          onClick={() => {
-            increaseQuestionCounter();
-            addUserAnswer('2'); // 추후 유저의 응답을 세세하게 저장하려면 변경
-          }}
-        >
-          NO
-        </ChoiceButton>
-      </ChoiceButtonContainer>
+      <Question>{selectedGame.questions[questionCounter].question}</Question>
+      <OptionContainer>
+        {selectedGame.questions[questionCounter].options.map(
+          (option, index) => (
+            <Option
+              key={index}
+              onClick={() => {
+                increaseQuestionCounter();
+                addUserSelectedOption(option.filter); // 추후 유저의 응답을 세세하게 저장하려면 변경
+              }}
+            >
+              {option.optionName}
+            </Option>
+          ),
+        )}
+      </OptionContainer>
     </GameContent>
   );
 };
@@ -57,7 +58,7 @@ const Question = styled.div`
   align-items: center;
 `;
 
-const ChoiceButtonContainer = styled.div`
+const OptionContainer = styled.div`
   width: 100%;
   height: 80%;
   padding: 50px 20px;
@@ -67,7 +68,7 @@ const ChoiceButtonContainer = styled.div`
   background-color: orange;
 `;
 
-const ChoiceButton = styled.div`
+const Option = styled.div`
   width: 50%;
   height: 100%;
   background-color: green;
