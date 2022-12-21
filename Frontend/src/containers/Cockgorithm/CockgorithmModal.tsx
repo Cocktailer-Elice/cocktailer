@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const CockgorithmModal = () => {
+interface CockgorithmModalProps {
+  toggleModal: () => void;
+}
+
+export const CockgorithmModal = ({ toggleModal }: CockgorithmModalProps) => {
   return (
     <>
       <Dimmed />
@@ -15,6 +19,8 @@ const Modal = styled.div`
   background-color: yellow;
   position: fixed;
   top: 20%;
+  padding: 20px;
+  z-index: 1;
 `;
 
 const Dimmed = styled.div`
