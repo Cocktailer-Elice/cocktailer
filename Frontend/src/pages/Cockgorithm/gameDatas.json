@@ -1,6 +1,7 @@
 [
   {
     "gameTitle": "게임제목1",
+    "message": "게임 메시지",
     "questions": [
       {
         "question": "질문1-1",
@@ -42,6 +43,7 @@
   },
   {
     "gameTitle": "게임제목2",
+    "message": "게임 메시지",
     "questions": [
       {
         "question": "질문2-1",
@@ -83,6 +85,7 @@
   },
   {
     "gameTitle": "게임제목3",
+    "message": "게임 메시지",
     "questions": [
       {
         "question": "질문3-1",

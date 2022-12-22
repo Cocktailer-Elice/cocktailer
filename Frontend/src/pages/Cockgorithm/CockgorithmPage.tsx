@@ -7,6 +7,7 @@ import gameDatas from './gameDatas.json';
 
 export interface IGame {
   gameTitle: string;
+  message: string;
   questions: {
     question: string;
     options: { optionName: string; filter: string }[];
