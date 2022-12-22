@@ -23,13 +23,20 @@ export const ApplyContainer = () => {
 
   //const dispatch = useAppDispatch();
 
-  const getRecipe = (obj: any) => {
+  const getRecipeA = (obj: any) => {
     const key: any = Object.keys(obj);
     setRecipeA({ ...recipeA, [key]: obj[key] });
   };
 
+  const getRecipeI = (obj: any) => {
+    const key: any = Object.keys(obj);
+    setRecipeI({ ...recipeI, [key]: obj[key] });
+  };
+
   const handleApply = () => {
     console.log(recipeA);
+    console.log(recipeI);
+
     const newData = {
       owner: 'seeun',
       name: name,
@@ -58,8 +65,8 @@ export const ApplyContainer = () => {
       />
       <InputCockFlavor setFlavor={setFlavor} />
       <InputCockContent setContent={setContent} />
-      <InputRecipe kind="alcohol" getRecipe={getRecipe} />
-
+      <InputRecipe kind="alcohol" getRecipe={getRecipeA} />
+      <InputRecipe kind="drink" getRecipe={getRecipeI} />
       <ApplyButton handleApply={handleApply} />
     </>
   );

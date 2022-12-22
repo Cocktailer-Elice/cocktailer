@@ -16,18 +16,19 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
   const [ingredient, setIngredient] = useState<string[]>();
   const [alcohol, setAlcohol] = useState<string[]>();
 
-  const [select, setSelect] = useState<string>('');
+  const [select, setSelect] = useState<string[]>();
   const [title, setTitle] = useState<string>();
   const [value, setValue] = useState<string>();
 
   const handleAddRecipe = () => {
     setCount((prev) => [...prev, 0]);
   };
+
   const handleChange = (event: SelectChangeEvent) => {
     setSelect(event.target.value);
   };
+
   const handleDelete = (event: any) => {
-    console.log(event.currentTarget.parentElement);
     if (event.currentTarget.parentElement.id === event.currentTarget.id) {
       setCount(
         count.filter(
@@ -44,6 +45,7 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
       setAlcohol(res.data.getIngredient.alcohol);
     });
   }, []);
+
   return (
     <>
       <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
@@ -63,7 +65,7 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
                 label="카테고리"
                 value={select}
                 onBlur={() => {
-                  getRecipe({ [kind]: select });
+                  getRecipe({ [select]: [] });
                 }}
                 onChange={handleChange}
               >
@@ -89,9 +91,6 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
               type="text"
               sx={{ marginRight: '10px;' }}
               onChange={(e) => setTitle(e.target.value)}
-              onBlur={() => {
-                getRecipe({ ['제품명']: title });
-              }}
             />
             <TextField
               label="용량"
@@ -99,7 +98,9 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
               type="number"
               onChange={(e) => setValue(e.target.value)}
               onBlur={() => {
-                getRecipe({ ['용량']: value });
+                getRecipe({
+                  [select]: [{ [title]: value }],
+                });
               }}
             />
             <ClearIcon id={idx.toString()} onClick={handleDelete} />
