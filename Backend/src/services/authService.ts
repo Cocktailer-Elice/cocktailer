@@ -37,9 +37,9 @@ class AuthService {
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
-    // if (!foundUser.deletedAt) {
-    //   throw new AppError(errorNames.authenticationError, 400, '탈퇴한 유저');
-    // }
+    if (foundUser.deletedAt) {
+      throw new AppError(errorNames.authenticationError, 401, '탈퇴한 유저');
+    }
     if (!foundUser || !(await compare(password, foundUser.password))) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }

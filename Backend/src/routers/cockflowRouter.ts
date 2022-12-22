@@ -5,7 +5,7 @@ import { asyncHandler } from './middlewares';
 
 const router: Router = Router();
 
-router.get('/', asyncHandler(cockflowController.getCockflows));
+router.get('/', asyncHandler(cockflowController.getCockflowsByRequest));
 router.get('/:cockflowId', asyncHandler(cockflowController.getCockflowById));
 
 router.use(isLoggedIn);
