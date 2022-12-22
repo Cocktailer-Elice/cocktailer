@@ -13,9 +13,10 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
       <img src={cocktail.img} width="300" height="300" />
       <Name>{cocktail.name}</Name>
       <Degree>{cocktail.degree}</Degree>
-      {cocktail.flavor.map((item: string) => (
-        <FlavorTag>{item}</FlavorTag>
+      {cocktail.flavor.map((item: string, idx) => (
+        <FlavorTag key={idx}>{item}</FlavorTag>
       ))}
+      <Content>{cocktail.content}</Content>
       <>
         <LikeNumber>{cocktail.likes}</LikeNumber>
         <ThumbUpIcon />
@@ -36,4 +37,8 @@ const FlavorTag = styled.div`
 `;
 const LikeNumber = styled.div`
   font-size: 15px;
+`;
+const Content = styled.div`
+  font-size: 15px;
+  border: 1px solid black;
 `;

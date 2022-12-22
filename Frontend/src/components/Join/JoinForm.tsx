@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserForm } from '../UserForm/styles';
@@ -7,11 +7,15 @@ import { UserInput } from '../UserForm/UserInput';
 import { Select } from '../UserForm/Select';
 import { Button } from '@mui/material';
 import { JoinSchema } from './JoinSchema';
-import { EmailValidationButton } from '../UserForm/utils';
-import axios from 'axios';
-import { EmailValidation, TelValidation } from '../../constants/regex';
+import { loginChecker } from '../../utils/loginChecker';
+import { useNavigate } from 'react-router-dom';
+import { EmailDuplicateChecker } from '../UserForm/EmailDuplicateChecker';
+import { TelVerifier } from '../UserForm/TelVerification';
+import { useAppDispatch } from '../../store/store';
+import { userRegister } from '../../store/authActions';
 
 export const JoinForm = () => {
+  const dispatch = useAppDispatch();
   const methods = useForm<UserCreateData>({
     resolver: yupResolver(JoinSchema),
     mode: 'onChange',
@@ -19,63 +23,34 @@ export const JoinForm = () => {
   const {
     handleSubmit,
     reset,
-    getValues,
     formState: { errors },
   } = methods;
 
-  const [emailDuplicateCheck, setEmailDuplicateCheck] = useState(false);
-  const [telVerifyStart, setTelVerifyStart] = useState(false);
-  const [isVerfiedTel, setIsVerifiedTel] = useState(false);
+  const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<
+    boolean | null
+  >(null);
+  const [telVerificationStart, setTelVerificationStart] = useState(false);
+  const [telVerificationEnd, setTelVerificationEnd] = useState(false);
 
   const onSubmitHandler = (data: UserCreateData) => {
-    console.log(data);
-    reset();
-  };
-
-  const sendEmailDuplicateCheck = async () => {
-    const currentEmail = getValues('email');
-    if (EmailValidation.test(currentEmail)) {
-      const response = await axios.post(
-        'http://localhost:8000/auth/email-check',
-        { email: currentEmail },
-      );
-      if (response.status === 400) {
-        setEmailDuplicateCheck(false);
-      } else {
-        setEmailDuplicateCheck(true);
-      }
+    if (emailDuplicateCheck === false) {
+      errors.email && (errors.email.message = '이메일 인증을 진행해주세요');
+    } else if (telVerificationEnd === false) {
+      errors.tel && (errors.tel.message = '전화번호 인증을 진행해주세요');
     } else {
-      errors.email && (errors.email.message = '이메일 형식이 맞지 않습니다');
+      dispatch(userRegister(data));
+      reset();
     }
   };
-
-  const sendTelVerifyStart = async () => {
-    const currentTel = getValues('tel');
-    if (TelValidation.test(currentTel)) {
-      const response = await axios.post(
-        'http://localhost:8000/auth/send-code',
-        { tel: currentTel },
-      );
-      if (response.status === 400) {
-        setTelVerifyStart(false);
-      } else {
-        setTelVerifyStart(true);
-      }
-    } else {
-      errors.tel && (errors.tel.message = '전화번호 형식이 맞지 않습니다');
-    }
-  };
-
-  const sendTelVerifyEnd = async () => {};
 
   return (
     <FormProvider {...methods}>
       <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
         <UserInput id="name" label="name" name="name" />
         <UserInput id="email" label="email" name="email" type="email" />
-        <EmailValidationButton
+        <EmailDuplicateChecker
           emailDuplicateCheck={emailDuplicateCheck}
-          sendEmailDuplicateCheck={sendEmailDuplicateCheck}
+          setEmailDuplicateCheck={setEmailDuplicateCheck}
         />
         <UserInput
           id="password"
@@ -95,6 +70,11 @@ export const JoinForm = () => {
           label="phone"
           name="tel"
           placeholder=" - 를 제외하고 입력해주세요"
+        />
+        <TelVerifier
+          telVerificationStart={telVerificationStart}
+          setTelVerificationStart={setTelVerificationStart}
+          setTelVerificationEnd={setTelVerificationEnd}
         />
         <Select
           id="alcohol"

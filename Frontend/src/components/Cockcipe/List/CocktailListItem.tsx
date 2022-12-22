@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { OfficialBadge } from '../OfficialBadge';
 
 interface Props {
   id: string;
   name: string;
+  official: boolean;
 }
 
-export const CocktailListItem = ({ id, name }: Props) => {
+export const CocktailListItem = ({ id, name, official }: Props) => {
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event);
 
@@ -14,13 +16,16 @@ export const CocktailListItem = ({ id, name }: Props) => {
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
-      레시피 사진<p>{id}</p>
+      {id}는{name}
+      {official ? <OfficialBadge /> : null}
     </ThumbnailBox>
   );
 };
 
 const ThumbnailBox = styled.div`
-  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: #bac8ff;
+  border-radius: 10px;
   width: auto;
   height: 100px;
   margin: 10px;
