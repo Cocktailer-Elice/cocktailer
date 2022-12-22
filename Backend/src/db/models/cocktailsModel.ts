@@ -4,7 +4,7 @@ import CocktailSchema from '../schemas/cocktailsSchema';
 import { cocktailQueries } from '../queries/cocktailsQuery';
 
 interface CocktailInterface {
-  create(cocktailCreateDto: CocktailCreateReqDto): Promise<number>;
+  createCocktail(cocktailCreateDto: CocktailCreateReqDto): Promise<number>;
 
   getLists(): Promise<Cocktail[]>;
 
@@ -20,8 +20,10 @@ interface CocktailInterface {
   ): Promise<Cocktail[]>;
 }
 
+const limitEachPage = 10;
+
 export class CocktailModel implements CocktailInterface {
-  public create = async (
+  public createCocktail = async (
     cocktailCreateDto: CocktailCreateReqDto,
   ): Promise<number> => {
     const newMyCocktail: Partial<Cocktail> = await CocktailSchema.create(
@@ -32,7 +34,7 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public getLists = async (): Promise<Cocktail[]> => {
-    const queries = cocktailQueries({ official: true });
+    const queries = cocktailQueries({});
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -61,15 +63,17 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
-  public async search(reqData: object): Promise<Cocktail[]> {
+  public async search(reqData: object, p: number): Promise<Cocktail[]> {
     const queries = cocktailQueries(reqData);
 
-    const result: Cocktail[] = await CocktailSchema.aggregate([
-      Object(queries),
-    ]);
+    const result: Cocktail[] = await CocktailSchema.aggregate([Object(queries)])
+      .limit(limitEachPage)
+      .skip(p * 10);
 
     return result;
   }
+
+  /*///////////////////////////////////////////////////////////////// */
 
   /* 아래 내용 이제 안쓸듯 */
   public findAll = async (

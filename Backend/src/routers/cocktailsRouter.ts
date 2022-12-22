@@ -8,9 +8,12 @@ cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
 
 cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
 
-cocktailsRouter.get('/', asyncHandler(cocktailController.findCategory));
+cocktailsRouter.get(
+  '/',
+  asyncHandler(cocktailController.findCategoryAndSearch),
+);
 
-cocktailsRouter.get('/search', asyncHandler(cocktailController.search));
+// cocktailsRouter.get('/search', asyncHandler(cocktailController.search));
 
 cocktailsRouter.get('/:id', asyncHandler(cocktailController.findId));
 

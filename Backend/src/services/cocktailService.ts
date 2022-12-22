@@ -10,7 +10,7 @@ class CocktailService {
   public async createCocktail(
     cocktailCreateDto: CocktailCreateReqDto,
   ): Promise<number> {
-    const data: number = await this.cocktailModel.create({
+    const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,
     });
 
@@ -34,10 +34,12 @@ class CocktailService {
     return data;
   }
 
-  public async search(reqData: object) {
-    const data = await this.cocktailModel.search(reqData);
+  public async search(reqData: object, p: number) {
+    const data = await this.cocktailModel.search(reqData, p);
     return data;
   }
+
+  /*///////////////////////////////////////////////////////////////// */
 
   public async getCocktail(
     id: number | null,

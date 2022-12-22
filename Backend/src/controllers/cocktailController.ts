@@ -28,7 +28,7 @@ class CoctailController {
     res.status(200).json({ cocktail: cocktail });
   };
 
-  public findCategory = async (req: Req, res: Res) => {
+  public findCategoryAndSearch = async (req: Req, res: Res) => {
     const reqData: any = {};
 
     if (req.query.category) {
@@ -43,22 +43,32 @@ class CoctailController {
     res.status(200).json({ categoryLists: categoryLists });
   };
 
-  public search = async (req: Req, res: Res) => {
-    const reqData: any = {};
+  // public search = async (req: Req, res: Res) => {
+  //   const reqData: any = {};
 
-    if (req.query.keyword) {
-      reqData.keyword = req.query.keyword;
-    }
-    if (req.query.category) {
-      reqData.category = req.query.category;
-    }
-    if (req.query.official) {
-      reqData.official = req.query.official;
-    }
+  //   const test: any = {
+  //     keyword: String(req.query.keyword),
+  //     category: String(req.query.category),
+  //     official: Boolean(req.query.official),
+  //   };
 
-    const serchList = await this.cocktailService.search(reqData);
-    res.status(200).json({ serchList: serchList });
-  };
+  //   console.log(test);
+
+  //   if (req.query.keyword) {
+  //     reqData.keyword = req.query.keyword;
+  //   }
+  //   if (req.query.category) {
+  //     reqData.category = req.query.category;
+  //   }
+  //   if (req.query.official) {
+  //     reqData.official = req.query.official;
+  //   }
+
+  //   const p = Number(req.query.p) || 0;
+
+  //   const serchList = await this.cocktailService.search(reqData, p);
+  //   res.status(200).json({ serchList: serchList });
+  // };
 
   /*///////////////////////////////////////////////////////////////// */
 

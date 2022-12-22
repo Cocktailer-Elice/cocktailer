@@ -1,10 +1,8 @@
 export const cocktailQueries = (reqData: object) => {
+  console.log(reqData);
+
   /*   전체 6개 리스트   */
-  if (
-    !('id' in reqData) &&
-    !('category' in reqData) &&
-    !('official' in reqData)
-  ) {
+  if (!('id' in reqData) && !('category' in reqData)) {
     const $facet: any = {};
 
     const Array = ['sweet', 'dry', 'refreshing', 'fruit', 'smoothie', 'hot'];
