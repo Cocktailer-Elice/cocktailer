@@ -10,11 +10,6 @@ import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg'
 //import { postCockcipe } from '../../../modules/cockcipeActions';
 //import { useAppDispatch } from '../../../modules/store';
 
-interface Kind {
-  name: string;
-  capacity: number;
-}
-
 export const ApplyContainer = () => {
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
@@ -22,11 +17,19 @@ export const ApplyContainer = () => {
   const [flavor, setFlavor] = useState<string[]>([]);
   const [content, setContent] = useState<string>();
   const [img, setImg] = useState<string>('');
-  const [alcohol, setAlcohol] = useState<string>('');
-  const [drink, setDrink] = useState<string>('');
+
+  const [recipeA, setRecipeA] = useState<object>();
+  const [recipeI, setRecipeI] = useState<object>();
 
   //const dispatch = useAppDispatch();
+
+  const getRecipe = (obj: any) => {
+    const key: any = Object.keys(obj);
+    setRecipeA({ ...recipeA, [key]: obj[key] });
+  };
+
   const handleApply = () => {
+    console.log(recipeA);
     const newData = {
       owner: 'seeun',
       name: name,
@@ -37,10 +40,10 @@ export const ApplyContainer = () => {
       content: content,
       official: false,
     };
-    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
-      console.log(res.data);
-      console.log(newData);
-    });
+    // axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
+    //   console.log(res.data);
+    //   console.log(newData);
+    // });
     // dispatch(postCockcipe({ newData }));
   };
   return (
@@ -51,11 +54,12 @@ export const ApplyContainer = () => {
         setName={setName}
         setDegree={setDegree}
         setCategory={setCategory}
+        category={category}
       />
       <InputCockFlavor setFlavor={setFlavor} />
       <InputCockContent setContent={setContent} />
-      <InputRecipe kind="alcohol" ingred={alcohol} setIngred={setAlcohol} />
-      <InputRecipe kind="drink" ingred={drink} setIngred={setDrink} />
+      <InputRecipe kind="alcohol" getRecipe={getRecipe} />
+
       <ApplyButton handleApply={handleApply} />
     </>
   );

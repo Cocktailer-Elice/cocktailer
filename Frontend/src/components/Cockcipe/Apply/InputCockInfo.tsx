@@ -8,7 +8,12 @@ import {
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-export const InputCockInfo = ({ setName, setDegree, setCategory }) => {
+export const InputCockInfo = ({
+  setName,
+  setDegree,
+  setCategory,
+  category,
+}) => {
   return (
     <>
       <InfoContainer>
@@ -36,6 +41,7 @@ export const InputCockInfo = ({ setName, setDegree, setCategory }) => {
           <InputLabel>카테고리 선택</InputLabel>
           <Select
             label="카테고리"
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value="dry">드라이 칵테일</MenuItem>

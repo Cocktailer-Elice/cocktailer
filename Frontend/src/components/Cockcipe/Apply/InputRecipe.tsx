@@ -1,36 +1,56 @@
-import React, { ReactHTMLElement, useState } from 'react';
+import React, { ReactHTMLElement, useEffect, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import ClearIcon from '@mui/icons-material/Clear';
 import styled from 'styled-components';
 import { FormControl, InputLabel, TextField, MenuItem } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-interface Recipe {
-  name: string;
-  capacity: number;
-}
+import axios from 'axios';
 
 interface Props {
   kind: string;
-  ingred: string;
-  setIngred: any;
+  getRecipe: any;
 }
 
-export const InputRecipe = ({ kind, ingred, setIngred }: Props) => {
+export const InputRecipe = ({ kind, getRecipe }: Props) => {
   const [count, setCount] = useState<number[]>([0]);
+  const [ingredient, setIngredient] = useState<string[]>();
+  const [alcohol, setAlcohol] = useState<string[]>();
+
+  const [select, setSelect] = useState<string>('');
+  const [title, setTitle] = useState<string>();
+  const [value, setValue] = useState<string>();
+
   const handleAddRecipe = () => {
     setCount((prev) => [...prev, 0]);
   };
   const handleChange = (event: SelectChangeEvent) => {
-    setIngred(event.target.value);
+    setSelect(event.target.value);
   };
+  const handleDelete = (event: any) => {
+    console.log(event.currentTarget.parentElement);
+    if (event.currentTarget.parentElement.id === event.currentTarget.id) {
+      setCount(
+        count.filter(
+          (cnt, idx) => idx !== parseInt(event.currentTarget.parentElement.id),
+        ),
+      );
+    }
+  };
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/ingredients').then((res) => {
+      console.log(res);
+      setIngredient(res.data.getIngredient.ingredient);
+      setAlcohol(res.data.getIngredient.alcohol);
+    });
+  }, []);
   return (
     <>
       <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
       <AddIcon onClick={handleAddRecipe} />
       {count &&
         count.map((item, idx) => (
-          <RecipeContainer key={idx}>
+          <RecipeContainer id={idx.toString()} key={idx}>
             <FormControl
               variant="standard"
               sx={{
@@ -39,19 +59,28 @@ export const InputRecipe = ({ kind, ingred, setIngred }: Props) => {
               }}
             >
               <InputLabel>재료 선택</InputLabel>
-              <Select label="카테고리" value={ingred} onChange={handleChange}>
-                <MenuItem value="진">진</MenuItem>
-                <MenuItem value="럼">럼</MenuItem>
-                <MenuItem value="보드카">보드카</MenuItem>
-                <MenuItem value="위스키">위스키</MenuItem>
-                <MenuItem value="브랜디">브랜디</MenuItem>
-                <MenuItem value="데킬라">데킬라</MenuItem>
-                <MenuItem value="맥주">맥주</MenuItem>
-                <MenuItem value="와인">와인</MenuItem>
-                <MenuItem value="샴페인">샴페인</MenuItem>
-                <MenuItem value="소주">소주</MenuItem>
-                <MenuItem value="리큐르">리큐르</MenuItem>
-                <MenuItem value="비터스">비터스</MenuItem>
+              <Select
+                label="카테고리"
+                value={select}
+                onBlur={() => {
+                  getRecipe({ [kind]: select });
+                }}
+                onChange={handleChange}
+              >
+                <MenuItem disabled value="">
+                  <em>none</em>
+                </MenuItem>
+                {kind === 'alcohol'
+                  ? alcohol?.map((item, idx) => (
+                      <MenuItem value={item} key={idx}>
+                        {item}
+                      </MenuItem>
+                    ))
+                  : ingredient?.map((item, idx) => (
+                      <MenuItem value={item} key={idx}>
+                        {item}
+                      </MenuItem>
+                    ))}
               </Select>
             </FormControl>
             <TextField
@@ -59,8 +88,21 @@ export const InputRecipe = ({ kind, ingred, setIngred }: Props) => {
               variant="standard"
               type="text"
               sx={{ marginRight: '10px;' }}
+              onChange={(e) => setTitle(e.target.value)}
+              onBlur={() => {
+                getRecipe({ ['제품명']: title });
+              }}
             />
-            <TextField label="용량" variant="standard" type="number" />
+            <TextField
+              label="용량"
+              variant="standard"
+              type="number"
+              onChange={(e) => setValue(e.target.value)}
+              onBlur={() => {
+                getRecipe({ ['용량']: value });
+              }}
+            />
+            <ClearIcon id={idx.toString()} onClick={handleDelete} />
           </RecipeContainer>
         ))}
     </>
