@@ -17,6 +17,7 @@ interface Data {
   category: string;
   official: boolean;
 }
+
 export const ListContainer = () => {
   const [dryList, setDryList] = useState<Data[]>([]);
   const [refreshList, setRefreshList] = useState<Data[]>([]);
@@ -36,10 +37,11 @@ export const ListContainer = () => {
       setHotList(res.data.lists[0]['hot']);
     });
   }, []);
+
   return (
     <>
       <Category>드라이 칵테일</Category>
-      <MorePageBtn />
+      <MorePageBtn category="dry" />
       <Swiper slidesPerView={3} loop={true}>
         {dryList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -48,7 +50,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>리프레싱 칵테일</Category>
-      <MorePageBtn />
+      <MorePageBtn category="refresh" />
       <Swiper slidesPerView={3} loop={true}>
         {refreshList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -57,7 +59,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>프루트 칵테일</Category>
-      <MorePageBtn />
+      <MorePageBtn category="fruit" />
       <Swiper slidesPerView={3} loop={true}>
         {fruitList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -66,7 +68,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>스위트 칵테일</Category>
-      <MorePageBtn />
+      <MorePageBtn category="sweet" />
       <Swiper slidesPerView={3} loop={true}>
         {sweetList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -75,7 +77,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>스무디 칵테일</Category>
-      <MorePageBtn />
+      <MorePageBtn category="smoothie" />
       <Swiper slidesPerView={3} loop={true}>
         {smoothieList?.map((item, idx) => (
           <SwiperSlide key={idx}>
@@ -84,7 +86,7 @@ export const ListContainer = () => {
         ))}
       </Swiper>
       <Category>핫 칵테일</Category>
-      <MorePageBtn />
+      <MorePageBtn category="hot" />
       <Swiper slidesPerView={3} loop={true}>
         {hotList?.map((item, idx) => (
           <SwiperSlide key={idx}>

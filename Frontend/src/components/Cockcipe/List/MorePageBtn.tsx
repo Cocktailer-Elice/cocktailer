@@ -1,5 +1,8 @@
 import React from 'react';
-
-export const MorePageBtn = () => {
-  return <div>더보기</div>;
+import { Link } from 'react-router-dom';
+interface Props {
+  category: string;
+}
+export const MorePageBtn = ({ category }: Props) => {
+  return <Link to={`/cockcipe/category/${category}`}>더보기</Link>;
 };
