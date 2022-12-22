@@ -22,16 +22,15 @@ export const ApplyContainer = () => {
 
   //const dispatch = useAppDispatch();
   const handleApply = () => {
-    console.log(name, degree, category);
-    console.log(flavor);
-    console.log(content);
-    console.log(alcohol);
     const newData = {
+      owner: 'seeun',
       name: name,
+      img: img,
       degree: degree,
       category: category,
       flavor: flavor,
       content: content,
+      official: false,
     };
     axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
       console.log(res.data);
@@ -52,7 +51,6 @@ export const ApplyContainer = () => {
       <InputCockContent setContent={setContent} />
       <InputRecipe kind="alcohol" ingred={alcohol} setIngred={setAlcohol} />
       <InputRecipe kind="drink" ingred={drink} setIngred={setDrink} />
-
       <ApplyButton handleApply={handleApply} />
     </>
   );
