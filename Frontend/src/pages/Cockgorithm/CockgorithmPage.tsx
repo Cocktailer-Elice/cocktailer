@@ -10,7 +10,8 @@ export interface IGame {
   message: string;
   questions: {
     question: string;
-    options: { optionName: string; filter: string }[];
+    filterName: string;
+    options: { optionName: string; filterValue: string }[];
   }[];
 }
 

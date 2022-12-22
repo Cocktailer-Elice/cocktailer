@@ -1,122 +1,171 @@
 [
   {
-    "gameTitle": "게임제목1",
-    "message": "게임 메시지",
+    "gameTitle": "오늘 기분이 꿀꿀하다면",
+    "message": "삶에 지친 당신께 칵테일러가 심심한 위로를 드려요.",
     "questions": [
       {
-        "question": "질문1-1",
+        "question": "어떤 종류의 칵테일이 먹고 싶으신가요?",
+        "filterName": "category",
         "options": [
-          { "optionName": "선택1-1-1", "filter": "필터1-1-1" },
-          { "optionName": "선택1-1-2", "filter": "필터1-1-2" },
-          { "optionName": "선택1-1-3", "filter": "필터1-1-3" },
-          { "optionName": "선택1-1-4", "filter": "필터1-1-4" }
+          { "optionName": "달콤한 칵테일", "filterValue": "sweet" },
+          {
+            "optionName": "진한 술맛이 나는 칵테일",
+            "filterValue": "dry"
+          },
+          { "optionName": "과일 맛이 나는 칵테일", "filterValue": "fruit" },
+          { "optionName": "상큼한 칵테일", "filterValue": "refreshing" }
         ]
       },
       {
-        "question": "질문1-2",
+        "question": "좋아하는 술이 있나요?",
+        "filterName": "baseAlcohol",
         "options": [
-          { "optionName": "선택1-2-1", "filter": "필터1-2-1" },
-          { "optionName": "선택1-2-2", "filter": "필터1-2-2" },
-          { "optionName": "선택1-2-3", "filter": "필터1-2-3" },
-          { "optionName": "선택1-2-4", "filter": "필터1-2-4" }
+          { "optionName": "위스키", "filterValue": "위스키" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "진", "filterValue": "진" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "럼", "filterValue": "럼" },
+          { "optionName": "데킬라", "filterValue": "데킬라" }
         ]
       },
       {
-        "question": "질문1-3",
+        "question": "먹고 싶은 음료가 있나요?",
+        "filterName": "drink",
         "options": [
-          { "optionName": "선택1-3-1", "filter": "필터1-3-1" },
-          { "optionName": "선택1-3-2", "filter": "필터1-3-2" },
-          { "optionName": "선택1-3-3", "filter": "필터1-3-3" },
-          { "optionName": "선택1-3-4", "filter": "필터1-3-4" }
+          { "optionName": "주스", "filterValue": "주스" },
+          { "optionName": "콜라", "filterValue": "콜라" },
+          { "optionName": "사이다", "filterValue": "사이다" },
+          { "optionName": "토닉워터", "filterValue": "토닉워터" },
+          { "optionName": "진저에일", "filterValue": "진저에일" }
         ]
       },
       {
         "question": "질문1-4",
+        "filterName": "평소 어느 정도 도수의 칵테일을 마시나요?",
         "options": [
-          { "optionName": "선택1-4-1", "filter": "필터1-4-1" },
-          { "optionName": "선택1-4-2", "filter": "필터1-4-2" },
-          { "optionName": "선택1-4-3", "filter": "필터1-4-3" },
-          { "optionName": "선택1-4-4", "filter": "필터1-4-4" }
+          { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
+          { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
+          { "optionName": "5~10도 (칵테일 러버)", "filterValue": "5~10" },
+          { "optionName": "10~15도 (드라이 매니아)", "filterValue": "10~15" },
+          { "optionName": "15~20도 (진정한 칵테일러)", "filterValue": "15~20" },
+          {
+            "optionName": "거 그냥 암거나 주쇼 (찐고수)",
+            "filterValue": "20~100"
+          }
         ]
       }
     ]
   },
   {
-    "gameTitle": "게임제목2",
-    "message": "게임 메시지",
+    "gameTitle": "사랑하는 애인과의 기념일이라면",
+    "message": "칵테일러가 두 분의 사랑이 영원하길 응원해요!",
     "questions": [
       {
-        "question": "질문2-1",
+        "question": "어떤 종류의 칵테일이 먹고 싶으신가요?",
+        "filterName": "category",
         "options": [
-          { "optionName": "선택2-1-1", "filter": "필터2-1-1" },
-          { "optionName": "선택2-1-2", "filter": "필터2-1-2" },
-          { "optionName": "선택2-1-3", "filter": "필터2-1-3" },
-          { "optionName": "선택2-1-4", "filter": "필터2-1-4" }
+          { "optionName": "달콤한 칵테일", "filterValue": "sweet" },
+          {
+            "optionName": "진한 술맛이 나는 칵테일",
+            "filterValue": "dry"
+          },
+          { "optionName": "과일 맛이 나는 칵테일", "filterValue": "fruit" },
+          { "optionName": "상큼한 칵테일", "filterValue": "refreshing" }
         ]
       },
       {
-        "question": "질문2-2",
+        "question": "좋아하는 술이 있나요?",
+        "filterName": "baseAlcohol",
         "options": [
-          { "optionName": "선택2-2-1", "filter": "필터2-2-1" },
-          { "optionName": "선택2-2-2", "filter": "필터2-2-2" },
-          { "optionName": "선택2-2-3", "filter": "필터2-2-3" },
-          { "optionName": "선택2-2-4", "filter": "필터2-2-4" }
+          { "optionName": "위스키", "filterValue": "위스키" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "진", "filterValue": "진" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "럼", "filterValue": "럼" },
+          { "optionName": "데킬라", "filterValue": "데킬라" }
         ]
       },
       {
-        "question": "질문2-3",
+        "question": "먹고 싶은 음료가 있나요?",
+        "filterName": "drink",
         "options": [
-          { "optionName": "선택2-3-1", "filter": "필터2-3-1" },
-          { "optionName": "선택2-3-2", "filter": "필터2-3-2" },
-          { "optionName": "선택2-3-3", "filter": "필터2-3-3" },
-          { "optionName": "선택2-3-4", "filter": "필터2-3-4" }
+          { "optionName": "주스", "filterValue": "주스" },
+          { "optionName": "콜라", "filterValue": "콜라" },
+          { "optionName": "사이다", "filterValue": "사이다" },
+          { "optionName": "토닉워터", "filterValue": "토닉워터" },
+          { "optionName": "진저에일", "filterValue": "진저에일" }
         ]
       },
       {
-        "question": "질문2-4",
+        "question": "질문1-4",
+        "filterName": "평소 어느 정도 도수의 칵테일을 마시나요?",
         "options": [
-          { "optionName": "선택2-4-1", "filter": "필터2-4-1" },
-          { "optionName": "선택2-4-2", "filter": "필터2-4-2" },
-          { "optionName": "선택2-4-3", "filter": "필터2-4-3" },
-          { "optionName": "선택2-4-4", "filter": "필터2-4-4" }
+          { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
+          { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
+          { "optionName": "5~10도 (칵테일 러버)", "filterValue": "5~10" },
+          { "optionName": "10~15도 (드라이 매니아)", "filterValue": "10~15" },
+          { "optionName": "15~20도 (진정한 칵테일러)", "filterValue": "15~20" },
+          {
+            "optionName": "거 그냥 암거나 주쇼 (찐고수)",
+            "filterValue": "20~100"
+          }
         ]
       }
     ]
   },
   {
-    "gameTitle": "게임제목3",
-    "message": "게임 메시지",
+    "gameTitle": "친구들과 파티중이라면",
+    "message": "칵테일러가 분위기를 UP! 시킬 수 있는 칵테일을 추천해 드릴께요!",
     "questions": [
       {
-        "question": "질문3-1",
+        "question": "어떤 종류의 칵테일이 먹고 싶으신가요?",
+        "filterName": "category",
         "options": [
-          { "optionName": "선택3-1-1", "filter": "필터3-1-1" },
-          { "optionName": "선택3-1-2", "filter": "필터3-1-2" },
-          { "optionName": "선택3-1-3", "filter": "필터3-1-3" }
+          { "optionName": "달콤한 칵테일", "filterValue": "sweet" },
+          {
+            "optionName": "진한 술맛이 나는 칵테일",
+            "filterValue": "dry"
+          },
+          { "optionName": "과일 맛이 나는 칵테일", "filterValue": "fruit" },
+          { "optionName": "상큼한 칵테일", "filterValue": "refreshing" }
         ]
       },
       {
-        "question": "질문3-2",
+        "question": "좋아하는 술이 있나요?",
+        "filterName": "baseAlcohol",
         "options": [
-          { "optionName": "선택3-2-1", "filter": "필터3-2-1" },
-          { "optionName": "선택3-2-2", "filter": "필터3-2-2" },
-          { "optionName": "선택3-2-3", "filter": "필터3-2-3" }
+          { "optionName": "위스키", "filterValue": "위스키" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "진", "filterValue": "진" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "럼", "filterValue": "럼" },
+          { "optionName": "데킬라", "filterValue": "데킬라" }
         ]
       },
       {
-        "question": "질문3-3",
+        "question": "먹고 싶은 음료가 있나요?",
+        "filterName": "drink",
         "options": [
-          { "optionName": "선택3-3-1", "filter": "필터3-3-1" },
-          { "optionName": "선택3-3-2", "filter": "필터3-3-2" },
-          { "optionName": "선택3-3-3", "filter": "필터3-3-3" }
+          { "optionName": "주스", "filterValue": "주스" },
+          { "optionName": "콜라", "filterValue": "콜라" },
+          { "optionName": "사이다", "filterValue": "사이다" },
+          { "optionName": "토닉워터", "filterValue": "토닉워터" },
+          { "optionName": "진저에일", "filterValue": "진저에일" }
         ]
       },
       {
-        "question": "질문3-4",
+        "question": "질문1-4",
+        "filterName": "평소 어느 정도 도수의 칵테일을 마시나요?",
         "options": [
-          { "optionName": "선택3-4-1", "filter": "필터3-4-1" },
-          { "optionName": "선택3-4-2", "filter": "필터3-4-2" },
-          { "optionName": "선택3-4-3", "filter": "필터3-4-3" }
+          { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
+          { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
+          { "optionName": "5~10도 (칵테일 러버)", "filterValue": "5~10" },
+          { "optionName": "10~15도 (드라이 매니아)", "filterValue": "10~15" },
+          { "optionName": "15~20도 (진정한 칵테일러)", "filterValue": "15~20" },
+          {
+            "optionName": "거 그냥 암거나 주쇼 (찐고수)",
+            "filterValue": "20~100"
+          }
         ]
       }
     ]
