@@ -27,7 +27,7 @@ const TextBox = styled.textarea`
 `;
 
 const gets = async (data: any) => {
-    await axios.post('http://localhost:8000/cockflow', data)
+    await axios.post('http://localhost:8000/api/cockflow', data)
     .then(function (response) {
       console.log(response);
     })

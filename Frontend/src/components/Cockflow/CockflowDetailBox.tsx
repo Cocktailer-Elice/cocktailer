@@ -43,29 +43,28 @@ const ChangedInput = styled.input`
 `
 
 interface dataType {
-  newData: {
+  detailData: {
+    id: number,
     title: string,
     isBartender: boolean,
     nickname: string,
-    createdAt: string,
+    createdAt: Date,
     content: string
   }
 }
 
-export const CockflowDetailBox = ({ newData }:dataType) => {
-  const [flowContent, setFlowcontent] = useState('');
-
+export const CockflowDetailBox = ({ detailData }:dataType) => {
   // 수정 기능 붙으면 - 전역으로 관리 
-  const [actived, setActived] = useState(true);
+  const [inputActived, setInputActived] = useState(true);
 
-  const { title, isBartender, nickname, createdAt, content } = newData;
+  const { title, isBartender, nickname, createdAt, content } = detailData;
 
   return (
     <ContWrap>
       <form>
         <TitleWrap>
           <div>
-            <ChangedInput type="text" value={title} readOnly={true} />
+            <ChangedInput type="text" value={title} readOnly={inputActived} />
           </div><br />
           <div>
             <FlexMiddle>
@@ -76,14 +75,16 @@ export const CockflowDetailBox = ({ newData }:dataType) => {
                 }
                 <div>&nbsp;{nickname}</div>
               </Middle>
-              <span>{createdAt}</span>
+              <span>
+                {String(createdAt).split('T')[0].replaceAll('-', '.')}
+              </span>
             </FlexMiddle>
           </div><br/>
           <div>
             {/* <span>(+)조회수</span> */}
           </div>
         </TitleWrap>
-        <TextBox name="" id="" value={content} readOnly={actived} />
+        <TextBox name="" id="" value={content} readOnly={inputActived} />
       </form>
     </ContWrap>
   );

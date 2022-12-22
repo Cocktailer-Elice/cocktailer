@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CockflowCreateReqDto } from '../../../../types/cockflowType';
 
-interface GetData {
+interface GetData extends CockflowCreateReqDto {
   key: string,
   id: string,
-  title: string,
-  content: string,
 }
 
 const NavLink = styled(Link)`

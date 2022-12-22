@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
 import { CockflowItemBox } from '../../components/Cockflow/CockflowItemBox';
@@ -98,7 +99,7 @@ const imgArr = [
 export const CockflowList = () => {
   const [data, setData] = useState([{
     id: '0',
-    title: '',
+    content: '',
   }]);
 
   const [pageNum, setPageNum] = useState(1)
@@ -106,15 +107,17 @@ export const CockflowList = () => {
   useEffect(() => {
     
     //axios.get 호출
-    // axios.get(`http://localhost:8000/cockflow/?q=${pageNum}`)
-    // .then(res => {
-    //   setData(res.data.data);
-    //   setPageNum((prev => prev + 1));
-    // });
+    // axios.get(`http://localhost:8000/api/cockflow`)
+    axios.get(`http://localhost:8000/api/cockflow/?q=${pageNum}`)
+    .then(res => {
+      // console.log(res);
+      setData(res.data.cockflows);
+      setPageNum((prev => prev + 1));
+    });
 
-    setData(mockData1);
+    // setData(mockData1);
     //  무한스크롤 - yarn add react-intersection-observer
-  }, [pageNum]);
+  }, []);
 
   return (
     <P5>
@@ -123,7 +126,7 @@ export const CockflowList = () => {
       <List>
         {data.map((item, index) => {return (
               <Item>
-                <CockflowItemBox key={item.id} id={item.id} title={item.title}
+                <CockflowItemBox key={item.id} id={item.id} title={String(item.content).slice(0,10).concat('...')}
                   content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}/>
               </Item>
             )
