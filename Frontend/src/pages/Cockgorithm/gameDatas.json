@@ -40,8 +40,8 @@
         ]
       },
       {
-        "question": "질문1-4",
-        "filterName": "평소 어느 정도 도수의 칵테일을 마시나요?",
+        "question": "평소 어느 정도 도수의 칵테일을 마시나요?",
+        "filterName": "degree",
         "options": [
           { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
           { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
@@ -97,8 +97,8 @@
         ]
       },
       {
-        "question": "질문1-4",
-        "filterName": "평소 어느 정도 도수의 칵테일을 마시나요?",
+        "question": "평소 어느 정도 도수의 칵테일을 마시나요?",
+        "filterName": "degree",
         "options": [
           { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
           { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
@@ -154,8 +154,8 @@
         ]
       },
       {
-        "question": "질문1-4",
-        "filterName": "평소 어느 정도 도수의 칵테일을 마시나요?",
+        "question": "평소 어느 정도 도수의 칵테일을 마시나요?",
+        "filterName": "degree",
         "options": [
           { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
           { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
