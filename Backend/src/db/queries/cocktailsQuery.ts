@@ -1,33 +1,40 @@
-export const cocktailQueries = (reqData: object) => {
-  console.log(reqData);
+export const lists = () => {
+  /*   전체 6개씩   */
 
-  /*   전체 6개 리스트   */
-  if (!('id' in reqData) && !('category' in reqData)) {
-    const $facet: any = {};
+  const $facet: any = {};
 
-    const Array = ['sweet', 'dry', 'refreshing', 'fruit', 'smoothie', 'hot'];
+  const Array = ['sweet', 'dry', 'refreshing', 'fruit', 'smoothie', 'hot'];
 
-    Array.map((e) => {
-      $facet[e] = [
-        { $match: { category: e, official: true } },
-        { $limit: 6 },
-        { $sort: { createdAt: -1 } },
-        { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
-      ];
-    });
+  Array.map((e) => {
+    $facet[e] = [
+      { $match: { category: e, official: true } },
+      { $limit: 6 },
+      { $sort: { createdAt: -1 } },
+      { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+    ];
+  });
 
-    return { $facet: $facet };
-  }
+  return { $facet: $facet };
+};
 
-  /*   id / 카테고리 / 검색     */
+export const findCocktailId = (id: number) => {
+  /*   id   */
+  return [
+    {
+      $match: { id: id },
+    },
+    { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+  ];
+};
+
+export const findCategoryAndSearch = (reqData: object) => {
+  /*   카테고리 / 검색   */
 
   const makeMatchForm = () => {
     const obj: any = {};
-    if ('id' in reqData) obj.id = reqData.id;
-    if ('category' in reqData && reqData.category !== 'undefined') {
+    if ('category' in reqData) {
       obj.category = reqData.category;
     }
-
     if ('keyword' in reqData) obj.name = { $regex: reqData.keyword };
     if ('official' in reqData)
       obj.official = reqData.official === 'true' ? true : false;
@@ -35,13 +42,11 @@ export const cocktailQueries = (reqData: object) => {
     return obj;
   };
 
-  console.log(makeMatchForm());
-
   return [
     {
       $match: makeMatchForm(),
     },
-    { $sort: { createdAt: -1 } },
+    { $sort: { id: -1, createdAt: -1 } },
     { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
   ];
 };

@@ -3,7 +3,6 @@ import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
 import { cocktailModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 
-/* 간결하게 작성 */
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
 
@@ -13,6 +12,13 @@ class CocktailService {
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,
     });
+    if (!data) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '검색하신 칵테일이 존재하지 않아요!',
+      );
+    }
 
     return data;
   }
@@ -23,53 +29,20 @@ class CocktailService {
     return data;
   }
 
-  public async findId(id: number) {
-    const data = await this.cocktailModel.findId(id);
+  public async findCocktailId(id: number) {
+    const data = await this.cocktailModel.findCocktailId(id);
 
     return data;
   }
 
-  public async findCategory(reqData: object) {
-    const data = await this.cocktailModel.findCategory(reqData);
-    return data;
-  }
-
-  public async search(reqData: object, p: number) {
-    const data = await this.cocktailModel.search(reqData, p);
-    return data;
-  }
-
-  /*///////////////////////////////////////////////////////////////// */
-
-  public async getCocktail(
-    id: number | null,
-    category: string | null,
-    official: boolean | null,
-  ): Promise<Cocktail | Cocktail[]> {
-    /*
-    id x / category x / = 각 카테고리마다 n개씩
-    id o / category x / = 해당 id 칵테일 가져오기
-    id x / category o / = 해당 카테고리 칵테일들 전체 가져오기
-    id o / category o / = 해당 id 칵테일 가져오기
-    */
-
-    const data =
-      id === null && category === null
-        ? await this.cocktailModel.findAll('main', null, null, official)
-        : Number.isInteger(id)
-        ? await this.cocktailModel.findAll('id', id, null, official)
-        : await this.cocktailModel.findAll(
-            'category',
-            null,
-            category,
-            official,
-          );
-
-    //책임 분리 //반복되는 함수 : 공통으로 뽑아서 사용
-
-    if (data === null) {
-      throw new AppError(errorNames.inputError, 400, '존재하지 않는 칵테일');
-    }
+  public async findCocktailCategoryAndSearch(
+    reqData: object,
+    endpoint: number,
+  ) {
+    const data = await this.cocktailModel.findCocktailCategoryAndSearch(
+      reqData,
+      endpoint,
+    );
 
     return data;
   }

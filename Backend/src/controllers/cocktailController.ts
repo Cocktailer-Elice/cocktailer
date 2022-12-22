@@ -20,15 +20,15 @@ class CoctailController {
     res.status(200).json({ lists: lists });
   };
 
-  public findId = async (req: Req, res: Res) => {
+  public findCocktailId = async (req: Req, res: Res) => {
     const id = Number(req.params.id);
 
-    const cocktail = await this.cocktailService.findId(id);
+    const cocktail = await this.cocktailService.findCocktailId(id);
 
     res.status(200).json({ cocktail: cocktail });
   };
 
-  public findCategoryAndSearch = async (req: Req, res: Res) => {
+  public findCocktailCategoryAndSearch = async (req: Req, res: Res) => {
     const reqData: any = {};
 
     if (req.query.category) {
@@ -37,58 +37,19 @@ class CoctailController {
     if (req.query.official) {
       reqData.official = req.query.official;
     }
+    if (req.query.keyword) {
+      reqData.keyword = req.query.keyword;
+    }
 
-    const categoryLists = await this.cocktailService.findCategory(reqData);
+    const endpoint = Number(req.query.endpoint) || 0;
+
+    const categoryLists =
+      await this.cocktailService.findCocktailCategoryAndSearch(
+        reqData,
+        endpoint,
+      );
 
     res.status(200).json({ categoryLists: categoryLists });
-  };
-
-  // public search = async (req: Req, res: Res) => {
-  //   const reqData: any = {};
-
-  //   const test: any = {
-  //     keyword: String(req.query.keyword),
-  //     category: String(req.query.category),
-  //     official: Boolean(req.query.official),
-  //   };
-
-  //   console.log(test);
-
-  //   if (req.query.keyword) {
-  //     reqData.keyword = req.query.keyword;
-  //   }
-  //   if (req.query.category) {
-  //     reqData.category = req.query.category;
-  //   }
-  //   if (req.query.official) {
-  //     reqData.official = req.query.official;
-  //   }
-
-  //   const p = Number(req.query.p) || 0;
-
-  //   const serchList = await this.cocktailService.search(reqData, p);
-  //   res.status(200).json({ serchList: serchList });
-  // };
-
-  /*///////////////////////////////////////////////////////////////// */
-
-  public getCocktail = async (req: Req, res: Res) => {
-    const id = req.params.id ? Number(req.params.id) : null;
-
-    const category = req.query.category ? String(req.query.category) : null;
-
-    const official = req.query.official ? Boolean(req.query.official) : null;
-
-    const getCocktailData = await this.cocktailService.getCocktail(
-      id,
-      category,
-      official,
-    );
-
-    //해당 단은 의도하기나름  => 범용적사용 X = > 서로 다른 API사용
-
-    //return type => 단건 다건 분리하는게 좋음.
-    res.status(200).json({ getCocktailData: getCocktailData });
   };
 }
 
