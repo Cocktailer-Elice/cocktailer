@@ -5,7 +5,6 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import { Ingredient } from './../../../../Backend/src/services/types/ingredientType';
 
 interface CockgorithmModalProps {
   toggleModal: () => void;
