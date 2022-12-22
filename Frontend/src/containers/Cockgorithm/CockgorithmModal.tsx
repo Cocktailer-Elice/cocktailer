@@ -5,6 +5,7 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import { Ingredient } from './../../../../Backend/src/services/types/ingredientType';
 
 interface CockgorithmModalProps {
   toggleModal: () => void;
@@ -16,6 +17,7 @@ interface IFilter {
   baseAlcohol: string;
   drink: string;
   degree: string;
+  ingredient: string;
 }
 
 export const CockgorithmModal = ({
@@ -28,12 +30,13 @@ export const CockgorithmModal = ({
     baseAlcohol: '',
     drink: '',
     degree: '',
+    ingredient: '',
   });
   const [loading, setLoading] = useState(false);
   const [cocktailInfo, setCocktailInfo] = useState(''); // 서버로부터 받아온 cocktail이 저장되는 state
 
   useEffect(() => {
-    if (questionCounter === 4) {
+    if (questionCounter === 5) {
       // 로딩 시작
       setLoading(true);
 
@@ -64,6 +67,7 @@ export const CockgorithmModal = ({
         filterName === 'category' ||
         filterName === 'baseAlcohol' ||
         filterName === 'drink' ||
+        filterName === 'ingredient' ||
         filterName === 'degree'
       ) {
         curr[filterName] = filterValue;
@@ -78,7 +82,7 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
-          {questionCounter < 4 ? (
+          {questionCounter < 5 ? (
             <CockgorithmGameContent
               selectedGame={seletedGame}
               questionCounter={questionCounter}
