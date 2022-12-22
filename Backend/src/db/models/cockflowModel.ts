@@ -1,4 +1,3 @@
-import { GetCockflowServiceDto } from './../../services/types/cockflowType';
 import { cockflowQueries } from './../queries/cockflowQuery';
 import {
   ICockflowMongoModel,
@@ -6,7 +5,7 @@ import {
   CockflowFindOneFilter,
   CockflowUpdateOneFilter,
 } from './../types/cockflowType';
-import { CockflowInfo } from '../../services';
+import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 
