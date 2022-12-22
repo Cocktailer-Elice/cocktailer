@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
 import { useState } from 'react';
-import games from './games.json';
+import gameDatas from './gameDatas.json';
 
 export interface IGame {
   gameTitle: string;
@@ -15,7 +15,7 @@ export interface IGame {
 
 export const CockgorithmPage = () => {
   const [modal, setModal] = useState(false);
-  const [seletedGame, setSelectedGame] = useState<IGame>(games[0]);
+  const [seletedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
 
   const toggleModal = () => {
     setModal((curr) => !curr);
@@ -29,7 +29,7 @@ export const CockgorithmPage = () => {
     <Container>
       <CockgorithmGameList
         toggleModal={toggleModal}
-        games={games}
+        gameDatas={gameDatas}
         changeSelectedGame={changeSelectedGame}
       />
       {modal ? (

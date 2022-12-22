@@ -4,18 +4,18 @@ import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
 
 interface CockgorithmGameListProps {
   toggleModal: () => void;
-  games: IGame[];
+  gameDatas: IGame[];
   changeSelectedGame: (game: IGame) => void;
 }
 
 export const CockgorithmGameList = ({
   toggleModal,
-  games,
+  gameDatas,
   changeSelectedGame,
 }: CockgorithmGameListProps) => {
   return (
     <GameList>
-      {games.map((game, index) => (
+      {gameDatas.map((game, index) => (
         <Game
           key={index}
           onClick={() => {
