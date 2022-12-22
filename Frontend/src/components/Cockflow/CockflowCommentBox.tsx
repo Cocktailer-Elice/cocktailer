@@ -2,7 +2,7 @@ import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
 import { Comment } from '../../../../types/commentType'
 import { CockflowCommentAdd } from './CockflowCommentAdd'
 
-interface CommetType {
+interface CommentType {
   comments: Comment[];
 }
 
@@ -15,11 +15,9 @@ interface ItemsType {
 }
 
 // 댓글 박스
-export const CockflowCommentBox = ({commentlist}: { commentlist: CommetType }) => {
-  // console.log(commentlist.comments)
+export const CockflowCommentBox = ({commentlist}: { commentlist: CommentType }) => {
 
   return (
-    // 컴포넌트 분리 >> props로 state를 가져서
     <>
       <CockflowBoxTitle replied={commentlist.comments.length} />
       {

@@ -33,10 +33,10 @@ export const CockflowCommentAdd = ( { item }:any) => {
             subComment
                 ?
                 <>
-                <SubComments>
-                <SubTextarea name="" value="test test" />
-                <Button2 variant="contained">등록하기</Button2>
-                </SubComments>
+                  <SubComments>
+                    <SubTextarea name="" value="test test" onChange={()=>{}} />
+                    <Button2 variant="contained">등록하기</Button2>
+                  </SubComments>
                 </>
                 : null
             }
