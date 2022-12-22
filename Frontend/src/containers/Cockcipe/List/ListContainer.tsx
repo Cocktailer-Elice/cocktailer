@@ -7,6 +7,7 @@ import { Navigation } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { MorePageBtn } from '../../../components/Cockcipe/List/MorePageBtn';
 
 // useEffect 데이터 get 후 칵테일 리스트 map 출력
 interface Data {
@@ -14,48 +15,130 @@ interface Data {
   img: string;
   id: string;
   category: string;
+  official: boolean;
 }
+
 export const ListContainer = () => {
-  const [cockOneList, setCockOneList] = useState<Data[]>([]);
-  const [cockTwoList, setCockTwoList] = useState<Data[]>([]);
-  const [cockThreeList, setCockThreeList] = useState<Data[]>([]);
+  const [dryList, setDryList] = useState<Data[]>([]);
+  const [refreshList, setRefreshList] = useState<Data[]>([]);
+  const [fruitList, setFruitList] = useState<Data[]>([]);
+  const [sweetList, setSweetList] = useState<Data[]>([]);
+  const [smoothieList, setSmoothList] = useState<Data[]>([]);
+  const [hotList, setHotList] = useState<Data[]>([]);
+
   useEffect(() => {
-    axios.get('/src/containers/Cockcipe/List/data.json').then((res) => {
-      for (let key in res.data) {
-        res.data[key].map((item: Data) => {
-          if (item.category === 'cate1')
-            setCockOneList((prev) => [...prev, item]);
-          if (item.category === 'cate2')
-            setCockTwoList((prev) => [...prev, item]);
-          if (item.category === 'cate3')
-            setCockThreeList((prev) => [...prev, item]);
-        });
-      }
+    axios.get('http://localhost:8000/api/cocktails/lists').then((res) => {
+      console.log(res.data.lists[0]);
+      setDryList(res.data.lists[0]['dry']);
+      setRefreshList(res.data.lists[0]['refreshing']);
+      setFruitList(res.data.lists[0]['fruit']);
+      setSweetList(res.data.lists[0]['refreshing']);
+      setSmoothList(res.data.lists[0]['smoothie']);
+      setHotList(res.data.lists[0]['hot']);
     });
   }, []);
+
   return (
     <>
-      <Category>카테고리1</Category>
-      <Swiper slidesPerView={3} loop={true}>
-        {cockOneList?.map((item, idx) => (
+      <CategoryContainer>
+        <Category>드라이 칵테일</Category>
+        <MorePageBtn category="dry" />
+      </CategoryContainer>
+
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+        {dryList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>카테고리2</Category>
-      <Swiper slidesPerView={3} loop={true}>
-        {cockTwoList?.map((item, idx) => (
+
+      <CategoryContainer>
+        <Category>리프레싱 칵테일</Category>
+        <MorePageBtn category="refresh" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+        {refreshList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>카테고리3</Category>
-      <Swiper slidesPerView={3} loop={true}>
-        {cockThreeList?.map((item, idx) => (
+
+      <CategoryContainer>
+        <Category>프루트 칵테일</Category>
+        <MorePageBtn category="fruit" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+        {fruitList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <CategoryContainer>
+        <Category>스위트 칵테일</Category>
+        <MorePageBtn category="sweet" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+        {sweetList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <CategoryContainer>
+        <Category>스무디 칵테일</Category>
+        <MorePageBtn category="smoothie" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+        {smoothieList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <CategoryContainer>
+        <Category>핫 칵테일</Category>
+        <MorePageBtn category="hot" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+        {hotList?.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -64,5 +147,11 @@ export const ListContainer = () => {
 };
 
 const Category = styled.p`
-  font-size: 15px;
+  font-size: 20px;
+  color: #212529;
+`;
+
+const CategoryContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

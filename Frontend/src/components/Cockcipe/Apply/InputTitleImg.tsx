@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
-export const InputTitleImg = () => {
+// TODO aws 업로드 후 반환 이미지 url 받아오기
+export const InputTitleImg = ({ setImg }: any) => {
   const [files, setFiles] = useState<File | null>(null);
   const [imgSrc, setImgsrc] = useState<string>();
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +24,8 @@ export const InputTitleImg = () => {
           folder: 'seeun-test',
         })
         .then((res) => {
-          console.log(res);
+          console.log(new URL(res.data).pathname.split('/')[2]);
+          setImg(new URL(res.data).pathname.split('/')[2]);
           axios
             .put(`${res.data}`, file, {
               headers: {
