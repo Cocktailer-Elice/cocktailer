@@ -1,5 +1,10 @@
 import { SubCommentInfo } from './../../services/types/commentType';
-import { ICommentMongoModel, ICommentModel } from './../types/commentType';
+import {
+  ICommentMongoModel,
+  ICommentModel,
+  CommentFindOneFilter,
+  CommentUpdateOneFilter,
+} from './../types/commentType';
 import { CommentInfo } from '../../services';
 import { IComment } from '../types';
 import Comment from '../schemas/commentSchema';
@@ -27,16 +32,18 @@ class MongoModel implements ICommentMongoModel {
     return comment;
   }
 
-  public updateAdopted = async (commentId: string) => {
-    const filter = { _id: commentId };
-    const update = { adopted: true };
+  public update = async (
+    filter: CommentFindOneFilter,
+    update: CommentUpdateOneFilter,
+  ) => {
     const result = await Comment.updateOne(filter, update);
     return result;
   };
 
-  public updateLikes = async (commentId: string, value: number) => {
+  public updateAdopted = async (commentId: string) => {
     const filter = { _id: commentId };
-    const update = { $inc: { likes: value } };
+    const update = { isAdopted: true };
+    console.log(update);
     const result = await Comment.updateOne(filter, update);
     return result;
   };

@@ -1,12 +1,6 @@
 import React from 'react';
-import DetailContainer from '../../containers/Cockcipe/Detail/DetailContainer';
+import { DetailContainer } from '../../containers/Cockcipe/Detail/DetailContainer';
 
-const CockDetailPage = () => {
-  return (
-    <div>
-      <DetailContainer />
-    </div>
-  );
+export const CockDetailPage = () => {
+  return <DetailContainer />;
 };
-
-export default CockDetailPage;

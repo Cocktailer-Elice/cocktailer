@@ -19,10 +19,6 @@ const CockflowSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    deletedAt: {
-      type: Date,
-      default: null,
-    },
   },
   { collection: 'cockflows', timestamps: true, versionKey: false },
 );

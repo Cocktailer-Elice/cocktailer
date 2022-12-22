@@ -1,19 +1,16 @@
 import styled from 'styled-components';
 
-const HomeSubCarousel = () => {
+export const HomeSubCarousel = () => {
   return (
-    <HomeSubCarouselWrapper>
+    <SubCarousel>
       <span>홈 서브 캐러셀</span>
-    </HomeSubCarouselWrapper>
+    </SubCarousel>
   );
 };
 
-const HomeSubCarouselWrapper = styled.div`
+const SubCarousel = styled.div`
   width: 100%;
-  height: 20%;
+  height: 100%;
   border: 1px solid gray;
   padding: 10px;
-  margin-bottom: 10px;
 `;
-
-export default HomeSubCarousel;

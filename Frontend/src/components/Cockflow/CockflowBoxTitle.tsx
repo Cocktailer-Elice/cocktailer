@@ -6,7 +6,12 @@ const SmallTitle = styled.div`
   border-bottom: 1px solid #ddd;
 `;
 
-export const CockflowBoxTitle = ({ replied = 0 }) => {
+interface title {
+  replied?: number,
+  smallTitle?: string
+}
+
+export const CockflowBoxTitle = ({ replied = 0, smallTitle }: title) => {
   return (
     <SmallTitle>
       {
@@ -14,7 +19,7 @@ export const CockflowBoxTitle = ({ replied = 0 }) => {
           ?
           `${replied}개의 답변`
           :
-          '답변 달기'
+          smallTitle
       }
     </SmallTitle>
   );

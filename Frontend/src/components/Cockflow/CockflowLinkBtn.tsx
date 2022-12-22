@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { Right } from './style'
 
-type btnProps = {
+interface btnProps {
     link: string,
     title: string
 }
