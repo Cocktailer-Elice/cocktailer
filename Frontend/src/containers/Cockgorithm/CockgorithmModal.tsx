@@ -19,6 +19,22 @@ interface IFilter {
   ingredient: string;
 }
 
+export interface ICockgorithmCocktail {
+  id: string;
+  name: string;
+  img: string;
+  degree: string;
+  content: string;
+}
+
+const cocktailMockData = {
+  id: '1',
+  name: '마티니 블루',
+  img: '칵테일 이미지 URL',
+  degree: '10',
+  content: '마티니 블루는 주절주절',
+};
+
 export const CockgorithmModal = ({
   toggleModal,
   seletedGame,
@@ -32,7 +48,8 @@ export const CockgorithmModal = ({
     ingredient: '',
   });
   const [loading, setLoading] = useState(false);
-  const [cocktailInfo, setCocktailInfo] = useState(''); // 서버로부터 받아온 cocktail이 저장되는 state
+  const [cocktailInfo, setCocktailInfo] =
+    useState<ICockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
   useEffect(() => {
     if (questionCounter === 5) {
@@ -46,7 +63,7 @@ export const CockgorithmModal = ({
       const cocktail = '마티니 블루';
 
       // 받아온 cocktail을 state로 관리
-      setCocktailInfo(cocktail);
+      setCocktailInfo(cocktailMockData);
 
       // 2초 후 로딩 종료
       setTimeout(() => {
@@ -125,6 +142,7 @@ const Dimmed = styled.div`
 
 const MainSection = styled.div`
   width: 100%;
+  height: 450px;
   min-height: 450px;
   background-color: skyblue;
   display: flex;
@@ -132,6 +150,7 @@ const MainSection = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
+  overflow-y: scroll;
 `;
 
 const GameTitle = styled.div`
