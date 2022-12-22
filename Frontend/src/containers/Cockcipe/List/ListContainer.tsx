@@ -45,7 +45,12 @@ export const ListContainer = () => {
       <Swiper slidesPerView={3} loop={true}>
         {dryList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -54,7 +59,12 @@ export const ListContainer = () => {
       <Swiper slidesPerView={3} loop={true}>
         {refreshList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -63,7 +73,12 @@ export const ListContainer = () => {
       <Swiper slidesPerView={3} loop={true}>
         {fruitList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -72,7 +87,12 @@ export const ListContainer = () => {
       <Swiper slidesPerView={3} loop={true}>
         {sweetList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -81,7 +101,12 @@ export const ListContainer = () => {
       <Swiper slidesPerView={3} loop={true}>
         {smoothieList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
@@ -90,7 +115,12 @@ export const ListContainer = () => {
       <Swiper slidesPerView={3} loop={true}>
         {hotList?.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CocktailListItem key={idx} name={item.name} id={item.id} />
+            <CocktailListItem
+              key={idx}
+              name={item.name}
+              official={item.official}
+              id={item.id}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
