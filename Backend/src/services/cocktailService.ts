@@ -26,11 +26,27 @@ class CocktailService {
   public async getLists() {
     const data: Cocktail[] = await this.cocktailModel.getLists();
 
+    if (!data) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '검색하신 칵테일이 존재하지 않아요!',
+      );
+    }
+
     return data;
   }
 
   public async findCocktailId(id: number) {
     const data = await this.cocktailModel.findCocktailId(id);
+
+    if (!data) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '이런! 이 칵테일은 누군가 다 마셨나봐요!!',
+      );
+    }
 
     return data;
   }
@@ -44,7 +60,19 @@ class CocktailService {
       endpoint,
     );
 
+    if (!data) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '이런! 이 칵테일은 누군가 다 마셨나봐요!!',
+      );
+    }
+
     return data;
+  }
+
+  public async makeMockData() {
+    return '123';
   }
 }
 
