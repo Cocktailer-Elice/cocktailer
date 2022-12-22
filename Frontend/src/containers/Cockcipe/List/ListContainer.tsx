@@ -40,9 +40,12 @@ export const ListContainer = () => {
 
   return (
     <>
-      <Category>드라이 칵테일</Category>
-      <MorePageBtn category="dry" />
-      <Swiper slidesPerView={3} loop={true}>
+      <CategoryContainer>
+        <Category>드라이 칵테일</Category>
+        <MorePageBtn category="dry" />
+      </CategoryContainer>
+
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {dryList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem
@@ -54,9 +57,12 @@ export const ListContainer = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>리프레싱 칵테일</Category>
-      <MorePageBtn category="refresh" />
-      <Swiper slidesPerView={3} loop={true}>
+
+      <CategoryContainer>
+        <Category>리프레싱 칵테일</Category>
+        <MorePageBtn category="refresh" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {refreshList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem
@@ -68,9 +74,12 @@ export const ListContainer = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>프루트 칵테일</Category>
-      <MorePageBtn category="fruit" />
-      <Swiper slidesPerView={3} loop={true}>
+
+      <CategoryContainer>
+        <Category>프루트 칵테일</Category>
+        <MorePageBtn category="fruit" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {fruitList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem
@@ -82,9 +91,12 @@ export const ListContainer = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>스위트 칵테일</Category>
-      <MorePageBtn category="sweet" />
-      <Swiper slidesPerView={3} loop={true}>
+
+      <CategoryContainer>
+        <Category>스위트 칵테일</Category>
+        <MorePageBtn category="sweet" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {sweetList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem
@@ -96,9 +108,12 @@ export const ListContainer = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>스무디 칵테일</Category>
-      <MorePageBtn category="smoothie" />
-      <Swiper slidesPerView={3} loop={true}>
+
+      <CategoryContainer>
+        <Category>스무디 칵테일</Category>
+        <MorePageBtn category="smoothie" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {smoothieList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem
@@ -110,9 +125,12 @@ export const ListContainer = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-      <Category>핫 칵테일</Category>
-      <MorePageBtn category="hot" />
-      <Swiper slidesPerView={3} loop={true}>
+
+      <CategoryContainer>
+        <Category>핫 칵테일</Category>
+        <MorePageBtn category="hot" />
+      </CategoryContainer>
+      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {hotList?.map((item, idx) => (
           <SwiperSlide key={idx}>
             <CocktailListItem
@@ -129,5 +147,11 @@ export const ListContainer = () => {
 };
 
 const Category = styled.p`
-  font-size: 15px;
+  font-size: 20px;
+  color: #212529;
+`;
+
+const CategoryContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

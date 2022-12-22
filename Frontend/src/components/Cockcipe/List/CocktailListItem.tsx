@@ -23,7 +23,9 @@ export const CocktailListItem = ({ id, name, official }: Props) => {
 };
 
 const ThumbnailBox = styled.div`
-  border: 1px solid black;
+  box-sizing: border-box;
+  background-color: #bac8ff;
+  border-radius: 10px;
   width: auto;
   height: 100px;
   margin: 10px;

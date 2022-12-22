@@ -10,6 +10,11 @@ import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg'
 //import { postCockcipe } from '../../../modules/cockcipeActions';
 //import { useAppDispatch } from '../../../modules/store';
 
+interface Kind {
+  name: string;
+  capacity: number;
+}
+
 export const ApplyContainer = () => {
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);

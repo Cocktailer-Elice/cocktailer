@@ -4,6 +4,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import styled from 'styled-components';
 import { FormControl, InputLabel, TextField, MenuItem } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 interface Recipe {
   name: string;
   capacity: number;
@@ -53,6 +54,12 @@ export const InputRecipe = ({ kind, ingred, setIngred }: Props) => {
                 <MenuItem value="비터스">비터스</MenuItem>
               </Select>
             </FormControl>
+            <TextField
+              label="제품명"
+              variant="standard"
+              type="text"
+              sx={{ marginRight: '10px;' }}
+            />
             <TextField label="용량" variant="standard" type="number" />
           </RecipeContainer>
         ))}
