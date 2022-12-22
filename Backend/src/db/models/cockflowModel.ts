@@ -8,6 +8,8 @@ import {
 import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
+import Comment from '../schemas/commentSchema';
+import db from '../../mongodb';
 
 class MongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
@@ -69,11 +71,24 @@ class MongoModel implements ICockflowMongoModel {
     return result;
   };
 
-  public async delete(cockflowId: number) {
-    const filter = { id: cockflowId };
-    const result = await Cockflow.deleteOne(filter);
+  public delete = async (cockflowId: number) => {
+    const session = await db.startSession();
+    session.startTransaction();
+    console.log('세션 및 트랜잭션이 정상적으로 시작됨');
+    console.log(session);
+
+    const cockflowDeleteFilter = { id: cockflowId };
+    await Cockflow.deleteOne(cockflowDeleteFilter);
+
+    const commentDeleteFilter = { cockflowId };
+    await Comment.deleteMany(commentDeleteFilter);
+
+    const result = await session.commitTransaction();
+    console.log('세션이 정상적으로 커밋됨');
+    session.endSession();
+    console.log(result);
     return result;
-  }
+  };
 }
 
 export class CockflowModel implements ICockflowModel {
