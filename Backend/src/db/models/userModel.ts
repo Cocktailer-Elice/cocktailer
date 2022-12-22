@@ -20,7 +20,7 @@ export class UserMongoModel implements IUserMongoModel {
     return users;
   };
 
-  public findById = async (userId: string): Promise<IUser | null> => {
+  public findById = async (userId: number): Promise<IUser | null> => {
     const filter = { id: userId };
     const projection = '-_id -__v';
     const user = await User.findOne(filter, projection);
@@ -39,23 +39,16 @@ export class UserMongoModel implements IUserMongoModel {
     return result;
   };
 
-  public checkEmailDuplicate = async (email: string): Promise<boolean> => {
-    const filter = { email };
-    const result = await User.find(filter).countDocuments();
-    return result ? true : false;
+  public softDelete = async (
+    filter: FindOneFilter,
+    update: UpdateOneFilter,
+  ) => {
+    const result = await User.updateOne(filter, update);
+    return result;
   };
 
-  public checkNicknameDuplicate = async (
-    nickname: string,
-  ): Promise<boolean> => {
-    const filter = { nickname };
-    const result = await User.find(filter).countDocuments();
-    return result ? true : false;
-  };
-
-  public checkTelDuplicate = async (tel: string): Promise<boolean> => {
-    const filter = { tel };
-    const result = await User.find(filter).countDocuments();
+  public checkDuplicate = async (filter: FindOneFilter): Promise<boolean> => {
+    const result = await User.findOne(filter).countDocuments();
     return result ? true : false;
   };
 }

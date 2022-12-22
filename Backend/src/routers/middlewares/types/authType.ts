@@ -1,5 +1,5 @@
 export interface Cookie {
-  userId: string;
+  userId: number;
   email: string;
   nickname: string;
   isAdmin: boolean;
