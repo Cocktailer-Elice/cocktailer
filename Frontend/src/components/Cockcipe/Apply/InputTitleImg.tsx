@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
-export const InputTitleImg = () => {
+// TODO aws 업로드 후 반환 이미지 url 받아오기
+export const InputTitleImg = ({ setImg }) => {
   const [files, setFiles] = useState<File | null>(null);
   const [imgSrc, setImgsrc] = useState<string>();
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {

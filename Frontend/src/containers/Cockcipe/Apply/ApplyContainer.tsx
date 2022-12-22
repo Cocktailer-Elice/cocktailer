@@ -16,12 +16,16 @@ export const ApplyContainer = () => {
   const [category, setCategory] = useState<string>('');
   const [flavor, setFlavor] = useState<string[]>([]);
   const [content, setContent] = useState<string>();
+  const [img, setImg] = useState<string>('');
+  const [alcohol, setAlcohol] = useState<string>('');
+  const [drink, setDrink] = useState<string>('');
 
   //const dispatch = useAppDispatch();
   const handleApply = () => {
     console.log(name, degree, category);
     console.log(flavor);
     console.log(content);
+    console.log(alcohol);
     const newData = {
       name: name,
       degree: degree,
@@ -29,7 +33,7 @@ export const ApplyContainer = () => {
       flavor: flavor,
       content: content,
     };
-    axios.post('https://localhost:8000/api/cocktails', newData).then((res) => {
+    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
       console.log(res.data);
       console.log(newData);
     });
@@ -38,7 +42,7 @@ export const ApplyContainer = () => {
   return (
     <>
       <Header>칵테일 레시피 등록하기</Header>
-      <InputTitleImg />
+      <InputTitleImg setImg={setImg} />
       <InputCockInfo
         setName={setName}
         setDegree={setDegree}
@@ -46,8 +50,9 @@ export const ApplyContainer = () => {
       />
       <InputCockFlavor setFlavor={setFlavor} />
       <InputCockContent setContent={setContent} />
-      <InputRecipe kind="alcohol" />
-      <InputRecipe kind="drink" />
+      <InputRecipe kind="alcohol" ingred={alcohol} setIngred={setAlcohol} />
+      <InputRecipe kind="drink" ingred={drink} setIngred={setDrink} />
+
       <ApplyButton handleApply={handleApply} />
     </>
   );
