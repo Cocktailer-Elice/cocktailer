@@ -11,12 +11,24 @@ interface CockgorithmModalProps {
   seletedGame: IGame;
 }
 
+interface IFilter {
+  category: string;
+  baseAlcohol: string;
+  drink: string;
+  degree: string;
+}
+
 export const CockgorithmModal = ({
   toggleModal,
   seletedGame,
 }: CockgorithmModalProps) => {
   const [questionCounter, setQuestionCounter] = useState(0);
-  const [userSelectedOptions, setUserSelectedOptions] = useState<string[]>([]);
+  const [filters, setFilters] = useState<IFilter>({
+    category: '',
+    baseAlcohol: '',
+    drink: '',
+    degree: '',
+  });
   const [loading, setLoading] = useState(false);
   const [cocktailInfo, setCocktailInfo] = useState(''); // 서버로부터 받아온 cocktail이 저장되는 state
 
@@ -26,7 +38,7 @@ export const CockgorithmModal = ({
       setLoading(true);
 
       // 유저가 선택한 응답들을 서버로 전달
-      console.log('유저 응답', userSelectedOptions);
+      console.log('유저 응답', filters);
 
       // 서버로부터 받아온 cocktail을 받아옴
       const cocktail = '마티니 블루';
@@ -45,8 +57,19 @@ export const CockgorithmModal = ({
     setQuestionCounter((curr) => curr + 1);
   };
 
-  const addUserSelectedOption = (answer: string) => {
-    setUserSelectedOptions((curr) => [...curr, answer]);
+  const addFilter = (filter: string) => {
+    const [filterName, filterValue] = filter.split(':');
+    setFilters((curr: IFilter) => {
+      if (
+        filterName === 'category' ||
+        filterName === 'baseAlcohol' ||
+        filterName === 'drink' ||
+        filterName === 'degree'
+      ) {
+        curr[filterName] = filterValue;
+      }
+      return curr;
+    });
   };
 
   return (
@@ -59,7 +82,7 @@ export const CockgorithmModal = ({
             <CockgorithmGameContent
               selectedGame={seletedGame}
               questionCounter={questionCounter}
-              addUserSelectedOption={addUserSelectedOption}
+              addFilter={addFilter}
               increaseQuestionCounter={increaseQuestionCounter}
             />
           ) : loading ? (

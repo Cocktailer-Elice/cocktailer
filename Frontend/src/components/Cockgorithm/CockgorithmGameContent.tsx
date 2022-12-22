@@ -5,16 +5,17 @@ import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
   questionCounter: number;
-  addUserSelectedOption: (answer: string) => void;
+  addFilter: (filter: string) => void;
   increaseQuestionCounter: () => void;
 }
 
 export const CockgorithmGameContent = ({
   selectedGame,
   questionCounter,
-  addUserSelectedOption,
+  addFilter,
   increaseQuestionCounter,
 }: CockgorithmGameContentProps) => {
+  const { filterName } = selectedGame.questions[questionCounter];
   return (
     <GameContent>
       <Question>{selectedGame.questions[questionCounter].question}</Question>
@@ -25,7 +26,7 @@ export const CockgorithmGameContent = ({
               key={index}
               onClick={() => {
                 increaseQuestionCounter();
-                addUserSelectedOption(option.filter); // 추후 유저의 응답을 세세하게 저장하려면 변경
+                addFilter(`${filterName}:${option.filterValue}`); // 추후 유저의 응답을 세세하게 저장하려면 변경
               }}
             >
               {option.optionName}
