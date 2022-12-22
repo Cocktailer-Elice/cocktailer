@@ -9,31 +9,45 @@ class CoctailController {
   public createCocktail = async (req: Req, res: Res, next: Next) => {
     const cocktailInfo: CocktailCreateReqDto = req.body;
 
-    console.log(cocktailInfo);
-
-    /*
-      if(role === 'admin' && role !== 'user' && role !== 'bartender'){
-        cocktailInfo.official = true;
-      }
-      */
-
     const createCocktailData: Cocktail | null =
       await this.cocktailService.createCocktail(cocktailInfo);
 
-    res
-      .status(200)
-      .json({ data: createCocktailData, message: 'cocktailCreated' });
+    res.status(200).json({ data: createCocktailData });
   };
 
   public getLists = async (req: Req, res: Res, next: Next) => {
     const lists = await this.cocktailService.lists();
+
     res.status(200).json({ lists: lists });
+  };
+
+  public findId = async (req: Req, res: Res, next: Next) => {
+    const id = Number(req.params.id);
+
+    const cocktail = await this.cocktailService.findId(id);
+
+    res.status(200).json({ cocktail: cocktail });
+  };
+
+  public findCategory = async (req: Req, res: Res, next: Next) => {
+    const category = String(req.query.category);
+
+    const official = Boolean(req.query.official);
+
+    const categoryLists = await this.cocktailService.findCategory(
+      category,
+      official,
+    );
+
+    res.status(200).json({ categoryLists: categoryLists });
   };
 
   public getCocktail = async (req: Req, res: Res, next: Next) => {
     const id = req.params.id ? Number(req.params.id) : null;
+
     const category = req.query.category ? String(req.query.category) : null;
-    const official = req.query.official ? String(req.query.official) : null;
+
+    const official = req.query.official ? Boolean(req.query.official) : null;
 
     const getCocktailData = await this.cocktailService.getCocktail(
       id,

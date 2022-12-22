@@ -18,11 +18,9 @@ const appErrorHandler = (
   res: Res,
   next: Next,
 ): Res => {
-  logger.error(`${req.url} ${req.method} ${err.stack}`);
-  const {
-    status = 500,
-    message = '알 수 없는 오류가 발생했어요 :( 잠시 후에 다시 시도해 주세요!',
-  } = err;
+  const errorContent = err.stack?.split('\n').slice(0, 3).join('\n');
+  logger.warn(`${req.url} ${req.method} ${errorContent}`);
+  const { status = 500, message } = err;
 
   return res.status(status).json({ message });
 };
