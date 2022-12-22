@@ -10,6 +10,7 @@ router.get('/:cockflowId', asyncHandler(cockflowController.getCockflowById));
 
 router.use(isLoggedIn);
 router.post('/', asyncHandler(cockflowController.createCockflow));
-router.patch('/:cockflowId', asyncHandler(cockflowController.deleteCockflow));
+router.put('/:cockflowId', asyncHandler(cockflowController.updateCockflow));
+router.delete('/:cockflowId', asyncHandler(cockflowController.deleteCockflow));
 
 export default router;

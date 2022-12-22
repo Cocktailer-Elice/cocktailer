@@ -37,7 +37,12 @@ class CockflowController {
     checkReqBody(title, content);
     const { cockflowId } = req.params;
     const { userId } = req.user;
-    await this.cockflowService.deleteCockflow(+cockflowId, userId);
+    await this.cockflowService.updateCockflow(
+      title,
+      content,
+      +cockflowId,
+      userId,
+    );
     res.sendStatus(204);
   };
 

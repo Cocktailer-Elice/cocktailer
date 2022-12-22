@@ -29,7 +29,7 @@ class CockflowService {
   }
 
   public async getCockflowById(cockflowId: number) {
-    const foundCockflow = await this.cockflowModel.findById(cockflowId);
+    const foundCockflow = await this.cockflowModel.findByAggregate(cockflowId);
 
     if (!foundCockflow) {
       throw new AppError(errorNames.inputError, 400, `존재하지 않는 칵플로우`);
@@ -38,15 +38,30 @@ class CockflowService {
     return formatCockflow(foundCockflow);
   }
 
+  public updateCockflow = async (
+    title: string,
+    content: string,
+    cockflowId: number,
+    userId: number,
+  ) => {
+    const cockflow = await this.cockflowModel.findById(cockflowId);
+    if (!cockflow) {
+      throw new AppError(errorNames.inputError, 400, '존재하지 않는 칵플로우');
+    }
+    if (cockflow.owner !== userId) {
+      throw new AppError(errorNames.authorizationError, 403, '권한 없는 유저');
+    }
+    const filter = { id: cockflowId };
+    const update = { title, content };
+    await this.cockflowModel.update(filter, update);
+    return;
+  };
+
   public async deleteCockflow(cockflowId: number, userId: number) {
     const cockflow = await this.cockflowModel.findById(cockflowId);
 
     if (!cockflow) {
-      throw new AppError(
-        errorNames.resourceNotFoundError,
-        400,
-        '해당하는 칵플로우 없음',
-      );
+      throw new AppError(errorNames.inputError, 400, '해당하는 칵플로우 없음');
     }
 
     if (cockflow.owner !== userId) {
@@ -56,8 +71,8 @@ class CockflowService {
         '권한 없는 사용자',
       );
     }
-    const result = await this.cockflowModel.softDelete(cockflowId);
-    if (!result.acknowledged || !result.modifiedCount) {
+    const result = await this.cockflowModel.delete(cockflowId);
+    if (!result.acknowledged) {
       throw new AppError(errorNames.databaseError, 500, '서버 에러');
     }
     return;

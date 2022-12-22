@@ -5,8 +5,8 @@ import {
 export const formatCockflow = (cockflow: GetCockflowServiceDto) => {
   if (cockflow.commentsCount === null) {
     cockflow.comments = [];
-    cockflow.subComments = [];
     delete cockflow.commentsCount;
+    delete cockflow.subComments;
     return cockflow;
   }
   const subComments = cockflow.subComments;
