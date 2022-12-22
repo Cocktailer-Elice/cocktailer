@@ -17,10 +17,11 @@
         "question": "베이스는 뭐로 갈까요!",
         "filterName": "baseAlcohol",
         "options": [
-          { "optionName": "위스키", "filterValue": "위스키" },
-          { "optionName": "보드카", "filterValue": "보드카" },
           { "optionName": "진", "filterValue": "진" },
           { "optionName": "럼", "filterValue": "럼" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "위스키", "filterValue": "위스키" },
+          { "optionName": "브랜디", "filterValue": "브랜디" },
           { "optionName": "데킬라", "filterValue": "데킬라" }
         ]
       },
@@ -28,10 +29,9 @@
         "question": "좋아하는 음료는요?",
         "filterName": "drink",
         "options": [
+          { "optionName": "시럽", "filterValue": "시럽" },
           { "optionName": "주스", "filterValue": "주스" },
-          { "optionName": "콜라", "filterValue": "콜라" },
-          { "optionName": "토닉워터", "filterValue": "토닉워터" },
-          { "optionName": "진저에일", "filterValue": "진저에일" }
+          { "optionName": "탄산음료", "filterValue": "탄산음료" }
         ]
       },
       {
@@ -47,17 +47,20 @@
         ]
       },
       {
-        "question": "당신의 주량은?!",
+        "question": "당신의 레벨은?!",
         "filterName": "degree",
         "options": [
-          { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
-          { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
-          { "optionName": "5~10도 (칵테일 러버)", "filterValue": "5~10" },
-          { "optionName": "10~15도 (진정한 칵테일러)", "filterValue": "10~15" },
-          { "optionName": "15~20도 (은근 고수)", "filterValue": "15~20" },
+          { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
+          { "optionName": "Lv.1 알린이 (0~5도)", "filterValue": "0~5" },
+          { "optionName": "Lv.2 알콜 러버 (5~10도)", "filterValue": "5~10" },
           {
-            "optionName": "거 그냥 암거나 주쇼 (찐 고수)",
-            "filterValue": "0~100"
+            "optionName": "Lv.3 알콜 탐험가 (10~15도)",
+            "filterValue": "10~15"
+          },
+          { "optionName": "Lv.4 알콜 러버 (15~20도)", "filterValue": "15~20" },
+          {
+            "optionName": "Lv.5 알콜 고인물 (20도 이상)",
+            "filterValue": "20~100"
           }
         ]
       }
@@ -73,21 +76,21 @@
         "options": [
           { "optionName": "달콤한 칵테일", "filterValue": "sweet" },
           {
-            "optionName": "진한 술맛이 나는 칵테일",
+            "optionName": "술맛이 진한 칵테일",
             "filterValue": "dry"
           },
-          { "optionName": "과일 맛이 나는 칵테일", "filterValue": "fruit" },
-          { "optionName": "상큼한 칵테일", "filterValue": "refreshing" }
+          { "optionName": "따뜻한 칵테일", "filterValue": "hot" }
         ]
       },
       {
         "question": "베이스는 뭐로 갈까요!",
         "filterName": "baseAlcohol",
         "options": [
-          { "optionName": "위스키", "filterValue": "위스키" },
-          { "optionName": "보드카", "filterValue": "보드카" },
           { "optionName": "진", "filterValue": "진" },
           { "optionName": "럼", "filterValue": "럼" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "위스키", "filterValue": "위스키" },
+          { "optionName": "브랜디", "filterValue": "브랜디" },
           { "optionName": "데킬라", "filterValue": "데킬라" }
         ]
       },
@@ -95,10 +98,9 @@
         "question": "좋아하는 음료는요?",
         "filterName": "drink",
         "options": [
+          { "optionName": "시럽", "filterValue": "시럽" },
           { "optionName": "주스", "filterValue": "주스" },
-          { "optionName": "콜라", "filterValue": "콜라" },
-          { "optionName": "토닉워터", "filterValue": "토닉워터" },
-          { "optionName": "진저에일", "filterValue": "진저에일" }
+          { "optionName": "탄산음료", "filterValue": "탄산음료" }
         ]
       },
       {
@@ -114,24 +116,27 @@
         ]
       },
       {
-        "question": "당신의 주량은?!",
+        "question": "당신의 레벨은?!",
         "filterName": "degree",
         "options": [
-          { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
-          { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
-          { "optionName": "5~10도 (칵테일 러버)", "filterValue": "5~10" },
-          { "optionName": "10~15도 (진정한 칵테일러)", "filterValue": "10~15" },
-          { "optionName": "15~20도 (은근 고수)", "filterValue": "15~20" },
+          { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
+          { "optionName": "Lv.1 알린이 (0~5도)", "filterValue": "0~5" },
+          { "optionName": "Lv.2 알콜 러버 (5~10도)", "filterValue": "5~10" },
           {
-            "optionName": "거 그냥 암거나 주쇼 (찐 고수)",
-            "filterValue": "0~100"
+            "optionName": "Lv.3 알콜 탐험가 (10~15도)",
+            "filterValue": "10~15"
+          },
+          { "optionName": "Lv.4 알콜 러버 (15~20도)", "filterValue": "15~20" },
+          {
+            "optionName": "Lv.5 알콜 고인물 (20도 이상)",
+            "filterValue": "20~100"
           }
         ]
       }
     ]
   },
   {
-    "gameTitle": "친구들과 파티중이라면",
+    "gameTitle": "친구들과 즐거운 파티중이라면? ",
     "message": "칵테일러가 분위기를 UP! 시킬 수 있는 칵테일을 추천해 드릴께요!",
     "questions": [
       {
@@ -139,22 +144,20 @@
         "filterName": "category",
         "options": [
           { "optionName": "달콤한 칵테일", "filterValue": "sweet" },
-          {
-            "optionName": "진한 술맛이 나는 칵테일",
-            "filterValue": "dry"
-          },
           { "optionName": "과일 맛이 나는 칵테일", "filterValue": "fruit" },
-          { "optionName": "상큼한 칵테일", "filterValue": "refreshing" }
+          { "optionName": "상큼한 칵테일", "filterValue": "refreshing" },
+          { "optionName": "스무디 칵테일", "filterValue": "smoothie" }
         ]
       },
       {
         "question": "베이스는 뭐로 갈까요!",
         "filterName": "baseAlcohol",
         "options": [
-          { "optionName": "위스키", "filterValue": "위스키" },
-          { "optionName": "보드카", "filterValue": "보드카" },
           { "optionName": "진", "filterValue": "진" },
           { "optionName": "럼", "filterValue": "럼" },
+          { "optionName": "보드카", "filterValue": "보드카" },
+          { "optionName": "위스키", "filterValue": "위스키" },
+          { "optionName": "브랜디", "filterValue": "브랜디" },
           { "optionName": "데킬라", "filterValue": "데킬라" }
         ]
       },
@@ -162,10 +165,9 @@
         "question": "좋아하는 음료는요?",
         "filterName": "drink",
         "options": [
+          { "optionName": "시럽", "filterValue": "시럽" },
           { "optionName": "주스", "filterValue": "주스" },
-          { "optionName": "콜라", "filterValue": "콜라" },
-          { "optionName": "토닉워터", "filterValue": "토닉워터" },
-          { "optionName": "진저에일", "filterValue": "진저에일" }
+          { "optionName": "탄산음료", "filterValue": "탄산음료" }
         ]
       },
       {
@@ -181,17 +183,20 @@
         ]
       },
       {
-        "question": "당신의 주량은?!",
+        "question": "당신의 레벨은?!",
         "filterName": "degree",
         "options": [
-          { "optionName": "0도 (알쓰!)", "filterValue": "0~0" },
-          { "optionName": "0~5도 (칵린이)", "filterValue": "0~5" },
-          { "optionName": "5~10도 (칵테일 러버)", "filterValue": "5~10" },
-          { "optionName": "10~15도 (진정한 칵테일러)", "filterValue": "10~15" },
-          { "optionName": "15~20도 (은근 고수)", "filterValue": "15~20" },
+          { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
+          { "optionName": "Lv.1 알린이 (0~5도)", "filterValue": "0~5" },
+          { "optionName": "Lv.2 알콜 러버 (5~10도)", "filterValue": "5~10" },
           {
-            "optionName": "거 그냥 암거나 주쇼 (찐 고수)",
-            "filterValue": "0~100"
+            "optionName": "Lv.3 알콜 탐험가 (10~15도)",
+            "filterValue": "10~15"
+          },
+          { "optionName": "Lv.4 알콜 러버 (15~20도)", "filterValue": "15~20" },
+          {
+            "optionName": "Lv.5 알콜 고인물 (20도 이상)",
+            "filterValue": "20~100"
           }
         ]
       }
