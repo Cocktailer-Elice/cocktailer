@@ -1,30 +1,34 @@
 import styled from 'styled-components';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Dispatch, SetStateAction } from 'react';
+import HamburgerIcon from '@mui/icons-material/Menu';
 
 interface HeaderHamburgerButtonProps {
-  setMenuClicked: Dispatch<SetStateAction<boolean>>;
+  toggleDrawer: () => void;
 }
 
 export const HeaderHamburgerButton = ({
-  setMenuClicked,
+  toggleDrawer,
 }: HeaderHamburgerButtonProps) => {
-  const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setMenuClicked(true);
+  const handleHamburgerButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    toggleDrawer();
   };
 
   return (
-    <HamburgerButton onClick={handleMenuClick}>
-      <MenuIcon />
+    <HamburgerButton onClick={handleHamburgerButtonClick}>
+      <CustomHamburgerIcon />
     </HamburgerButton>
   );
 };
 
 const HamburgerButton = styled.div`
-  width: 70px;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid gray;
+`;
+
+const CustomHamburgerIcon = styled(HamburgerIcon)`
+  width: 35px;
+  height: 35px;
 `;

@@ -10,9 +10,9 @@ export interface Comment {
     isBartender: false;
   };
   content: string;
-  nickname: string;
-  adopted: boolean;
-  // subComments: subComments[]; 대댓글은 추가 기능으로 일단 보류
+  isAdopted?: boolean;
+  parentCommentId?: string;
+  subComments: Comment[];
 }
 
 export interface Comments {

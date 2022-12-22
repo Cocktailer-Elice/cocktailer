@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import styled from 'styled-components';
 import { useState } from 'react';
 
-const SearchCocktailInput = () => {
+export const SearchCocktailInput = () => {
   const [active, setActive] = useState<boolean>(false);
   const handleSearch = () => {
     setActive(!active);
@@ -22,8 +22,6 @@ const SearchCocktailInput = () => {
     </Search>
   );
 };
-
-export default SearchCocktailInput;
 
 const Search = styled.div`
   display: flex;

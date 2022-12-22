@@ -16,6 +16,7 @@ export interface GetCockflowsResData {
 }
 
 export interface CockflowGetResData {
+  id: number;
   owner: {
     id: number;
     nickname: string;

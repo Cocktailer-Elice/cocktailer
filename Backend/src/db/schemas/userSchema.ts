@@ -59,7 +59,7 @@ UserSchema.virtual('userGetResDto').get(function (this: User) {
     name: this.name,
     email: this.email,
     nickname: this.nickname,
-    avatarUrl: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.avatarUrl}`,
+    avatarUrl: `https://profiles.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
     isBartender: this.isBartender,
   };
 });
