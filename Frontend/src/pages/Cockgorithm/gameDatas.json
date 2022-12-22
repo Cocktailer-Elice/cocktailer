@@ -40,6 +40,18 @@
         ]
       },
       {
+        "question": "넣고 싶은 재료가 있나요?",
+        "filterName": "ingredient",
+        "options": [
+          { "optionName": "꿀", "filterValue": "꿀" },
+          { "optionName": "타바스코", "filterValue": "타바스코" },
+          { "optionName": "우스터 소스", "filterValue": "우스터 소스" },
+          { "optionName": "소금", "filterValue": "소금" },
+          { "optionName": "후추", "filterValue": "후추" },
+          { "optionName": "우유", "filterValue": "우유" }
+        ]
+      },
+      {
         "question": "평소 어느 정도 도수의 칵테일을 마시나요?",
         "filterName": "degree",
         "options": [
@@ -97,6 +109,18 @@
         ]
       },
       {
+        "question": "넣고 싶은 재료가 있나요?",
+        "filterName": "ingredient",
+        "options": [
+          { "optionName": "꿀", "filterValue": "꿀" },
+          { "optionName": "타바스코", "filterValue": "타바스코" },
+          { "optionName": "우스터 소스", "filterValue": "우스터 소스" },
+          { "optionName": "소금", "filterValue": "소금" },
+          { "optionName": "후추", "filterValue": "후추" },
+          { "optionName": "우유", "filterValue": "우유" }
+        ]
+      },
+      {
         "question": "평소 어느 정도 도수의 칵테일을 마시나요?",
         "filterName": "degree",
         "options": [
@@ -151,6 +175,18 @@
           { "optionName": "사이다", "filterValue": "사이다" },
           { "optionName": "토닉워터", "filterValue": "토닉워터" },
           { "optionName": "진저에일", "filterValue": "진저에일" }
+        ]
+      },
+      {
+        "question": "넣고 싶은 재료가 있나요?",
+        "filterName": "ingredient",
+        "options": [
+          { "optionName": "꿀", "filterValue": "꿀" },
+          { "optionName": "타바스코", "filterValue": "타바스코" },
+          { "optionName": "우스터 소스", "filterValue": "우스터 소스" },
+          { "optionName": "소금", "filterValue": "소금" },
+          { "optionName": "후추", "filterValue": "후추" },
+          { "optionName": "우유", "filterValue": "우유" }
         ]
       },
       {
