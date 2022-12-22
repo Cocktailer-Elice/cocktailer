@@ -11,13 +11,14 @@ class MongoModel implements ICockflowMongoModel {
   }
 
   public async getByRequest(
-    request: number,
+    scroll: number,
     cockflowsPerRequest: number,
   ): Promise<ICockflow[]> {
     const filter = { deletedAt: null };
+    const projection = '-_id -owner -title -deletedAt -createdAt -updatedAt';
     const option = { sort: { createdAt: -1 } };
-    const cockflows = await Cockflow.find(filter, {}, option)
-      .skip((request - 1) * cockflowsPerRequest)
+    const cockflows = await Cockflow.find(filter, projection, option)
+      .skip((scroll - 1) * cockflowsPerRequest)
       .limit(cockflowsPerRequest);
     return cockflows;
   }
@@ -25,8 +26,8 @@ class MongoModel implements ICockflowMongoModel {
   public async getTotalRequest(cockflowsPerRequest: number) {
     const filter = { deletedAt: null };
     const cockflowsCount = await Cockflow.countDocuments(filter);
-    const totalPage = Math.ceil(cockflowsCount / cockflowsPerRequest);
-    return totalPage;
+    const totalRequest = Math.ceil(cockflowsCount / cockflowsPerRequest);
+    return totalRequest;
   }
 
   public async findByUserId(userId: number): Promise<ICockflow[]> {

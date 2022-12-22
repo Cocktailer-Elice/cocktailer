@@ -9,20 +9,39 @@ const Comment = styled.div`
   line-height: 1.8;
 `;
 
+interface CommetType {
+  comments: ItemsType[] // 임시로 지정하기
+}
+
+interface ItemsType {
+  content: string,
+  owner: string,
+  id: number,
+  isBartender: boolean,
+  nickname: string,
+}
+
 // 댓글 박스
-export const CockflowCommentBox = () => {
+export const CockflowCommentBox = ({commentlist}: { commentlist: CommetType }) => {
+  console.log(commentlist.comments)
   return (
     <>
-      <CockflowBoxTitle replied={3} />
-      <Comment>
-        입력된 댓글 내용 Lorem ipsum dolor
-        sit amet consectetur adipisicing elit.
-        Dignissimos dicta nobis dolore suscipit itaque dolor!
-      </Comment>
-      <Right>
-        <Button variant="outlined">댓글달기</Button>&nbsp;&nbsp;
-        <Button variant="contained">채택하기</Button>
-      </Right>
+      <CockflowBoxTitle replied={commentlist.comments.length} />
+      {/* 갯수만큼 반복하기 */}
+      {
+        (commentlist.comments).map(item => { return (
+          <>
+            <Comment>
+            {item.content}
+            </Comment>
+            <Right>
+              <Button variant="outlined">댓글달기</Button>&nbsp;&nbsp;
+              <Button variant="contained">채택하기</Button>
+            </Right>
+          </>
+        )})
+      }
+
       <P5>
         <CockflowBoxTitle smallTitle="댓글달기"/>
       </P5>

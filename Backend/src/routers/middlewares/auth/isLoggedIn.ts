@@ -7,7 +7,6 @@ const ACCESS_KEY = process.env.ACCESS_KEY;
 export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
   const secretKey = ACCESS_KEY as string;
   const token = req.cookies.Authorization;
-
   if (!token) {
     return res.status(401).json({ message: '로그인 필요' });
   }
