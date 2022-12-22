@@ -1,8 +1,14 @@
 export const cocktailQueries = (reqData: object) => {
   /*   전체 6개 리스트   */
-  if (!('id' in reqData) && !('category' in reqData)) {
+  if (
+    !('id' in reqData) &&
+    !('category' in reqData) &&
+    !('official' in reqData)
+  ) {
     const $facet: any = {};
+
     const Array = ['sweet', 'dry', 'refreshing', 'fruit', 'smoothie', 'hot'];
+
     Array.map((e) => {
       $facet[e] = [
         { $match: { category: e, official: true } },
@@ -15,6 +21,8 @@ export const cocktailQueries = (reqData: object) => {
     return { $facet: $facet };
   }
 
+  /*   id / 카테고리 / 검색     */
+
   const makeMatchForm = () => {
     const obj: any = {};
     if ('id' in reqData) obj.id = reqData.id;
@@ -23,7 +31,8 @@ export const cocktailQueries = (reqData: object) => {
     }
 
     if ('keyword' in reqData) obj.name = { $regex: reqData.keyword };
-    if ('official' in reqData) obj.official = reqData.official;
+    if ('official' in reqData)
+      obj.official = reqData.official === 'true' ? true : false;
 
     return obj;
   };

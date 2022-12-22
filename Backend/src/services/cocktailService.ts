@@ -17,8 +17,9 @@ class CocktailService {
     return data;
   }
 
-  public async lists() {
-    const data = await this.cocktailModel.lists();
+  public async getLists() {
+    const data: Cocktail[] = await this.cocktailModel.getLists();
+
     return data;
   }
 
@@ -28,14 +29,13 @@ class CocktailService {
     return data;
   }
 
-  public async findCategory(category: string, official: true | false) {
-    const data = await this.cocktailModel.findCategory(category, official);
+  public async findCategory(reqData: object) {
+    const data = await this.cocktailModel.findCategory(reqData);
     return data;
   }
 
-  public async search(keyword: string, category: string, official: boolean) {
-    console.log(official);
-    const data = await this.cocktailModel.search(keyword, category, official);
+  public async search(reqData: object) {
+    const data = await this.cocktailModel.search(reqData);
     return data;
   }
 

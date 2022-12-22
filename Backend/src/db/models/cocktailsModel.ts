@@ -1,16 +1,16 @@
 import { Cocktail } from '../../services/types/cocktailType';
-import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
+import { CocktailCreateReqDto } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 import { cocktailQueries } from '../queries/cocktailsQuery';
 
 interface CocktailInterface {
   create(cocktailCreateDto: CocktailCreateReqDto): Promise<number>;
 
-  lists(): Promise<Cocktail[]>;
+  getLists(): Promise<Cocktail[]>;
 
   findId(id: number): Promise<Cocktail[]>;
 
-  findCategory(category: string, official: boolean | null): Promise<Cocktail[]>;
+  findCategory(reqData: object): Promise<Cocktail[]>;
 
   findAll(
     queries: string,
@@ -21,15 +21,17 @@ interface CocktailInterface {
 }
 
 export class CocktailModel implements CocktailInterface {
-  async create(cocktailCreateDto: CocktailCreateReqDto): Promise<number> {
+  public create = async (
+    cocktailCreateDto: CocktailCreateReqDto,
+  ): Promise<number> => {
     const newMyCocktail: Partial<Cocktail> = await CocktailSchema.create(
       cocktailCreateDto,
     );
 
     return Number(newMyCocktail.id);
-  }
+  };
 
-  public lists = async (): Promise<Cocktail[]> => {
+  public getLists = async (): Promise<Cocktail[]> => {
     const queries = cocktailQueries({ official: true });
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
@@ -49,14 +51,8 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
-  public findCategory = async (
-    category: string,
-    official: true | false,
-  ): Promise<Cocktail[]> => {
-    const queries = cocktailQueries({
-      category: category,
-      official: official,
-    });
+  public findCategory = async (reqData: object): Promise<Cocktail[]> => {
+    const queries = cocktailQueries(reqData);
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -65,16 +61,8 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
-  public async search(
-    keyword: string,
-    category: string,
-    official: boolean,
-  ): Promise<Cocktail[]> {
-    const queries = cocktailQueries({
-      keyword: keyword,
-      category: category,
-      official: official,
-    });
+  public async search(reqData: object): Promise<Cocktail[]> {
+    const queries = cocktailQueries(reqData);
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),

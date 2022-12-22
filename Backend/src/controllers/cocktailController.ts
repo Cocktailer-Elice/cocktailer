@@ -1,12 +1,11 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { Cocktail } from '../services/types';
-import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
+import { CocktailCreateReqDto } from 'types';
 import CocktailService from '../services/cocktailService';
 
 class CoctailController {
   private readonly cocktailService = new CocktailService();
 
-  public createCocktail = async (req: Req, res: Res, next: Next) => {
+  public createCocktail = async (req: Req, res: Res) => {
     const cocktailInfo: CocktailCreateReqDto = req.body;
 
     const createCocktailData: number =
@@ -15,15 +14,13 @@ class CoctailController {
     res.status(200).json({ data: createCocktailData });
   };
 
-  public getLists = async (req: Req, res: Res, next: Next) => {
-    console.log('list');
-    const lists = await this.cocktailService.lists();
+  public getLists = async (req: Req, res: Res) => {
+    const lists = await this.cocktailService.getLists();
 
     res.status(200).json({ lists: lists });
   };
 
-  public findId = async (req: Req, res: Res, next: Next) => {
-    console.log('id');
+  public findId = async (req: Req, res: Res) => {
     const id = Number(req.params.id);
 
     const cocktail = await this.cocktailService.findId(id);
@@ -31,38 +28,41 @@ class CoctailController {
     res.status(200).json({ cocktail: cocktail });
   };
 
-  public findCategory = async (req: Req, res: Res, next: Next) => {
-    console.log('category');
-    const category = String(req.query.category);
+  public findCategory = async (req: Req, res: Res) => {
+    const reqData: any = {};
 
-    const official = Boolean(req.query.official);
+    if (req.query.category) {
+      reqData.category = req.query.category;
+    }
+    if (req.query.official) {
+      reqData.official = req.query.official;
+    }
 
-    const categoryLists = await this.cocktailService.findCategory(
-      category,
-      official,
-    );
+    const categoryLists = await this.cocktailService.findCategory(reqData);
 
     res.status(200).json({ categoryLists: categoryLists });
   };
 
-  public search = async (req: Req, res: Res, next: Next) => {
-    console.log('search');
-    //const { keyword, category, official } = req.query;
-    const keyword = String(req.query.keyword);
-    const category = String(req.query.category);
-    const official = Boolean(req.query.official === 'true');
+  public search = async (req: Req, res: Res) => {
+    const reqData: any = {};
 
-    const serchList = await this.cocktailService.search(
-      String(keyword),
-      String(category),
-      Boolean(official),
-    );
+    if (req.query.keyword) {
+      reqData.keyword = req.query.keyword;
+    }
+    if (req.query.category) {
+      reqData.category = req.query.category;
+    }
+    if (req.query.official) {
+      reqData.official = req.query.official;
+    }
+
+    const serchList = await this.cocktailService.search(reqData);
     res.status(200).json({ serchList: serchList });
   };
 
   /*///////////////////////////////////////////////////////////////// */
 
-  public getCocktail = async (req: Req, res: Res, next: Next) => {
+  public getCocktail = async (req: Req, res: Res) => {
     const id = req.params.id ? Number(req.params.id) : null;
 
     const category = req.query.category ? String(req.query.category) : null;

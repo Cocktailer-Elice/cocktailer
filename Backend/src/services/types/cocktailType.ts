@@ -9,5 +9,4 @@ export interface Cocktail {
   img: string;
   ratio: object;
   content: string;
-  createdAt: Date;
 }

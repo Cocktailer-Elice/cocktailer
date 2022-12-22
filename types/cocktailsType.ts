@@ -1,9 +1,3 @@
-interface Iingredients {
-  alcohol: string[];
-  drink: string[];
-  garnish: string[];
-}
-
 export interface CocktailCreateReqDto {
   id: number;
   owner: string;
