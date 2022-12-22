@@ -1,16 +1,9 @@
-import styled from 'styled-components';
-import Button from '@mui/material/Button';
-import { Right } from './style';
 import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
-import { P5 } from '../../components/Cockflow/style';
-
-const Comment = styled.div`
-  padding: 15px;
-  line-height: 1.8;
-`;
+import { Comment } from '../../../../types/commentType'
+import { CockflowCommentAdd } from './CockflowCommentAdd'
 
 interface CommetType {
-  comments: ItemsType[] // 임시로 지정하기
+  comments: Comment[];
 }
 
 interface ItemsType {
@@ -23,28 +16,18 @@ interface ItemsType {
 
 // 댓글 박스
 export const CockflowCommentBox = ({commentlist}: { commentlist: CommetType }) => {
-  console.log(commentlist.comments)
+  // console.log(commentlist.comments)
+
   return (
+    // 컴포넌트 분리 >> props로 state를 가져서
     <>
       <CockflowBoxTitle replied={commentlist.comments.length} />
-      {/* 갯수만큼 반복하기 */}
       {
-        (commentlist.comments).map(item => { return (
-          <>
-            <Comment>
-            {item.content}
-            </Comment>
-            <Right>
-              <Button variant="outlined">댓글달기</Button>&nbsp;&nbsp;
-              <Button variant="contained">채택하기</Button>
-            </Right>
-          </>
+        (commentlist.comments).map( item => { return (
+          <CockflowCommentAdd item={item} key={item._id} />
         )})
       }
-
-      <P5>
-        <CockflowBoxTitle smallTitle="댓글달기"/>
-      </P5>
     </>
   );
 };
+
