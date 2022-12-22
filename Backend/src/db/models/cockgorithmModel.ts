@@ -22,6 +22,19 @@ export class CockgorithmModel implements CockgorithmInterface {
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       { $match: { id: rnd } },
+      {
+        $project: {
+          _id: 0,
+          category: 0,
+          flavor: 0,
+          ratio: 0,
+          owner: 0,
+          official: 0,
+          likes: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        },
+      },
     ]);
 
     return result;
