@@ -10,5 +10,6 @@ const Apply = styled.div`
   color: #edf2ff;
   border-radius: 10px;
   width: 100px;
-  magin-top: 20px;
+  font-size: 24px;
+  margin-top: 20px;
 `;
