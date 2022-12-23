@@ -1,7 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
-import { Cocktail } from '../../services/types';
-import { CocktailGetResDto } from 'types';
-import { boolean } from 'joi';
+import { CocktailModelType } from '../types';
 
 //참조 https://www.notion.so/90143a86ded04b23b0094946940de37d
 
@@ -79,7 +77,7 @@ const CocktailSchema: Schema = new Schema(
   { collection: 'cocktails', timestamps: true, versionKey: false },
 );
 
-CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
+CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailModelType) {
   return {
     owner: this.owner,
     category: this.category,
@@ -87,8 +85,7 @@ CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
     official: this.official,
     flavor: this.flavor,
     degree: this.degree,
-    img: `https://profiles.s3.ap-northeast-2.amazonaws.com/seeun-test/${this.img}`, //cocktail-image
-    liquid: this.liquid,
+    img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${this.img}`, //cocktail-image
     ratio: this.ratio,
     content: this.content,
   };
@@ -112,4 +109,4 @@ CocktailSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<Cocktail>('cocktails', CocktailSchema);
+export default model<CocktailModelType>('cocktails', CocktailSchema);

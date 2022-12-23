@@ -13,9 +13,9 @@ class CommentController {
     res.status(201).json(newComment);
   };
 
-  public getCommentsByUserId = async (req: Req, res: Res) => {
+  public getMyComments = async (req: Req, res: Res) => {
     const { userId } = req.user;
-    const comments = await this.commentService.getCommentsByUserId(userId);
+    const comments = await this.commentService.getMyComments(userId);
     res.status(200).json(comments);
   };
 
@@ -62,11 +62,3 @@ class CommentController {
 const commentController = new CommentController();
 
 export { commentController };
-
-// public updateCommentLikes = async (req: Req, res: Res) => {
-//   const { commentId } = req.params;
-//   const value = req.body.like === 'like' ? 1 : -1;
-//   const { userId } = req.user;
-//   await this.commentService.updateCommentLikes(commentId, value, userId);
-//   res.sendStatus(204);
-// };

@@ -12,6 +12,7 @@ export interface User {
   isBartender: boolean;
 }
 
+// 마이페이지에서 내가 작성한 글들을 요청하면 받는 데이터
 export interface MyPostsResData {
   comments: MyComment[];
   cockflows: MyCockflow[];
@@ -23,26 +24,29 @@ export interface UserCreateData {
   name: string;
   email: string;
   password: string;
-  passwordCheck: string;
   birthday: string;
   tel: string;
   alcohol: string;
 }
 
+// 이메일 찾기를 위해 서버에 보낼 데이터
+export interface FindEmailReqData {
+  name: string;
+  tel: string;
+}
+
+// 비밀번호 찾기를 위해 서버에 보낼 데이터
+export interface FindPasswordReqData {
+  name: string;
+  email: string;
+  tel: string;
+}
+
 export interface ChangePasswordReqData {
   password: string;
   newPassword: string;
-  newPasswordCheck: string;
 }
 
 export interface UpdateAvatarReqData {
   avatarUrl: string;
 }
-
-// auth / user
-
-// 내가 작성한 칵시피
-
-// 내가 좋아요 한 칵시피
-
-// 내가 작성한 칵플로우

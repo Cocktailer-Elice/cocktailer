@@ -1,17 +1,43 @@
-export interface CocktailCreateReqDto {
-  id: number;
-  owner: string;
+//types
+
+export interface CocktailCreateReqData {
+  owner: number;
   category: string;
   name: string;
   official: boolean;
   flavor: string;
   degree: number;
   img: string;
-  ratio: object;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
   content: string;
 }
 
-export interface CocktailGetResDto {
+export interface FindCocktailId {
+  cocktailId: number;
+}
+
+export interface FindCocktailCategoryAndSearch {
+  category: string;
+  official: string;
+  keyword: string;
+}
+
+export interface CocktailGetResData {
   id: number;
   owner: string;
   category: string;
@@ -20,7 +46,6 @@ export interface CocktailGetResDto {
   flavor: string;
   degree: number;
   img: string;
-  liquid: object;
   ratio: object;
   content: string;
 }
