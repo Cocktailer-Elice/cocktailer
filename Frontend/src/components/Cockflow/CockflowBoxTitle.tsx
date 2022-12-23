@@ -9,7 +9,7 @@ const SmallTitle = styled.div`
 interface title {
   replied?: number,
   smallTitle?: string
-}
+};
 
 export const CockflowBoxTitle = ({ replied = 0, smallTitle }: title) => {
   return (

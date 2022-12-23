@@ -1,3 +1,5 @@
+import { MyCockflow } from './cockflowType';
+
 export interface CommentCreateReqDto {
   content: string;
 }
@@ -17,4 +19,12 @@ export interface Comment {
 
 export interface Comments {
   comments: Comment[];
+}
+
+export interface MyComment {
+  _id: string;
+  owner: number;
+  content: string;
+  isAdopted?: boolean;
+  parentCockflow: MyCockflow[];
 }

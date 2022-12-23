@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { Right } from './style'
+import { Right } from './style';
 
 interface btnProps {
     link: string,
     title: string
-}
+};
 
 export const CockflowLinkBtn = ({link, title}:btnProps) => {
   return (

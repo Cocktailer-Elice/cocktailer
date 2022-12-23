@@ -8,11 +8,13 @@ import {
 import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
+import Comment from '../schemas/commentSchema';
+import db from '../../mongodb';
 
 class MongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
-    const newcockflow = await Cockflow.create(cockflowInfo);
-    return newcockflow;
+    const cockflow = await Cockflow.create(cockflowInfo);
+    return cockflow;
   }
 
   public async getByRequest(
@@ -69,11 +71,25 @@ class MongoModel implements ICockflowMongoModel {
     return result;
   };
 
-  public async delete(cockflowId: number) {
-    const filter = { id: cockflowId };
-    const result = await Cockflow.deleteOne(filter);
-    return result;
-  }
+  public delete = async (cockflowId: number) => {
+    const session = await db.startSession();
+    session.startTransaction();
+    console.log('세션 및 트랜잭션이 정상적으로 시작됨');
+
+    const cockflowDeleteFilter = { id: cockflowId };
+    await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
+    console.log('세션 중 칵플로우 삭제 완료');
+
+    const commentDeleteFilter = { cockflowId };
+    await Comment.deleteMany(commentDeleteFilter).session(session);
+    console.log('세션 중 코멘트 삭제 완료');
+    await session.abortTransaction();
+    const result = await session.commitTransaction();
+    console.log(result);
+    console.log('세션이 정상적으로 커밋됨');
+    session.endSession();
+    return;
+  };
 }
 
 export class CockflowModel implements ICockflowModel {

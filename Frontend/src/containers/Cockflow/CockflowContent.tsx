@@ -23,20 +23,20 @@ export const CockflowContent = () => {
     nickname: '',
     createdAt: new Date(),
     content: ''
-  })
+  });
 
 
-  const [comments, setComments] = useState( {
+  const [comments, setComments] = useState({
     "_id": "",
     "owner": {
-        "id": 0,
-        "nickname": "",
-        "isBartender": false
+      "id": 0,
+      "nickname": "",
+      "isBartender": false
     },
     "content": "",
     "subComments": [],
     comments: []
-})
+  });
 
   useEffect(() => {
     axios.get<CockflowGetResData | any>(`http://localhost:8000/api/cockflow/${_id}`)
@@ -57,9 +57,8 @@ export const CockflowContent = () => {
 
           if (res.data.comments) {
             setComments(res.data)
-          }
-          
-        }
+          };
+        };
       });
 
     
@@ -73,8 +72,8 @@ export const CockflowContent = () => {
         <CockflowDetailBox detailData={data} />
         {/* (+)삭제를 위해 넘겨줘야하는 값 key={data.id} */}
         <br />
-        <CockflowAddComment />
-        <CockflowCommentBox commentlist={comments} />
+        <CockflowAddComment cockflowId={_id} />
+        <CockflowCommentBox cockflowId={_id} commentlist={comments} commentId={'16'} />
       </P5>
     </>
   );
