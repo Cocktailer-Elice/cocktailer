@@ -31,22 +31,22 @@ export const ApplyContainer = () => {
     console.log(selectA, titleA, valueA);
     console.log(selectI, titleI, valueI);
     let alcohoObj: any = {};
-    let drinkObj: any = {};
+    let IngredObj: any = {};
     for (let i = 0; i < selectA.length; i++) {
       if (alcohoObj[selectA[i]])
         alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
       else alcohoObj[selectA[i]] = [{ [titleA[i]]: valueA[i] }];
     }
     for (let i = 0; i < selectI.length; i++) {
-      if (drinkObj[selectI[i]])
-        drinkObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
-      else drinkObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+      if (IngredObj[selectI[i]])
+        IngredObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
+      else IngredObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
     }
 
     const newData = {
       owner: 1,
       name: name,
-      img: 'testImgKey',
+      img: img,
       degree: degree,
       category: category,
       flavor: flavor,
@@ -54,12 +54,13 @@ export const ApplyContainer = () => {
       official: false,
       ratio: {
         alcohol: alcohoObj,
-        drink: drinkObj,
+        ingredient: IngredObj,
       },
     };
 
     axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
-      console.log(res.data);
+      console.log(res);
+      console.log(newData);
     });
     // dispatch(postCockcipe({ newData }));
   };
