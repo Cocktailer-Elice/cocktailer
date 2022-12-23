@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { UserForm } from '../UserForm/styles';
@@ -7,8 +7,6 @@ import { UserInput } from '../UserForm/UserInput';
 import { Select } from '../UserForm/Select';
 import { Button } from '@mui/material';
 import { JoinSchema } from './JoinSchema';
-import { loginChecker } from '../../utils/loginChecker';
-import { useNavigate } from 'react-router-dom';
 import { EmailDuplicateChecker } from '../UserForm/EmailDuplicateChecker';
 import { TelVerifier } from '../UserForm/TelVerification';
 import { useAppDispatch } from '../../store/store';
