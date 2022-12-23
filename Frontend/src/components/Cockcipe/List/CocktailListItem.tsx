@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { OfficialBadge } from '../OfficialBadge';
 
@@ -9,10 +10,10 @@ interface Props {
 }
 
 export const CocktailListItem = ({ id, name, official }: Props) => {
+  const navigate = useNavigate();
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event);
-
-    window.location.href = `/cockcipe/detail/${id}`;
+    navigate(`/cockcipe/detail/${id}`);
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
