@@ -24,9 +24,9 @@ class Server {
   private setMiddleware() {
     this.app.use(
       cors({
-        // 추후 프론트엔드 URL이 결정되면 세부 설정
-        // origin: `${process.env.URL}:${process.env.PORT}`,
-        // credentials: true,
+        origin: true,
+        credentials: true,
+        methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
       }),
     );
 
@@ -35,7 +35,6 @@ class Server {
       next();
     });
 
-    //* json middleware
     this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));

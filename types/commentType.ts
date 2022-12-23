@@ -10,7 +10,8 @@ export interface Comment {
     isBartender: false;
   };
   content: string;
-  adopted: boolean;
+  isAdopted?: boolean;
+  parentCommentId?: string;
   subComments: Comment[];
 }
 

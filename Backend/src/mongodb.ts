@@ -19,3 +19,5 @@ db.on('connected', () => {
 });
 
 db.on('error', () => logger.error(DB_URL));
+
+export default db;
