@@ -7,10 +7,12 @@ export const WithdrawlButton = () => {
   const navigate = useNavigate();
   const withdrawl = async () => {
     try {
-      const response = await axios.delete(WITHDRAWAL);
-      if (response) {
-        alert('탈퇴되었습니다');
-        navigate('/');
+      if (confirm('정말 탈퇴하시겠습니까?') === true) {
+        const response = await axios.delete(WITHDRAWAL);
+        if (response) {
+          alert('탈퇴되었습니다');
+          navigate('/');
+        }
       }
     } catch (e: any) {
       console.log(e);
