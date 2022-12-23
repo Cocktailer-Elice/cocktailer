@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginReqData, UserCreateData } from '../../../types';
-import { LOGIN, LOGOUT, SIGNUP } from '../constants/api';
+import { LOGIN, LOGOUT, SIGNUP, VERIFY_LOGIN } from '../constants/api';
 
 export const userLogin = createAsyncThunk(
   'user/login',
@@ -23,3 +23,8 @@ export const userRegister = createAsyncThunk(
     return response.data;
   },
 );
+
+export const userRefresh = createAsyncThunk('user/refresh', async () => {
+  const response = await axios.get(VERIFY_LOGIN);
+  return response.data;
+});
