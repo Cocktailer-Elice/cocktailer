@@ -2,8 +2,8 @@ import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import Joi from 'joi';
 
 const cockflowSchema = Joi.object({
-  title: Joi.string(),
-  content: Joi.string(),
+  title: Joi.string().min(1).max(120),
+  content: Joi.string().min(1).max(1200),
 });
 
 export const cockflowValidator = (req: Req, res: Res, next: Next) => {

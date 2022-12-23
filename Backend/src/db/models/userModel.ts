@@ -7,6 +7,7 @@ import {
 import { UserInfo } from '../../services/types';
 import { IUser } from '../types';
 import User from '../schemas/userSchema';
+import { userQueries } from '../queries/userQuery';
 
 export class UserMongoModel implements IUserMongoModel {
   public create = async (userInfo: UserInfo): Promise<IUser> => {
@@ -14,9 +15,8 @@ export class UserMongoModel implements IUserMongoModel {
     return newUser;
   };
 
-  public findAll = async (): Promise<IUser[]> => {
-    const projection = '-_id -__v';
-    const users: IUser[] = await User.find({}, projection);
+  public getPosts = async (userId: number) => {
+    const users: IUser[] = await User.aggregate(userQueries.findById(userId));
     return users;
   };
 

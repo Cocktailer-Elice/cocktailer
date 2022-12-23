@@ -9,7 +9,7 @@ const router: Router = Router();
 router.use(authAndUserValidator);
 router.post('/find-email', asyncHandler(userController.findUserEmail));
 router.use(isLoggedIn);
-router.get('/', asyncHandler(userController.getUserById));
+router.get('/', asyncHandler(userController.getMyPosts));
 router.patch('/', asyncHandler(userController.changePassword));
 router.delete('/', asyncHandler(userController.softDeleteUser));
 router.patch('/profile', asyncHandler(userController.updateUserProfile));
