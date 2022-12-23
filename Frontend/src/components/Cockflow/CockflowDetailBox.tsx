@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { CockflowBadge } from '../../components/Cockflow/CockflowBadge'
-import { Middle, FlexMiddle } from '../../components/Cockflow/style'
+import { CockflowBadge } from '../../components/Cockflow/CockflowBadge';
+import { Middle, FlexMiddle } from '../../components/Cockflow/style';
 
 interface dataType {
   detailData: {
@@ -11,8 +11,8 @@ interface dataType {
     nickname: string,
     createdAt: Date,
     content: string
-  }
-}
+  };
+};
 
 export const CockflowDetailBox = ({ detailData }:dataType) => {
   // 수정 기능 붙으면 - 전역으로 관리 
@@ -45,7 +45,7 @@ export const CockflowDetailBox = ({ detailData }:dataType) => {
             {/* <span>(+)조회수</span> */}
           </div>
         </TitleWrap>
-        <TextBox name="" id="" value={content} readOnly={inputActived} />
+        <TextBox defaultValue="" value={content} readOnly={inputActived} />
       </form>
     </ContWrap>
   );
@@ -56,7 +56,7 @@ const ContWrap = styled.div`
   border-radius: 7px;
   overflow: hidden;
   color: #555;
-`
+`;
 
 const TitleWrap = styled.div`
   width: 100%;
@@ -64,7 +64,7 @@ const TitleWrap = styled.div`
   border: none;
   border-bottom: 1px solid #ddd;
   font-size: 13px;
-`
+`;
 
 const TextBox = styled.textarea`
   width: 100%;
@@ -88,4 +88,4 @@ const ChangedInput = styled.input`
     border: none;
     color: #555;  
   }
-`
+`;

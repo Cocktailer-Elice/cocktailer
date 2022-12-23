@@ -5,7 +5,7 @@ import { CockflowCreateReqDto } from '../../../../types/cockflowType';
 interface GetData extends CockflowCreateReqDto {
   key: string,
   id: string,
-}
+};
 
 export const CockflowItemBox = ({ id, title, content }:GetData) => {
   return (
