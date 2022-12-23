@@ -25,5 +25,4 @@ const AppLayout = styled.div`
   background-color: #fff;
   border: 1px solid #ddd;
   margin: auto;
-  position: relative;
 `;
