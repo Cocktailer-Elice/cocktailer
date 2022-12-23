@@ -24,3 +24,15 @@ export interface CocktailGetResDto {
   ratio: object;
   content: string;
 }
+
+export interface MyCockcipe {
+  category: string;
+  name: string;
+  flavor: [string];
+  degree: number;
+  img: string;
+  ration: object;
+  content: string;
+  likes: number;
+  createdAt: number;
+}

@@ -27,3 +27,9 @@ export interface CockflowGetResData {
   createdAt: Date;
   comments: Comment[];
 }
+
+export interface MyCockflow {
+  title: string;
+  content: string;
+  createdAt: Date;
+}
