@@ -15,7 +15,7 @@ interface CocktailInterface {
 
   findByUserId(userId: number): Promise<Cocktail[]>;
 
-  findCocktailId(id: number): Promise<Cocktail>;
+  findCocktailId(id: number): Promise<Cocktail | null>;
 
   findCocktailCategoryAndSearch(
     reqData: object,
@@ -57,15 +57,15 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
-  public findCocktailId = async (id: number): Promise<Cocktail> => {
+  public findCocktailId = async (id: number): Promise<Cocktail | null> => {
     const queries = findCocktailId(id);
     console.log(queries);
 
-    const result: Cocktail[] = await CocktailSchema.aggregate([
-      Object(queries),
-    ]);
+    const result = await CocktailSchema.findOne({
+      id: id,
+    });
 
-    return result[0];
+    return result;
   };
 
   public findCocktailCategoryAndSearch = async (
