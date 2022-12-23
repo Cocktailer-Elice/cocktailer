@@ -8,6 +8,7 @@ const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE;
 export const createToken = (user: IUser): Token => {
   const tokenData: Cookie = {
     userId: user.id,
+    name: user.name,
     email: user.email,
     nickname: user.nickname,
     isAdmin: user.isAdmin,
