@@ -25,14 +25,6 @@ class UserController {
     res.sendStatus(204);
   };
 
-  public validatePassword = async (req: Req, res: Res) => {
-    const { password } = req.body;
-    checkReqBody(password);
-    const { email } = req.user;
-    await this.userService.validatePassword(email, password);
-    res.sendStatus(204);
-  };
-
   public changePassword = async (req: Req, res: Res) => {
     const { password, newPassword } = req.body;
     checkReqBody(password, newPassword);

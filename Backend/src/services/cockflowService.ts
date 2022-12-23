@@ -28,6 +28,11 @@ class CockflowService {
     return { cockflows, maxRequest };
   }
 
+  public getMyCockflows = async (userId: number) => {
+    const cockflows = await this.cockflowModel.findByUserId(userId);
+    return cockflows;
+  };
+
   public async getCockflowById(cockflowId: number) {
     const foundCockflow = await this.cockflowModel.findByAggregate(cockflowId);
 

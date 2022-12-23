@@ -32,6 +32,12 @@ class CockflowController {
     res.status(200).json(cockflow);
   };
 
+  public getMyCockflows = async (req: Req, res: Res) => {
+    const { userId } = req.user;
+    const cockflows = await this.cockflowService.getMyCockflows(+userId);
+    res.status(200).json(cockflows);
+  };
+
   public updateCockflow = async (req: Req, res: Res) => {
     const { title, content } = req.body;
     checkReqBody(title, content);
