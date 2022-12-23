@@ -1,19 +1,14 @@
-import { IUser } from './../db/types/userType';
 import { Request as Req, Response as Res } from 'express';
 import UserService from '../services/userService';
-import AuthService from '../services/authService';
 import { checkReqBody } from './utils';
 
 class UserController {
   private readonly userService = new UserService();
 
-  private readonly authService = new AuthService();
-
   public getUserById = async (req: Req, res: Res) => {
     const { userId } = req.user;
-    const requestUserId = req.params.userId;
-    const foundUser = await this.userService.getUserById(userId, requestUserId);
-    res.status(200).json((foundUser as IUser).userGetResDto);
+    const foundUser = await this.userService.getUserById(userId);
+    res.status(200).json(foundUser.userGetResDto);
   };
 
   public findUserEmail = async (req: Req, res: Res) => {
@@ -21,13 +16,6 @@ class UserController {
     checkReqBody(name, tel);
     const foundEmail = await this.userService.findUserEmail(name, tel);
     res.status(200).json({ email: foundEmail });
-  };
-
-  public generateAuthCode = async (req: Req, res: Res) => {
-    const { tel } = req.body;
-    checkReqBody(tel);
-    await this.authService.generateAuthCode(tel);
-    res.status(202).json();
   };
 
   public verifyUser = async (req: Req, res: Res) => {
@@ -53,10 +41,18 @@ class UserController {
     res.sendStatus(204);
   };
 
+  public updateUserProfile = async (req: Req, res: Res) => {
+    const { avatarUrl } = req.body;
+    const { userId } = req.user;
+    checkReqBody(avatarUrl);
+    await this.userService.updateUserProfile(userId, avatarUrl);
+    res.sendStatus(204);
+  };
+
   public softDeleteUser = async (req: Req, res: Res) => {
     const { userId } = req.user;
-    const requestUserId = req.params.userId;
-    await this.userService.softDeleteUser(userId, requestUserId);
+    await this.userService.softDeleteUser(userId);
+    res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     res.sendStatus(204);
   };
 }

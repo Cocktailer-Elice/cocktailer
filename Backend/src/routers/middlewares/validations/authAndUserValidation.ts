@@ -2,8 +2,8 @@ import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import Joi from 'joi';
 
 const authAndUserSchema = Joi.object({
-  name: Joi.string().min(2).max(20),
-  email: Joi.string().email({ minDomainSegments: 2 }),
+  name: Joi.string().min(2).max(30),
+  email: Joi.string().email({ minDomainSegments: 2 }).min(10).max(40),
   password: Joi.string().pattern(
     new RegExp(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
@@ -22,8 +22,13 @@ const authAndUserSchema = Joi.object({
     '데킬라',
   ),
   code: Joi.number().min(100000).max(999999),
-  newPassword: Joi.string(),
+  newPassword: Joi.string().pattern(
+    new RegExp(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
+    ),
+  ),
   newPasswordCheck: Joi.ref('newPassword'),
+  avatarUrl: Joi.number(),
 });
 
 export const authAndUserValidator = (req: Req, res: Res, next: Next) => {

@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
-// interface Container {
-//   margin?: string;
-// }
-
-// const H3 = styled.div<Container>`
-//   color: 'red';
-// `
+export const CockflowHeader = () => {
+  return (
+    <H3>cock-flow</H3>
+  );
+};
 
 const H3 = styled.div`
   text-align: center;
@@ -15,9 +13,3 @@ const H3 = styled.div`
   border-bottom: 1px solid #ddd;
   letter-spacing: 3.5px;
 `;
-
-export const CockflowHeader = () => {
-  return (
-    <H3>cock-flow</H3>
-  );
-};
