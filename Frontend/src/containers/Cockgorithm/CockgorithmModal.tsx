@@ -65,9 +65,18 @@ export const CockgorithmModal = ({
           filters,
         );
 
-        const fetchedCocktailInfo = response.data.data[0];
+        console.log('response');
+        console.log(response);
 
-        setCocktailInfo(fetchedCocktailInfo);
+        console.log('response.data');
+        console.log(response.data);
+
+        console.log('response.data.data[0]');
+        console.log(response.data.data[0]);
+
+        const fetchedCocktail = response.data.data[0];
+
+        setCocktailInfo(fetchedCocktail);
 
         setLoading(false);
       }, 2000);

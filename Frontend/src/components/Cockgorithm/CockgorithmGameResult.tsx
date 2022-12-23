@@ -15,7 +15,9 @@ export const CockgorithmGameResult = ({
       <CocktailImage src={cocktailInfo.img}></CocktailImage>
       <CocktailContent>{cocktailInfo.content}</CocktailContent>
       <CocktailDegree>도수 : {cocktailInfo.degree} 도</CocktailDegree>
-      <Link to={`/cockcipe/detail/${cocktailInfo.id}`}>상세 정보 보기</Link>
+      <Link to={`/cockcipe/detail/${cocktailInfo.id}`}>
+        상세 정보 보러 가기
+      </Link>
     </GameResult>
   );
 };
