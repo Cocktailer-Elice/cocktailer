@@ -12,7 +12,8 @@ export const HeaderHomeLogo = () => {
 };
 
 const HomeLogo = styled.div`
-  width: calc(100% - 70px);
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,37 +1,62 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { Cocktail } from '../services/types';
-import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
+import { CocktailCreateReqDto } from 'types';
 import CocktailService from '../services/cocktailService';
 
-class CoctailController {
+class CocktailController {
   private readonly cocktailService = new CocktailService();
 
-  public createCocktail = async (req: Req, res: Res, next: Next) => {
+  public createCocktail = async (req: Req, res: Res) => {
     const cocktailInfo: CocktailCreateReqDto = req.body;
 
-    /*
-      if(role === 'admin' && role !== 'user' && role !== 'bartender'){
-        cocktailInfo.official = true;
-      }
-      */
-
-    const createCocktailData: Cocktail | null =
+    const createCocktailData: number =
       await this.cocktailService.createCocktail(cocktailInfo);
 
-    res
-      .status(200)
-      .json({ data: createCocktailData, message: 'cocktailCreated' });
+    res.status(200).json({ data: createCocktailData });
   };
 
-  public getCocktail = async (req: Req, res: Res, next: Next) => {
-    const cocktailId = Number(req.query.cocktail);
+  public getLists = async (req: Req, res: Res) => {
+    const lists = await this.cocktailService.getLists();
 
-    const getCocktailData = await this.cocktailService.getCocktail(cocktailId);
+    res.status(200).json({ lists: lists });
+  };
 
-    res.status(200).json({ getCocktailData: getCocktailData });
+  public findCocktailId = async (req: Req, res: Res) => {
+    const id = Number(req.params.id);
+
+    const cocktail = await this.cocktailService.findCocktailId(id);
+
+    res.status(200).json({ cocktail: cocktail });
+  };
+
+  public findCocktailCategoryAndSearch = async (req: Req, res: Res) => {
+    const reqData: any = {};
+
+    if (req.query.category) {
+      reqData.category = req.query.category;
+    }
+    if (req.query.official) {
+      reqData.official = req.query.official;
+    }
+    if (req.query.keyword) {
+      reqData.keyword = req.query.keyword;
+    }
+
+    const endpoint = Number(req.query.endpoint) || 0;
+
+    const categoryLists =
+      await this.cocktailService.findCocktailCategoryAndSearch(
+        reqData,
+        endpoint,
+      );
+
+    res.status(200).json({ categoryLists: categoryLists });
+  };
+
+  public makeMockData = async (req: Req, res: Res) => {
+    const result: string = await this.cocktailService.makeMockData();
   };
 }
 
-const cocktailController = new CoctailController();
+const cocktailController = new CocktailController();
 
 export { cocktailController };
