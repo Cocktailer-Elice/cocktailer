@@ -20,7 +20,7 @@ export const InputTitleImg = ({ setImg }: any) => {
       const formData = new FormData();
       formData.append('image', file);
       axios
-        .post('http://localhost:8000/image-upload', {
+        .post('http://localhost:8000/api/image-upload', {
           folder: 'seeun-test',
         })
         .then((res) => {
