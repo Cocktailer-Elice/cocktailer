@@ -9,8 +9,9 @@ import {
   HeadingRight,
 } from '../../components/Mypage/style';
 import { useNavigate } from 'react-router-dom';
+import { User } from '../../../../types';
 
-export const Header = () => {
+export const Header = ({ user }: { user: User | null }) => {
   const navigate = useNavigate();
   return (
     <Heading>
@@ -29,10 +30,11 @@ export const Header = () => {
         <Avatar>
           <AvatarImage
             src={
-              'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/15-09-26-RalfR-WLC-0084.jpg/250px-15-09-26-RalfR-WLC-0084.jpg'
+              'https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/' +
+              user?.avatarUrl
             }
           />
-          <AvatarText>진 # 2212</AvatarText>
+          <AvatarText>{user?.nickname}</AvatarText>
         </Avatar>
       </HeadingGrid>
       <HeadingRight>
