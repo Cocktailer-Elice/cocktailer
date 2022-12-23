@@ -14,8 +14,7 @@ export const GET_USER = `${API_BASE}/users`;
 export const FIND_EMAIL = `${API_BASE}/users/find-email`;
 export const VERIFY_USER = `${API_BASE}/users/verify-user`;
 export const UPDATE_AVATAR = `${API_BASE}/users/profile`;
-export const CHANGE_PASSWORD = (userId: number) =>
-  `${API_BASE}/users/${userId}`;
+export const CHANGE_PASSWORD = `${API_BASE}/users`;
 export const WITHDRAWAL = `${API_BASE}/users`;
 
 // S3

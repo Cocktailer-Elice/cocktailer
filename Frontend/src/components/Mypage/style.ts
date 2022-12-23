@@ -48,10 +48,15 @@ export const AvatarText = styled.span`
   font-weight: bold;
 `;
 
-const SectionWrapper = styled.section`
+export const SectionContainer = styled.div`
+  width: 100%;
+  height: 25vh;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem;
+`;
+
+export const SectionWrapper = styled.section`
   border: 1px solid #ddd;
   width: 100%;
   height: 100%;
 `;
-export const Carousel = styled(SectionWrapper)``;
-export const Board = styled(SectionWrapper)``;
