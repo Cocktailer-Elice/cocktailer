@@ -8,11 +8,13 @@ import {
 import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
+import Comment from '../schemas/commentSchema';
+import db from '../../mongodb';
 
 class MongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
-    const newcockflow = await Cockflow.create(cockflowInfo);
-    return newcockflow;
+    const cockflow = await Cockflow.create(cockflowInfo);
+    return cockflow;
   }
 
   public async getByRequest(
@@ -69,11 +71,19 @@ class MongoModel implements ICockflowMongoModel {
     return result;
   };
 
-  public async delete(cockflowId: number) {
-    const filter = { id: cockflowId };
-    const result = await Cockflow.deleteOne(filter);
-    return result;
-  }
+  public delete = async (cockflowId: number) => {
+    const session = await db.startSession();
+    session.startTransaction();
+
+    const cockflowDeleteFilter = { id: cockflowId };
+    await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
+
+    const commentDeleteFilter = { cockflowId };
+    await Comment.deleteMany(commentDeleteFilter).session(session);
+    await session.commitTransaction();
+    session.endSession();
+    return;
+  };
 }
 
 export class CockflowModel implements ICockflowModel {

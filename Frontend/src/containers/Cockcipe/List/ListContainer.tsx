@@ -28,6 +28,7 @@ export const ListContainer = () => {
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/cocktails/lists').then((res) => {
+      console.log(res.data);
       console.log(res.data.lists[0]);
       setDryList(res.data.lists[0]['dry']);
       setRefreshList(res.data.lists[0]['refreshing']);
@@ -60,7 +61,7 @@ export const ListContainer = () => {
 
       <CategoryContainer>
         <Category>리프레싱 칵테일</Category>
-        <MorePageBtn category="refresh" />
+        <MorePageBtn category="refreshing" />
       </CategoryContainer>
       <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {refreshList?.map((item, idx) => (

@@ -25,12 +25,12 @@ export interface CommentUpdateOneFilter {
 
 export interface ICommentMongoModel {
   create(cockflowInfo: CommentInfo | SubCommentInfo): Promise<IComment>;
-  findByUserId(userId: string): Promise<IComment[]>;
+  findByUserId(userId: number): Promise<IComment[]>;
   findById(commentId: string): Promise<IComment | null>;
   update(
     filter: CommentFindOneFilter,
     update: CommentUpdateOneFilter,
   ): Promise<UpdateWriteOpResult>;
   updateAdopted(commentId: string): Promise<UpdateWriteOpResult>;
-  deleteById(commentId: string): Promise<AnyExpression>;
+  delete(commentId: string): Promise<AnyExpression>;
 }
