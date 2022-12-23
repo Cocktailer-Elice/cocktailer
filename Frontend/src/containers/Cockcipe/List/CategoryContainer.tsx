@@ -1,3 +1,4 @@
+import { Box, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -31,14 +32,24 @@ export const CategoryContainer = () => {
     <>
       <CategoryHeader>{categoryId}</CategoryHeader>
       <SearchCocktailInput />
-      {categoryList?.map((item, idx) => (
-        <CocktailListItem
-          key={idx.toString()}
-          id={item.id}
-          name={item.name}
-          official={item.official}
-        />
-      ))}
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid
+          container
+          spacing={{ xs: 2, md: 3 }}
+          columns={{ xs: 4, sm: 8, md: 12 }}
+        >
+          {categoryList?.map((item, idx) => (
+            <Grid item xs={2} sm={4} md={4} key={idx}>
+              <CocktailListItem
+                key={idx.toString()}
+                id={item.id}
+                name={item.name}
+                official={item.official}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </>
   );
 };

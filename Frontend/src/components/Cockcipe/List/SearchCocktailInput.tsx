@@ -1,24 +1,29 @@
-import { TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import {
+  FormControlLabel,
+  FormGroup,
+  TextField,
+  Checkbox,
+} from '@mui/material';
 import styled from 'styled-components';
 import { useState } from 'react';
 
 export const SearchCocktailInput = () => {
-  const [active, setActive] = useState<boolean>(false);
-  const handleSearch = () => {
-    setActive(!active);
-  };
   return (
     <Search>
-      {active ? (
-        <TextField
-          id="standard-basic"
-          placeholder="search..."
-          variant="standard"
-          style={{}}
-        />
-      ) : null}
-      <SearchIcon fontSize="large" onClick={handleSearch} />
+      <FormControlLabel
+        control={<Checkbox defaultChecked />}
+        label="official"
+      />
+      <FormControlLabel
+        control={<Checkbox defaultChecked />}
+        label="not-official"
+      />
+      <TextField
+        id="standard-basic"
+        placeholder="search..."
+        variant="standard"
+        style={{}}
+      />
     </Search>
   );
 };

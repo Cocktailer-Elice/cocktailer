@@ -50,12 +50,16 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
   };
   return (
     <>
-      <img src={cocktail.img} width="300" height="300" />
       <Name>{cocktail.name}</Name>
+      <img src={cocktail.img} width="300" height="300" />
+
       <Degree>{cocktail.degree}</Degree>
-      {cocktail.flavor.map((item: string, idx) => (
-        <FlavorTag key={idx}>{item}</FlavorTag>
-      ))}
+      <FlavorContainer>
+        {cocktail.flavor.map((item: string, idx) => (
+          <FlavorTag key={idx}>{item}</FlavorTag>
+        ))}
+      </FlavorContainer>
+
       <Content>{cocktail.content}</Content>
       <Pie data={data} />
       <>
@@ -68,18 +72,27 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
 
 const Name = styled.div`
   font-size: 24px;
+  margin: 15px 0;
 `;
+
 const Degree = styled.div`
   font-size: 20px;
+`;
+const FlavorContainer = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 const FlavorTag = styled.div`
   background-color: #5c7cfa;
   color: #edf2ff;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 5px;
 `;
 const LikeNumber = styled.div`
   font-size: 15px;
 `;
 const Content = styled.div`
-  font-size: 15px;
-  border: 1px solid black;
+  font-size: 20px;
 `;
