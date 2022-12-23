@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { shareKakao } from './shareKaKao';
-import { ICocktail } from '../../../containers/Cockcipe/Detail/DetailContainer';
-import dotenv from 'dotenv';
 
 type CockProps = {
   id: number;
