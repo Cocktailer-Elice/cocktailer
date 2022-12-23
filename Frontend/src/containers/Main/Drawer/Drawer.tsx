@@ -12,9 +12,6 @@ interface DrawerProps {
 export const Drawer = ({ toggleDrawer }: DrawerProps) => {
   const isLoggedIn = loginChecker();
 
-  console.log('isLoggedIn');
-  console.log(isLoggedIn);
-
   return (
     <>
       <Dimmed onClick={toggleDrawer} />
