@@ -5,10 +5,10 @@ import { checkReqBody } from './utils';
 class UserController {
   private readonly userService = new UserService();
 
-  public getUserById = async (req: Req, res: Res) => {
+  public getMyPosts = async (req: Req, res: Res) => {
     const { userId } = req.user;
-    const foundUser = await this.userService.getUserById(userId);
-    res.status(200).json(foundUser.userGetResDto);
+    const myPosts = await this.userService.getMyPosts(userId);
+    res.status(200).json(myPosts);
   };
 
   public findUserEmail = async (req: Req, res: Res) => {
@@ -22,14 +22,6 @@ class UserController {
     const { name, email, tel } = req.body;
     checkReqBody(name, email, tel);
     await this.userService.verifyUser(name, email, tel);
-    res.sendStatus(204);
-  };
-
-  public validatePassword = async (req: Req, res: Res) => {
-    const { password } = req.body;
-    checkReqBody(password);
-    const { email } = req.user;
-    await this.userService.validatePassword(email, password);
     res.sendStatus(204);
   };
 

@@ -13,9 +13,8 @@ class AuthController {
     if (token) {
       throw new AppError(errorNames.businessError, 400, '비정상적 접근');
     }
-    const { name, email, password, passwordCheck, birthday, tel, alcohol } =
-      req.body;
-    checkReqBody(name, email, password, passwordCheck, birthday, tel, alcohol);
+    const { name, email, password, birthday, tel, alcohol } = req.body;
+    checkReqBody(name, email, password, birthday, tel, alcohol);
     const userInfo: UserCreateData = req.body;
     const newUser = await this.authService.signup(userInfo);
 
@@ -40,11 +39,11 @@ class AuthController {
       throw new AppError(errorNames.businessError, 400, '비정상적 접근');
     }
     const userData: LoginReqData = req.body;
-    const foundUser = await this.authService.login(userData);
-    const tokenData = createToken(foundUser);
+    const user = await this.authService.login(userData);
+    const tokenData = createToken(user);
     const cookie = createCookie(tokenData);
     res.setHeader('Set-Cookie', cookie);
-    res.status(200).json(foundUser.userGetResDto);
+    res.status(200).json(user.userGetResDto);
   };
 
   public logout = async (req: Req, res: Res) => {
@@ -65,6 +64,12 @@ class AuthController {
     checkReqBody(tel, code);
     await this.authService.validateAuthCode(tel, code);
     res.sendStatus(204);
+  };
+
+  public verifyToken = async (req: Req, res: Res) => {
+    const id = req.user.userId;
+    const { name, email, nickname, isBartender, avatarUrl } = req.user;
+    res.status(200).json({ id, name, email, nickname, isBartender, avatarUrl });
   };
 }
 

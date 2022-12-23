@@ -13,9 +13,9 @@ class CommentController {
     res.status(201).json(newComment);
   };
 
-  public getCommentsByUserId = async (req: Req, res: Res) => {
+  public getMyComments = async (req: Req, res: Res) => {
     const { userId } = req.user;
-    const comments = await this.commentService.getCommentsByUserId(userId);
+    const comments = await this.commentService.getMyComments(userId);
     res.status(200).json(comments);
   };
 
@@ -57,43 +57,8 @@ class CommentController {
     await this.commentService.addSubcomment(commentInfo);
     res.sendStatus(204);
   };
-
-  public updateSubComment = async (req: Req, res: Res) => {
-    const { content } = req.body;
-    checkReqBody(content);
-    const { cockflowId, commentId, subCommentId } = req.params;
-    const { userId } = req.user;
-    await this.commentService.updateSubcomment(
-      +cockflowId,
-      commentId,
-      subCommentId,
-      userId,
-      content,
-    );
-    res.sendStatus(204);
-  };
-
-  public deleteSubComment = async (req: Req, res: Res) => {
-    const { cockflowId, commentId, subCommentId } = req.params;
-    const { userId } = req.user;
-    await this.commentService.deleteSubcomment(
-      +cockflowId,
-      commentId,
-      subCommentId,
-      userId,
-    );
-    res.sendStatus(204);
-  };
 }
 
 const commentController = new CommentController();
 
 export { commentController };
-
-// public updateCommentLikes = async (req: Req, res: Res) => {
-//   const { commentId } = req.params;
-//   const value = req.body.like === 'like' ? 1 : -1;
-//   const { userId } = req.user;
-//   await this.commentService.updateCommentLikes(commentId, value, userId);
-//   res.sendStatus(204);
-// };

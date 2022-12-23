@@ -19,7 +19,7 @@ export const EditPasswordFormSchema = yup.object().shape({
     .string()
     .required('확인 비밀번호를 입력해주세요')
     .test('password-match', '비밀번호가 일치하지 않습니다', function (value) {
-      return this.parent.password === value;
+      return this.parent.password !== value;
     })
     .test('password-different', '기존 비밀번호와 동일합니다', function (value) {
       return this.parent.password !== value;

@@ -1,10 +1,10 @@
 import { UserInfo } from '../../services';
-import { Document, UpdateWriteOpResult } from 'mongoose';
+import { AnyExpression, Document, UpdateWriteOpResult } from 'mongoose';
 import { User } from 'types';
 
 export interface IUserMongoModel {
   create(userInfo: UserInfo): Promise<IUser>;
-  findAll(): Promise<IUser[]>;
+  getPosts(userId: number): Promise<AnyExpression>;
   findById(userId: number): Promise<IUser | null>;
   findByFilter(filter: FindOneFilter): Promise<IUser | null>;
   update(

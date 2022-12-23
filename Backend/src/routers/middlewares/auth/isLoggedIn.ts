@@ -27,10 +27,12 @@ export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
   // }
   req.user = {
     userId: decodedData.userId,
+    name: decodedData.name,
     email: decodedData.email,
     nickname: decodedData.nickname,
     isAdmin: decodedData.isAdmin,
     isBartender: decodedData.isBartender,
+    avatarUrl: decodedData.avatarUrl,
   };
 
   next();

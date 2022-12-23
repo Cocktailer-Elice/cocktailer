@@ -1,68 +1,87 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
+import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import {
+  CockgorithmReqData,
+  CockgorithmResData,
+} from '../../../../types/cockgorithmType';
 
 interface CockgorithmModalProps {
-  gameTitle: string;
   toggleModal: () => void;
+  seletedGame: IGame;
 }
 
-// 기본 구현 : 프론트에서 배열로 관리
-// 심화 구현 : 서버로부터 받음
-const questions = ['질문1', '질문2', '질문3', '질문4'];
+const cocktailMockData = {
+  id: 1,
+  name: '마티니 블루',
+  img: '칵테일 이미지 URL',
+  degree: 1,
+  content: '마티니 블루는 주절주절',
+};
 
 export const CockgorithmModal = ({
-  gameTitle,
   toggleModal,
+  seletedGame,
 }: CockgorithmModalProps) => {
-  const [questionCounter, setQuestionCounter] = useState(0);
-  const [userAnswer, setUserAnswer] = useState<string[]>([]);
+  const [isGameEnd, setIsGameEnd] = useState(false);
+  const [filters, setFilters] = useState<CockgorithmReqData>({
+    category: '',
+    alcohol: '',
+    degree: '',
+    ingredients: [],
+  });
   const [loading, setLoading] = useState(false);
-  const [cocktailInfo, setCocktailInfo] = useState(''); // 서버로부터 받아온 cocktail이 저장되는 state
+  const [cocktailInfo, setCocktailInfo] =
+    useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+
+  const toggleGameEnd = () => {
+    setIsGameEnd((curr) => !curr);
+  };
 
   useEffect(() => {
-    if (questionCounter === 4) {
+    if (isGameEnd) {
       // 로딩 시작
       setLoading(true);
 
-      // 유저가 선택한 응답들을 서버로 전달
-      console.log('유저 응답', userAnswer);
+      console.log('유저 응답', filters);
 
-      // 서버로부터 받아온 cocktail을 받아옴
-      const cocktail = '마티니 블루';
+      setTimeout(async () => {
+        const response = await axios.post(
+          'http://localhost:8000/api/cocktails/cockgorithm',
+          filters,
+        );
 
-      // 받아온 cocktail을 state로 관리
-      setCocktailInfo(cocktail);
+        console.log('response');
+        console.log(response);
 
-      // 2초 후 로딩 종료
-      setTimeout(() => {
+        console.log('response.data');
+        console.log(response.data);
+
+        const fetchedCocktail = response.data;
+
+        setCocktailInfo(fetchedCocktail);
+
         setLoading(false);
       }, 2000);
     }
-  }, [questionCounter]);
-
-  const increaseQuestionCounter = () => {
-    setQuestionCounter((curr) => curr + 1);
-  };
-
-  const addUserAnswer = (answer: string) => {
-    setUserAnswer((curr) => [...curr, answer]);
-  };
+  }, [isGameEnd]);
 
   return (
     <>
       <Dimmed onClick={toggleModal} />
       <Modal>
         <MainSection>
-          <GameTitle>게임 타이틀 : {gameTitle}</GameTitle>
-          {questionCounter < 4 ? (
+          <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
+          {!isGameEnd ? (
             <CockgorithmGameContent
-              question={questions[questionCounter]}
-              addUserAnswer={addUserAnswer}
-              increaseQuestionCounter={increaseQuestionCounter}
+              selectedGame={seletedGame}
+              toggleGameEnd={toggleGameEnd}
+              setFilters={setFilters}
             />
           ) : loading ? (
             <CockgorithmGameLoading />
@@ -101,6 +120,7 @@ const Dimmed = styled.div`
 
 const MainSection = styled.div`
   width: 100%;
+  height: 450px;
   min-height: 450px;
   background-color: skyblue;
   display: flex;
@@ -108,6 +128,7 @@ const MainSection = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
+  overflow-y: scroll;
 `;
 
 const GameTitle = styled.div`
