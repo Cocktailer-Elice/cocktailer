@@ -3,6 +3,54 @@ import { useState } from 'react';
 import { CockflowBadge } from '../../components/Cockflow/CockflowBadge'
 import { Middle, FlexMiddle } from '../../components/Cockflow/style'
 
+interface dataType {
+  detailData: {
+    id: number,
+    title: string,
+    isBartender: boolean,
+    nickname: string,
+    createdAt: Date,
+    content: string
+  }
+}
+
+export const CockflowDetailBox = ({ detailData }:dataType) => {
+  // 수정 기능 붙으면 - 전역으로 관리 
+  const [inputActived, setInputActived] = useState(true);
+
+  const { title, isBartender, nickname, createdAt, content } = detailData;
+
+  return (
+    <ContWrap>
+      <form>
+        <TitleWrap>
+          <div>
+            <ChangedInput type="text" value={title} readOnly={inputActived} />
+          </div><br />
+          <div>
+            <FlexMiddle>
+              <Middle>
+                {isBartender
+                ? null
+                : <CockflowBadge /> // 임시로 표시를 반대로.
+                }
+                <div>&nbsp;{nickname}</div>
+              </Middle>
+              <span>
+                {String(createdAt).split('T')[0].replaceAll('-', '.')}
+              </span>
+            </FlexMiddle>
+          </div><br/>
+          <div>
+            {/* <span>(+)조회수</span> */}
+          </div>
+        </TitleWrap>
+        <TextBox name="" id="" value={content} readOnly={inputActived} />
+      </form>
+    </ContWrap>
+  );
+};
+
 const ContWrap = styled.div`
   // border: 1px solid #ddd;
   border-radius: 7px;
@@ -41,50 +89,3 @@ const ChangedInput = styled.input`
     color: #555;  
   }
 `
-
-interface dataType {
-  newData: {
-    title: string,
-    isBartender: boolean,
-    nickname: string,
-    createdAt: string,
-    content: string
-  }
-}
-
-export const CockflowDetailBox = ({ newData }:dataType) => {
-  const [flowContent, setFlowcontent] = useState('');
-
-  // 수정 기능 붙으면 - 전역으로 관리 
-  const [actived, setActived] = useState(true);
-
-  const { title, isBartender, nickname, createdAt, content } = newData;
-
-  return (
-    <ContWrap>
-      <form>
-        <TitleWrap>
-          <div>
-            <ChangedInput type="text" value={title} readOnly={true} />
-          </div><br />
-          <div>
-            <FlexMiddle>
-              <Middle>
-                {isBartender
-                ? null
-                : <CockflowBadge /> // 임시로 표시를 반대로.
-                }
-                <div>&nbsp;{nickname}</div>
-              </Middle>
-              <span>{createdAt}</span>
-            </FlexMiddle>
-          </div><br/>
-          <div>
-            {/* <span>(+)조회수</span> */}
-          </div>
-        </TitleWrap>
-        <TextBox name="" id="" value={content} readOnly={actived} />
-      </form>
-    </ContWrap>
-  );
-};

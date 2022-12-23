@@ -1,9 +1,3 @@
-interface Ingredients {
-  alcohol: string[];
-  drink: string[];
-  garnish: string[];
-}
-
 export interface Cocktail {
   id: number;
   owner: string;
@@ -15,5 +9,4 @@ export interface Cocktail {
   img: string;
   ratio: object;
   content: string;
-  likes: number;
 }

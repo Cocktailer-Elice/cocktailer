@@ -24,7 +24,6 @@ export interface CockflowGetResData {
   };
   title: string;
   content: string;
-  // view: number; 조회수는 구현 예정
   createdAt: Date;
   comments: Comment[];
 }

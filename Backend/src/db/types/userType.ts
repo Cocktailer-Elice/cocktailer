@@ -34,6 +34,8 @@ export interface UpdateOneFilter {
   password?: string;
   avatarUrl?: string;
   deletedAt?: number;
+  isBartender?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface IUser extends Document {

@@ -5,18 +5,8 @@ class IngredientService {
   /* test */
   private readonly ingredientModel = ingredientModel;
 
-  public async createIngredient(
-    ingredientCreateDto: IngredientCreateReqDto,
-  ): Promise<Ingredient | null> {
-    const data: Ingredient | null = await this.ingredientModel.create({
-      ...ingredientCreateDto,
-    });
-
-    return data;
-  }
-
-  public async getIngredient(ingredientId: number): Promise<Ingredient | null> {
-    const data = await this.ingredientModel.findOne(ingredientId);
+  public async getIngredient(): Promise<object> {
+    const data: object = await this.ingredientModel.getIngredient();
 
     return data;
   }
