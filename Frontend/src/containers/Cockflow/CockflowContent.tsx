@@ -42,7 +42,7 @@ export const CockflowContent = () => {
     axios.get<CockflowGetResData | any>(`http://localhost:8000/api/cockflow/${_id}`)
     // axios.get<CockflowGetResData>(`http://localhost:8000/api/cockflow/6`)
       .then(res => {
-        // console.log(res.data)
+        console.log(res)
         if (res.data) {
           setResData(res.data);
           const newData = {

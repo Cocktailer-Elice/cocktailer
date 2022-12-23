@@ -3,45 +3,6 @@ import { useState } from 'react';
 import { CockflowBadge } from '../../components/Cockflow/CockflowBadge'
 import { Middle, FlexMiddle } from '../../components/Cockflow/style'
 
-const ContWrap = styled.div`
-  // border: 1px solid #ddd;
-  border-radius: 7px;
-  overflow: hidden;
-  color: #555;
-`
-
-const TitleWrap = styled.div`
-  width: 100%;
-  padding: 0px 15px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  font-size: 13px;
-`
-
-const TextBox = styled.textarea`
-  width: 100%;
-  padding: 10.5px 15px;
-  border: none;
-  resize: none;
-  height: 190px;
-  line-height: 1.6;
-`;
-
-const ChangedInput = styled.input`
-  display: block;
-  width: 100%;
-  padding: 16.5px 15px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  resize: none;
-  
-  &:read-only {
-  padding: 5px 0px;
-    border: none;
-    color: #555;  
-  }
-`
-
 interface dataType {
   detailData: {
     id: number,
@@ -89,3 +50,42 @@ export const CockflowDetailBox = ({ detailData }:dataType) => {
     </ContWrap>
   );
 };
+
+const ContWrap = styled.div`
+  // border: 1px solid #ddd;
+  border-radius: 7px;
+  overflow: hidden;
+  color: #555;
+`
+
+const TitleWrap = styled.div`
+  width: 100%;
+  padding: 0px 15px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+`
+
+const TextBox = styled.textarea`
+  width: 100%;
+  padding: 10.5px 15px;
+  border: none;
+  resize: none;
+  height: 190px;
+  line-height: 1.6;
+`;
+
+const ChangedInput = styled.input`
+  display: block;
+  width: 100%;
+  padding: 16.5px 15px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  resize: none;
+  
+  &:read-only {
+  padding: 5px 0px;
+    border: none;
+    color: #555;  
+  }
+`

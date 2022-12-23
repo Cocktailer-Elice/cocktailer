@@ -110,7 +110,7 @@ export const CockflowList = () => {
     // axios.get(`http://localhost:8000/api/cockflow`)
     axios.get(`http://localhost:8000/api/cockflow/?q=${pageNum}`)
     .then(res => {
-      // console.log(res);
+      console.log(res);
       setData(res.data.cockflows);
       setPageNum((prev => prev + 1));
     });
@@ -125,7 +125,7 @@ export const CockflowList = () => {
       <CockflowLinkBtn link="/cockflow/new" title="질문하기" />
       <List>
         {data.map((item, index) => {return (
-              <Item>
+              <Item key={item.id}>
                 <CockflowItemBox key={item.id} id={item.id} title={String(item.content).slice(0,10).concat('...')}
                   content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}/>
               </Item>

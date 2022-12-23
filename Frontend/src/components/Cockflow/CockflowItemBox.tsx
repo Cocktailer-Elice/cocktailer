@@ -7,6 +7,17 @@ interface GetData extends CockflowCreateReqDto {
   id: string,
 }
 
+export const CockflowItemBox = ({ id, title, content }:GetData) => {
+  return (
+    <NavLink to={`/cockflow/detail/${id}`}>
+      <Title>{title}</Title>
+      <ImgWrap>
+        <Img src={content} />
+      </ImgWrap>
+    </NavLink>
+  );
+};
+
 const NavLink = styled(Link)`
   position: relative;
   border-radius: 5px;
@@ -48,14 +59,3 @@ const Img = styled.img`
   height: 100%;
   object-fit: cover;
 `;
-
-export const CockflowItemBox = ({ id, title, content }:GetData) => {
-  return (
-    <NavLink to={`/cockflow/detail/${id}`}>
-      <Title>{title}</Title>
-      <ImgWrap>
-        <Img src={content} />
-      </ImgWrap>
-    </NavLink>
-  );
-};

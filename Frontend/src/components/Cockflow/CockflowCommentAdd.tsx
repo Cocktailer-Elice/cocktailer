@@ -3,12 +3,9 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { P15B1, Right } from './style';
 
-
 const postAdopted = () => {
 
 }
-
-
 
 export const CockflowCommentAdd = ( { item }:any) => {
     const [subComment, setSubComment] = useState(false)
