@@ -1,17 +1,29 @@
-import { Cocktail } from './types';
-import { CocktailCreateReqData } from 'types';
+import { CocktailServiceType } from './types';
+
 import { cocktailModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
 
-  public async createCocktail(
-    cocktailCreateDto: CocktailCreateReqData,
-  ): Promise<number> {
+  public async createCocktail(cocktailCreateDto: any): Promise<number> {
+    console.log(Object.keys(cocktailCreateDto.ratio.alcohol));
+    console.log(Object.keys(cocktailCreateDto.ratio.ingredient));
+    const key1 = Object.keys(cocktailCreateDto.ratio.alcohol);
+
+    const key2 = key1.map((e) => {
+      console.log(e);
+      if (String(e) in cocktailCreateDto.ratio.alcohol) {
+        console.log(cocktailCreateDto.ratio.alcohol[e]);
+      }
+    });
+
+    const refromData = {};
+
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,
     });
+
     if (!data) {
       throw new AppError(errorNames.noDataError, 400, '칵테일 생성 실패!');
     }
@@ -20,7 +32,7 @@ class CocktailService {
   }
 
   public async getLists() {
-    const data: Cocktail[] = await this.cocktailModel.getLists();
+    const data: CocktailServiceType[] = await this.cocktailModel.getLists();
 
     if (!data) {
       throw new AppError(

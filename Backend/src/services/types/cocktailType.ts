@@ -1,18 +1,16 @@
 //service
 
-import { CocktailGetResData } from 'types';
-
-export interface Cocktail {
-  id: number;
-  owner: string;
+export interface CocktailServiceType {
+  owner: number;
   category: string;
   name: string;
   official: boolean;
   flavor: string;
   degree: number;
   img: string;
-  ratio: object;
+  ratio: {
+    alcohol: object;
+    ingredient: object;
+  };
   content: string;
-
-  readonly cocktailInfo: CocktailGetResData;
 }

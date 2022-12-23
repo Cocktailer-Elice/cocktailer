@@ -1,14 +1,17 @@
 //types
 
 export interface CocktailCreateReqData {
-  owner: string;
+  owner: number;
   category: string;
   name: string;
   official: boolean;
   flavor: string;
   degree: number;
   img: string;
-  ratio: object;
+  ratio: {
+    alcohol: object;
+    ingredient: object;
+  };
   content: string;
 }
 

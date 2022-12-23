@@ -31,7 +31,9 @@ cocktailsRouter.post(
   asyncHandler(cockgorithmController.activateCockgorithm),
 );
 
-cocktailsRouter.use(isLoggedIn);
+//////////////////////////////////////////////////////
+//cocktailsRouter.use(isLoggedIn); ///에러시 삭제하시오//
+/////////////////////////////////////////////////////
 
 cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
 

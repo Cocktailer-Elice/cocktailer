@@ -1,7 +1,7 @@
-export interface CockgorithmResData {
-  id: number;
-  name: string;
-  img: string;
-  degree: number;
-  content: string;
+export interface CockgorithmServiceType {
+  category: string;
+  alcohol: string;
+  minDegree: number;
+  maxDegree: number;
+  ingredients: string[];
 }

@@ -1,4 +1,4 @@
-import { Cocktail } from '../../services/types/cocktailType';
+import { CocktailModelType } from '../types';
 import { CocktailCreateReqData } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 import {
@@ -10,16 +10,16 @@ import {
 interface CocktailInterface {
   createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
 
-  getLists(): Promise<Cocktail[]>;
+  getLists(): Promise<CocktailModelType[]>;
 
-  findByUserId(userId: number): Promise<Cocktail[]>;
+  findByUserId(userId: number): Promise<CocktailModelType[]>;
 
-  findCocktailId(id: number): Promise<Cocktail | null>;
+  findCocktailId(id: number): Promise<CocktailModelType | null>;
 
   findCocktailCategoryAndSearch(
     reqData: object,
     lastId: number,
-  ): Promise<Cocktail[]>;
+  ): Promise<CocktailModelType[]>;
 }
 
 const limitEachPage = 10;
@@ -28,25 +28,27 @@ export class CocktailModel implements CocktailInterface {
   public createCocktail = async (
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> => {
-    const newMyCocktail: Partial<Cocktail> = await CocktailSchema.create(
+    const newMyCocktail: CocktailModelType = await CocktailSchema.create(
       cocktailCreateDto,
     );
 
     return Number(newMyCocktail.id);
   };
 
-  public getLists = async (): Promise<Cocktail[]> => {
+  public getLists = async (): Promise<CocktailModelType[]> => {
     const queries = lists();
 
-    const result: Cocktail[] = await CocktailSchema.aggregate([
+    const result: CocktailModelType[] = await CocktailSchema.aggregate([
       Object(queries),
     ]);
 
     return result;
   };
 
-  public findByUserId = async (userId: number): Promise<Cocktail[]> => {
-    const result: Cocktail[] = await CocktailSchema.aggregate([
+  public findByUserId = async (
+    userId: number,
+  ): Promise<CocktailModelType[]> => {
+    const result: CocktailModelType[] = await CocktailSchema.aggregate([
       {
         $match: { owner: userId },
       },
@@ -56,15 +58,18 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
-  public findCocktailId = async (id: number): Promise<Cocktail | null> => {
+  public findCocktailId = async (
+    id: number,
+  ): Promise<CocktailModelType | null> => {
     const queries = findCocktailId(id);
-    console.log(queries);
 
-    const test: Cocktail[] = await CocktailSchema.aggregate([Object(queries)]);
+    const test: CocktailModelType[] = await CocktailSchema.aggregate([
+      Object(queries),
+    ]);
 
     const result = (await CocktailSchema.findOne({
       id: id,
-    })) as Cocktail;
+    })) as CocktailModelType;
 
     return result;
   };
@@ -72,10 +77,12 @@ export class CocktailModel implements CocktailInterface {
   public findCocktailCategoryAndSearch = async (
     reqData: object,
     endpoint: number,
-  ): Promise<Cocktail[]> => {
+  ): Promise<CocktailModelType[]> => {
     const queries = findCategoryAndSearch(reqData);
 
-    const result: Cocktail[] = await CocktailSchema.aggregate([Object(queries)])
+    const result: CocktailModelType[] = await CocktailSchema.aggregate([
+      Object(queries),
+    ])
       .limit(limitEachPage)
       .skip(endpoint);
 
@@ -87,7 +94,6 @@ export class CocktailModel implements CocktailInterface {
   ////////////////////////////////
 
   public makeMockData = async () => {
-    console.log('생성기 시작 _model');
     const result: any = {};
     const alcoholArr = [
       '진',

@@ -1,5 +1,5 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData, FindCocktailId } from 'types';
+import { CocktailCreateReqData } from 'types';
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {

@@ -1,5 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
-import { Cocktail } from '../../services/types';
+import { CocktailModelType } from '../types';
 
 //참조 https://www.notion.so/90143a86ded04b23b0094946940de37d
 
@@ -77,7 +77,7 @@ const CocktailSchema: Schema = new Schema(
   { collection: 'cocktails', timestamps: true, versionKey: false },
 );
 
-CocktailSchema.virtual('cocktailInfo').get(function (this: Cocktail) {
+CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailModelType) {
   return {
     owner: this.owner,
     category: this.category,
@@ -109,4 +109,4 @@ CocktailSchema.pre('save', async function () {
   this.set({ id });
 });
 
-export default model<Cocktail>('cocktails', CocktailSchema);
+export default model<CocktailModelType>('cocktails', CocktailSchema);

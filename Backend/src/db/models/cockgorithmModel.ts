@@ -1,18 +1,16 @@
-import { CockgorithmResData } from '../../services/types';
+import { CockgorithmModelType } from '../types';
 
 import CocktailSchema from '../schemas/cocktailsSchema';
 
 interface CockgorithmInterface {
-  activateCockgorithm(material: any): Promise<CockgorithmResData>;
+  activateCockgorithm(material: any): Promise<CockgorithmModelType>;
 }
 
 export class CockgorithmModel implements CockgorithmInterface {
   public activateCockgorithm = async (
     material: any,
-  ): Promise<CockgorithmResData> => {
+  ): Promise<CockgorithmModelType> => {
     // material 을 사용할것!!
-
-    console.log(material);
 
     //////////////////////////////////////////
     ///////////// 아래 임시 로직 //////////////
@@ -22,7 +20,7 @@ export class CockgorithmModel implements CockgorithmInterface {
 
     const rnd: number = Math.floor(Math.random() * count);
 
-    const result: CockgorithmResData[] = await CocktailSchema.aggregate([
+    const result: CockgorithmModelType[] = await CocktailSchema.aggregate([
       { $match: { id: rnd } },
       {
         $project: {
@@ -39,7 +37,12 @@ export class CockgorithmModel implements CockgorithmInterface {
       },
     ]);
 
-    return result[0];
+    const formatedCocktail = {
+      ...result[0],
+      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${result[0].img}`,
+    };
+
+    return formatedCocktail;
   };
 }
 
