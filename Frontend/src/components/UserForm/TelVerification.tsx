@@ -8,6 +8,7 @@ import {
 } from '../../constants/api';
 import { TelValidation } from '../../constants/regex';
 import { timeFormat } from '../../utils/timeFormat';
+import { BottomLineInput } from './styles';
 
 interface TelVerifierProps {
   telVerificationStart: boolean;
@@ -27,7 +28,9 @@ export const TelVerifier = ({
   const [success, setSuccess] = useState(false);
 
   const startTelVerification = async (
-    e: React.MouseEvent<HTMLButtonElement>,
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.TouchEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
     if (TelValidation.test(tel)) {
@@ -48,15 +51,24 @@ export const TelVerifier = ({
     }
   };
 
-  const endTelVerification = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const endTelVerification = async (
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.TouchEvent<HTMLButtonElement>,
+  ) => {
     e.preventDefault();
     try {
-      const response = await axios.post(TEL_VERIFICATION_END, { tel, code });
-      if (response.status === 204) {
-        // 인증 성공
-        setTelVerificationStart(false);
-        setTelVerificationEnd(true);
-        setSuccess(true);
+      if (Number(code) < 100000 && Number(code) > 999999) {
+        alert('인증번호는 6자리 숫자입니다.');
+        return;
+      } else {
+        const response = await axios.post(TEL_VERIFICATION_END, { tel, code });
+        if (response.status === 204) {
+          // 인증 성공
+          setTelVerificationStart(false);
+          setTelVerificationEnd(true);
+          setSuccess(true);
+        }
       }
     } catch (e: any) {
       // 인증 실패
@@ -68,7 +80,7 @@ export const TelVerifier = ({
   };
 
   useEffect(() => {
-    if (telVerificationStart) {
+    if (telVerificationStart && time > 0) {
       const counter = setInterval(() => {
         setTime((prev) => prev - 1);
       }, 1000);
@@ -81,7 +93,7 @@ export const TelVerifier = ({
       {telVerificationStart ? (
         <>
           <span>{timeFormat(time)}</span>
-          <input
+          <BottomLineInput
             type="text"
             value={code}
             onChange={onChangeHandler}
