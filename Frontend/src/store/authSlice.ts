@@ -24,7 +24,6 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
-      console.log(action);
       state.user = action.payload;
       state.isLoggedIn = true;
     });
