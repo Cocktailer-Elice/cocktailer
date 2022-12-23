@@ -30,22 +30,37 @@ export const ApplyContainer = () => {
   const handleApply = () => {
     console.log(selectA, titleA, valueA);
     console.log(selectI, titleI, valueI);
+    let alcohoObj: any = {};
+    let drinkObj: any = {};
+    for (let i = 0; i < selectA.length; i++) {
+      if (alcohoObj[selectA[i]])
+        alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
+      else alcohoObj[selectA[i]] = [{ [titleA[i]]: valueA[i] }];
+    }
+    for (let i = 0; i < selectI.length; i++) {
+      if (drinkObj[selectI[i]])
+        drinkObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
+      else drinkObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+    }
 
     const newData = {
-      owner: 'seeun',
+      owner: 1,
       name: name,
-      img: img,
+      img: 'testImgKey',
       degree: degree,
       category: category,
       flavor: flavor,
       content: content,
       official: false,
+      ratio: {
+        alcohol: alcohoObj,
+        drink: drinkObj,
+      },
     };
 
-    // axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
-    //   console.log(res.data);
-    //   console.log(newData);
-    // });
+    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
+      console.log(res.data);
+    });
     // dispatch(postCockcipe({ newData }));
   };
   return (

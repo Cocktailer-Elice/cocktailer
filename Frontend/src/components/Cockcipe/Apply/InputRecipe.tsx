@@ -66,19 +66,22 @@ export const InputRecipe = ({
       );
       setSelect(
         select.filter(
-          (item, idx) => idx !== parseInt(event.currentTarget.parentElement.id),
+          (item: any, idx: number) =>
+            idx !== parseInt(event.currentTarget.parentElement.id),
         ),
       );
 
       setTitle(
         title.filter(
-          (item, idx) => idx !== parseInt(event.currentTarget.parentElement.id),
+          (item: any, idx: number) =>
+            idx !== parseInt(event.currentTarget.parentElement.id),
         ),
       );
 
       setValue(
         value.filter(
-          (item, idx) => idx !== parseInt(event.currentTarget.parentElement.id),
+          (item: any, idx: number) =>
+            idx !== parseInt(event.currentTarget.parentElement.id),
         ),
       );
     }
