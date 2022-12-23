@@ -1,13 +1,13 @@
 import { SetStateAction, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { IFilter } from '../../containers/Cockgorithm/CockgorithmModal';
 
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import { CockgorithmReqData } from '../../../../types/cockgorithmType';
 
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
   toggleGameEnd: () => void;
-  setFilters: React.Dispatch<SetStateAction<IFilter>>;
+  setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
 }
 
 close;
@@ -40,7 +40,7 @@ export const CockgorithmGameContent = ({
               onClick={() => {
                 const { filterName } = selectedGame.questions[questionCounter];
                 console.log('클릭됨');
-                setFilters((curr: IFilter) => {
+                setFilters((curr: CockgorithmReqData) => {
                   if (filterName === 'ingredients') {
                     console.log('나는 재료요');
                     curr[filterName] = [

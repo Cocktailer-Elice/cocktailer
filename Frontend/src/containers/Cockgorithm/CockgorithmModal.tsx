@@ -1,30 +1,19 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import axios from 'axios';
+import {
+  CockgorithmReqData,
+  CockgorithmResData,
+} from '../../../../types/cockgorithmType';
 
 interface CockgorithmModalProps {
   toggleModal: () => void;
   seletedGame: IGame;
-}
-
-export interface IFilter {
-  category: string;
-  alcohol: string;
-  degree: string;
-  ingredients: string[];
-}
-
-export interface ICockgorithmCocktail {
-  id: number;
-  name: string;
-  img: string;
-  degree: number;
-  content: string;
 }
 
 const cocktailMockData = {
@@ -40,7 +29,7 @@ export const CockgorithmModal = ({
   seletedGame,
 }: CockgorithmModalProps) => {
   const [isGameEnd, setIsGameEnd] = useState(false);
-  const [filters, setFilters] = useState<IFilter>({
+  const [filters, setFilters] = useState<CockgorithmReqData>({
     category: '',
     alcohol: '',
     degree: '',
@@ -48,7 +37,7 @@ export const CockgorithmModal = ({
   });
   const [loading, setLoading] = useState(false);
   const [cocktailInfo, setCocktailInfo] =
-    useState<ICockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+    useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
   const toggleGameEnd = () => {
     setIsGameEnd((curr) => !curr);
@@ -73,10 +62,7 @@ export const CockgorithmModal = ({
         console.log('response.data');
         console.log(response.data);
 
-        console.log('response.data.data[0]');
-        console.log(response.data.data[0]);
-
-        const fetchedCocktail = response.data.data[0];
+        const fetchedCocktail = response.data;
 
         setCocktailInfo(fetchedCocktail);
 

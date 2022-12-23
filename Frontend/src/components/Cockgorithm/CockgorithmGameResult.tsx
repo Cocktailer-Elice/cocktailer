@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import { ICockgorithmCocktail } from './../../containers/Cockgorithm/CockgorithmModal';
 import { Link } from 'react-router-dom';
 
+import { CockgorithmResData } from '../../../../types/cockgorithmType';
+
 interface CockgorithmGameResultProps {
-  cocktailInfo: ICockgorithmCocktail;
+  cocktailInfo: CockgorithmResData;
 }
 
 export const CockgorithmGameResult = ({
