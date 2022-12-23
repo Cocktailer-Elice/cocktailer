@@ -16,7 +16,7 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
   const [ingredient, setIngredient] = useState<string[]>();
   const [alcohol, setAlcohol] = useState<string[]>();
 
-  const [select, setSelect] = useState<string[]>();
+  const [select, setSelect] = useState<string[]>(['']);
   const [title, setTitle] = useState<string>();
   const [value, setValue] = useState<string>();
 
@@ -25,7 +25,7 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSelect(event.target.value);
+    setSelect([...select, event.target.value]);
   };
 
   const handleDelete = (event: any) => {
@@ -36,11 +36,16 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
         ),
       );
     }
+    setSelect(
+      select.filter(
+        (item, idx) => idx !== parseInt(event.currentTarget.parentElement.id),
+      ),
+    );
+    console.log(select);
   };
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/ingredients').then((res) => {
-      console.log(res);
       setIngredient(res.data.getIngredient.ingredient);
       setAlcohol(res.data.getIngredient.alcohol);
     });
@@ -63,15 +68,12 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
               <InputLabel>재료 선택</InputLabel>
               <Select
                 label="카테고리"
-                value={select}
+                value={select[idx + 1]}
                 onBlur={() => {
-                  getRecipe({ [select]: [] });
+                  getRecipe({ [select[idx + 1]]: [] });
                 }}
                 onChange={handleChange}
               >
-                <MenuItem disabled value="">
-                  <em>none</em>
-                </MenuItem>
                 {kind === 'alcohol'
                   ? alcohol?.map((item, idx) => (
                       <MenuItem value={item} key={idx}>
@@ -99,7 +101,7 @@ export const InputRecipe = ({ kind, getRecipe }: Props) => {
               onChange={(e) => setValue(e.target.value)}
               onBlur={() => {
                 getRecipe({
-                  [select]: [{ [title]: value }],
+                  [select[idx + 1]]: [...select[idx + 1], { [title]: value }],
                 });
               }}
             />

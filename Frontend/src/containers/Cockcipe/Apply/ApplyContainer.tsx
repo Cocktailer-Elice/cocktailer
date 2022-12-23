@@ -47,6 +47,7 @@ export const ApplyContainer = () => {
       content: content,
       official: false,
     };
+    console.log(newData);
     // axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
     //   console.log(res.data);
     //   console.log(newData);

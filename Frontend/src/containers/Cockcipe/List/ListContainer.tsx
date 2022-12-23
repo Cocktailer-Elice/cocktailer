@@ -60,7 +60,7 @@ export const ListContainer = () => {
 
       <CategoryContainer>
         <Category>리프레싱 칵테일</Category>
-        <MorePageBtn category="refresh" />
+        <MorePageBtn category="refreshing" />
       </CategoryContainer>
       <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
         {refreshList?.map((item, idx) => (
