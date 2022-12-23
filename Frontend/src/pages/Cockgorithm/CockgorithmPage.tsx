@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
-import { useState } from 'react';
 import gameDatas from './gameDatas.json';
 
 export interface IGame {

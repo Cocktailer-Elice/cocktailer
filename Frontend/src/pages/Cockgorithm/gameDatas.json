@@ -15,7 +15,7 @@
       },
       {
         "question": "베이스는 뭐로 갈까요!",
-        "filterName": "baseAlcohol",
+        "filterName": "alcohol",
         "options": [
           { "optionName": "진", "filterValue": "진" },
           { "optionName": "럼", "filterValue": "럼" },
@@ -27,7 +27,7 @@
       },
       {
         "question": "좋아하는 음료는요?",
-        "filterName": "drink",
+        "filterName": "ingredients",
         "options": [
           { "optionName": "시럽", "filterValue": "시럽" },
           { "optionName": "주스", "filterValue": "주스" },
@@ -36,7 +36,7 @@
       },
       {
         "question": "혹시 이중에 추가하고 싶은 재료가 있나요?",
-        "filterName": "ingredient",
+        "filterName": "ingredients",
         "options": [
           { "optionName": "꿀", "filterValue": "꿀" },
           { "optionName": "타바스코", "filterValue": "타바스코" },
@@ -84,7 +84,7 @@
       },
       {
         "question": "베이스는 뭐로 갈까요!",
-        "filterName": "baseAlcohol",
+        "filterName": "alcohol",
         "options": [
           { "optionName": "진", "filterValue": "진" },
           { "optionName": "럼", "filterValue": "럼" },
@@ -96,7 +96,7 @@
       },
       {
         "question": "좋아하는 음료는요?",
-        "filterName": "drink",
+        "filterName": "ingredients",
         "options": [
           { "optionName": "시럽", "filterValue": "시럽" },
           { "optionName": "주스", "filterValue": "주스" },
@@ -105,7 +105,7 @@
       },
       {
         "question": "혹시 이중에 추가하고 싶은 재료가 있나요?",
-        "filterName": "ingredient",
+        "filterName": "ingredients",
         "options": [
           { "optionName": "꿀", "filterValue": "꿀" },
           { "optionName": "타바스코", "filterValue": "타바스코" },
@@ -151,7 +151,7 @@
       },
       {
         "question": "베이스는 뭐로 갈까요!",
-        "filterName": "baseAlcohol",
+        "filterName": "alcohol",
         "options": [
           { "optionName": "진", "filterValue": "진" },
           { "optionName": "럼", "filterValue": "럼" },
@@ -163,7 +163,7 @@
       },
       {
         "question": "좋아하는 음료는요?",
-        "filterName": "drink",
+        "filterName": "ingredients",
         "options": [
           { "optionName": "시럽", "filterValue": "시럽" },
           { "optionName": "주스", "filterValue": "주스" },
@@ -172,7 +172,7 @@
       },
       {
         "question": "혹시 이중에 추가하고 싶은 재료가 있나요?",
-        "filterName": "ingredient",
+        "filterName": "ingredients",
         "options": [
           { "optionName": "꿀", "filterValue": "꿀" },
           { "optionName": "타바스코", "filterValue": "타바스코" },
