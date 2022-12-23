@@ -1,4 +1,3 @@
-import axios from 'axios'
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import { Center } from './style';

@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 
-export const InputCockContent = () => {
+export const InputCockContent = ({ setContent }) => {
   return (
     <ContentContainer>
       <TextField
@@ -11,6 +11,7 @@ export const InputCockContent = () => {
         rows={4}
         multiline
         sx={{ width: '300px' }}
+        onChange={(e) => setContent(e.target.value)}
       />
     </ContentContainer>
   );

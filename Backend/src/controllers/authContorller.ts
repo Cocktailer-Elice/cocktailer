@@ -21,7 +21,7 @@ class AuthController {
 
     const tokenData = createToken(newUser);
     const cookie = createCookie(tokenData);
-    res.setHeader('Set-Cookie', [cookie]);
+    res.setHeader('Set-Cookie', cookie);
     res.status(201).json(newUser.userGetResDto);
   };
 
@@ -43,12 +43,12 @@ class AuthController {
     const foundUser = await this.authService.login(userData);
     const tokenData = createToken(foundUser);
     const cookie = createCookie(tokenData);
-    res.setHeader('Set-Cookie', [cookie]);
+    res.setHeader('Set-Cookie', cookie);
     res.status(200).json(foundUser.userGetResDto);
   };
 
   public logout = async (req: Req, res: Res) => {
-    res.setHeader('Set-Cookie', ['Authorization=; Max-age=0; path=/']);
+    res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     res.sendStatus(204);
   };
 
@@ -57,7 +57,7 @@ class AuthController {
     checkReqBody(tel);
     await this.authService.checkTelDuplicate(tel);
     await this.authService.generateAuthCode(tel);
-    res.status(202).json();
+    res.sendStatus(204);
   };
 
   public validateAuthCode = async (req: Req, res: Res) => {

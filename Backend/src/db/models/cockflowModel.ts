@@ -1,6 +1,11 @@
 import { cockflowQueries } from './../queries/cockflowQuery';
-import { ICockflowMongoModel, ICockflowModel } from './../types/cockflowType';
-import { CockflowInfo } from '../../services';
+import {
+  ICockflowMongoModel,
+  ICockflowModel,
+  CockflowFindOneFilter,
+  CockflowUpdateOneFilter,
+} from './../types/cockflowType';
+import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 
@@ -42,17 +47,31 @@ class MongoModel implements ICockflowMongoModel {
     return cockflows;
   }
 
-  public findById = async (cockflowId: number): Promise<ICockflow> => {
+  public findByAggregate = async (
+    cockflowId: number,
+  ): Promise<GetCockflowServiceDto> => {
     const cockflow = await Cockflow.aggregate(
       cockflowQueries.findById(cockflowId),
     );
     return cockflow[0];
   };
 
-  public async softDelete(cockflowId: number) {
-    const filter = { id: cockflowId };
-    const update = { deletedAt: Date.now() };
+  public findById = async (cockflowId: number): Promise<ICockflow | null> => {
+    const cockflow = await Cockflow.findOne({ id: cockflowId });
+    return cockflow;
+  };
+
+  public update = async (
+    filter: CockflowFindOneFilter,
+    update: CockflowUpdateOneFilter,
+  ) => {
     const result = await Cockflow.updateOne(filter, update);
+    return result;
+  };
+
+  public async delete(cockflowId: number) {
+    const filter = { id: cockflowId };
+    const result = await Cockflow.deleteOne(filter);
     return result;
   }
 }

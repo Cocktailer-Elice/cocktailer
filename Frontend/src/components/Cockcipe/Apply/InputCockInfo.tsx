@@ -5,15 +5,32 @@ import {
   TextField,
   MenuItem,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-export const InputCockInfo = () => {
+export const InputCockInfo = ({
+  setName,
+  setDegree,
+  setCategory,
+  category,
+}) => {
   return (
     <>
       <InfoContainer>
-        <TextField label="나만의 칵테일 이름" sx={{ marginRight: '20px;' }} />
-        <TextField label="칵테일 도수" type="number" />
+        <TextField
+          label="나만의 칵테일 이름"
+          sx={{ marginRight: '20px;' }}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <TextField
+          label="칵테일 도수"
+          type="number"
+          onChange={(e) => {
+            setDegree(parseInt(e.target.value));
+          }}
+        />
       </InfoContainer>
       <CategoryContainer>
         <FormControl
@@ -22,13 +39,17 @@ export const InputCockInfo = () => {
           }}
         >
           <InputLabel>카테고리 선택</InputLabel>
-          <Select label="카테고리">
-            <MenuItem>드라이 칵테일</MenuItem>
-            <MenuItem>리프레싱 칵테일</MenuItem>
-            <MenuItem>프루트 칵테일</MenuItem>
-            <MenuItem>스위트 칵테일</MenuItem>
-            <MenuItem>스무디 칵테일</MenuItem>
-            <MenuItem>핫 칵테일</MenuItem>
+          <Select
+            label="카테고리"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <MenuItem value="dry">드라이 칵테일</MenuItem>
+            <MenuItem value="refresh">리프레싱 칵테일</MenuItem>
+            <MenuItem value="fruit">프루트 칵테일</MenuItem>
+            <MenuItem value="sweet">스위트 칵테일</MenuItem>
+            <MenuItem value="smoothie">스무디 칵테일</MenuItem>
+            <MenuItem value="hot">핫 칵테일</MenuItem>
           </Select>
         </FormControl>
       </CategoryContainer>
