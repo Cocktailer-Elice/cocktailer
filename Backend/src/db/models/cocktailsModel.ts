@@ -6,6 +6,7 @@ import {
   findCocktailId,
   findCategoryAndSearch,
 } from '../queries/cocktailsQuery';
+import { array } from 'joi';
 
 interface CocktailInterface {
   createCocktail(cocktailCreateDto: CocktailCreateReqDto): Promise<number>;
@@ -14,7 +15,7 @@ interface CocktailInterface {
 
   findByUserId(userId: number): Promise<Cocktail[]>;
 
-  findCocktailId(id: number): Promise<Cocktail[]>;
+  findCocktailId(id: number): Promise<Cocktail>;
 
   findCocktailCategoryAndSearch(
     reqData: object,
@@ -56,14 +57,15 @@ export class CocktailModel implements CocktailInterface {
     return result;
   };
 
-  public findCocktailId = async (id: number): Promise<Cocktail[]> => {
+  public findCocktailId = async (id: number): Promise<Cocktail> => {
     const queries = findCocktailId(id);
+    console.log(queries);
 
     const result: Cocktail[] = await CocktailSchema.aggregate([
       Object(queries),
     ]);
 
-    return result;
+    return result[0];
   };
 
   public findCocktailCategoryAndSearch = async (
@@ -145,7 +147,7 @@ export class CocktailModel implements CocktailInterface {
 
         name: `${title[Number(Math.floor(Math.random() * 6))]} 칵테일`,
 
-        official: officialBool[Number(Math.floor(Math.random() * 1))],
+        official: officialBool[Number(Math.floor(Math.random()))],
 
         flavor: [
           flavor1[Number(Math.floor(Math.random() * 5))],

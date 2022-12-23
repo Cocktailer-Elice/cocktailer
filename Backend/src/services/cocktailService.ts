@@ -13,11 +13,7 @@ class CocktailService {
       ...cocktailCreateDto,
     });
     if (!data) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '검색하신 칵테일이 존재하지 않아요!',
-      );
+      throw new AppError(errorNames.noDataError, 400, '칵테일 생성 실패!');
     }
 
     return data;
@@ -70,7 +66,7 @@ class CocktailService {
       throw new AppError(
         errorNames.noDataError,
         400,
-        '이런! 이 칵테일은 누군가 다 마셨나봐요!!',
+        '이런! 이 칵테일은 누군가 다 마셨나봐요!! 검색하신 정보가 없어요!',
       );
     }
 

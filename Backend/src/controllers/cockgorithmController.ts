@@ -19,20 +19,21 @@ class CockgorithmController {
     const rowMaterial = req.body;
 
     const processedMaterial: any = {};
-    processedMaterial.ingredient = [];
+
     if ('degree' in rowMaterial) {
       const degree: string[] = String(rowMaterial.degree).split('~');
       processedMaterial.minD = Number(degree[0]);
       processedMaterial.maxD = Number(degree[1]);
     }
+    if ('alcohol' in rowMaterial) {
+      processedMaterial.alcohol = rowMaterial.baseAlcohol;
+    }
     if ('category' in rowMaterial) {
       processedMaterial.category = rowMaterial.category;
     }
-    if ('drink' in rowMaterial) {
-      processedMaterial.ingredient.push(rowMaterial.drink);
-    }
-    if ('ingredients' in rowMaterial) {
-      processedMaterial.ingredient.push(rowMaterial.ingredients);
+
+    if ('ingredient' in rowMaterial) {
+      processedMaterial.ingredients = rowMaterial.ingredient;
     }
 
     const data: CocktailCreateReqDto[] =
