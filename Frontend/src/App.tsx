@@ -5,8 +5,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { GlobalStyles } from './GlobalStyles';
 import { Header } from './containers/Main/Header/Header';
 import { Router } from './Router';
+import { useEffect } from 'react';
+import { loginRefresh } from './utils/loginRefresh';
 
 export const App = () => {
+  useEffect(() => loginRefresh(), []);
   return (
     <AppLayout>
       <Helmet />
