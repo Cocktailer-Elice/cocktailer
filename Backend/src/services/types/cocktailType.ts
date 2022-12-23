@@ -1,15 +1,12 @@
-interface Ingredients {
-  alcohol: string[];
-  drink: string[];
-  garnish: string[];
-}
-
 export interface Cocktail {
   id: number;
-  cocktailName: string;
-  cocktailCategory: string;
-  cocktailFlavor: string[];
-  cocktailDegree: number;
-  cocktailImgUrl: string; //칵테일 이미지 url
-  cocktailProducts: Ingredients;
+  owner: string;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: object;
+  content: string;
 }

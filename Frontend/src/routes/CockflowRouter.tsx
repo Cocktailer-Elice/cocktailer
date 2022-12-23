@@ -8,7 +8,7 @@ export const CockflowRouter = () => {
     <Routes>
       <Route path="/cockflow" element={<CockflowPage />}></Route>
       <Route path="/cockflow/new" element={<CockflowNew />}></Route>
-      <Route path="/cockflow/detail" element={<CockflowDetail />}></Route>
+      <Route path="/cockflow/detail/:cockflowId" element={<CockflowDetail />}></Route>
     </Routes>
   );
 };

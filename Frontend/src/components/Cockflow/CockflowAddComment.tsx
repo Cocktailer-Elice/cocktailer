@@ -13,13 +13,13 @@ const TextBox = styled.textarea`
 // 댓글 박스
 export const CockflowAddComment = () => {
   return (
-    <>
-      <CockflowBoxTitle />
+    <form onSubmit={()=>{}}>
+      <CockflowBoxTitle smallTitle="답글 달기" />
       <TextBox name="" id="" value="" placeholder='답글입력' onChange={() => { }}>
       </TextBox>
       <Center>
-        <Button variant="contained">등록하기</Button>
+        <Button type="submit" variant="contained">등록하기</Button>
       </Center>
-    </>
+    </form>
   );
 };

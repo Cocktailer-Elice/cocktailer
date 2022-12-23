@@ -1,10 +1,28 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CockflowCreateReqDto } from '../../../../types/cockflowType';
+
+interface GetData extends CockflowCreateReqDto {
+  key: string,
+  id: string,
+}
+
+export const CockflowItemBox = ({ id, title, content }:GetData) => {
+  return (
+    <NavLink to={`/cockflow/detail/${id}`}>
+      <Title>{title}</Title>
+      <ImgWrap>
+        <Img src={content} />
+      </ImgWrap>
+    </NavLink>
+  );
+};
 
 const NavLink = styled(Link)`
   position: relative;
   border-radius: 5px;
   overflow: hidden;
+  box-shadow: 1px 4px 5px #7d7d7d;
   &::after {
     content: '';
     display: block;
@@ -41,14 +59,3 @@ const Img = styled.img`
   height: 100%;
   object-fit: cover;
 `;
-
-export const CockflowItemBox = ({ imgSrc = 'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg' }) => {
-  return (
-    <NavLink to='/cockflow/detail'>
-      <Title>이미지 제목들</Title>
-      <ImgWrap>
-        <Img src={imgSrc} />
-      </ImgWrap>
-    </NavLink>
-  );
-};

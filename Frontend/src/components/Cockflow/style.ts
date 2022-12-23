@@ -22,3 +22,19 @@ export const Container = styled.div`
 export const P5 = styled.div`
     padding: 5px;
 `;
+
+export const P15B1 = styled.div`
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+`;
+
+export const Middle = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+export const FlexMiddle = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
