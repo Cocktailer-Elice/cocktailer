@@ -1,7 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
 import { Cocktail } from '../../services/types';
-import { CocktailGetResDto } from 'types';
-import { boolean } from 'joi';
 
 //참조 https://www.notion.so/90143a86ded04b23b0094946940de37d
 
@@ -79,7 +77,7 @@ const CocktailSchema: Schema = new Schema(
   { collection: 'cocktails', timestamps: true, versionKey: false },
 );
 
-CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailGetResDto) {
+CocktailSchema.virtual('cocktailInfo').get(function (this: Cocktail) {
   return {
     owner: this.owner,
     category: this.category,

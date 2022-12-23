@@ -1,3 +1,7 @@
+//service
+
+import { CocktailGetResData } from 'types';
+
 export interface Cocktail {
   id: number;
   owner: string;
@@ -9,4 +13,6 @@ export interface Cocktail {
   img: string;
   ratio: object;
   content: string;
+
+  readonly cocktailInfo: CocktailGetResData;
 }

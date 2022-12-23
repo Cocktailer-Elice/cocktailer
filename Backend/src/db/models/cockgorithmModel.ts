@@ -1,13 +1,15 @@
-import { Cocktail } from '../../services/types/cocktailType';
+import { CockgorithmResData } from '../../services/types';
 
 import CocktailSchema from '../schemas/cocktailsSchema';
 
 interface CockgorithmInterface {
-  activateCockgorithm(material: any): Promise<Cocktail[]>;
+  activateCockgorithm(material: any): Promise<CockgorithmResData>;
 }
 
 export class CockgorithmModel implements CockgorithmInterface {
-  public activateCockgorithm = async (material: any): Promise<Cocktail[]> => {
+  public activateCockgorithm = async (
+    material: any,
+  ): Promise<CockgorithmResData> => {
     // material 을 사용할것!!
 
     console.log(material);
@@ -20,7 +22,7 @@ export class CockgorithmModel implements CockgorithmInterface {
 
     const rnd: number = Math.floor(Math.random() * count);
 
-    const result: Cocktail[] = await CocktailSchema.aggregate([
+    const result: CockgorithmResData[] = await CocktailSchema.aggregate([
       { $match: { id: rnd } },
       {
         $project: {
@@ -37,7 +39,7 @@ export class CockgorithmModel implements CockgorithmInterface {
       },
     ]);
 
-    return result;
+    return result[0];
   };
 }
 

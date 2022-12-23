@@ -1,5 +1,5 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqDto } from 'types';
+import { CockgorithmResData } from 'types';
 import CockgorithmService from '../services/cockgorithmService';
 
 class CockgorithmController {
@@ -36,9 +36,9 @@ class CockgorithmController {
       processedMaterial.ingredients = rowMaterial.ingredient;
     }
 
-    const data: CocktailCreateReqDto[] =
+    const data: CockgorithmResData =
       await this.CockgorithmService.activateCockgorithm(processedMaterial);
-    res.status(200).json({ data: data });
+    res.status(200).json(data);
   };
 }
 const cockgorithmController = new CockgorithmController();

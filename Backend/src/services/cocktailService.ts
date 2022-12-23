@@ -1,5 +1,5 @@
 import { Cocktail } from './types';
-import { CocktailCreateReqDto, CocktailGetResDto } from 'types';
+import { CocktailCreateReqData } from 'types';
 import { cocktailModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
 
@@ -7,7 +7,7 @@ class CocktailService {
   private readonly cocktailModel = cocktailModel;
 
   public async createCocktail(
-    cocktailCreateDto: CocktailCreateReqDto,
+    cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> {
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,

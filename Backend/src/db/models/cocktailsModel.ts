@@ -1,15 +1,14 @@
 import { Cocktail } from '../../services/types/cocktailType';
-import { CocktailCreateReqDto } from 'types';
+import { CocktailCreateReqData } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 import {
   lists,
   findCocktailId,
   findCategoryAndSearch,
 } from '../queries/cocktailsQuery';
-import { array } from 'joi';
 
 interface CocktailInterface {
-  createCocktail(cocktailCreateDto: CocktailCreateReqDto): Promise<number>;
+  createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
 
   getLists(): Promise<Cocktail[]>;
 
@@ -27,7 +26,7 @@ const limitEachPage = 10;
 
 export class CocktailModel implements CocktailInterface {
   public createCocktail = async (
-    cocktailCreateDto: CocktailCreateReqDto,
+    cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> => {
     const newMyCocktail: Partial<Cocktail> = await CocktailSchema.create(
       cocktailCreateDto,
@@ -61,9 +60,11 @@ export class CocktailModel implements CocktailInterface {
     const queries = findCocktailId(id);
     console.log(queries);
 
-    const result = await CocktailSchema.findOne({
+    const test: Cocktail[] = await CocktailSchema.aggregate([Object(queries)]);
+
+    const result = (await CocktailSchema.findOne({
       id: id,
-    });
+    })) as Cocktail;
 
     return result;
   };
@@ -147,7 +148,7 @@ export class CocktailModel implements CocktailInterface {
 
         name: `${title[Number(Math.floor(Math.random() * 6))]} 칵테일`,
 
-        official: officialBool[Number(Math.floor(Math.random()))],
+        official: officialBool[Number(Math.floor(Math.random() * 2))],
 
         flavor: [
           flavor1[Number(Math.floor(Math.random() * 5))],
@@ -181,10 +182,11 @@ export class CocktailModel implements CocktailInterface {
             ],
           },
         },
-
         content: '이곳에 전체적인 레시피와 가니쉬를 작성',
       };
+
       await CocktailSchema.create(mockData);
+
       result[i] = mockData;
     }
     return '데이터 생성됨';
