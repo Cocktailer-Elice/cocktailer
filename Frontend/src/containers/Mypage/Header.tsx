@@ -28,12 +28,7 @@ export const Header = ({ user }: { user: User | null }) => {
       </HeadingLeft>
       <HeadingGrid>
         <Avatar>
-          <AvatarImage
-            src={
-              'https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/' +
-              user?.avatarUrl
-            }
-          />
+          <AvatarImage src={user?.avatarUrl} />
           <AvatarText>{user?.nickname}</AvatarText>
         </Avatar>
       </HeadingGrid>
