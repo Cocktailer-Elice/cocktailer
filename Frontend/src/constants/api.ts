@@ -16,7 +16,7 @@ export const VERIFY_USER = `${API_BASE}/users/verify-user`;
 export const UPDATE_AVATAR = `${API_BASE}/users/profile`;
 export const CHANGE_PASSWORD = (userId: number) =>
   `${API_BASE}/users/${userId}`;
-export const WITHDRAWAL = (userId: number) => `${API_BASE}/users/${userId}`;
+export const WITHDRAWAL = `${API_BASE}/users`;
 
 // S3
 export const GET_S3_URL = `${API_BASE}/image-upload`;
