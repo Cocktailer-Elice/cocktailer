@@ -13,9 +13,8 @@ class AuthController {
     if (token) {
       throw new AppError(errorNames.businessError, 400, '비정상적 접근');
     }
-    const { name, email, password, passwordCheck, birthday, tel, alcohol } =
-      req.body;
-    checkReqBody(name, email, password, passwordCheck, birthday, tel, alcohol);
+    const { name, email, password, birthday, tel, alcohol } = req.body;
+    checkReqBody(name, email, password, birthday, tel, alcohol);
     const userInfo: UserCreateData = req.body;
     const newUser = await this.authService.signup(userInfo);
 

@@ -9,7 +9,6 @@ const authAndUserSchema = Joi.object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
     ),
   ),
-  passwordCheck: Joi.ref('password'),
   tel: Joi.string().pattern(/^(010)\d{3,4}\d{4}$/),
   birthday: Joi.string(),
   alcohol: Joi.string().valid(
@@ -21,14 +20,13 @@ const authAndUserSchema = Joi.object({
     '브랜디',
     '데킬라',
   ),
-  code: Joi.number().min(100000).max(999999),
+  code: Joi.string().min(6).max(6),
   newPassword: Joi.string().pattern(
     new RegExp(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,16}/,
     ),
   ),
-  newPasswordCheck: Joi.ref('newPassword'),
-  avatarUrl: Joi.number(),
+  avatarUrl: Joi.string().min(13).max(13),
 });
 
 export const authAndUserValidator = (req: Req, res: Res, next: Next) => {

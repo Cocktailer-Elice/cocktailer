@@ -15,7 +15,8 @@ const UserSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
+      index: true,
+      unique: false,
     },
     password: {
       type: String,
@@ -32,15 +33,16 @@ const UserSchema: Schema = new Schema(
     tel: {
       type: String,
       required: true,
-      unique: true,
+      index: true,
+      unique: false,
     },
     avatarUrl: {
       type: String,
-      default: '{수정예정}',
+      default: '1671798714000',
     },
     points: {
       type: Number,
-      Default: 0,
+      default: 0,
     },
     currentPoints: {
       type: Number,
