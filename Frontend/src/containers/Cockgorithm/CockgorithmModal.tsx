@@ -12,12 +12,11 @@ interface CockgorithmModalProps {
   seletedGame: IGame;
 }
 
-interface IFilter {
+export interface IFilter {
   category: string;
-  baseAlcohol: string;
-  drink: string;
+  alcohol: string;
   degree: string;
-  ingredient: string;
+  ingredients: string[];
 }
 
 export interface ICockgorithmCocktail {
@@ -40,20 +39,23 @@ export const CockgorithmModal = ({
   toggleModal,
   seletedGame,
 }: CockgorithmModalProps) => {
-  const [questionCounter, setQuestionCounter] = useState(0);
+  const [isGameEnd, setIsGameEnd] = useState(false);
   const [filters, setFilters] = useState<IFilter>({
     category: '',
-    baseAlcohol: '',
-    drink: '',
+    alcohol: '',
     degree: '',
-    ingredient: '',
+    ingredients: [],
   });
   const [loading, setLoading] = useState(false);
   const [cocktailInfo, setCocktailInfo] =
     useState<ICockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
+  const toggleGameEnd = () => {
+    setIsGameEnd((curr) => !curr);
+  };
+
   useEffect(() => {
-    if (questionCounter === 5) {
+    if (isGameEnd) {
       // 로딩 시작
       setLoading(true);
 
@@ -81,27 +83,7 @@ export const CockgorithmModal = ({
         setLoading(false);
       }, 2000);
     }
-  }, [questionCounter]);
-
-  const increaseQuestionCounter = () => {
-    setQuestionCounter((curr) => curr + 1);
-  };
-
-  const addFilter = (filter: string) => {
-    const [filterName, filterValue] = filter.split(':');
-    setFilters((curr: IFilter) => {
-      if (
-        filterName === 'category' ||
-        filterName === 'baseAlcohol' ||
-        filterName === 'drink' ||
-        filterName === 'ingredient' ||
-        filterName === 'degree'
-      ) {
-        curr[filterName] = filterValue;
-      }
-      return curr;
-    });
-  };
+  }, [isGameEnd]);
 
   return (
     <>
@@ -109,12 +91,11 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
-          {questionCounter < 5 ? (
+          {!isGameEnd ? (
             <CockgorithmGameContent
               selectedGame={seletedGame}
-              questionCounter={questionCounter}
-              addFilter={addFilter}
-              increaseQuestionCounter={increaseQuestionCounter}
+              toggleGameEnd={toggleGameEnd}
+              setFilters={setFilters}
             />
           ) : loading ? (
             <CockgorithmGameLoading />
