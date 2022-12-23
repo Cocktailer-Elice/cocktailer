@@ -1,27 +1,47 @@
 import { Header } from '../../containers/Mypage/Header';
-import { Section } from '../../containers/Mypage/Section';
 import { loginChecker } from '../../utils/loginChecker';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/store';
 import { WithdrawlButton } from '../../components/Mypage/WithdrawlButton';
+import { getCurrentUser } from '../../utils/getCurrentUser';
+import { Board } from '../../containers/Mypage/Board';
+import { Carousel } from '../../containers/Mypage/Carousel';
+import { Helmet } from 'react-helmet';
+import axios from 'axios';
+import { GET_USER } from '../../constants/api';
+import { MyPostsResData } from '../../../../types';
 
 export const Mypage = () => {
   const isLoggedIn = loginChecker();
-  const { user } = useAppSelector((state) => state.auth);
+  const user = getCurrentUser();
   const navigate = useNavigate();
-  console.log(useAppSelector((state) => state.auth));
+  const [userData, setUserData] = useState<MyPostsResData>();
+
+  const getUserData = async () => {
+    const response = await axios.get(GET_USER);
+    return response.data;
+  };
+
+  useEffect(() => {
+    getUserData().then((res) => setUserData(res[0]));
+  }, []);
+
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login');
     }
   }, [isLoggedIn]);
+
   return (
     <>
+      <Helmet>
+        <title>Cocktailer | 마이페이지</title>
+      </Helmet>
       <Header user={user} />
-      <Section type="carousel" data={[]} />
-      <Section type="carousel" data={[]} />
-      <Section type="board" data={[]} />
+      <Carousel title="나의 Cockcipe" cockcipes={userData?.cocktails} />
+      <Carousel title="내가 좋아한 Cockcipe" cockcipes={userData?.cocktails} />
+      <Board title="나의 Cockflow" cockflow={userData?.cockflows} />
+      <Board title="나의 Cockflow Comments" comments={userData?.comments} />
       <WithdrawlButton />
     </>
   );
