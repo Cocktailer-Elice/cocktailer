@@ -1,5 +1,6 @@
-//service
+//model
 
+import { CocktailGetResData } from 'types';
 type Ratio = {
   alcohol: {
     [anykey: string]: [
@@ -16,7 +17,8 @@ type Ratio = {
     ];
   };
 };
-export interface CocktailServiceType {
+export interface CocktailModelType {
+  id: number;
   owner: number;
   category: string;
   name: string;
@@ -26,4 +28,6 @@ export interface CocktailServiceType {
   img: string;
   ratio: Ratio;
   content: string;
+
+  readonly cocktailInfo: CocktailGetResData;
 }
