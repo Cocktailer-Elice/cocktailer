@@ -24,7 +24,8 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
     });
     builder.addCase(userLogin.fulfilled, (state, action) => {
-      state.user = action.payload.user;
+      console.log(action);
+      state.user = action.payload;
       state.isLoggedIn = true;
     });
     builder.addCase(userLogin.rejected, (state, action) => {
@@ -46,7 +47,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
     });
     builder.addCase(userRegister.fulfilled, (state, action) => {
-      state.user = action.payload.user;
+      state.user = action.payload;
       state.isLoggedIn = true;
     });
     builder.addCase(userRegister.rejected, (state, action) => {
