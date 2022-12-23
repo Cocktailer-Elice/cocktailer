@@ -1,57 +1,113 @@
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { CockflowMoreComment } from './CockflowMoreComment';
 import { P15B1, Right } from './style';
 
 const postAdopted = () => {
+  
+}
+
+const onSubmit = () => {
 
 }
 
-export const CockflowCommentAdd = ( { item }:any) => {
+interface newArrType {
+  content: string
+}
+
+// const addMoreComments = <T extends Array<newArrType>>(arr: T[]): void => {
+//   console.log(arr);
+//   return 
+// }
+
+export const CockflowCommentAdd = ({ item }: any) => {
+    const { register, handleSubmit, reset } = useForm();
+
+    const gets = async (data: any) => {
+      await axios.post('http://localhost:8000/api/cockflow/16/comments/63a5b1e01baa03436d5214d6', data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    const onSubmit = (data: any) => {
+      alert(JSON.stringify(data));
+      gets(data);
+      reset();
+    };
+  
     const [subComment, setSubComment] = useState(false)
+    const [moreComments, setMoreComments] = useState([])
+
+    useEffect(() => {
+      if (item.subComments.length > 0) {
+        const contArr = item.subComments.map((items: any) => items.content)
+        setMoreComments(contArr)
+      }
+    },[item])
 
     return (
-        <P15B1 key="추가하기ㅣㅣ">
-            <Comment2>
-            {item.content}
-            </Comment2>
+        <P15B1 key={item._id}>
+            <Comment2 readOnly={true}>{item.content}</Comment2>
             <Right>
-            <Button variant="outlined" onClick={() => {
-                if (subComment) {
-                setSubComment(false)
-                return;
-                }
-                setSubComment(true)
-                return;
-            }}>댓글달기</Button>&nbsp;&nbsp;
-            <Button variant="contained" onClick={postAdopted}>채택하기</Button>
+              <Button variant="outlined" onClick={() => {
+                  if (subComment) {
+                  setSubComment(false)
+                  return;
+                  }
+                  setSubComment(true)
+                  return;
+              }}>댓글달기</Button>&nbsp;&nbsp;
+              <Button variant="contained" onClick={postAdopted}>채택하기</Button>
             </Right>
             {
-            subComment
+              subComment
                 ?
-                <>
-                  <SubComments>
-                    <SubTextarea name="" value="test test" onChange={()=>{}} />
-                    <Button2 variant="contained">등록하기</Button2>
-                  </SubComments>
-                </>
+                <SubComments
+                  onSubmit={handleSubmit(onSubmit)}>
+                  <SubTextarea
+                    {...register("content")}
+                    placeholder="대댓글을 입력해주세요"
+                  />
+                  <Button2
+                    type="submit"
+                    variant="contained">
+                    등록하기
+                  </Button2>
+                </SubComments>
                 : null
             }
+            <P15B1>
+              {
+                moreComments.map(co => <CockflowMoreComment content={ co } />)
+              }
+            </P15B1>
         </P15B1>
     )
 }
 
-const Comment2 = styled.div`
+const Comment2 = styled.textarea`
+  width: 100%;
   padding: 15px;
   line-height: 1.8;
+  border: none;
+  resize: none;
 `;
 
-const SubComments = styled.div`
+const SubComments = styled.form`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 90%;
   height: 120px;
+  margin: 0 auto;
   &::before {
     display: block;
     content: '';
@@ -77,9 +133,9 @@ const SubComments = styled.div`
   }
 `
 
-const SubTextarea = styled.textarea`
+const SubTextarea = styled.input`
   position: relative;
-  width: 75%;
+  width: 70%;
   height: 90px;
   margin-right: 13px;
   padding: 16.5px 14px;

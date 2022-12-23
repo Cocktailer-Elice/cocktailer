@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
 
-const gets = async (data: any) => {
-    await axios.post('http://localhost:8000/api/cockflow', data)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-  
 export const CockflowGetPost = () => {
+    const gets = async (data: any) => {
+      await axios.post('http://localhost:8000/api/cockflow', data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = (data: any) => {
       alert(JSON.stringify(data));
@@ -25,7 +25,6 @@ export const CockflowGetPost = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CockflowPostBox>
           <InputBox
-            type="text"
             {...register("title")}
             readOnly={false}
             placeholder="질문 제목을 입력해주세요" />
