@@ -3,12 +3,18 @@ import CloseButton from '@mui/icons-material/Close';
 
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
+import { loginChecker } from './../../../utils/loginChecker';
 
 interface DrawerProps {
   toggleDrawer: () => void;
 }
 
 export const Drawer = ({ toggleDrawer }: DrawerProps) => {
+  const isLoggedIn = loginChecker();
+
+  console.log('isLoggedIn');
+  console.log(isLoggedIn);
+
   return (
     <>
       <Dimmed onClick={toggleDrawer} />
@@ -16,16 +22,33 @@ export const Drawer = ({ toggleDrawer }: DrawerProps) => {
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              <DrawerUserPageButton
-                pageName="로그인"
-                link="/login"
-                toggleDrawer={toggleDrawer}
-              />
-              <DrawerUserPageButton
-                pageName="회원가입"
-                link="/join"
-                toggleDrawer={toggleDrawer}
-              />
+              {isLoggedIn ? (
+                <>
+                  <DrawerUserPageButton
+                    pageName="마이페이지"
+                    link="/mypage"
+                    toggleDrawer={toggleDrawer}
+                  />
+                  <DrawerUserPageButton
+                    pageName="로그아웃"
+                    link="/logout"
+                    toggleDrawer={toggleDrawer}
+                  />
+                </>
+              ) : (
+                <>
+                  <DrawerUserPageButton
+                    pageName="로그인"
+                    link="/login"
+                    toggleDrawer={toggleDrawer}
+                  />
+                  <DrawerUserPageButton
+                    pageName="회원가입"
+                    link="/join"
+                    toggleDrawer={toggleDrawer}
+                  />
+                </>
+              )}
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
