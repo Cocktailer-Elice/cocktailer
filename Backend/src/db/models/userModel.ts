@@ -1,45 +1,62 @@
-import { IUser, UserInfo } from '../types';
+import {
+  IUserMongoModel,
+  IUserModel,
+  FindOneFilter,
+  UpdateOneFilter,
+} from '../types';
+import { UserInfo } from '../../services/types';
+import { IUser } from '../types';
 import User from '../schemas/userSchema';
+import { userQueries } from '../queries/userQuery';
 
-interface IUserModel {
-  create(userInfo: UserInfo): Promise<IUser>;
-  findAll(): Promise<IUser[]>;
-  findById(userId: string): Promise<IUser | null>;
-  checkEmailDuplicate(email: string): Promise<number>;
+export class UserMongoModel implements IUserMongoModel {
+  public create = async (userInfo: UserInfo): Promise<IUser> => {
+    const newUser = await User.create(userInfo);
+    return newUser;
+  };
+
+  public getPosts = async (userId: number) => {
+    const users: IUser[] = await User.aggregate(userQueries.findById(userId));
+    return users;
+  };
+
+  public findById = async (userId: number): Promise<IUser | null> => {
+    const filter = { id: userId };
+    const projection = '-_id -__v';
+    const user = await User.findOne(filter, projection);
+    return user;
+  };
+
+  public findByFilter = async (
+    filter: FindOneFilter,
+  ): Promise<IUser | null> => {
+    const foundUser = await User.findOne(filter);
+    return foundUser;
+  };
+
+  public update = async (filter: FindOneFilter, update: UpdateOneFilter) => {
+    const result = await User.updateOne(filter, update);
+    return result;
+  };
+
+  public softDelete = async (
+    filter: FindOneFilter,
+    update: UpdateOneFilter,
+  ) => {
+    const result = await User.updateOne(filter, update);
+    return result;
+  };
+
+  public checkDuplicate = async (filter: FindOneFilter): Promise<boolean> => {
+    const result = await User.findOne(filter).countDocuments();
+    return result ? true : false;
+  };
 }
 
 export class UserModel implements IUserModel {
-  async create(userInfo: UserInfo): Promise<IUser> {
-    const newUser = await User.create(userInfo);
-    return newUser;
-  }
-
-  async findAll(): Promise<IUser[]> {
-    const users: IUser[] = await User.find({}, '-_id -__v');
-    return users;
-  }
-
-  async findById(userId: string): Promise<IUser | null> {
-    const user = await User.findOne({ id: userId }, '-_id -__v');
-    return user;
-  }
-
-  async findByEmail(email: string): Promise<IUser | null> {
-    const user = await User.findOne({ email }, '-_id -__v');
-    return user;
-  }
-
-  async checkEmailDuplicate(email: string): Promise<number> {
-    const result = await User.find({ email }).countDocuments();
-    return result;
-  }
-
-  async checkNicknameDuplicate(nickname: string): Promise<number> {
-    const result = await User.find({ nickname }).countDocuments();
-    return result;
-  }
+  Mongo = new UserMongoModel();
 }
 
 const userModel = new UserModel();
 
-export { IUserModel, userModel };
+export { userModel };

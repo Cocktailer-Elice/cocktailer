@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import logger from './configs/winston';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+
+import logger from './winston';
 
 import globalRouter from './routers';
 import {
@@ -22,9 +24,9 @@ class Server {
   private setMiddleware() {
     this.app.use(
       cors({
-        // 추후 프론트엔드 URL이 결정되면 세부 설정
-        // origin: `${process.env.URL}:${process.env.PORT}`,
-        // credentials: true,
+        origin: true,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'HEAD'],
       }),
     );
 
@@ -33,14 +35,14 @@ class Server {
       next();
     });
 
-    //* json middleware
+    this.app.use(morgan('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
   }
 
   private setRouter() {
-    this.app.use('/', globalRouter);
+    this.app.use('/api', globalRouter);
     this.app.use(errorLogger);
     this.app.use(errorHandler);
     this.app.use(notFoundErrorHandler);

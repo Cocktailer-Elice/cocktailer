@@ -1,19 +1,7 @@
 import React from 'react';
-import ApplyBtn from '../../components/Cockcipe/Apply/ApplyBtn';
+import { ApplyButton } from '../../components/Cockcipe/Apply/ApplyButton';
+import { ApplyContainer } from '../../containers/Cockcipe/Apply/ApplyContainer';
 
-import InputCockContainer from '../../containers/Cockcipe/Apply/InputCockContainer';
-import InputImgContainer from '../../containers/Cockcipe/Apply/InputImgContainer';
-import InputRecipeContainer from '../../containers/Cockcipe/Apply/InputRecipeContainer';
-
-const CockApplyPage = () => {
-  return (
-    <div>
-      <InputImgContainer />
-      <InputCockContainer />
-      <InputRecipeContainer />
-      <ApplyBtn />
-    </div>
-  );
+export const CockApplyPage = () => {
+  return <ApplyContainer />;
 };
-
-export default CockApplyPage;

@@ -15,7 +15,8 @@ const UserSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
+      index: true,
+      unique: false,
     },
     password: {
       type: String,
@@ -32,10 +33,20 @@ const UserSchema: Schema = new Schema(
     tel: {
       type: String,
       required: true,
+      index: true,
+      unique: false,
     },
     avatarUrl: {
       type: String,
-      default: '{수정예정}',
+      default: '1671798714000',
+    },
+    points: {
+      type: Number,
+      default: 0,
+    },
+    currentPoints: {
+      type: Number,
+      default: 0,
     },
     isAdmin: {
       type: Boolean,
@@ -49,16 +60,16 @@ const UserSchema: Schema = new Schema(
       type: Date,
     },
   },
-  { collection: 'users', timestamps: true },
+  { collection: 'users', timestamps: true, versionKey: false },
 );
 
 UserSchema.virtual('userGetResDto').get(function (this: User) {
   return {
+    id: this.id,
     name: this.name,
     email: this.email,
     nickname: this.nickname,
-    avatarUrl: `https://profiles.s3.ap-northeast-2.amazonaws.com/${this.avatarUrl}`,
-    isAdmin: this.isAdmin,
+    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
     isBartender: this.isBartender,
   };
 });
