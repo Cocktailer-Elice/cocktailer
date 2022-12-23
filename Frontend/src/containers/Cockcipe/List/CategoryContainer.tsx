@@ -15,23 +15,49 @@ interface Data {
 
 // TODO : 카테고리별 아이템 출력하기
 export const CategoryContainer = () => {
-  const [official, setOfficial] = useState<boolean>();
+  const [official, setOfficial] = useState<boolean>(true);
+  const [nonOfficial, setNonOfficial] = useState<boolean>(true);
   const url = window.location.pathname;
   const categoryId = url.split('/')[3];
 
   const [categoryList, setCategoryList] = useState<Data[]>();
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/cocktails/?category=${categoryId}`)
-      .then((res) => {
-        console.log(res.data.categoryLists);
-        setCategoryList(res.data.categoryLists);
-      });
-  }, []);
+    if (official && nonOfficial) {
+      axios
+        .get(`http://localhost:8000/api/cocktails/?category=${categoryId}`)
+        .then((res) => {
+          console.log(res.data.categoryLists);
+          setCategoryList(res.data.categoryLists);
+        });
+    } else if (official && !nonOfficial) {
+      axios
+        .get(
+          `http://localhost:8000/api/cocktails/?category=${categoryId}&official=true`,
+        )
+        .then((res) => {
+          console.log(res.data.categoryLists);
+          setCategoryList(res.data.categoryLists);
+        });
+    } else if (!official && nonOfficial) {
+      axios
+        .get(
+          `http://localhost:8000/api/cocktails/?category=${categoryId}&official=false`,
+        )
+        .then((res) => {
+          console.log(res.data.categoryLists);
+          setCategoryList(res.data.categoryLists);
+        });
+    }
+  }, [official, nonOfficial]);
   return (
     <>
       <CategoryHeader>{categoryId}</CategoryHeader>
-      <SearchCocktailInput />
+      <SearchCocktailInput
+        official={official}
+        setOfficial={setOfficial}
+        nonOfficial={nonOfficial}
+        setNonOfficial={setNonOfficial}
+      />
       <Box sx={{ flexGrow: 1 }}>
         <Grid
           container

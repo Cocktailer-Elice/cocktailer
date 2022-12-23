@@ -5,17 +5,40 @@ import {
   Checkbox,
 } from '@mui/material';
 import styled from 'styled-components';
-import { useState } from 'react';
 
-export const SearchCocktailInput = () => {
+interface Props {
+  official: boolean;
+  setOfficial: any;
+  nonOfficial: boolean;
+  setNonOfficial: any;
+}
+
+export const SearchCocktailInput = ({
+  official,
+  setOfficial,
+  nonOfficial,
+  setNonOfficial,
+}: Props) => {
   return (
     <Search>
       <FormControlLabel
-        control={<Checkbox defaultChecked />}
+        control={
+          <Checkbox
+            defaultChecked
+            size="small"
+            onChange={() => setOfficial(!official)}
+          />
+        }
         label="official"
       />
       <FormControlLabel
-        control={<Checkbox defaultChecked />}
+        control={
+          <Checkbox
+            defaultChecked
+            size="small"
+            onChange={() => setNonOfficial(!nonOfficial)}
+          />
+        }
         label="not-official"
       />
       <TextField
