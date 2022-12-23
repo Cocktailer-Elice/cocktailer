@@ -28,6 +28,7 @@ export const ListContainer = () => {
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/cocktails/lists').then((res) => {
+      console.log(res.data);
       console.log(res.data.lists[0]);
       setDryList(res.data.lists[0]['dry']);
       setRefreshList(res.data.lists[0]['refreshing']);
