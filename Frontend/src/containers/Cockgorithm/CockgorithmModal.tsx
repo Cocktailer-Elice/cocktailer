@@ -5,6 +5,7 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import axios from 'axios';
 
 interface CockgorithmModalProps {
   toggleModal: () => void;
@@ -20,18 +21,18 @@ interface IFilter {
 }
 
 export interface ICockgorithmCocktail {
-  id: string;
+  id: number;
   name: string;
   img: string;
-  degree: string;
+  degree: number;
   content: string;
 }
 
 const cocktailMockData = {
-  id: '1',
+  id: 1,
   name: '마티니 블루',
   img: '칵테일 이미지 URL',
-  degree: '10',
+  degree: 1,
   content: '마티니 블루는 주절주절',
 };
 
@@ -56,17 +57,18 @@ export const CockgorithmModal = ({
       // 로딩 시작
       setLoading(true);
 
-      // 유저가 선택한 응답들을 서버로 전달
       console.log('유저 응답', filters);
 
-      // 서버로부터 받아온 cocktail을 받아옴
-      const cocktail = '마티니 블루';
+      setTimeout(async () => {
+        const response = await axios.post(
+          'http://localhost:8000/api/cocktails/cockgorithm',
+          filters,
+        );
 
-      // 받아온 cocktail을 state로 관리
-      setCocktailInfo(cocktailMockData);
+        const fetchedCocktailInfo = response.data.data[0];
 
-      // 2초 후 로딩 종료
-      setTimeout(() => {
+        setCocktailInfo(fetchedCocktailInfo);
+
         setLoading(false);
       }, 2000);
     }
