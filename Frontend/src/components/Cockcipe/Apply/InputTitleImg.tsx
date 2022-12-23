@@ -31,6 +31,7 @@ export const InputTitleImg = ({ setImg }: any) => {
               headers: {
                 'Content-Type': file.type,
               },
+              withCredentials: false,
             })
             .then((res) => console.log(res.status));
         });

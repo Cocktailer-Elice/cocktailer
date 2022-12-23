@@ -22,7 +22,7 @@ export const SearchCocktailInput = () => {
         id="standard-basic"
         placeholder="search..."
         variant="standard"
-        style={{}}
+        style={{ width: '100px', marginRight: '10px' }}
       />
     </Search>
   );

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { ICocktail } from '../../../containers/Cockcipe/Detail/DetailContainer';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import axios from 'axios';
 // 칵테일 이미지, 명, 도수, 맛 이런거 표시해주기
 type CockProps = {
   cocktail: ICocktail;
@@ -19,18 +20,17 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
     }
     totalCnt += value.length;
   }
-  for (let key in cocktail.ratio.drink) {
-    const value = cocktail.ratio.drink[key];
+  for (let key in cocktail.ratio.ingredient) {
+    const value = cocktail.ratio.ingredient[key];
     for (let temp in value) {
       totalIngred.push(value[temp]);
     }
     totalCnt += value.length;
   }
-  const totalCapacity = totalIngred
-    .flatMap((item) => Object.values(item))
-    .reduce((acc, cur: any) => acc + cur, 0);
+  // const totalCapacity = totalIngred
+  //   .flatMap((item) => Object.values(item))
+  //   .reduce((acc, cur: any) => acc + cur, 0);
 
-  console.log(totalCnt, totalIngred, totalCapacity);
   let data = {
     labels: totalIngred.map((item) => Object.keys(item)),
     datasets: [
@@ -48,6 +48,19 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
       },
     ],
   };
+
+  const [like, setLike] = useState<number>(cocktail.likes);
+  const [isLike, setIsLike] = useState<boolean>(false);
+  const handleLike = () => {
+    setIsLike(!isLike);
+
+    if (!isLike) {
+      setLike(like + 1);
+    } else {
+      setLike(like - 1);
+    }
+    // axios.post('http://localhost');
+  };
   return (
     <>
       <Name>{cocktail.name}</Name>
@@ -62,10 +75,10 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
 
       <Content>{cocktail.content}</Content>
       <Pie data={data} />
-      <>
-        <LikeNumber>{cocktail.likes}</LikeNumber>
-        <ThumbUpIcon />
-      </>
+      <LikeContainer>
+        <LikeNumber>{like}</LikeNumber>
+        <Like onClick={handleLike}>{isLike ? 'isGood' : 'Good'}</Like>
+      </LikeContainer>
     </>
   );
 };
@@ -90,8 +103,21 @@ const FlavorTag = styled.div`
   padding: 5px;
   margin: 5px;
 `;
+const LikeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 const LikeNumber = styled.div`
   font-size: 15px;
+  margin-right: 10px;
+`;
+const Like = styled.div`
+  font-size: 30px;
+  border: 1px solid black;
+
+  &:hover {
+    background-color: aliceblue;
+  }
 `;
 const Content = styled.div`
   font-size: 20px;
