@@ -6,19 +6,40 @@ import { AppError, errorNames } from '../routers/middlewares';
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
 
-  public async createCocktail(cocktailCreateDto: any): Promise<number> {
-    console.log(Object.keys(cocktailCreateDto.ratio.alcohol));
-    console.log(Object.keys(cocktailCreateDto.ratio.ingredient));
+  public async createCocktail(
+    cocktailCreateDto: CocktailServiceType,
+  ): Promise<number> {
+    const name: string[] = [];
+    const brand: string[] = [];
+    const volume: number[] = [];
+
+    const alcohol: object = {
+      name: name,
+      brand: brand,
+      volume: volume,
+    };
+
+    const ingredient: any = {
+      brand: brand,
+      volume: volume,
+    };
+
     const key1 = Object.keys(cocktailCreateDto.ratio.alcohol);
 
-    const key2 = key1.map((e) => {
-      console.log(e);
-      if (String(e) in cocktailCreateDto.ratio.alcohol) {
-        console.log(cocktailCreateDto.ratio.alcohol[e]);
-      }
+    const key2 = key1.map((e1) => {
+      ingredient.name = e1;
+      console.log(e1);
+      const obj1 = cocktailCreateDto.ratio.alcohol[e1];
+      console.log(obj1);
+      obj1.map((e2, idx2) => {
+        ingredient.brand = String(Object.keys(e2));
+        ingredient.volume = Number(Object.values(e2));
+        console.log(e2);
+      });
     });
 
-    const refromData = {};
+    console.log(alcohol);
+    console.log(ingredient);
 
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,

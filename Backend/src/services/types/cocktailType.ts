@@ -1,5 +1,21 @@
 //service
 
+type Ratio = {
+  alcohol: {
+    [anykey: string]: [
+      {
+        [anykey: string]: number;
+      },
+    ];
+  };
+  ingredient: {
+    [anykey: string]: [
+      {
+        [anykey: string]: number;
+      },
+    ];
+  };
+};
 export interface CocktailServiceType {
   owner: number;
   category: string;
@@ -8,9 +24,6 @@ export interface CocktailServiceType {
   flavor: string;
   degree: number;
   img: string;
-  ratio: {
-    alcohol: object;
-    ingredient: object;
-  };
+  ratio: Ratio;
   content: string;
 }

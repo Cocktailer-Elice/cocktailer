@@ -9,8 +9,20 @@ export interface CocktailCreateReqData {
   degree: number;
   img: string;
   ratio: {
-    alcohol: object;
-    ingredient: object;
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
   };
   content: string;
 }
