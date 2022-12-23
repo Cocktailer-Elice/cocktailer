@@ -1,28 +1,41 @@
 import styled from 'styled-components';
+
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
 import { useState } from 'react';
+import gameDatas from './gameDatas.json';
+
+export interface IGame {
+  gameTitle: string;
+  message: string;
+  questions: {
+    question: string;
+    filterName: string;
+    options: { optionName: string; filterValue: string }[];
+  }[];
+}
 
 export const CockgorithmPage = () => {
   const [modal, setModal] = useState(false);
-  const [seletedGame, setSelectedGame] = useState('');
+  const [seletedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
 
   const toggleModal = () => {
     setModal((curr) => !curr);
   };
 
-  const changeSelectedGame = (gameTitle: string) => {
-    setSelectedGame(gameTitle);
+  const changeSelectedGame = (game: IGame) => {
+    setSelectedGame(game);
   };
 
   return (
     <Container>
       <CockgorithmGameList
         toggleModal={toggleModal}
+        gameDatas={gameDatas}
         changeSelectedGame={changeSelectedGame}
       />
       {modal ? (
-        <CockgorithmModal gameTitle={seletedGame} toggleModal={toggleModal} />
+        <CockgorithmModal toggleModal={toggleModal} seletedGame={seletedGame} />
       ) : (
         <></>
       )}
