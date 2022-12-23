@@ -43,7 +43,7 @@ class AuthController {
     const foundUser = await this.authService.login(userData);
     const tokenData = createToken(foundUser);
     const cookie = createCookie(tokenData);
-    res.setHeader('Set-Cookie', cookie);
+    res.cookie('Authorization', cookie);
     res.status(200).json(foundUser.userGetResDto);
   };
 

@@ -25,5 +25,5 @@ export const createToken = (user: IUser): Token => {
 export const createCookie = (tokenData: Token): string => {
   const { token, expiresIn } = tokenData;
   // HTTPS 적용 후 secure 옵션도 설정할 것! secure;
-  return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn}; path=/`;
+  return `${token}`;
 };
