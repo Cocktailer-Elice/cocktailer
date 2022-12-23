@@ -1,10 +1,11 @@
-export interface CommentCreateDto {
+export interface SubCommentInfo {
   owner: number;
   cockflowId: string;
   content: string;
+  parentCommentId: string;
 }
 
-export interface CommentDto {
+export interface CommentInfo {
   owner: number;
   cockflowId: string;
   content: string;
