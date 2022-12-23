@@ -11,6 +11,14 @@ class AuthService {
 
   public signup = async (userCreateData: UserCreateData) => {
     const { email, password, alcohol, tel } = userCreateData;
+    // const isTelVerifed = await redisCache.GET(`${tel}_validated`);
+    // if (isTelVerifed !== '1') {
+    //   throw new AppError(
+    //     errorNames.authenticationError,
+    //     401,
+    //     '인증 후 1시간 초과',
+    //   );
+    // }
 
     await this.checkEmailDuplicate(email);
     await this.checkTelDuplicate(tel);
@@ -22,6 +30,7 @@ class AuthService {
       isNicknameDuplicate = await this.checkNicknameDuplicate(nickname);
     }
     const hashedPassword = await hash(password, 12);
+
     const newUser = await this.userModel.create({
       ...userCreateData,
       password: hashedPassword,
@@ -52,11 +61,10 @@ class AuthService {
     }
     const code = createRandomNumber(6, false) as string;
     const response = await sendAuthCodeMessage(tel, code);
-
     if (response.status !== 202) {
       throw new AppError(errorNames.businessError, 500, '문자 전송 실패');
     }
-    await redisCache.SETEX(tel, 300, code);
+    await redisCache.SETEX(tel, 180, code);
     return;
   };
 
@@ -67,6 +75,7 @@ class AuthService {
     }
     if (matchedCode === code) {
       await redisCache.del(tel);
+      await redisCache.SETEX(`${tel}_validated`, 3600, '1');
     }
     return;
   };
