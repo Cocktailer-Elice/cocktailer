@@ -8,89 +8,77 @@ import { P15B1, Right } from './style';
 
 const postAdopted = () => {
   
-}
+};
 
-const onSubmit = () => {
+export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
+  const { register, handleSubmit, reset } = useForm();
 
-}
-
-interface newArrType {
-  content: string
-}
-
-// const addMoreComments = <T extends Array<newArrType>>(arr: T[]): void => {
-//   console.log(arr);
-//   return 
-// }
-
-export const CockflowCommentAdd = ({ item }: any) => {
-    const { register, handleSubmit, reset } = useForm();
-
-    const gets = async (data: any) => {
-      await axios.post('http://localhost:8000/api/cockflow/16/comments/63a5b1e01baa03436d5214d6', data)
+  const gets = async (data: any) => {
+    await axios.post(`http://localhost:8000/api/cockflow/${cockflowId}/comments/${commentId}`, data)
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-    }
+  };
 
-    const onSubmit = (data: any) => {
-      alert(JSON.stringify(data));
-      gets(data);
-      reset();
-    };
+  const onSubmit = (data: any) => {
+    alert(JSON.stringify(data));
+    gets(data);
+    reset();
+  };
   
-    const [subComment, setSubComment] = useState(false)
-    const [moreComments, setMoreComments] = useState([])
+  const [subComment, setSubComment] = useState(false);
+  const [moreComments, setMoreComments] = useState([]);
 
-    useEffect(() => {
-      if (item.subComments.length > 0) {
-        const contArr = item.subComments.map((items: any) => items.content)
-        setMoreComments(contArr)
+  useEffect(() => {
+    if (item.subComments.length > 0) {
+      const contArr = item.subComments.map((items: any) => items.content)
+      setMoreComments(contArr)
+      console.log(contArr)
+    };
+  }, [item]);
+
+  return (
+    <P15B1 key={item._id}>
+      <Comment2 value={item.content} onChange={()=>{}} readOnly={true}></Comment2>
+      <Right>
+        <Button variant="outlined" onClick={() => {
+          if (subComment) {
+            setSubComment(false)
+            return;
+          };
+          setSubComment(true)
+          return;
+        }}>댓글달기</Button>&nbsp;&nbsp;
+        <Button variant="contained" onClick={postAdopted}>채택하기</Button>
+      </Right>
+      {
+        subComment
+          ?
+          <SubComments
+            onSubmit={handleSubmit(onSubmit)}>
+            <SubTextarea
+              {...register("content")}
+              placeholder="대댓글을 입력해주세요"
+            />
+            <Button2
+              type="submit"
+              variant="contained">
+              등록하기
+            </Button2>
+          </SubComments>
+          : null
       }
-    },[item])
-
-    return (
-        <P15B1 key={item._id}>
-            <Comment2 readOnly={true}>{item.content}</Comment2>
-            <Right>
-              <Button variant="outlined" onClick={() => {
-                  if (subComment) {
-                  setSubComment(false)
-                  return;
-                  }
-                  setSubComment(true)
-                  return;
-              }}>댓글달기</Button>&nbsp;&nbsp;
-              <Button variant="contained" onClick={postAdopted}>채택하기</Button>
-            </Right>
-            {
-              subComment
-                ?
-                <SubComments
-                  onSubmit={handleSubmit(onSubmit)}>
-                  <SubTextarea
-                    {...register("content")}
-                    placeholder="대댓글을 입력해주세요"
-                  />
-                  <Button2
-                    type="submit"
-                    variant="contained">
-                    등록하기
-                  </Button2>
-                </SubComments>
-                : null
-            }
-            <P15B1>
-              {
-                moreComments.map(co => <CockflowMoreComment content={ co } />)
-              }
-            </P15B1>
-        </P15B1>
-    )
-}
+      <P15B1>
+        {
+          moreComments.map((co, index) => <CockflowMoreComment content={co} key={index} />)
+        }
+      </P15B1>
+    </P15B1>
+  );
+};
 
 const Comment2 = styled.textarea`
   width: 100%;
@@ -131,7 +119,7 @@ const SubComments = styled.form`
     background: #ddd;
     border-radius: 10px;
   }
-`
+`;
 
 const SubTextarea = styled.input`
   position: relative;
@@ -143,7 +131,7 @@ const SubTextarea = styled.input`
   resize: none;
   background: #fff;
   z-index: 1;
-`
+`;
 
 const Button2 = styled(Button)`
   position: relative;
@@ -157,4 +145,4 @@ const Button2 = styled(Button)`
     background: #7b7b7b;
     color: #fff;
   }
-`
+`;
