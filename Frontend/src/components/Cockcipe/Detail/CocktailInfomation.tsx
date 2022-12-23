@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { ICocktail } from '../../../containers/Cockcipe/Detail/DetailContainer';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import axios from 'axios';
-// 칵테일 이미지, 명, 도수, 맛 이런거 표시해주기
+
 type CockProps = {
   cocktail: ICocktail;
 };
 ChartJS.register(ArcElement, Tooltip, Legend);
+
 export const CocktailInfomation = ({ cocktail }: CockProps) => {
   let totalCnt = 0;
   let totalIngred = [];
@@ -27,9 +26,6 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
     }
     totalCnt += value.length;
   }
-  // const totalCapacity = totalIngred
-  //   .flatMap((item) => Object.values(item))
-  //   .reduce((acc, cur: any) => acc + cur, 0);
 
   let data = {
     labels: totalIngred.map((item) => Object.keys(item)),
@@ -59,7 +55,6 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
     } else {
       setLike(like - 1);
     }
-    // axios.post('http://localhost');
   };
   return (
     <>

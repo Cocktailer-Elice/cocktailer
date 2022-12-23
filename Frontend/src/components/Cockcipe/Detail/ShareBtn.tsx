@@ -32,4 +32,5 @@ const KakaoBtn = styled.div`
   color: #edf2ff;
   padding: 0.2rem;
   box-sizing: border-box;
+  margin: 15px 0;
 `;

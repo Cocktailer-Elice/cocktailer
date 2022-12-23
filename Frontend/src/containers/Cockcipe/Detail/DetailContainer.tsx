@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
+import { ModifyButton } from '../../../components/Cockcipe/Detail/ModifyButton';
 import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
 
 interface Recipe {
@@ -53,6 +54,7 @@ export const DetailContainer = () => {
           id={cocktailInfo.id}
           content={cocktailInfo.content}
         />
+        <ModifyButton id={cocktailInfo.id} />
       </ContentContainer>
     </>
   );
