@@ -32,5 +32,5 @@ export interface ICommentMongoModel {
     update: CommentUpdateOneFilter,
   ): Promise<UpdateWriteOpResult>;
   updateAdopted(commentId: string): Promise<UpdateWriteOpResult>;
-  deleteById(commentId: string): Promise<AnyExpression>;
+  delete(commentId: string): Promise<AnyExpression>;
 }

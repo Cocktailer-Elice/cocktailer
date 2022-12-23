@@ -39,11 +39,11 @@ class AuthController {
       throw new AppError(errorNames.businessError, 400, '비정상적 접근');
     }
     const userData: LoginReqData = req.body;
-    const foundUser = await this.authService.login(userData);
-    const tokenData = createToken(foundUser);
+    const user = await this.authService.login(userData);
+    const tokenData = createToken(user);
     const cookie = createCookie(tokenData);
     res.setHeader('Set-Cookie', cookie);
-    res.status(200).json(foundUser.userGetResDto);
+    res.status(200).json(user.userGetResDto);
   };
 
   public logout = async (req: Req, res: Res) => {

@@ -13,12 +13,6 @@ class CommentController {
     res.status(201).json(newComment);
   };
 
-  public getCommentsByUserId = async (req: Req, res: Res) => {
-    const { userId } = req.user;
-    const comments = await this.commentService.getCommentsByUserId(userId);
-    res.status(200).json(comments);
-  };
-
   public updateComment = async (req: Req, res: Res) => {
     const { content } = req.body;
     checkReqBody(content);

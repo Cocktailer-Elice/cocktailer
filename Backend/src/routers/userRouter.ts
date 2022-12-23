@@ -14,9 +14,5 @@ router.patch('/', asyncHandler(userController.changePassword));
 router.delete('/', asyncHandler(userController.softDeleteUser));
 router.patch('/profile', asyncHandler(userController.updateUserProfile));
 router.post('/verify-user', asyncHandler(userController.verifyUser));
-router.post(
-  '/validate-password',
-  asyncHandler(userController.validatePassword),
-);
 
 export default router;

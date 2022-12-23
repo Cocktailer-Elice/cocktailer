@@ -12,10 +12,6 @@ class CommentService {
     return this.commentModel.create(commentInfo);
   };
 
-  public getCommentsByUserId = async (userId: string) => {
-    return this.commentModel.findByUserId(userId);
-  };
-
   public updateComment = async (
     commentId: string,
     content: string,
@@ -80,9 +76,7 @@ class CommentService {
     if (comment.owner !== userId)
       throw new AppError(errorNames.authorizationError, 403, '권한 없음');
 
-    const result = await this.commentModel.deleteById(commentId);
-    if (!result.acknowledged || !result.deletedCount)
-      throw new AppError(errorNames.databaseError, 500, '서버 에러');
+    await this.commentModel.delete(commentId);
     return;
   };
 
