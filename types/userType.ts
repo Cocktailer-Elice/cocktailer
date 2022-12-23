@@ -15,7 +15,7 @@ export interface User {
 export interface MyPostsResData {
   comments: MyComment[];
   cockflows: MyCockflow[];
-  cockcipe: MyCockcipe[];
+  cocktails: MyCockcipe[];
 }
 
 // 서버에 회원가입을 위해 전송할 데이터

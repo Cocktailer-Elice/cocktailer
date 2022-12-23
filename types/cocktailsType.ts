@@ -26,12 +26,13 @@ export interface CocktailGetResDto {
 }
 
 export interface MyCockcipe {
+  id: number;
   category: string;
   name: string;
   flavor: [string];
   degree: number;
   img: string;
-  ration: object;
+  ratio: object;
   content: string;
   likes: number;
   createdAt: number;

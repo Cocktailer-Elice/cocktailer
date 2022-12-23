@@ -29,6 +29,7 @@ export interface CockflowGetResData {
 }
 
 export interface MyCockflow {
+  id: number;
   title: string;
   content: string;
   createdAt: Date;

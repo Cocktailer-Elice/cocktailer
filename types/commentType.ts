@@ -22,6 +22,7 @@ export interface Comments {
 }
 
 export interface MyComment {
+  _id: string;
   owner: number;
   content: string;
   isAdopted?: boolean;
