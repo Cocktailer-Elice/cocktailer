@@ -20,7 +20,18 @@ class CocktailController {
     res.status(200).json({ lists: lists });
   };
 
+  public findByUserId = async (req: Req, res: Res) => {
+    const userId = Number(req.params.userId);
+
+    console.log(req.params.userId);
+
+    const lists = await this.cocktailService.findByUserId(userId);
+
+    res.status(200).json({ lists: lists });
+  };
+
   public findCocktailId = async (req: Req, res: Res) => {
+    console.log(req.params.id);
     const id = Number(req.params.id);
 
     const cocktail = await this.cocktailService.findCocktailId(id);
@@ -52,8 +63,14 @@ class CocktailController {
     res.status(200).json({ categoryLists: categoryLists });
   };
 
+  ////////////////////////////////
+  //       목데이터 생성기       //
+  ////////////////////////////////
+
   public makeMockData = async (req: Req, res: Res) => {
-    const result: string = await this.cocktailService.makeMockData();
+    console.log('생성기 시작 _controller');
+    const result: any = await this.cocktailService.makeMockData();
+    res.status(200).json({ result: result });
   };
 }
 

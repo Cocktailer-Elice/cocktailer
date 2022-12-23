@@ -37,6 +37,12 @@ class CocktailService {
     return data;
   }
 
+  public async findByUserId(userId: number) {
+    const data = await this.cocktailModel.findByUserId(userId);
+
+    return data;
+  }
+
   public async findCocktailId(id: number) {
     const data = await this.cocktailModel.findCocktailId(id);
 
@@ -71,8 +77,14 @@ class CocktailService {
     return data;
   }
 
+  ////////////////////////////////
+  //       목데이터 생성기       //
+  ////////////////////////////////
+
   public async makeMockData() {
-    return '123';
+    console.log('생성기 시작 _service');
+    const result: any = await this.cocktailModel.makeMockData();
+    return result;
   }
 }
 
