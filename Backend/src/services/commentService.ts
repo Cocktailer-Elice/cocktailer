@@ -12,6 +12,11 @@ class CommentService {
     return this.commentModel.create(commentInfo);
   };
 
+  public getMyComments = async (userId: number) => {
+    const comments = await this.commentModel.findByUserId(userId);
+    return comments;
+  };
+
   public updateComment = async (
     commentId: string,
     content: string,

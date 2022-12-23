@@ -18,12 +18,12 @@ class MongoModel implements ICommentMongoModel {
     return newComment;
   }
 
-  public async findByUserId(userId: string): Promise<IComment[]> {
+  public async findByUserId(userId: number): Promise<IComment[]> {
     const filter = { owner: userId };
-    const projection = '-_id -updatedAt';
+    const projection = '-_id -owner -updatedAt';
     const option = { sort: { createdAt: -1 } };
-    const posts: IComment[] = await Comment.find(filter, projection, option);
-    return posts;
+    const comments: IComment[] = await Comment.find(filter, projection, option);
+    return comments;
   }
 
   public async findById(commentId: string): Promise<IComment | null> {

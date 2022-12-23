@@ -25,7 +25,7 @@ export interface CommentUpdateOneFilter {
 
 export interface ICommentMongoModel {
   create(cockflowInfo: CommentInfo | SubCommentInfo): Promise<IComment>;
-  findByUserId(userId: string): Promise<IComment[]>;
+  findByUserId(userId: number): Promise<IComment[]>;
   findById(commentId: string): Promise<IComment | null>;
   update(
     filter: CommentFindOneFilter,

@@ -1,7 +1,7 @@
 import { authAndUserValidator } from './middlewares';
 import { isLoggedIn } from './middlewares/auth/isLoggedIn';
 import { Router } from 'express';
-import { userController } from '../controllers';
+import { commentController, userController } from '../controllers';
 import { asyncHandler } from './middlewares';
 
 const router: Router = Router();
@@ -14,5 +14,6 @@ router.patch('/', asyncHandler(userController.changePassword));
 router.delete('/', asyncHandler(userController.softDeleteUser));
 router.patch('/profile', asyncHandler(userController.updateUserProfile));
 router.post('/verify-user', asyncHandler(userController.verifyUser));
+router.get('/my-comments', asyncHandler(commentController.getMyComments));
 
 export default router;
