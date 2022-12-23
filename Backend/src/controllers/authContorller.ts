@@ -43,7 +43,7 @@ class AuthController {
     const foundUser = await this.authService.login(userData);
     const tokenData = createToken(foundUser);
     const cookie = createCookie(tokenData);
-    res.cookie('Authorization', cookie);
+    res.setHeader('Set-Cookie', cookie);
     res.status(200).json(foundUser.userGetResDto);
   };
 
@@ -65,6 +65,12 @@ class AuthController {
     checkReqBody(tel, code);
     await this.authService.validateAuthCode(tel, code);
     res.sendStatus(204);
+  };
+
+  public verifyToken = async (req: Req, res: Res) => {
+    const id = req.user.userId;
+    const { name, email, nickname, isBartender, avatarUrl } = req.user;
+    res.status(200).json({ id, name, email, nickname, isBartender, avatarUrl });
   };
 }
 

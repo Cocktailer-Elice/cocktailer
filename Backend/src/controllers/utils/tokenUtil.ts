@@ -12,6 +12,7 @@ export const createToken = (user: IUser): Token => {
     nickname: user.nickname,
     isAdmin: user.isAdmin,
     isBartender: user.isBartender,
+    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${user.avatarUrl}`,
   };
   const secretKey: string = ACCESS_KEY as string;
   const expiresIn: string = ACCESS_EXPIRE as string;
@@ -25,5 +26,5 @@ export const createToken = (user: IUser): Token => {
 export const createCookie = (tokenData: Token): string => {
   const { token, expiresIn } = tokenData;
   // HTTPS 적용 후 secure 옵션도 설정할 것! secure;
-  return `${token}`;
+  return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn}; path=/`;
 };

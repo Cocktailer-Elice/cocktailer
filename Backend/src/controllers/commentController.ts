@@ -57,33 +57,6 @@ class CommentController {
     await this.commentService.addSubcomment(commentInfo);
     res.sendStatus(204);
   };
-
-  public updateSubComment = async (req: Req, res: Res) => {
-    const { content } = req.body;
-    checkReqBody(content);
-    const { cockflowId, commentId, subCommentId } = req.params;
-    const { userId } = req.user;
-    await this.commentService.updateSubcomment(
-      +cockflowId,
-      commentId,
-      subCommentId,
-      userId,
-      content,
-    );
-    res.sendStatus(204);
-  };
-
-  public deleteSubComment = async (req: Req, res: Res) => {
-    const { cockflowId, commentId, subCommentId } = req.params;
-    const { userId } = req.user;
-    await this.commentService.deleteSubcomment(
-      +cockflowId,
-      commentId,
-      subCommentId,
-      userId,
-    );
-    res.sendStatus(204);
-  };
 }
 
 const commentController = new CommentController();

@@ -4,6 +4,7 @@ export interface Cookie {
   nickname: string;
   isAdmin: boolean;
   isBartender: boolean;
+  avatarUrl: string;
 }
 
 export interface Token {

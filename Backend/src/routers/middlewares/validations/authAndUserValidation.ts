@@ -10,7 +10,7 @@ const authAndUserSchema = Joi.object({
     ),
   ),
   passwordCheck: Joi.ref('password'),
-  tel: Joi.string().pattern(/^\d{3}\d{3,4}\d{4}$/),
+  tel: Joi.string().pattern(/^(010)\d{3,4}\d{4}$/),
   birthday: Joi.string(),
   alcohol: Joi.string().valid(
     '랜덤',

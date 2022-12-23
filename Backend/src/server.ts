@@ -26,7 +26,7 @@ class Server {
       cors({
         origin: true,
         credentials: true,
-        methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'HEAD'],
       }),
     );
 

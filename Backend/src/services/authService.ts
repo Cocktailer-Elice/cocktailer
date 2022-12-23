@@ -52,11 +52,10 @@ class AuthService {
     }
     const code = createRandomNumber(6, false) as string;
     const response = await sendAuthCodeMessage(tel, code);
-
     if (response.status !== 202) {
       throw new AppError(errorNames.businessError, 500, '문자 전송 실패');
     }
-    await redisCache.SETEX(tel, 300, code);
+    await redisCache.SETEX(tel, 180, code);
     return;
   };
 

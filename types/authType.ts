@@ -3,15 +3,15 @@ export interface LoginReqData {
   password: string;
 }
 
-export interface sendCodeReqData {
+export interface SendCodeReqData {
   tel: string;
 }
 
-export interface validateCodeReqData {
+export interface ValidateCodeReqData {
   tel: string;
   code: string;
 }
 
-export interface checkEmailReqData {
+export interface CheckEmailReqData {
   email: string;
 }
