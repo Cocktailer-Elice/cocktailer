@@ -6,10 +6,19 @@ import { GlobalStyles } from './GlobalStyles';
 import { Header } from './containers/Main/Header/Header';
 import { Router } from './Router';
 import { useEffect } from 'react';
-import { loginRefresh } from './utils/loginRefresh';
+import { loginChecker } from './utils/loginChecker';
+import { useAppDispatch } from './store/store';
+import { userRefresh } from './store/authActions';
 
 export const App = () => {
-  useEffect(() => loginRefresh(), []);
+  const isLoggedIn = loginChecker();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      dispatch(userRefresh());
+    }
+  }, [isLoggedIn]);
   return (
     <AppLayout>
       <Helmet />
