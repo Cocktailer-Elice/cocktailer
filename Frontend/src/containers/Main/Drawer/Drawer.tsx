@@ -3,29 +3,49 @@ import CloseButton from '@mui/icons-material/Close';
 
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
+import { loginChecker } from './../../../utils/loginChecker';
 
 interface DrawerProps {
   toggleDrawer: () => void;
 }
 
 export const Drawer = ({ toggleDrawer }: DrawerProps) => {
+  const isLoggedIn = loginChecker();
+
   return (
     <>
-      <Dimmed onClick={toggleDrawer}></Dimmed>
+      <Dimmed onClick={toggleDrawer} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              <DrawerUserPageButton
-                pageName="로그인"
-                link="/login"
-                toggleDrawer={toggleDrawer}
-              />
-              <DrawerUserPageButton
-                pageName="회원가입"
-                link="/join"
-                toggleDrawer={toggleDrawer}
-              />
+              {isLoggedIn ? (
+                <>
+                  <DrawerUserPageButton
+                    pageName="마이페이지"
+                    link="/mypage"
+                    toggleDrawer={toggleDrawer}
+                  />
+                  <DrawerUserPageButton
+                    pageName="로그아웃"
+                    link="/logout"
+                    toggleDrawer={toggleDrawer}
+                  />
+                </>
+              ) : (
+                <>
+                  <DrawerUserPageButton
+                    pageName="로그인"
+                    link="/login"
+                    toggleDrawer={toggleDrawer}
+                  />
+                  <DrawerUserPageButton
+                    pageName="회원가입"
+                    link="/join"
+                    toggleDrawer={toggleDrawer}
+                  />
+                </>
+              )}
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
@@ -60,7 +80,7 @@ const Dimmed = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.1);
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   z-index: 10;

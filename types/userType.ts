@@ -19,8 +19,12 @@ export interface UserCreateData {
   alcohol: string;
 }
 
-// 비밀번호 제외 회원정보 수정 시 서버에 보낼 데이터
-export interface UserUpdateData {}
+export interface ChangePasswordReqData {
+  password: string;
+  newPassword: string;
+  newPasswordCheck: string;
+}
 
-// 비밀번호 변경 시 서버에 보낼 데이터
-export interface UserUpdatePasswordData {}
+export interface UpdateAvatarReqData {
+  avatarUrl: string;
+}

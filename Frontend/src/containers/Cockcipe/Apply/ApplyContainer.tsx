@@ -18,39 +18,49 @@ export const ApplyContainer = () => {
   const [content, setContent] = useState<string>();
   const [img, setImg] = useState<string>('');
 
-  const [recipeA, setRecipeA] = useState<object>();
-  const [recipeI, setRecipeI] = useState<object>();
+  const [selectA, setSelectA] = useState<string[]>(['']);
+  const [titleA, setTitleA] = useState<string[]>(['']);
+  const [valueA, setValueA] = useState<string[]>(['']);
 
+  const [selectI, setSelectI] = useState<string[]>(['']);
+  const [titleI, setTitleI] = useState<string[]>(['']);
+  const [valueI, setValueI] = useState<string[]>(['']);
   //const dispatch = useAppDispatch();
 
-  const getRecipeA = (obj: any) => {
-    const key: any = Object.keys(obj);
-    setRecipeA({ ...recipeA, [key]: obj[key] });
-  };
-
-  const getRecipeI = (obj: any) => {
-    const key: any = Object.keys(obj);
-    setRecipeI({ ...recipeI, [key]: obj[key] });
-  };
-
   const handleApply = () => {
-    console.log(recipeA);
-    console.log(recipeI);
+    console.log(selectA, titleA, valueA);
+    console.log(selectI, titleI, valueI);
+    let alcohoObj: any = {};
+    let drinkObj: any = {};
+    for (let i = 0; i < selectA.length; i++) {
+      if (alcohoObj[selectA[i]])
+        alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
+      else alcohoObj[selectA[i]] = [{ [titleA[i]]: valueA[i] }];
+    }
+    for (let i = 0; i < selectI.length; i++) {
+      if (drinkObj[selectI[i]])
+        drinkObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
+      else drinkObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+    }
 
     const newData = {
-      owner: 'seeun',
+      owner: 1,
       name: name,
-      img: img,
+      img: 'testImgKey',
       degree: degree,
       category: category,
       flavor: flavor,
       content: content,
       official: false,
+      ratio: {
+        alcohol: alcohoObj,
+        drink: drinkObj,
+      },
     };
-    // axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
-    //   console.log(res.data);
-    //   console.log(newData);
-    // });
+
+    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
+      console.log(res.data);
+    });
     // dispatch(postCockcipe({ newData }));
   };
   return (
@@ -65,8 +75,24 @@ export const ApplyContainer = () => {
       />
       <InputCockFlavor setFlavor={setFlavor} />
       <InputCockContent setContent={setContent} />
-      <InputRecipe kind="alcohol" getRecipe={getRecipeA} />
-      <InputRecipe kind="drink" getRecipe={getRecipeI} />
+      <InputRecipe
+        kind="alcohol"
+        select={selectA}
+        title={titleA}
+        value={valueA}
+        setSelect={setSelectA}
+        setTitle={setTitleA}
+        setValue={setValueA}
+      />
+      <InputRecipe
+        kind="drink"
+        select={selectI}
+        title={titleI}
+        value={valueI}
+        setSelect={setSelectI}
+        setTitle={setTitleI}
+        setValue={setValueI}
+      />
       <ApplyButton handleApply={handleApply} />
     </>
   );
