@@ -5,7 +5,8 @@ import { CocktailInfomation } from '../../../components/Cockcipe/Detail/Cocktail
 import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
 
 interface Recipe {
-  ingredient: string;
+  alcohol: any;
+  drink: any;
 }
 export interface ICocktail {
   name: string;
@@ -15,7 +16,7 @@ export interface ICocktail {
   degree: number;
   likes: number;
   content: string;
-  ratio: Recipe[];
+  ratio: Recipe;
 }
 
 export const DetailContainer = () => {
@@ -30,7 +31,7 @@ export const DetailContainer = () => {
     degree: 0,
     likes: 0,
     content: '',
-    ratio: [],
+    ratio: { alcohol: {}, drink: {} },
   });
 
   useEffect(() => {
