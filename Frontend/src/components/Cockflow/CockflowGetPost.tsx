@@ -2,8 +2,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
+import { useNavigate } from 'react-router-dom';
 
 export const CockflowGetPost = () => {
+  const navigate = useNavigate();
+  
   const gets = async (data: any) => {
     await axios.post('http://localhost:8000/api/cockflow', data)
       .then(function (response) {
@@ -16,9 +19,11 @@ export const CockflowGetPost = () => {
   
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+    console.log(JSON.stringify(data));
+    alert('등록되었습니다');
     gets(data);
-    reset();
+    // reset();
+    navigate(`/cockflow`);
   };
   
   return (
