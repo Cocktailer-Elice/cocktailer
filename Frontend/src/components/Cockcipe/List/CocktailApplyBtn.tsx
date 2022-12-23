@@ -7,7 +7,17 @@ export const CocktailApplyBtn = () => {
 };
 
 const ApplyBtn = styled(Link)`
-  border: 1px solid black;
-  width: 100px;
+  border: none;
+  box-sizing: border-box;
+  background-color: #4263eb;
+  width: auto;
   text-decoration: none;
+  color: #edf2ff;
+  border-radius: 10px;
+  padding: 8px;
+
+  &:hover {
+    background-color: #edf2ff;
+    color: #4263eb;
+  }
 `;

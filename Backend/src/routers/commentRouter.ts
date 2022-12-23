@@ -10,10 +10,14 @@ router.post('/', asyncHandler(commentController.createComment));
 router.post('/:commentId', asyncHandler(commentController.addSubcomment));
 router.put('/:commentId', asyncHandler(commentController.updateComment));
 router.patch('/:commentId', asyncHandler(commentController.adoptComment));
-router.patch(
-  '/:commentId/like',
-  asyncHandler(commentController.updateCommentLikes),
-);
 router.delete('/:commentId', asyncHandler(commentController.deleteComment));
+router.put(
+  '/:commentId/subcomments/:subCommentId',
+  asyncHandler(commentController.updateSubComment),
+);
+router.delete(
+  '/:commentId/subcomments/:subCommentId',
+  asyncHandler(commentController.deleteSubComment),
+);
 
 export default router;

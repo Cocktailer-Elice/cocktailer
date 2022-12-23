@@ -15,6 +15,7 @@ export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
   try {
     decodedData = verify(token, secretKey) as Cookie;
   } catch (err: any) {
+    res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     return res.status(419).json({ message: '만료 또는 손상된 토큰' });
   }
 

@@ -7,6 +7,7 @@ export const generatePresignedUrl = async (req: Req, res: Res) => {
   res.status(200).json(presignedUrl);
 };
 
+export * from './adminController';
 export * from './authContorller';
 export * from './userController';
 export * from './cockflowController';
