@@ -8,18 +8,28 @@ import {
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+interface Props {
+  value: string;
+  setName: any;
+  setDegree: any;
+  setCategory: any;
+  category: string;
+}
+
 export const InputCockInfo = ({
+  value,
   setName,
   setDegree,
   setCategory,
   category,
-}) => {
+}: Props) => {
   return (
     <>
       <InfoContainer>
         <TextField
           label="나만의 칵테일 이름"
           sx={{ marginRight: '20px;' }}
+          value={value}
           onChange={(e) => {
             setName(e.target.value);
           }}

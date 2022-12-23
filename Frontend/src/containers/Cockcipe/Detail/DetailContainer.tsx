@@ -2,15 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
+import { ModifyButton } from '../../../components/Cockcipe/Detail/ModifyButton';
 import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
 
 interface Recipe {
   alcohol: any;
-  drink: any;
+  ingredient: any;
 }
 export interface ICocktail {
   name: string;
-  id: string;
+  id: number;
   img: string;
   flavor: string[];
   degree: number;
@@ -25,13 +26,13 @@ export const DetailContainer = () => {
 
   const [cocktailInfo, setCocktail] = useState<ICocktail>({
     name: '',
-    id: '',
+    id: 0,
     img: '',
     flavor: [],
     degree: 0,
     likes: 0,
     content: '',
-    ratio: { alcohol: {}, drink: {} },
+    ratio: { alcohol: {}, ingredient: {} },
   });
 
   useEffect(() => {
@@ -39,14 +40,21 @@ export const DetailContainer = () => {
       .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
       .then((res) => {
         console.log(res);
-        setCocktail(res.data.cocktail[0]);
+        setCocktail(res.data.cocktail);
       });
   }, []);
+
   return (
     <>
       <ContentContainer>
         <CocktailInfomation cocktail={cocktailInfo} />
-        <ShareBtn />
+        <ShareBtn
+          img={cocktailInfo.img}
+          name={cocktailInfo.name}
+          id={cocktailInfo.id}
+          content={cocktailInfo.content}
+        />
+        <ModifyButton id={cocktailInfo.id} />
       </ContentContainer>
     </>
   );

@@ -1,16 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ApplyButton } from '../../../components/Cockcipe/Apply/ApplyButton';
-import { InputCockContent } from '../../../components/Cockcipe/Apply/InputCockContent';
-import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
 import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
-import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
-import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
-//import { postCockcipe } from '../../../modules/cockcipeActions';
-//import { useAppDispatch } from '../../../modules/store';
 
-export const ApplyContainer = () => {
+export const ModifyContainer = () => {
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
@@ -26,6 +19,18 @@ export const ApplyContainer = () => {
   const [selectI, setSelectI] = useState<string[]>(['']);
   const [titleI, setTitleI] = useState<string[]>(['']);
   const [valueI, setValueI] = useState<string[]>(['']);
+
+  const url = window.location.pathname;
+  const cocktailId = url.split('/')[3];
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
+      .then((res) => {
+        console.log(res.data);
+        setName(res.data.cocktail.name);
+      });
+  }, []);
 
   //const dispatch = useAppDispatch();
 
@@ -60,16 +65,12 @@ export const ApplyContainer = () => {
       },
     };
 
-    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
-      console.log(res);
-      console.log(newData);
-    });
     // dispatch(postCockcipe({ newData }));
   };
+
   return (
     <>
-      <Header>칵테일 레시피 등록하기</Header>
-      <InputTitleImg setImg={setImg} />
+      <Header>수정하기</Header>
       <InputCockInfo
         value={name}
         setName={setName}
@@ -77,31 +78,9 @@ export const ApplyContainer = () => {
         setCategory={setCategory}
         category={category}
       />
-      <InputCockFlavor setFlavor={setFlavor} />
-      <InputCockContent setContent={setContent} />
-      <InputRecipe
-        kind="alcohol"
-        select={selectA}
-        title={titleA}
-        value={valueA}
-        setSelect={setSelectA}
-        setTitle={setTitleA}
-        setValue={setValueA}
-      />
-      <InputRecipe
-        kind="drink"
-        select={selectI}
-        title={titleI}
-        value={valueI}
-        setSelect={setSelectI}
-        setTitle={setTitleI}
-        setValue={setValueI}
-      />
-      <ApplyButton handleApply={handleApply} />
     </>
   );
 };
-
 const Header = styled.div`
   font-size: 24px;
   color: #3b5bdb;
