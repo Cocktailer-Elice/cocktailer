@@ -1,31 +1,19 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import axios from 'axios';
+import {
+  CockgorithmReqData,
+  CockgorithmResData,
+} from '../../../../types/cockgorithmType';
 
 interface CockgorithmModalProps {
   toggleModal: () => void;
   seletedGame: IGame;
-}
-
-interface IFilter {
-  category: string;
-  baseAlcohol: string;
-  drink: string;
-  degree: string;
-  ingredient: string;
-}
-
-export interface ICockgorithmCocktail {
-  id: number;
-  name: string;
-  img: string;
-  degree: number;
-  content: string;
 }
 
 const cocktailMockData = {
@@ -40,20 +28,23 @@ export const CockgorithmModal = ({
   toggleModal,
   seletedGame,
 }: CockgorithmModalProps) => {
-  const [questionCounter, setQuestionCounter] = useState(0);
-  const [filters, setFilters] = useState<IFilter>({
+  const [isGameEnd, setIsGameEnd] = useState(false);
+  const [filters, setFilters] = useState<CockgorithmReqData>({
     category: '',
-    baseAlcohol: '',
-    drink: '',
+    alcohol: '',
     degree: '',
-    ingredient: '',
+    ingredients: [],
   });
   const [loading, setLoading] = useState(false);
   const [cocktailInfo, setCocktailInfo] =
-    useState<ICockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+    useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+
+  const toggleGameEnd = () => {
+    setIsGameEnd((curr) => !curr);
+  };
 
   useEffect(() => {
-    if (questionCounter === 5) {
+    if (isGameEnd) {
       // 로딩 시작
       setLoading(true);
 
@@ -71,37 +62,14 @@ export const CockgorithmModal = ({
         console.log('response.data');
         console.log(response.data);
 
-        console.log('response.data.data[0]');
-        console.log(response.data.data[0]);
-
-        const fetchedCocktail = response.data.data[0];
+        const fetchedCocktail = response.data;
 
         setCocktailInfo(fetchedCocktail);
 
         setLoading(false);
       }, 2000);
     }
-  }, [questionCounter]);
-
-  const increaseQuestionCounter = () => {
-    setQuestionCounter((curr) => curr + 1);
-  };
-
-  const addFilter = (filter: string) => {
-    const [filterName, filterValue] = filter.split(':');
-    setFilters((curr: IFilter) => {
-      if (
-        filterName === 'category' ||
-        filterName === 'baseAlcohol' ||
-        filterName === 'drink' ||
-        filterName === 'ingredient' ||
-        filterName === 'degree'
-      ) {
-        curr[filterName] = filterValue;
-      }
-      return curr;
-    });
-  };
+  }, [isGameEnd]);
 
   return (
     <>
@@ -109,12 +77,11 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
-          {questionCounter < 5 ? (
+          {!isGameEnd ? (
             <CockgorithmGameContent
               selectedGame={seletedGame}
-              questionCounter={questionCounter}
-              addFilter={addFilter}
-              increaseQuestionCounter={increaseQuestionCounter}
+              toggleGameEnd={toggleGameEnd}
+              setFilters={setFilters}
             />
           ) : loading ? (
             <CockgorithmGameLoading />

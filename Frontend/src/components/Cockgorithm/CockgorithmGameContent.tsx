@@ -1,32 +1,60 @@
+import { SetStateAction, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import { CockgorithmReqData } from '../../../../types/cockgorithmType';
 
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
-  questionCounter: number;
-  addFilter: (filter: string) => void;
-  increaseQuestionCounter: () => void;
+  toggleGameEnd: () => void;
+  setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
 }
 
 export const CockgorithmGameContent = ({
   selectedGame,
-  questionCounter,
-  addFilter,
-  increaseQuestionCounter,
+  toggleGameEnd,
+  setFilters,
 }: CockgorithmGameContentProps) => {
-  const { filterName } = selectedGame.questions[questionCounter];
-  return (
+  const [questionCounter, setQuestionCounter] = useState(0);
+
+  const increaseQuestionCounter = () => {
+    setQuestionCounter((curr) => curr + 1);
+  };
+
+  useEffect(() => {
+    if (questionCounter === 5) {
+      toggleGameEnd();
+    }
+  }, [questionCounter]);
+
+  return questionCounter < 5 ? (
     <GameContent>
       <Question>{selectedGame.questions[questionCounter].question}</Question>
       <OptionContainer>
         {selectedGame.questions[questionCounter].options.map(
           (option, index) => (
             <Option
-              key={index}
+              key={`${questionCounter} + ${index}`}
               onClick={() => {
+                const { filterName } = selectedGame.questions[questionCounter];
+                console.log('클릭됨');
+                setFilters((curr: CockgorithmReqData) => {
+                  if (filterName === 'ingredients') {
+                    console.log('나는 재료요');
+                    curr[filterName] = [
+                      ...curr[filterName],
+                      option.filterValue,
+                    ];
+                  } else if (
+                    filterName === 'category' ||
+                    filterName === 'alcohol' ||
+                    filterName === 'degree'
+                  ) {
+                    curr[filterName] = option.filterValue;
+                  }
+                  return curr;
+                });
                 increaseQuestionCounter();
-                addFilter(`${filterName}:${option.filterValue}`); // 추후 유저의 응답을 세세하게 저장하려면 변경
               }}
             >
               {option.optionName}
@@ -35,6 +63,8 @@ export const CockgorithmGameContent = ({
         )}
       </OptionContainer>
     </GameContent>
+  ) : (
+    <></>
   );
 };
 
@@ -70,7 +100,7 @@ const OptionContainer = styled.div`
 `;
 
 const Option = styled.div`
-  width: 50%;
+  width: 10px;
   height: 100%;
   background-color: green;
   display: flex;
