@@ -10,8 +10,6 @@ interface CockgorithmGameContentProps {
   setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
 }
 
-close;
-
 export const CockgorithmGameContent = ({
   selectedGame,
   toggleGameEnd,
