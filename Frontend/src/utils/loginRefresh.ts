@@ -2,7 +2,7 @@ import { loginChecker } from './loginChecker';
 import { useAppDispatch } from '../store/store';
 import { userRefresh } from '../store/authActions';
 
-export const loginRefresh = async () => {
+export const loginRefresh = () => {
   const isLoggedIn = loginChecker();
   const dispatch = useAppDispatch();
   const cookie = document.cookie;
@@ -10,4 +10,5 @@ export const loginRefresh = async () => {
   if (!isLoggedIn && cookie) {
     dispatch(userRefresh());
   }
+  return;
 };
