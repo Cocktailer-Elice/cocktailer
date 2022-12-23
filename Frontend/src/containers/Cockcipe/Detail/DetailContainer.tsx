@@ -39,7 +39,7 @@ export const DetailContainer = () => {
       .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
       .then((res) => {
         console.log(res);
-        setCocktail(res.data.cocktail[0]);
+        setCocktail(res.data.cocktail);
       });
   }, []);
 
