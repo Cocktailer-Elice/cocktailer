@@ -21,8 +21,8 @@ export const CockflowCommentBox = ({commentlist}: { commentlist: CommentType }) 
     <>
       <CockflowBoxTitle replied={commentlist.comments.length} />
       {
-        (commentlist.comments).map( item => { return (
-          <CockflowCommentAdd item={item} key={item._id} />
+        (commentlist.comments).map( (item, index) => { return (
+          <CockflowCommentAdd item={item} key={index} />
         )})
       }
     </>

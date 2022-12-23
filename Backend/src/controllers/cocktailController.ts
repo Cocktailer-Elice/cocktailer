@@ -2,7 +2,7 @@ import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import { CocktailCreateReqDto } from 'types';
 import CocktailService from '../services/cocktailService';
 
-class CoctailController {
+class CocktailController {
   private readonly cocktailService = new CocktailService();
 
   public createCocktail = async (req: Req, res: Res) => {
@@ -51,8 +51,12 @@ class CoctailController {
 
     res.status(200).json({ categoryLists: categoryLists });
   };
+
+  public makeMockData = async (req: Req, res: Res) => {
+    const result: string = await this.cocktailService.makeMockData();
+  };
 }
 
-const cocktailController = new CoctailController();
+const cocktailController = new CocktailController();
 
 export { cocktailController };

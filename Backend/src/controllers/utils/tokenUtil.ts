@@ -8,10 +8,12 @@ const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE;
 export const createToken = (user: IUser): Token => {
   const tokenData: Cookie = {
     userId: user.id,
+    name: user.name,
     email: user.email,
     nickname: user.nickname,
     isAdmin: user.isAdmin,
     isBartender: user.isBartender,
+    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${user.avatarUrl}`,
   };
   const secretKey: string = ACCESS_KEY as string;
   const expiresIn: string = ACCESS_EXPIRE as string;

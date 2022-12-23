@@ -71,10 +71,7 @@ class CockflowService {
         '권한 없는 사용자',
       );
     }
-    const result = await this.cockflowModel.delete(cockflowId);
-    if (!result.acknowledged) {
-      throw new AppError(errorNames.databaseError, 500, '서버 에러');
-    }
+    await this.cockflowModel.delete(cockflowId);
     return;
   }
 }

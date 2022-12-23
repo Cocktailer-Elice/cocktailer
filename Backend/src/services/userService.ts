@@ -6,13 +6,10 @@ import { compare, hash } from 'bcrypt';
 class UserService {
   private readonly userModel = userModel.Mongo;
 
-  public getUserById = async (userId: number) => {
-    const founduser: IUser | null = await this.userModel.findById(userId);
-    if (!founduser) {
-      throw new AppError(errorNames.inputError, 400, `존재하지 않는 유저`);
-    }
+  public getMyPosts = async (userId: number) => {
+    const myPosts = await this.userModel.getPosts(userId);
 
-    return founduser;
+    return myPosts;
   };
 
   public findUserEmail = async (name: string, tel: string) => {
@@ -71,7 +68,12 @@ class UserService {
 
   public softDeleteUser = async (userId: number) => {
     const filter = { id: userId };
-    const update = { deletedAt: Date.now() };
+    const update = {
+      tel: null,
+      email: null,
+      nickname: null,
+      deletedAt: Date.now(),
+    };
     await this.userModel.softDelete(filter, update);
     return;
   };
