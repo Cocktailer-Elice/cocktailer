@@ -59,10 +59,7 @@ export const CockgorithmModal = ({
         console.log('response');
         console.log(response);
 
-        console.log('response.data');
-        console.log(response.data);
-
-        const fetchedCocktail = response.data;
+        const fetchedCocktail = response.data.data;
 
         setCocktailInfo(fetchedCocktail);
 
