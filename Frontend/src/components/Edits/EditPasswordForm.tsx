@@ -21,11 +21,11 @@ export const EditPasswordForm = () => {
       password: getValues('password'),
       newPassword: getValues('newPassword'),
     });
-    if (response.status === 400) {
+    if (response.status === 204) {
       alert('다시 로그인해주세요');
       navigate('/logout');
     } else {
-      alert('Server Error');
+      alert('비밀번호 변경 실패');
     }
   };
   const onSubmitHandler = () => {
