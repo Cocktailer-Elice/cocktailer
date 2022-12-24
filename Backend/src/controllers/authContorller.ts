@@ -3,11 +3,11 @@ import { errorNames } from '../errorNames';
 import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
 import { LoginReqData } from 'types';
-import AuthService from '../services/authService';
+import authService from '../services/authService';
 import { createToken, createCookie, checkReqBody } from './utils';
 
 class AuthController {
-  private readonly authService = new AuthService();
+  private readonly authService = authService;
 
   public signup = async (req: Req, res: Res) => {
     const token = req.cookies.Authorization;

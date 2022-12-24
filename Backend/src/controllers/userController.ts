@@ -1,9 +1,9 @@
 import { Request as Req, Response as Res } from 'express';
-import UserService from '../services/userService';
+import userService from '../services/userService';
 import { checkReqBody } from './utils';
 
 class UserController {
-  private readonly userService = new UserService();
+  private readonly userService = userService;
 
   public getMyPosts = async (req: Req, res: Res) => {
     const { userId } = req.user;

@@ -6,9 +6,14 @@ import { userModel } from '../db/models/userModel';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 import { redisCache } from '../redis';
+import { IAuthDependencies } from './types';
+
+class AuthDependencies implements IAuthDependencies {
+  public userModel = userModel.Mongo;
+}
 
 class AuthService {
-  private readonly userModel = userModel.Mongo;
+  constructor(private dependencies: AuthDependencies) {}
 
   public signup = async (userCreateData: UserCreateData) => {
     const { email, password, alcohol, tel } = userCreateData;
@@ -32,7 +37,7 @@ class AuthService {
     }
     const hashedPassword = await hash(password, 12);
 
-    const newUser = await this.userModel.create({
+    const newUser = await this.dependencies.userModel.create({
       ...userCreateData,
       password: hashedPassword,
       nickname,
@@ -43,7 +48,7 @@ class AuthService {
   public login = async (userData: LoginReqData) => {
     const { email, password } = userData;
     const filter = { email };
-    const foundUser = await this.userModel.findByFilter(filter);
+    const foundUser = await this.dependencies.userModel.findByFilter(filter);
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
@@ -83,7 +88,7 @@ class AuthService {
 
   public checkEmailDuplicate = async (email: string) => {
     const filter = { email };
-    const result = await this.userModel.checkDuplicate(filter);
+    const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
     }
@@ -92,7 +97,7 @@ class AuthService {
 
   public checkTelDuplicate = async (tel: string) => {
     const filter = { tel };
-    const result = await this.userModel.checkDuplicate(filter);
+    const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '전화번호 중복');
     }
@@ -101,7 +106,7 @@ class AuthService {
 
   private checkNicknameDuplicate = async (nickname: string) => {
     const filter = { nickname };
-    const result = await this.userModel.checkDuplicate(filter);
+    const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
     }
@@ -109,4 +114,8 @@ class AuthService {
   };
 }
 
-export default AuthService;
+const authDependencies = new AuthDependencies();
+
+const authService = new AuthService(authDependencies);
+
+export default authService;

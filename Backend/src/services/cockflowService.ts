@@ -4,11 +4,15 @@ import { cockflowModel } from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 
+class CockflowDependencies implements CockflowDependencies {
+  public cockflowModel = cockflowModel.Mongo;
+}
+
 class CockflowService {
-  private readonly cockflowModel = cockflowModel.Mongo;
+  constructor(private readonly dependencies: CockflowDependencies) {}
 
   public async createCockflow(cockflowInfo: CockflowInfo) {
-    const newPost = await this.cockflowModel.create(cockflowInfo);
+    const newPost = await this.dependencies.cockflowModel.create(cockflowInfo);
     return newPost;
   }
 
@@ -16,13 +20,13 @@ class CockflowService {
     scroll: number,
     cockflowsPerRequest: number,
   ) {
-    const maxRequest = await this.cockflowModel.getTotalRequest(
+    const maxRequest = await this.dependencies.cockflowModel.getTotalRequest(
       cockflowsPerRequest,
     );
     if (scroll > maxRequest) {
       throw new AppError(errorNames.inputError, 400, '비정상적인 접근');
     }
-    const cockflows = await this.cockflowModel.getByRequest(
+    const cockflows = await this.dependencies.cockflowModel.getByRequest(
       scroll,
       cockflowsPerRequest,
     );
@@ -30,12 +34,16 @@ class CockflowService {
   }
 
   public getMyCockflows = async (userId: number) => {
-    const cockflows = await this.cockflowModel.findByUserId(userId);
+    const cockflows = await this.dependencies.cockflowModel.findByUserId(
+      userId,
+    );
     return cockflows;
   };
 
   public async getCockflowById(cockflowId: number) {
-    const foundCockflow = await this.cockflowModel.findByAggregate(cockflowId);
+    const foundCockflow = await this.dependencies.cockflowModel.findByAggregate(
+      cockflowId,
+    );
 
     if (!foundCockflow) {
       throw new AppError(errorNames.inputError, 400, `존재하지 않는 칵플로우`);
@@ -50,7 +58,7 @@ class CockflowService {
     cockflowId: number,
     userId: number,
   ) => {
-    const cockflow = await this.cockflowModel.findById(cockflowId);
+    const cockflow = await this.dependencies.cockflowModel.findById(cockflowId);
     if (!cockflow) {
       throw new AppError(errorNames.inputError, 400, '존재하지 않는 칵플로우');
     }
@@ -59,12 +67,12 @@ class CockflowService {
     }
     const filter = { id: cockflowId };
     const update = { title, content };
-    await this.cockflowModel.update(filter, update);
+    await this.dependencies.cockflowModel.update(filter, update);
     return;
   };
 
   public async deleteCockflow(cockflowId: number, userId: number) {
-    const cockflow = await this.cockflowModel.findById(cockflowId);
+    const cockflow = await this.dependencies.cockflowModel.findById(cockflowId);
 
     if (!cockflow) {
       throw new AppError(errorNames.inputError, 400, '해당하는 칵플로우 없음');
@@ -77,9 +85,13 @@ class CockflowService {
         '권한 없는 사용자',
       );
     }
-    await this.cockflowModel.delete(cockflowId);
+    await this.dependencies.cockflowModel.delete(cockflowId);
     return;
   }
 }
 
-export default CockflowService;
+const cockflowDependencies = new CockflowDependencies();
+
+const cockflowService = new CockflowService(cockflowDependencies);
+
+export default cockflowService;

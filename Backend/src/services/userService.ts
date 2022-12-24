@@ -1,21 +1,26 @@
+import { compare, hash } from 'bcrypt';
 import { userModel } from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 import { IUser } from '../db/types';
-import { compare, hash } from 'bcrypt';
+import { IUserDependencies } from './types/userType';
+
+class UserDependencies implements IUserDependencies {
+  public userModel = userModel.Mongo;
+}
 
 class UserService {
-  private readonly userModel = userModel.Mongo;
+  constructor(private dependencies: UserDependencies) {}
 
   public getMyPosts = async (userId: number) => {
-    const myPosts = await this.userModel.getPosts(userId);
+    const myPosts = await this.dependencies.userModel.getPosts(userId);
 
     return myPosts;
   };
 
   public findUserEmail = async (name: string, tel: string) => {
     const filter = { name, tel, deletedAt: null };
-    const foundUser = await this.userModel.findByFilter(filter);
+    const foundUser = await this.dependencies.userModel.findByFilter(filter);
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, '해당하는 이메일 없음');
     }
@@ -26,7 +31,7 @@ class UserService {
 
   public verifyUser = async (name: string, email: string, tel: string) => {
     const filter = { name, email, tel };
-    const foundUser = await this.userModel.findByFilter(filter);
+    const foundUser = await this.dependencies.userModel.findByFilter(filter);
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, '해당하는 유저 없음');
     }
@@ -35,7 +40,9 @@ class UserService {
 
   public validatePassword = async (email: string, password: string) => {
     const filter = { email };
-    const user = (await this.userModel.findByFilter(filter)) as IUser;
+    const user = (await this.dependencies.userModel.findByFilter(
+      filter,
+    )) as IUser;
     const isPasswordMatching = await compare(password, user.password);
     if (!isPasswordMatching)
       throw new AppError(errorNames.inputError, 400, '비밀번호 재확인');
@@ -48,7 +55,9 @@ class UserService {
     newPassword: string,
   ) => {
     const filter = { id: userId };
-    const user = (await this.userModel.findByFilter(filter)) as IUser;
+    const user = (await this.dependencies.userModel.findByFilter(
+      filter,
+    )) as IUser;
     const isPasswordMatching = await compare(password, user.password);
     if (!isPasswordMatching) {
       throw new AppError(errorNames.inputError, 400, '비정상적인 접근');
@@ -56,14 +65,14 @@ class UserService {
 
     const hashedPassword = await hash(newPassword, 12);
     const update = { password: hashedPassword };
-    await this.userModel.update(filter, update);
+    await this.dependencies.userModel.update(filter, update);
     return;
   };
 
   public updateUserProfile = async (userId: number, avatarUrl: string) => {
     const filter = { id: userId };
     const update = { avatarUrl };
-    await this.userModel.update(filter, update);
+    await this.dependencies.userModel.update(filter, update);
     return;
   };
 
@@ -73,9 +82,13 @@ class UserService {
       nickname: null,
       deletedAt: Date.now(),
     };
-    await this.userModel.softDelete(filter, update);
+    await this.dependencies.userModel.softDelete(filter, update);
     return;
   };
 }
 
-export default UserService;
+const userDependencies = new UserDependencies();
+
+const userService = new UserService(userDependencies);
+
+export default userService;
