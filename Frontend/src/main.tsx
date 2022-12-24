@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import { Provider } from 'react-redux';
+import axios from 'axios';
+import 'swiper/css/bundle';
 
 import { App } from './App';
 import { theme } from './theme';
 import { store } from './store/store';
-
-import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 
