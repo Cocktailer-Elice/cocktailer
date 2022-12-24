@@ -48,17 +48,17 @@ class AuthService {
   public login = async (userData: LoginReqData) => {
     const { email, password } = userData;
     const filter = { email };
-    const foundUser = await this.dependencies.userModel.findByFilter(filter);
-    if (!foundUser) {
+    const user = await this.dependencies.userModel.findByFilter(filter);
+    if (!user) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
-    if (foundUser.deletedAt) {
+    if (user.deletedAt) {
       throw new AppError(errorNames.authenticationError, 401, '탈퇴한 유저');
     }
-    if (!foundUser || !(await compare(password, foundUser.password))) {
+    if (!user || !(await compare(password, user.password))) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
-    return foundUser;
+    return user;
   };
 
   public generateAuthCode = async (tel: string) => {

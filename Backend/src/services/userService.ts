@@ -76,6 +76,13 @@ class UserService {
     return;
   };
 
+  public updateUserState = async (userId: number) => {
+    const filter = { id: userId };
+    const update = { isBartender: 'waiting' };
+    await this.dependencies.userModel.update(filter, update);
+    return;
+  };
+
   public softDeleteUser = async (userId: number) => {
     const filter = { id: userId };
     const update = {

@@ -23,18 +23,20 @@ export interface IUserModel {
 }
 
 export interface FindOneFilter {
+  _id?: string;
   id?: number;
   name?: string;
   email?: string;
   tel?: string;
   nickname?: string;
+  isBartender?: string;
 }
 
 export interface UpdateOneFilter {
   password?: string;
   avatarUrl?: string;
   deletedAt?: number;
-  isBartender?: boolean;
+  isBartender?: boolean | string;
   isAdmin?: boolean;
 }
 
@@ -48,7 +50,7 @@ export interface IUser extends Document {
   birthday: Date;
   avatarUrl: string;
   isAdmin: boolean;
-  isBartender: boolean;
+  isBartender: boolean | string;
   deletedAt: null | number;
   readonly userGetResDto: User;
 }

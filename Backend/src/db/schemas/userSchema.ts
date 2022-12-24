@@ -27,7 +27,7 @@ const UserSchema: Schema = new Schema(
       unique: true,
     },
     birthday: {
-      type: Date,
+      type: String,
       required: true,
     },
     tel: {
@@ -44,16 +44,11 @@ const UserSchema: Schema = new Schema(
       type: Number,
       default: 0,
     },
-    currentPoints: {
-      type: Number,
-      default: 0,
-    },
     isAdmin: {
       type: Boolean,
       default: false,
     },
     isBartender: {
-      type: Boolean,
       default: false,
     },
     deletedAt: {
@@ -70,7 +65,7 @@ UserSchema.virtual('userGetResDto').get(function (this: User) {
     email: this.email,
     nickname: this.nickname,
     avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
-    isBartender: this.isBartender,
+    isBartender: this.isBartender === true ? true : false,
   };
 });
 

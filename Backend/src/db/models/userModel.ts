@@ -34,6 +34,11 @@ class UserMongoModel implements IUserMongoModel {
     return foundUser;
   };
 
+  public findByApplying = async (filter: FindOneFilter, projection: string) => {
+    const users = await User.find(filter, projection);
+    return users;
+  };
+
   public update = async (filter: FindOneFilter, update: UpdateOneFilter) => {
     const result = await User.updateOne(filter, update);
     return result;

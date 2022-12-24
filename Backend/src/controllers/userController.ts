@@ -41,6 +41,12 @@ class UserController {
     res.sendStatus(204);
   };
 
+  public updateUserState = async (req: Req, res: Res) => {
+    const { userId } = req.user;
+    await this.userService.updateUserState(userId);
+    res.sendStatus(204);
+  };
+
   public softDeleteUser = async (req: Req, res: Res) => {
     const { userId } = req.user;
     await this.userService.softDeleteUser(userId);

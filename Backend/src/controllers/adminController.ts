@@ -5,6 +5,11 @@ import { checkReqBody } from './utils';
 class AdminController {
   private readonly adminService = adminService;
 
+  public getUsersApplyingBartender = async (req: Req, res: Res) => {
+    const users = await this.adminService.getUsersApplyingBartender();
+    res.status(200).json(users);
+  };
+
   public verifyBartender = async (req: Req, res: Res) => {
     const { userId } = req.body;
     checkReqBody(userId);
