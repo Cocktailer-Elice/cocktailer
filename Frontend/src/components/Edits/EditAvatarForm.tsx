@@ -9,6 +9,8 @@ import axios from 'axios';
 import { getCompressedImage } from '../../utils/imageCompression';
 import { GET_S3_URL, UPDATE_AVATAR } from '../../constants/api';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../store/store';
+import { userRefresh } from '../../store/authActions';
 
 interface EditAvatarFormData {
   avatar?: FileList;
@@ -16,6 +18,7 @@ interface EditAvatarFormData {
 
 export const EditAvatarForm = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const methods = useForm<EditAvatarFormData>({
     resolver: yupResolver(EditAvatarFormSchema),
   });
@@ -48,6 +51,7 @@ export const EditAvatarForm = () => {
         const fileCode = getFileCode(url);
         await axios.patch(UPDATE_AVATAR, { avatarUrl: fileCode });
         alert('변경이 완료되었습니다');
+        dispatch(userRefresh());
         navigate('/mypage');
       }
     } catch (e: any) {
