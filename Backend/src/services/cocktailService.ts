@@ -1,7 +1,8 @@
 import { CocktailServiceType } from './types';
 
 import { cocktailModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 
 class CocktailService {
   private readonly cocktailModel = cocktailModel;

@@ -1,4 +1,5 @@
-import { AppError, errorNames } from '../../routers/middlewares';
+import { AppError } from '../../errorHandler';
+import { errorNames } from '../../errorNames';
 
 export const checkReqBody = (...args: string[]) => {
   for (const arg of args) {

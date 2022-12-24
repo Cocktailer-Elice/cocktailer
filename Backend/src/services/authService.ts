@@ -3,8 +3,9 @@ import { createRandomNumber, sendAuthCodeMessage } from './utils';
 import { hash, compare } from 'bcrypt';
 import { UserCreateData, LoginReqData } from 'types';
 import { userModel } from '../db/models/userModel';
-import { AppError, errorNames } from '../routers/middlewares';
-import redisCache from '../redis';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
+import { redisCache } from '../redis';
 
 class AuthService {
   private readonly userModel = userModel.Mongo;

@@ -1,6 +1,7 @@
 import { CockgorithmServiceType } from './types';
 import { cockgorithmModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 
 class CockgorithmService {
   private readonly cockgorithmModel = cockgorithmModel;

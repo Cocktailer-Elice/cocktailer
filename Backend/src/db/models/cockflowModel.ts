@@ -9,7 +9,9 @@ import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import MongoDb from '../../mongodb';
+
+const db = MongoDb.db;
 
 class MongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {

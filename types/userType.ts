@@ -9,7 +9,7 @@ export interface User {
   email: string;
   nickname: string;
   avatarUrl: string;
-  isBartender: boolean;
+  isBartender: boolean | 'applying';
 }
 
 // 마이페이지에서 내가 작성한 글들을 요청하면 받는 데이터

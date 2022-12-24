@@ -1,7 +1,8 @@
 import { SubCommentInfo } from './types/commentType';
 import { CommentInfo } from '../services';
 import { cockflowModel, commentModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 
 class CommentService {
   private readonly commentModel = commentModel.Mongo;

@@ -6,12 +6,8 @@ import morgan from 'morgan';
 import logger from './winston';
 
 import globalRouter from './routers';
-import {
-  appErrorHandler,
-  errorHandler,
-  errorLogger,
-  notFoundErrorHandler,
-} from './routers/middlewares';
+import { notFoundErrorHandler } from './routers/middlewares';
+import { errorHandler } from './errorHandler';
 
 class Server {
   private readonly app: express.Application;
@@ -43,10 +39,8 @@ class Server {
 
   private setRouter() {
     this.app.use('/api', globalRouter);
-    this.app.use(errorLogger);
-    this.app.use(errorHandler);
     this.app.use(notFoundErrorHandler);
-    this.app.use(appErrorHandler);
+    this.app.use(errorHandler);
   }
 
   public listen(port: string) {

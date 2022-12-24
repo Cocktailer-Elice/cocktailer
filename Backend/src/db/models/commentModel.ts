@@ -8,7 +8,9 @@ import {
 import { CommentInfo } from '../../services';
 import { IComment } from '../types';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import MongoDb from '../../mongodb';
+
+const db = MongoDb.db;
 
 class MongoModel implements ICommentMongoModel {
   public async create(

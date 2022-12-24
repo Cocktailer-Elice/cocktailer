@@ -1,4 +1,5 @@
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
 import { LoginReqData } from 'types';

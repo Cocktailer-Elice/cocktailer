@@ -1,5 +1,6 @@
 import { userModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 import { IUser } from '../db/types';
 import { compare, hash } from 'bcrypt';
 
@@ -13,7 +14,7 @@ class UserService {
   };
 
   public findUserEmail = async (name: string, tel: string) => {
-    const filter = { name, tel };
+    const filter = { name, tel, deletedAt: null };
     const foundUser = await this.userModel.findByFilter(filter);
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, '해당하는 이메일 없음');
@@ -69,8 +70,6 @@ class UserService {
   public softDeleteUser = async (userId: number) => {
     const filter = { id: userId };
     const update = {
-      tel: null,
-      email: null,
       nickname: null,
       deletedAt: Date.now(),
     };

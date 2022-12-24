@@ -1,5 +1,6 @@
 import { userModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 
 class UserService {
   private readonly userModel = userModel.Mongo;
