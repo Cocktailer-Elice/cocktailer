@@ -1,2 +1,2 @@
 export * from './authType';
-export * from './async-function';
+export * from './asyncFunction';

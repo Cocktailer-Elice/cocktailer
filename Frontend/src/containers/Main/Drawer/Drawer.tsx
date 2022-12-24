@@ -1,68 +1,141 @@
 import styled from 'styled-components';
-import CloseIcon from '@mui/icons-material/Close';
-import { Dispatch, SetStateAction } from 'react';
+import CloseButton from '@mui/icons-material/Close';
 
-import { DrawerUserButton } from '../../../components/Main/Drawer/DrawerUserButton';
-import { DrawerPageButton } from './../../../components/Main/Drawer/DrawerPageButton';
+import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
+import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
+import { loginChecker } from './../../../utils/loginChecker';
 
 interface DrawerProps {
-  setMenuClicked: Dispatch<SetStateAction<boolean>>;
+  toggleDrawer: () => void;
 }
 
-export const Drawer = ({ setMenuClicked }: DrawerProps) => {
-  const handleCloseButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    setMenuClicked(false);
-  };
+export const Drawer = ({ toggleDrawer }: DrawerProps) => {
+  const isLoggedIn = loginChecker();
 
   return (
-    <DrawerWrapper>
-      <DrawerUserSection>
-        <DrawerUserButton pageName="로그인" link="/login" />
-        <DrawerUserButton pageName="회원가입" link="/join" />
-        <DrawerCloseButton onClick={handleCloseButtonClick}>
-          <CloseIcon />
-        </DrawerCloseButton>
-      </DrawerUserSection>
-      <DrawerPageSection>
-        <DrawerPageButton pageName="칵시피" link="/cockcipe" />
-        <DrawerPageButton pageName="칵플로우" link="/cockflow" />
-        <DrawerPageButton pageName="칵고리즘" link="/cockgorithm" />
-      </DrawerPageSection>
-    </DrawerWrapper>
+    <>
+      <Dimmed onClick={toggleDrawer} />
+      <DrawerContainer>
+        <TopSection>
+          <TopLeftSection>
+            <UserPageButtonContainer>
+              {isLoggedIn ? (
+                <>
+                  <DrawerUserPageButton
+                    pageName="마이페이지"
+                    link="/mypage"
+                    toggleDrawer={toggleDrawer}
+                  />
+                  <DrawerUserPageButton
+                    pageName="로그아웃"
+                    link="/logout"
+                    toggleDrawer={toggleDrawer}
+                  />
+                </>
+              ) : (
+                <>
+                  <DrawerUserPageButton
+                    pageName="로그인"
+                    link="/login"
+                    toggleDrawer={toggleDrawer}
+                  />
+                  <DrawerUserPageButton
+                    pageName="회원가입"
+                    link="/join"
+                    toggleDrawer={toggleDrawer}
+                  />
+                </>
+              )}
+            </UserPageButtonContainer>
+          </TopLeftSection>
+          <TopRightSection>
+            <CloseButtonWrap onClick={toggleDrawer}>
+              <CloseButton />
+            </CloseButtonWrap>
+          </TopRightSection>
+        </TopSection>
+        <BottomSection>
+          <DrawerContentPageButton
+            pageName="칵시피"
+            link="/cockcipe"
+            toggleDrawer={toggleDrawer}
+          />
+          <DrawerContentPageButton
+            pageName="칵플로우"
+            link="/cockflow"
+            toggleDrawer={toggleDrawer}
+          />
+          <DrawerContentPageButton
+            pageName="칵고리즘"
+            link="/cockgorithm"
+            toggleDrawer={toggleDrawer}
+          />
+        </BottomSection>
+      </DrawerContainer>
+    </>
   );
 };
 
-const DrawerWrapper = styled.div`
-  width: 300px;
-  height: 100%;
-  border: 1px solid gray;
-  position: absolute;
+const Dimmed = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: fixed;
   left: 0;
   top: 0;
-  z-index: 1;
+  z-index: 10;
 `;
 
-const DrawerUserSection = styled.div`
+const DrawerContainer = styled.div`
+  width: 300px;
+  height: 100vh;
+  border: 1px solid gray;
+  position: absolute;
+  background-color: white;
+  left: -1px;
+  top: 0;
+  z-index: 11;
+`;
+
+const TopSection = styled.div`
   width: 100%;
-  height: 50px;
+  height: 80px;
+  border: 1px solid gray;
+  display: flex;
+`;
+
+const TopLeftSection = styled.div`
+  width: calc(100% - 50px);
+  height: 100%;
+  border: 1px solid gray;
+`;
+
+const TopRightSection = styled.div`
+  width: 50px;
+  height: 100%;
+  border: 1px solid gray;
+`;
+
+const BottomSection = styled.div`
+  width: 100%;
+  height: calc(100% - 50px);
+  border: 1px solid gray;
+`;
+
+const UserPageButtonContainer = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border: 1px solid gray;
-  background-color: white;
 `;
 
-const DrawerPageSection = styled.div`
+const CloseButtonWrap = styled.div`
   width: 100%;
-  height: calc(100% - 50px);
-  border: 1px solid gray;
-  background-color: white;
-`;
-
-const DrawerCloseButton = styled.div`
-  width: 50px;
-  height: 50px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid gray;
 `;
