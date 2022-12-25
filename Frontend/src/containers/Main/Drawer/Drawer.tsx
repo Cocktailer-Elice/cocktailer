@@ -4,6 +4,7 @@ import CloseButton from '@mui/icons-material/Close';
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 import { loginChecker } from './../../../utils/loginChecker';
+import { contentMenus } from './../../../constants/pages';
 
 interface DrawerProps {
   handleDrawerClose: () => void;
@@ -14,12 +15,6 @@ const userMenus = [
   { isLoggedInUserMenu: true, pageName: '로그아웃', link: '/logout' },
   { isLoggedInUserMenu: false, pageName: '로그인', link: '/login' },
   { isLoggedInUserMenu: false, pageName: '회원가입', link: '/join' },
-];
-
-const contentMenus = [
-  { pageName: '칵시피', link: '/cockcipe' },
-  { pageName: '칵플로우', link: '/cockflow' },
-  { pageName: '칵고리즘', link: '/cockgorithm' },
 ];
 
 export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
