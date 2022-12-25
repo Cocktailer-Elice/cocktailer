@@ -4,10 +4,9 @@ import CloseButton from '@mui/icons-material/Close';
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 import { loginChecker } from './../../../utils/loginChecker';
-import { isLoggedIn } from './../../../../../Backend/src/routers/middlewares/auth/isLoggedIn';
 
 interface DrawerProps {
-  handleDrawerToggle: () => void;
+  handleDrawerClose: () => void;
 }
 
 const menus = [
@@ -17,12 +16,12 @@ const menus = [
   { isLoggedInUserMenu: false, pageName: '회원가입', link: '/join' },
 ];
 
-export const Drawer = ({ handleDrawerToggle }: DrawerProps) => {
+export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
   const isLoggedIn = loginChecker();
 
   return (
     <>
-      <Dimmed onClick={handleDrawerToggle} />
+      <Dimmed onClick={handleDrawerClose} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
@@ -33,14 +32,14 @@ export const Drawer = ({ handleDrawerToggle }: DrawerProps) => {
                     <DrawerUserPageButton
                       title={menu.pageName}
                       link={menu.link}
-                      handleDrawerToggle={handleDrawerToggle}
+                      handleDrawerClose={handleDrawerClose}
                     />
                   ),
               )}
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
-            <CloseButtonWrap onClick={handleDrawerToggle}>
+            <CloseButtonWrap onClick={handleDrawerClose}>
               <CloseButton />
             </CloseButtonWrap>
           </TopRightSection>
@@ -49,17 +48,17 @@ export const Drawer = ({ handleDrawerToggle }: DrawerProps) => {
           <DrawerContentPageButton
             pageName="칵시피"
             link="/cockcipe"
-            handleDrawerToggle={handleDrawerToggle}
+            handleDrawerClose={handleDrawerClose}
           />
           <DrawerContentPageButton
             pageName="칵플로우"
             link="/cockflow"
-            handleDrawerToggle={handleDrawerToggle}
+            handleDrawerClose={handleDrawerClose}
           />
           <DrawerContentPageButton
             pageName="칵고리즘"
             link="/cockgorithm"
-            handleDrawerToggle={handleDrawerToggle}
+            handleDrawerClose={handleDrawerClose}
           />
         </BottomSection>
       </DrawerContainer>

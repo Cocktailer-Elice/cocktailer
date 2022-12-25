@@ -5,18 +5,21 @@ import { Drawer } from './../Drawer/Drawer';
 import { useToggle } from '../../../utils/customHooks';
 
 export const Header = () => {
-  const { isOpen: isDrawerOpen, handleToggle: handleDrawerToggle } =
-    useToggle(false);
+  const {
+    isOpen: isDrawerOpen,
+    handleOpen: handleDrawerOpen,
+    handleClose: handleDrawerClose,
+  } = useToggle(false);
 
   return (
     <Container>
       <LeftSection>
-        <HeaderHamburgerButton handleDrawerToggle={handleDrawerToggle} />
+        <HeaderHamburgerButton handleDrawerOpen={handleDrawerOpen} />
       </LeftSection>
       <RightSection>
         <HeaderHomeLogo />
       </RightSection>
-      {isDrawerOpen && <Drawer handleDrawerToggle={handleDrawerToggle} />}
+      {isDrawerOpen && <Drawer handleDrawerClose={handleDrawerClose} />}
     </Container>
   );
 };

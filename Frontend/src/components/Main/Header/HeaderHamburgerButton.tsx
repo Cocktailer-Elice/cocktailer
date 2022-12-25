@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import HamburgerIcon from '@mui/icons-material/Menu';
 
 interface HeaderHamburgerButtonProps {
-  handleDrawerToggle: () => void;
+  handleDrawerOpen: () => void;
 }
 
 export const HeaderHamburgerButton = ({
-  handleDrawerToggle,
+  handleDrawerOpen,
 }: HeaderHamburgerButtonProps) => {
   return (
-    <HamburgerButton onClick={handleDrawerToggle}>
+    <HamburgerButton onClick={handleDrawerOpen}>
       <CustomHamburgerIcon />
     </HamburgerButton>
   );
