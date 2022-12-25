@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom';
 interface DrawerUserPageButtonProps {
   pageName: string;
   link: string;
-  toggleDrawer: () => void;
+  handleDrawerToggle: () => void;
 }
 
 export const DrawerUserPageButton = ({
   pageName,
   link,
-  toggleDrawer,
+  handleDrawerToggle,
 }: DrawerUserPageButtonProps) => {
   return (
-    <Link to={link} onClick={toggleDrawer}>
+    <Link to={link} onClick={handleDrawerToggle}>
       <UserPageButton>{pageName}</UserPageButton>
     </Link>
   );

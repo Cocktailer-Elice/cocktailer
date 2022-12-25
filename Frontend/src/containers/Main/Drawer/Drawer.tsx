@@ -6,15 +6,15 @@ import { DrawerContentPageButton } from './../../../components/Main/Drawer/Drawe
 import { loginChecker } from './../../../utils/loginChecker';
 
 interface DrawerProps {
-  toggleDrawer: () => void;
+  handleDrawerToggle: () => void;
 }
 
-export const Drawer = ({ toggleDrawer }: DrawerProps) => {
+export const Drawer = ({ handleDrawerToggle }: DrawerProps) => {
   const isLoggedIn = loginChecker();
 
   return (
     <>
-      <Dimmed onClick={toggleDrawer} />
+      <Dimmed onClick={handleDrawerToggle} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
@@ -24,12 +24,12 @@ export const Drawer = ({ toggleDrawer }: DrawerProps) => {
                   <DrawerUserPageButton
                     pageName="마이페이지"
                     link="/mypage"
-                    toggleDrawer={toggleDrawer}
+                    handleDrawerToggle={handleDrawerToggle}
                   />
                   <DrawerUserPageButton
                     pageName="로그아웃"
                     link="/logout"
-                    toggleDrawer={toggleDrawer}
+                    handleDrawerToggle={handleDrawerToggle}
                   />
                 </>
               ) : (
@@ -37,19 +37,19 @@ export const Drawer = ({ toggleDrawer }: DrawerProps) => {
                   <DrawerUserPageButton
                     pageName="로그인"
                     link="/login"
-                    toggleDrawer={toggleDrawer}
+                    handleDrawerToggle={handleDrawerToggle}
                   />
                   <DrawerUserPageButton
                     pageName="회원가입"
                     link="/join"
-                    toggleDrawer={toggleDrawer}
+                    handleDrawerToggle={handleDrawerToggle}
                   />
                 </>
               )}
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
-            <CloseButtonWrap onClick={toggleDrawer}>
+            <CloseButtonWrap onClick={handleDrawerToggle}>
               <CloseButton />
             </CloseButtonWrap>
           </TopRightSection>
@@ -58,17 +58,17 @@ export const Drawer = ({ toggleDrawer }: DrawerProps) => {
           <DrawerContentPageButton
             pageName="칵시피"
             link="/cockcipe"
-            toggleDrawer={toggleDrawer}
+            handleDrawerToggle={handleDrawerToggle}
           />
           <DrawerContentPageButton
             pageName="칵플로우"
             link="/cockflow"
-            toggleDrawer={toggleDrawer}
+            handleDrawerToggle={handleDrawerToggle}
           />
           <DrawerContentPageButton
             pageName="칵고리즘"
             link="/cockgorithm"
-            toggleDrawer={toggleDrawer}
+            handleDrawerToggle={handleDrawerToggle}
           />
         </BottomSection>
       </DrawerContainer>
