@@ -1,5 +1,5 @@
 export interface Cookie {
-  userId: number;
+  id: number;
   name: string;
   email: string;
   nickname: string;
@@ -8,9 +8,4 @@ export interface Cookie {
   avatarUrl: string;
   iat: number;
   exp: number;
-}
-
-export interface TokenData {
-  token: string;
-  expiresIn: string;
 }

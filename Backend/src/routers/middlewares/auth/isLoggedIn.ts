@@ -8,8 +8,10 @@ const ACCESS_KEY = process.env.ACCESS_KEY;
 
 export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
   const secretKey = ACCESS_KEY as string;
-  const [token, userId] = req.cookies.Authorization.split('/');
-  if (!token) {
+  let token, userId;
+  try {
+    [token, userId] = req.cookies.Authorization.split('/');
+  } catch (err) {
     return res.status(401).json({ message: '로그인 필요' });
   }
 
@@ -20,33 +22,30 @@ export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
       const user = (await userModel.Mongo.findByFilter({
         _id: userId,
       })) as IUser;
-      decodedData = {
-        userId: user.id,
-        name: user.name,
-        email: user.email,
-        nickname: user.nickname,
-        isAdmin: user.isAdmin,
-        isBartender: user.isBartender,
-        avatarUrl: user.avatarUrl,
-      };
-      const tokenData = createToken(user);
-      const cookie = createCookie(tokenData, user._id);
+      const refreshedToken = createToken(user, true);
+      const cookie = createCookie(refreshedToken, user._id, true);
       res.setHeader('Set-Cookie', cookie);
+      decodedData = jwtModule.verifyToken(token, secretKey);
+    }
+    if (!(await redisCache.exists(`${userId}`))) {
+      res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
+      return res.status(419).json({ message: '만료 또는 손상된 토큰' });
     }
   }
   if (decodedData !== 'TokenExpiredError' && typeof decodedData === 'string') {
     res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     return res.status(419).json({ message: '만료 또는 손상된 토큰' });
   }
-
   req.user = {
-    userId: decodedData.userId,
+    userId: decodedData.id,
     name: decodedData.name,
     email: decodedData.email,
     nickname: decodedData.nickname,
     isAdmin: decodedData.isAdmin,
     isBartender: decodedData.isBartender,
     avatarUrl: decodedData.avatarUrl,
+    iat: decodedData.iat,
+    exp: decodedData.exp,
   };
   next();
 };

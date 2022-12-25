@@ -20,9 +20,9 @@ class AuthController {
     const userInfo: UserCreateData = req.body;
     const newUser = await this.authService.signup(userInfo);
 
-    const tokenData = createToken(newUser);
-    const cookie = createCookie(tokenData, newUser._id);
-    res.setHeader('Token', cookie);
+    const token = createToken(newUser, false);
+    const cookie = createCookie(token, newUser._id, false);
+    res.setHeader('Token', [cookie]);
     res.status(201).json(newUser.userGetResDto);
   };
 
@@ -42,16 +42,20 @@ class AuthController {
     }
     const userData: LoginReqData = req.body;
     const user = await this.authService.login(userData);
-    const tokenData = createToken(user);
-    const cookie = createCookie(tokenData, user._id);
+    const tokenData = createToken(user, isAutoLogin);
+    const cookie = createCookie(tokenData, user._id, isAutoLogin);
     if (isAutoLogin) {
       await redisCache.SETEX(user._id.toString(), 604800, '1');
     }
-    res.setHeader('Set-Cookie', cookie);
+    res.setHeader('Set-Cookie', [cookie]);
     res.status(200).json(user.userGetResDto);
   };
 
   public logout = async (req: Req, res: Res) => {
+    const userId = req.cookies.Authorization.split('/');
+    if (await redisCache.exists(userId)) {
+      redisCache.del(userId);
+    }
     res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     res.sendStatus(204);
   };
