@@ -27,6 +27,28 @@ export const CockgorithmGameContent = ({
     }
   }, [questionCounter]);
 
+  const handleOptionClick = (option: {
+    optionName: string;
+    filterValue: string;
+  }) => {
+    const { filterName } = selectedGame.questions[questionCounter];
+    console.log('클릭됨');
+    setFilters((curr: CockgorithmReqData) => {
+      if (filterName === 'ingredients') {
+        console.log('나는 재료요');
+        curr[filterName] = [...curr[filterName], option.filterValue];
+      } else if (
+        filterName === 'category' ||
+        filterName === 'alcohol' ||
+        filterName === 'degree'
+      ) {
+        curr[filterName] = option.filterValue;
+      }
+      return curr;
+    });
+    increaseQuestionCounter();
+  };
+
   return questionCounter < 5 ? (
     <GameContent>
       <Question>{selectedGame.questions[questionCounter].question}</Question>
@@ -35,27 +57,7 @@ export const CockgorithmGameContent = ({
           (option, index) => (
             <Option
               key={`${questionCounter} + ${index}`}
-              onClick={() => {
-                const { filterName } = selectedGame.questions[questionCounter];
-                console.log('클릭됨');
-                setFilters((curr: CockgorithmReqData) => {
-                  if (filterName === 'ingredients') {
-                    console.log('나는 재료요');
-                    curr[filterName] = [
-                      ...curr[filterName],
-                      option.filterValue,
-                    ];
-                  } else if (
-                    filterName === 'category' ||
-                    filterName === 'alcohol' ||
-                    filterName === 'degree'
-                  ) {
-                    curr[filterName] = option.filterValue;
-                  }
-                  return curr;
-                });
-                increaseQuestionCounter();
-              }}
+              onClick={() => handleOptionClick(option)}
             >
               {option.optionName}
             </Option>
