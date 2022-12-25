@@ -7,7 +7,7 @@ interface GetData extends CockflowCreateReqDto {
   id: string,
 };
 
-export const CockflowItemBox = ({ id, title, content }:GetData) => {
+export const CockflowItemBox = ({ id, title, content }: GetData) => {
   return (
     <NavLink to={`/cockflow/detail/${id}`}>
       <Title>{title}</Title>

@@ -12,7 +12,7 @@ const TextBox = styled.textarea`
   resize: none;
 `;
 
-export const CockflowAddComment = ({ cockflowId }:any) => {
+export const CockflowAddComment = ({ cockflowId }: any) => {
   const gets = async (data: any) => {
     await axios.post(`http://localhost:8000/api/cockflow/${cockflowId}/comments`, data)
       .then(function (response) {
@@ -22,7 +22,7 @@ export const CockflowAddComment = ({ cockflowId }:any) => {
         console.log(error);
       });
   };
-  
+
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
     alert(JSON.stringify(data));

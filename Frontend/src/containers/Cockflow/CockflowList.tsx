@@ -33,28 +33,28 @@ const mockData1 = [
   }, {
     id: '4',
     title: 'string4',
-  },{
+  }, {
     id: '5',
     title: 'string4',
-  },{
+  }, {
     id: '6',
     title: 'string4',
-  },{
+  }, {
     id: '7',
     title: 'string4',
-  },{
+  }, {
     id: '8',
     title: 'string4',
-  },{
+  }, {
     id: '9',
     title: 'string4',
-  },{
+  }, {
     id: '10',
     title: 'string4',
-  },{
+  }, {
     id: '11',
     title: 'string4',
-  },{
+  }, {
     id: '12',
     title: 'string4',
   }
@@ -62,16 +62,16 @@ const mockData1 = [
 
 const imsiData1 = [
   {
-      "_id": "639f1573a10b5da4bacac17c",
-      "id": 4,
-      "owner": 79,
-      "title": "칵플로우 테스트",
-      "content": "오렌지주스 + 말리부랑 잘 어울리는 술이 뭘까요?",
-      "comments": [],
-      "deletedAt": null,
-      "createdAt": "2022-12-18T13:28:19.385Z",
-      "updatedAt": "2022-12-18T13:28:19.385Z",
-      "__v": 0
+    "_id": "639f1573a10b5da4bacac17c",
+    "id": 4,
+    "owner": 79,
+    "title": "칵플로우 테스트",
+    "content": "오렌지주스 + 말리부랑 잘 어울리는 술이 뭘까요?",
+    "comments": [],
+    "deletedAt": null,
+    "createdAt": "2022-12-18T13:28:19.385Z",
+    "updatedAt": "2022-12-18T13:28:19.385Z",
+    "__v": 0
   },
   {
     "_id": "63a15e59117f359863eccece",
@@ -103,17 +103,17 @@ export const CockflowList = () => {
   }]);
 
   const [pageNum, setPageNum] = useState(1)
-  
+
   useEffect(() => {
-    
+
     //axios.get 호출
     // axios.get(`http://localhost:8000/api/cockflow`)
     axios.get(`http://localhost:8000/api/cockflow/?q=${pageNum}`)
-    .then(res => {
-      console.log(res);
-      setData(res.data.cockflows);
-      setPageNum((prev => prev + 1));
-    });
+      .then(res => {
+        console.log(res);
+        setData(res.data.cockflows);
+        setPageNum((prev => prev + 1));
+      });
 
     // setData(mockData1);
     //  무한스크롤 - yarn add react-intersection-observer
@@ -124,13 +124,14 @@ export const CockflowList = () => {
       <CockflowHeader />
       <CockflowLinkBtn link="/cockflow/new" title="질문하기" />
       <List>
-        {data.map((item, index) => {return (
-              <Item key={item.id}>
-                <CockflowItemBox key={item.id} id={item.id} title={String(item.content).slice(0,10).concat('...')}
-                  content={imgArr[Math.round(Math.random()*(imgArr.length-1))]}/>
-              </Item>
-            )
-          }
+        {data.map((item, index) => {
+          return (
+            <Item key={item.id}>
+              <CockflowItemBox key={item.id} id={item.id} title={String(item.content).slice(0, 10).concat('...')}
+                content={imgArr[Math.round(Math.random() * (imgArr.length - 1))]} />
+            </Item>
+          )
+        }
         )}
       </List>
     </P5>

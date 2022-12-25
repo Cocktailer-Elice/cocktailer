@@ -15,7 +15,7 @@ export const CockflowContent = () => {
   const _id = params.cockflowId;
 
   const [resData, setResData] = useState<CockflowGetResData | null>(null);
-    
+
   const [data, setData] = useState({
     id: 0,
     title: '',
@@ -40,7 +40,7 @@ export const CockflowContent = () => {
 
   useEffect(() => {
     axios.get<CockflowGetResData | any>(`http://localhost:8000/api/cockflow/${_id}`)
-    // axios.get<CockflowGetResData>(`http://localhost:8000/api/cockflow/6`)
+      // axios.get<CockflowGetResData>(`http://localhost:8000/api/cockflow/6`)
       .then(res => {
         console.log(res)
         if (res.data) {
@@ -61,7 +61,7 @@ export const CockflowContent = () => {
         };
       });
 
-    
+
   }, []);
 
   return (

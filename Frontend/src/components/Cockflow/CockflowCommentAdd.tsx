@@ -7,7 +7,7 @@ import { CockflowMoreComment } from './CockflowMoreComment';
 import { P15B1, Right } from './style';
 
 const postAdopted = () => {
-  
+
 };
 
 export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
@@ -28,7 +28,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
     gets(data);
     reset();
   };
-  
+
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
 
@@ -42,7 +42,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
 
   return (
     <P15B1 key={item._id}>
-      <Comment2 value={item.content} onChange={()=>{}} readOnly={true}></Comment2>
+      <Comment2 value={item.content} onChange={() => { }} readOnly={true}></Comment2>
       <Right>
         <Button variant="outlined" onClick={() => {
           if (subComment) {

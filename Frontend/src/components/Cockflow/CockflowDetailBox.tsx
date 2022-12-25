@@ -14,7 +14,7 @@ interface dataType {
   };
 };
 
-export const CockflowDetailBox = ({ detailData }:dataType) => {
+export const CockflowDetailBox = ({ detailData }: dataType) => {
   // 수정 기능 붙으면 - 전역으로 관리 
   const [inputActived, setInputActived] = useState(true);
 
@@ -31,8 +31,8 @@ export const CockflowDetailBox = ({ detailData }:dataType) => {
             <FlexMiddle>
               <Middle>
                 {isBartender
-                ? null
-                : <CockflowBadge /> // 임시로 표시를 반대로.
+                  ? null
+                  : <CockflowBadge /> // 임시로 표시를 반대로.
                 }
                 <div>&nbsp;{nickname}</div>
               </Middle>
@@ -40,7 +40,7 @@ export const CockflowDetailBox = ({ detailData }:dataType) => {
                 {String(createdAt).split('T')[0].replaceAll('-', '.')}
               </span>
             </FlexMiddle>
-          </div><br/>
+          </div><br />
           <div>
             {/* <span>(+)조회수</span> */}
           </div>

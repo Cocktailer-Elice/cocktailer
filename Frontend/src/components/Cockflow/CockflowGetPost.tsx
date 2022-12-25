@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const CockflowGetPost = () => {
   const navigate = useNavigate();
-  
+
   const gets = async (data: any) => {
     await axios.post('http://localhost:8000/api/cockflow', data)
       .then(function (response) {
@@ -16,7 +16,7 @@ export const CockflowGetPost = () => {
         console.log(error);
       });
   };
-  
+
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
     console.log(JSON.stringify(data));
@@ -25,7 +25,7 @@ export const CockflowGetPost = () => {
     // reset();
     navigate(`/cockflow`);
   };
-  
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <CockflowPostBox>
