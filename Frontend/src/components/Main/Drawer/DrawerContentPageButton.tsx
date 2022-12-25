@@ -2,19 +2,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface DrawerContentPageButtonProps {
-  pageName: string;
+  title: string;
   link: string;
   handleDrawerClose: () => void;
 }
 
 export const DrawerContentPageButton = ({
-  pageName,
+  title,
   link,
   handleDrawerClose,
 }: DrawerContentPageButtonProps) => {
   return (
     <Link to={link} onClick={handleDrawerClose}>
-      <ContentPageButton>{pageName}</ContentPageButton>
+      <ContentPageButton>{title}</ContentPageButton>
     </Link>
   );
 };

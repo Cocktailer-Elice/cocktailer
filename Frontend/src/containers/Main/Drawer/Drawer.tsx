@@ -9,11 +9,17 @@ interface DrawerProps {
   handleDrawerClose: () => void;
 }
 
-const menus = [
+const userMenus = [
   { isLoggedInUserMenu: true, pageName: '마이페이지', link: '/mypage' },
   { isLoggedInUserMenu: true, pageName: '로그아웃', link: '/logout' },
   { isLoggedInUserMenu: false, pageName: '로그인', link: '/login' },
   { isLoggedInUserMenu: false, pageName: '회원가입', link: '/join' },
+];
+
+const contentMenus = [
+  { pageName: '칵시피', link: '/cockcipe' },
+  { pageName: '칵플로우', link: '/cockflow' },
+  { pageName: '칵고리즘', link: '/cockgorithm' },
 ];
 
 export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
@@ -26,12 +32,12 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              {menus.map(
-                (menu) =>
-                  isLoggedIn === menu.isLoggedInUserMenu && (
+              {userMenus.map(
+                (userMenu) =>
+                  isLoggedIn === userMenu.isLoggedInUserMenu && (
                     <DrawerUserPageButton
-                      title={menu.pageName}
-                      link={menu.link}
+                      title={userMenu.pageName}
+                      link={userMenu.link}
                       handleDrawerClose={handleDrawerClose}
                     />
                   ),
@@ -45,21 +51,13 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
           </TopRightSection>
         </TopSection>
         <BottomSection>
-          <DrawerContentPageButton
-            pageName="칵시피"
-            link="/cockcipe"
-            handleDrawerClose={handleDrawerClose}
-          />
-          <DrawerContentPageButton
-            pageName="칵플로우"
-            link="/cockflow"
-            handleDrawerClose={handleDrawerClose}
-          />
-          <DrawerContentPageButton
-            pageName="칵고리즘"
-            link="/cockgorithm"
-            handleDrawerClose={handleDrawerClose}
-          />
+          {contentMenus.map((contentMenu) => (
+            <DrawerContentPageButton
+              title={contentMenu.pageName}
+              link={contentMenu.link}
+              handleDrawerClose={handleDrawerClose}
+            />
+          ))}
         </BottomSection>
       </DrawerContainer>
     </>
