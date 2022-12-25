@@ -6,13 +6,13 @@ import { CockgorithmReqData } from '../../../../types/cockgorithmType';
 
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
-  toggleGameEnd: () => void;
+  handleLoadingOpen: () => void;
   setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
 }
 
 export const CockgorithmGameContent = ({
   selectedGame,
-  toggleGameEnd,
+  handleLoadingOpen,
   setFilters,
 }: CockgorithmGameContentProps) => {
   const [questionCounter, setQuestionCounter] = useState(0);
@@ -23,9 +23,31 @@ export const CockgorithmGameContent = ({
 
   useEffect(() => {
     if (questionCounter === 5) {
-      toggleGameEnd();
+      handleLoadingOpen();
     }
   }, [questionCounter]);
+
+  const handleOptionClick = (option: {
+    optionName: string;
+    filterValue: string;
+  }) => {
+    const { filterName } = selectedGame.questions[questionCounter];
+    console.log('클릭됨');
+    setFilters((curr: CockgorithmReqData) => {
+      if (filterName === 'ingredients') {
+        console.log('나는 재료요');
+        curr[filterName] = [...curr[filterName], option.filterValue];
+      } else if (
+        filterName === 'category' ||
+        filterName === 'alcohol' ||
+        filterName === 'degree'
+      ) {
+        curr[filterName] = option.filterValue;
+      }
+      return curr;
+    });
+    increaseQuestionCounter();
+  };
 
   return questionCounter < 5 ? (
     <GameContent>
@@ -35,27 +57,7 @@ export const CockgorithmGameContent = ({
           (option, index) => (
             <Option
               key={`${questionCounter} + ${index}`}
-              onClick={() => {
-                const { filterName } = selectedGame.questions[questionCounter];
-                console.log('클릭됨');
-                setFilters((curr: CockgorithmReqData) => {
-                  if (filterName === 'ingredients') {
-                    console.log('나는 재료요');
-                    curr[filterName] = [
-                      ...curr[filterName],
-                      option.filterValue,
-                    ];
-                  } else if (
-                    filterName === 'category' ||
-                    filterName === 'alcohol' ||
-                    filterName === 'degree'
-                  ) {
-                    curr[filterName] = option.filterValue;
-                  }
-                  return curr;
-                });
-                increaseQuestionCounter();
-              }}
+              onClick={() => handleOptionClick(option)}
             >
               {option.optionName}
             </Option>

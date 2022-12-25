@@ -6,13 +6,14 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import { useToggle } from './../../utils/customHooks';
 import {
   CockgorithmReqData,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
 
 interface CockgorithmModalProps {
-  toggleModal: () => void;
+  handleModalClose: () => void;
   seletedGame: IGame;
 }
 
@@ -25,68 +26,69 @@ const cocktailMockData = {
 };
 
 export const CockgorithmModal = ({
-  toggleModal,
+  handleModalClose,
   seletedGame,
 }: CockgorithmModalProps) => {
-  const [isGameEnd, setIsGameEnd] = useState(false);
+  const { isOpen: isLoadingOpen, handleOpen: handleLoadingOpen } =
+    useToggle(false);
+
+  const { isOpen: isGameResultOpen, handleOpen: handleGameResultOpen } =
+    useToggle(false);
+
   const [filters, setFilters] = useState<CockgorithmReqData>({
     category: '',
     alcohol: '',
     degree: '',
     ingredients: [],
   });
-  const [loading, setLoading] = useState(false);
+
   const [cocktailInfo, setCocktailInfo] =
     useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
-  const toggleGameEnd = () => {
-    setIsGameEnd((curr) => !curr);
-  };
-
   useEffect(() => {
-    if (isGameEnd) {
-      // 로딩 시작
-      setLoading(true);
-
+    if (isLoadingOpen) {
       console.log('유저 응답', filters);
 
       setTimeout(async () => {
-        const response = await axios.post(
-          'http://localhost:8000/api/cocktails/cockgorithm',
-          filters,
-        );
+        try {
+          const response = await axios.post(
+            'http://localhost:8000/api/cocktails/cockgorithm',
+            filters,
+          );
 
-        console.log('response');
-        console.log(response);
+          console.log('response');
+          console.log(response);
 
-        const fetchedCocktail = response.data.data;
-
-        setCocktailInfo(fetchedCocktail);
-
-        setLoading(false);
+          const fetchedCocktail = response.data.data;
+          setCocktailInfo(fetchedCocktail);
+        } catch (error) {
+          alert(error);
+        } finally {
+          handleGameResultOpen();
+        }
       }, 2000);
     }
-  }, [isGameEnd]);
+  }, [isLoadingOpen]);
 
   return (
     <>
-      <Dimmed onClick={toggleModal} />
+      <Dimmed onClick={handleModalClose} />
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
-          {!isGameEnd ? (
+          {!isLoadingOpen ? (
             <CockgorithmGameContent
               selectedGame={seletedGame}
-              toggleGameEnd={toggleGameEnd}
+              handleLoadingOpen={handleLoadingOpen}
               setFilters={setFilters}
             />
-          ) : loading ? (
+          ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
           ) : (
             <CockgorithmGameResult cocktailInfo={cocktailInfo} />
           )}
         </MainSection>
-        <CloseButton onClick={toggleModal} />
+        <CloseButton onClick={handleModalClose} />
       </Modal>
     </>
   );
