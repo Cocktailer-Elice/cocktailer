@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ApplyButton } from '../../../components/Cockcipe/Apply/ApplyButton';
 import { InputCockContent } from '../../../components/Cockcipe/Apply/InputCockContent';
-import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
+// import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
 import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
 import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
 import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
@@ -77,7 +77,7 @@ export const ApplyContainer = () => {
         setCategory={setCategory}
         category={category}
       />
-      <InputCockFlavor setFlavor={setFlavor} />
+      {/* <InputCockFlavor setFlavor={setFlavor} /> */}
       <InputCockContent setContent={setContent} />
       <InputRecipe
         kind="alcohol"
