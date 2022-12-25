@@ -24,9 +24,11 @@
     "mongoose": "^6.8.0",
     "morgan": "^1.10.0",
     "node-fetch": "2",
+    "pm2": "^5.2.2",
     "redis": "^4.5.1",
     "reflect-metadata": "^0.1.13",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
