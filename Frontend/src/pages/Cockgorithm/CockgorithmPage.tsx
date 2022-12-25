@@ -17,24 +17,28 @@ export interface IGame {
 }
 
 export const CockgorithmPage = () => {
-  const { isOpen: isModalOpen, handleToggle: handleModalToggle } =
-    useToggle(false);
+  const {
+    isOpen: isModalOpen,
+    handleOpen: handleModalOpen,
+    handleClose: handleModalClose,
+  } = useToggle(false);
+
   const [seletedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
 
-  const changeSelectedGame = (game: IGame) => {
+  const handleGameClick = (game: IGame) => {
     setSelectedGame(game);
+    handleModalOpen();
   };
 
   return (
     <Container>
       <CockgorithmGameList
-        handleModalToggle={handleModalToggle}
         gameDatas={gameDatas}
-        changeSelectedGame={changeSelectedGame}
+        handleGameClick={handleGameClick}
       />
       {isModalOpen && (
         <CockgorithmModal
-          handleModalToggle={handleModalToggle}
+          handleModalClose={handleModalClose}
           seletedGame={seletedGame}
         />
       )}

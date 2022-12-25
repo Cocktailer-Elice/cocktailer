@@ -3,15 +3,13 @@ import styled from 'styled-components';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
 
 interface CockgorithmGameListProps {
-  handleModalToggle: () => void;
   gameDatas: IGame[];
-  changeSelectedGame: (game: IGame) => void;
+  handleGameClick: (game: IGame) => void;
 }
 
 export const CockgorithmGameList = ({
-  handleModalToggle,
   gameDatas,
-  changeSelectedGame,
+  handleGameClick,
 }: CockgorithmGameListProps) => {
   return (
     <GameList>
@@ -19,8 +17,7 @@ export const CockgorithmGameList = ({
         <Game
           key={index}
           onClick={() => {
-            handleModalToggle();
-            changeSelectedGame(game);
+            handleGameClick(game);
           }}
         >
           {game.gameTitle}
