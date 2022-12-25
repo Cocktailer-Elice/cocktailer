@@ -6,13 +6,13 @@ import { CockgorithmReqData } from '../../../../types/cockgorithmType';
 
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
-  toggleGameEnd: () => void;
+  handleLoadingOpen: () => void;
   setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
 }
 
 export const CockgorithmGameContent = ({
   selectedGame,
-  toggleGameEnd,
+  handleLoadingOpen,
   setFilters,
 }: CockgorithmGameContentProps) => {
   const [questionCounter, setQuestionCounter] = useState(0);
@@ -23,7 +23,7 @@ export const CockgorithmGameContent = ({
 
   useEffect(() => {
     if (questionCounter === 5) {
-      toggleGameEnd();
+      handleLoadingOpen();
     }
   }, [questionCounter]);
 

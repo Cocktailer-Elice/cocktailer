@@ -6,6 +6,7 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import { useToggle } from './../../utils/customHooks';
 import {
   CockgorithmReqData,
   CockgorithmResData,
@@ -28,26 +29,24 @@ export const CockgorithmModal = ({
   handleModalToggle,
   seletedGame,
 }: CockgorithmModalProps) => {
-  const [isGameEnd, setIsGameEnd] = useState(false);
+  const { isOpen: isLoadingOpen, handleOpen: handleLoadingOpen } =
+    useToggle(false);
+
+  const { isOpen: isGameResultOpen, handleOpen: handleGameResultOpen } =
+    useToggle(false);
+
   const [filters, setFilters] = useState<CockgorithmReqData>({
     category: '',
     alcohol: '',
     degree: '',
     ingredients: [],
   });
-  const [loading, setLoading] = useState(false);
+
   const [cocktailInfo, setCocktailInfo] =
     useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
-  const toggleGameEnd = () => {
-    setIsGameEnd((curr) => !curr);
-  };
-
   useEffect(() => {
-    if (isGameEnd) {
-      // 로딩 시작
-      setLoading(true);
-
+    if (isLoadingOpen) {
       console.log('유저 응답', filters);
 
       setTimeout(async () => {
@@ -65,11 +64,11 @@ export const CockgorithmModal = ({
         } catch (error) {
           alert(error);
         } finally {
-          setLoading(false);
+          handleGameResultOpen();
         }
       }, 2000);
     }
-  }, [isGameEnd]);
+  }, [isLoadingOpen]);
 
   return (
     <>
@@ -77,13 +76,13 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
-          {!isGameEnd ? (
+          {!isLoadingOpen ? (
             <CockgorithmGameContent
               selectedGame={seletedGame}
-              toggleGameEnd={toggleGameEnd}
+              handleLoadingOpen={handleLoadingOpen}
               setFilters={setFilters}
             />
-          ) : loading ? (
+          ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
           ) : (
             <CockgorithmGameResult cocktailInfo={cocktailInfo} />
