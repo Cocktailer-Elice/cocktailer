@@ -6,70 +6,58 @@ import { DrawerContentPageButton } from './../../../components/Main/Drawer/Drawe
 import { loginChecker } from './../../../utils/loginChecker';
 
 interface DrawerProps {
-  toggleDrawer: () => void;
+  handleDrawerClose: () => void;
 }
 
-export const Drawer = ({ toggleDrawer }: DrawerProps) => {
+const userMenus = [
+  { isLoggedInUserMenu: true, pageName: '마이페이지', link: '/mypage' },
+  { isLoggedInUserMenu: true, pageName: '로그아웃', link: '/logout' },
+  { isLoggedInUserMenu: false, pageName: '로그인', link: '/login' },
+  { isLoggedInUserMenu: false, pageName: '회원가입', link: '/join' },
+];
+
+const contentMenus = [
+  { pageName: '칵시피', link: '/cockcipe' },
+  { pageName: '칵플로우', link: '/cockflow' },
+  { pageName: '칵고리즘', link: '/cockgorithm' },
+];
+
+export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
   const isLoggedIn = loginChecker();
 
   return (
     <>
-      <Dimmed onClick={toggleDrawer} />
+      <Dimmed onClick={handleDrawerClose} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              {isLoggedIn ? (
-                <>
-                  <DrawerUserPageButton
-                    pageName="마이페이지"
-                    link="/mypage"
-                    toggleDrawer={toggleDrawer}
-                  />
-                  <DrawerUserPageButton
-                    pageName="로그아웃"
-                    link="/logout"
-                    toggleDrawer={toggleDrawer}
-                  />
-                </>
-              ) : (
-                <>
-                  <DrawerUserPageButton
-                    pageName="로그인"
-                    link="/login"
-                    toggleDrawer={toggleDrawer}
-                  />
-                  <DrawerUserPageButton
-                    pageName="회원가입"
-                    link="/join"
-                    toggleDrawer={toggleDrawer}
-                  />
-                </>
+              {userMenus.map(
+                (userMenu) =>
+                  isLoggedIn === userMenu.isLoggedInUserMenu && (
+                    <DrawerUserPageButton
+                      title={userMenu.pageName}
+                      link={userMenu.link}
+                      handleDrawerClose={handleDrawerClose}
+                    />
+                  ),
               )}
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
-            <CloseButtonWrap onClick={toggleDrawer}>
+            <CloseButtonWrap onClick={handleDrawerClose}>
               <CloseButton />
             </CloseButtonWrap>
           </TopRightSection>
         </TopSection>
         <BottomSection>
-          <DrawerContentPageButton
-            pageName="칵시피"
-            link="/cockcipe"
-            toggleDrawer={toggleDrawer}
-          />
-          <DrawerContentPageButton
-            pageName="칵플로우"
-            link="/cockflow"
-            toggleDrawer={toggleDrawer}
-          />
-          <DrawerContentPageButton
-            pageName="칵고리즘"
-            link="/cockgorithm"
-            toggleDrawer={toggleDrawer}
-          />
+          {contentMenus.map((contentMenu) => (
+            <DrawerContentPageButton
+              title={contentMenu.pageName}
+              link={contentMenu.link}
+              handleDrawerClose={handleDrawerClose}
+            />
+          ))}
         </BottomSection>
       </DrawerContainer>
     </>
