@@ -51,19 +51,22 @@ export const CockgorithmModal = ({
       console.log('유저 응답', filters);
 
       setTimeout(async () => {
-        const response = await axios.post(
-          'http://localhost:8000/api/cocktails/cockgorithm',
-          filters,
-        );
+        try {
+          const response = await axios.post(
+            'http://localhost:8000/api/cocktails/cockgorithm',
+            filters,
+          );
 
-        console.log('response');
-        console.log(response);
+          console.log('response');
+          console.log(response);
 
-        const fetchedCocktail = response.data.data;
-
-        setCocktailInfo(fetchedCocktail);
-
-        setLoading(false);
+          const fetchedCocktail = response.data.data;
+          setCocktailInfo(fetchedCocktail);
+        } catch (error) {
+          alert(error);
+        } finally {
+          setLoading(false);
+        }
       }, 2000);
     }
   }, [isGameEnd]);
