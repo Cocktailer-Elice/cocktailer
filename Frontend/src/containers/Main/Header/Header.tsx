@@ -2,24 +2,24 @@ import styled from 'styled-components';
 import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
 import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
 import { Drawer } from './../Drawer/Drawer';
-import { useState } from 'react';
+import { useToggle } from '../../../utils/customHooks';
 
 export const Header = () => {
-  const [drawer, setDrawer] = useState(false);
-
-  const toggleDrawer = () => {
-    setDrawer((curr) => !curr);
-  };
+  const {
+    isOpen: isDrawerOpen,
+    handleOpen: handleDrawerOpen,
+    handleClose: handleDrawerClose,
+  } = useToggle(false);
 
   return (
     <Container>
       <LeftSection>
-        <HeaderHamburgerButton toggleDrawer={toggleDrawer} />
+        <HeaderHamburgerButton handleDrawerOpen={handleDrawerOpen} />
       </LeftSection>
       <RightSection>
         <HeaderHomeLogo />
       </RightSection>
-      {drawer ? <Drawer toggleDrawer={toggleDrawer} /> : <></>}
+      {isDrawerOpen && <Drawer handleDrawerClose={handleDrawerClose} />}
     </Container>
   );
 };

@@ -3,25 +3,31 @@ import styled from 'styled-components';
 import { HomeWidgetsContainer } from '../../containers/Home/HomeWidgetsContainer';
 import { HomeSubCarousel } from '../../containers/Home/HomeSubCarousel';
 import { HomeMainCarousel } from '../../containers/Home/HomeMainCarousel';
+import { Helmet } from 'react-helmet';
 
 export const Home = () => {
   return (
-    <Container>
-      <Section>
-        <HomeMainCarousel />
-      </Section>
-      <Section>
-        <HomeWidgetsContainer />
-      </Section>
-      <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
-      <Section>
-        <HomeSubCarousel />
-      </Section>
-      <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
-      <Section>
-        <HomeSubCarousel />
-      </Section>
-    </Container>
+    <>
+      <Helmet>
+        <title>Cocktailer | 홈</title>
+      </Helmet>
+      <Container>
+        <Section>
+          <HomeMainCarousel />
+        </Section>
+        <Section>
+          <HomeWidgetsContainer />
+        </Section>
+        <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
+        <Section>
+          <HomeSubCarousel />
+        </Section>
+        <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
+        <Section>
+          <HomeSubCarousel />
+        </Section>
+      </Container>
+    </>
   );
 };
 
