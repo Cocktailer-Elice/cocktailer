@@ -12,7 +12,7 @@ import {
 } from '../../../../types/cockgorithmType';
 
 interface CockgorithmModalProps {
-  toggleModal: () => void;
+  handleModalToggle: () => void;
   seletedGame: IGame;
 }
 
@@ -25,7 +25,7 @@ const cocktailMockData = {
 };
 
 export const CockgorithmModal = ({
-  toggleModal,
+  handleModalToggle,
   seletedGame,
 }: CockgorithmModalProps) => {
   const [isGameEnd, setIsGameEnd] = useState(false);
@@ -70,7 +70,7 @@ export const CockgorithmModal = ({
 
   return (
     <>
-      <Dimmed onClick={toggleModal} />
+      <Dimmed onClick={handleModalToggle} />
       <Modal>
         <MainSection>
           <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
@@ -86,7 +86,7 @@ export const CockgorithmModal = ({
             <CockgorithmGameResult cocktailInfo={cocktailInfo} />
           )}
         </MainSection>
-        <CloseButton onClick={toggleModal} />
+        <CloseButton onClick={handleModalToggle} />
       </Modal>
     </>
   );

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
 import gameDatas from './gameDatas.json';
+import { useToggle } from './../../utils/customHooks';
 
 export interface IGame {
   gameTitle: string;
@@ -16,12 +17,9 @@ export interface IGame {
 }
 
 export const CockgorithmPage = () => {
-  const [modal, setModal] = useState(false);
+  const { isOpen: isModalOpen, handleToggle: handleModalToggle } =
+    useToggle(false);
   const [seletedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
-
-  const toggleModal = () => {
-    setModal((curr) => !curr);
-  };
 
   const changeSelectedGame = (game: IGame) => {
     setSelectedGame(game);
@@ -30,14 +28,15 @@ export const CockgorithmPage = () => {
   return (
     <Container>
       <CockgorithmGameList
-        toggleModal={toggleModal}
+        handleModalToggle={handleModalToggle}
         gameDatas={gameDatas}
         changeSelectedGame={changeSelectedGame}
       />
-      {modal ? (
-        <CockgorithmModal toggleModal={toggleModal} seletedGame={seletedGame} />
-      ) : (
-        <></>
+      {isModalOpen && (
+        <CockgorithmModal
+          handleModalToggle={handleModalToggle}
+          seletedGame={seletedGame}
+        />
       )}
     </Container>
   );
