@@ -1,6 +1,7 @@
 import { UserInfo } from '../../services';
 import { AnyExpression, Document, UpdateWriteOpResult } from 'mongoose';
 import { User } from 'types';
+import { Cookie } from 'Backend/src/routers/middlewares/types';
 
 export interface IUserMongoModel {
   create(userInfo: UserInfo): Promise<IUser>;
@@ -53,4 +54,5 @@ export interface IUser extends Document {
   isBartender: boolean | string;
   deletedAt: null | number;
   readonly userGetResDto: User;
+  readonly tokenData: Cookie;
 }

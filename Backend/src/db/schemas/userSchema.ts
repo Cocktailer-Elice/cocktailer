@@ -1,6 +1,7 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../types';
 import { User } from 'types';
+import { Cookie } from 'Backend/src/routers/middlewares/types';
 
 const UserSchema: Schema = new Schema(
   {
@@ -65,6 +66,18 @@ UserSchema.virtual('userGetResDto').get(function (this: User) {
     email: this.email,
     nickname: this.nickname,
     avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
+    isBartender: this.isBartender === true ? true : false,
+  };
+});
+
+UserSchema.virtual('tokenData').get(function (this: Cookie) {
+  return {
+    id: this.id,
+    name: this.name,
+    email: this.email,
+    nickname: this.nickname,
+    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
+    isAdmin: this.isAdmin,
     isBartender: this.isBartender === true ? true : false,
   };
 });
