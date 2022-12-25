@@ -87,7 +87,7 @@ class AuthService {
   };
 
   public checkEmailDuplicate = async (email: string) => {
-    const filter = { email };
+    const filter = { email, deletedAt: null };
     const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
@@ -96,7 +96,7 @@ class AuthService {
   };
 
   public checkTelDuplicate = async (tel: string) => {
-    const filter = { tel };
+    const filter = { tel, deletedAt: null };
     const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '전화번호 중복');

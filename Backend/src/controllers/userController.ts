@@ -1,6 +1,7 @@
 import { Request as Req, Response as Res } from 'express';
+import { redisCache } from '../redis';
 import userService from '../services/userService';
-import { checkReqBody } from './utils';
+import { checkReqBody, createCookie, updateToken } from './utils';
 
 class UserController {
   private readonly userService = userService;
@@ -38,6 +39,12 @@ class UserController {
     const { userId } = req.user;
     checkReqBody(avatarUrl);
     await this.userService.updateUserProfile(userId, avatarUrl);
+    const userIdString = req.cookies.Authorization.split('/')[1];
+    const originalCookie = req.user;
+    const token = updateToken(originalCookie);
+    const isAutoLogin = (await redisCache.exists(userIdString)) ? true : false;
+    const cookie = createCookie(token, userIdString, isAutoLogin);
+    res.setHeader('Set-Cookie', [cookie]);
     res.sendStatus(204);
   };
 

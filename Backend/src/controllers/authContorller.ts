@@ -22,7 +22,7 @@ class AuthController {
 
     const token = createToken(newUser, false);
     const cookie = createCookie(token, newUser._id, false);
-    res.setHeader('Token', [cookie]);
+    res.setHeader('Set-Cookie', [cookie]);
     res.status(201).json(newUser.userGetResDto);
   };
 
