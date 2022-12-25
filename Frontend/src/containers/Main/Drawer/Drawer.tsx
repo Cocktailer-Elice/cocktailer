@@ -4,10 +4,18 @@ import CloseButton from '@mui/icons-material/Close';
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 import { loginChecker } from './../../../utils/loginChecker';
+import { isLoggedIn } from './../../../../../Backend/src/routers/middlewares/auth/isLoggedIn';
 
 interface DrawerProps {
   handleDrawerToggle: () => void;
 }
+
+const menus = [
+  { isLoggedInUserMenu: true, pageName: '마이페이지', link: '/mypage' },
+  { isLoggedInUserMenu: true, pageName: '로그아웃', link: '/logout' },
+  { isLoggedInUserMenu: false, pageName: '로그인', link: '/login' },
+  { isLoggedInUserMenu: false, pageName: '회원가입', link: '/join' },
+];
 
 export const Drawer = ({ handleDrawerToggle }: DrawerProps) => {
   const isLoggedIn = loginChecker();
@@ -19,32 +27,15 @@ export const Drawer = ({ handleDrawerToggle }: DrawerProps) => {
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              {isLoggedIn ? (
-                <>
-                  <DrawerUserPageButton
-                    pageName="마이페이지"
-                    link="/mypage"
-                    handleDrawerToggle={handleDrawerToggle}
-                  />
-                  <DrawerUserPageButton
-                    pageName="로그아웃"
-                    link="/logout"
-                    handleDrawerToggle={handleDrawerToggle}
-                  />
-                </>
-              ) : (
-                <>
-                  <DrawerUserPageButton
-                    pageName="로그인"
-                    link="/login"
-                    handleDrawerToggle={handleDrawerToggle}
-                  />
-                  <DrawerUserPageButton
-                    pageName="회원가입"
-                    link="/join"
-                    handleDrawerToggle={handleDrawerToggle}
-                  />
-                </>
+              {menus.map(
+                (menu) =>
+                  isLoggedIn === menu.isLoggedInUserMenu && (
+                    <DrawerUserPageButton
+                      title={menu.pageName}
+                      link={menu.link}
+                      handleDrawerToggle={handleDrawerToggle}
+                    />
+                  ),
               )}
             </UserPageButtonContainer>
           </TopLeftSection>
