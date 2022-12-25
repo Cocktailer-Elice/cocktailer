@@ -5,6 +5,7 @@ import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal'
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
 import gameDatas from './gameDatas.json';
 import { useToggle } from './../../utils/customHooks';
+import { Helmet } from 'react-helmet';
 
 export interface IGame {
   gameTitle: string;
@@ -31,18 +32,23 @@ export const CockgorithmPage = () => {
   };
 
   return (
-    <Container>
-      <CockgorithmGameList
-        gameDatas={gameDatas}
-        handleGameClick={handleGameClick}
-      />
-      {isModalOpen && (
-        <CockgorithmModal
-          handleModalClose={handleModalClose}
-          seletedGame={seletedGame}
+    <>
+      <Helmet>
+        <title>Cocktailer | 칵고리즘</title>
+      </Helmet>
+      <Container>
+        <CockgorithmGameList
+          gameDatas={gameDatas}
+          handleGameClick={handleGameClick}
         />
-      )}
-    </Container>
+        {isModalOpen && (
+          <CockgorithmModal
+            handleModalClose={handleModalClose}
+            seletedGame={seletedGame}
+          />
+        )}
+      </Container>
+    </>
   );
 };
 
