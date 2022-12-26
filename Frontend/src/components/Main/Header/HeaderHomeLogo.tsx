@@ -5,7 +5,7 @@ export const HeaderHomeLogo = () => {
   return (
     <HomeLogo>
       <CustomLink to="/">
-        <HomeLogoImage />
+        <HomeLogoImage src="../../../../assets/images/app_logo.png" />
         <AppTitle>Cocktailer</AppTitle>
       </CustomLink>
     </HomeLogo>
@@ -44,4 +44,5 @@ const AppTitle = styled.div`
 const HomeLogoImage = styled.img`
   width: 50px;
   height: 50px;
+  border-radius: 5px;
 `;
