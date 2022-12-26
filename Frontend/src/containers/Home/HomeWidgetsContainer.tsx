@@ -22,6 +22,5 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid gray;
   padding: 30px;
 `;

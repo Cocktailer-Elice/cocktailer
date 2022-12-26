@@ -41,6 +41,5 @@ export const HomeMainCarousel = () => {
 const Carousel = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid gray;
   padding: 10px;
 `;
