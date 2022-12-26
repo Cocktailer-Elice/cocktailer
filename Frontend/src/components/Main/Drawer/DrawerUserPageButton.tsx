@@ -24,6 +24,7 @@ const CustomLink = styled(Link)`
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-width: 90px;
   height: 100%;
 `;
 
