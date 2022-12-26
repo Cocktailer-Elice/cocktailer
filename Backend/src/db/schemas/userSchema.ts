@@ -1,7 +1,7 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../types';
 import { User } from 'types';
-import { Cookie } from 'Backend/src/routers/middlewares/types';
+import { Token } from 'Backend/src/routers/middlewares/types';
 
 const UserSchema: Schema = new Schema(
   {
@@ -71,7 +71,7 @@ UserSchema.virtual('userGetResDto').get(function (this: User) {
   };
 });
 
-UserSchema.virtual('tokenData').get(function (this: Cookie) {
+UserSchema.virtual('tokenData').get(function (this: Token) {
   return {
     id: this.id,
     name: this.name,

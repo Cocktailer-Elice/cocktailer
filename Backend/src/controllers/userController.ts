@@ -41,11 +41,9 @@ class UserController {
     await this.userService.updateUserProfile(userId, avatarUrl);
     const userIdString = req.cookies.Authorization.split('/')[1];
     const originalCookie = req.user;
-    const token = updateToken(originalCookie);
+    const token = updateToken(originalCookie, avatarUrl);
     const isAutoLogin = (await redisCache.exists(userIdString)) ? true : false;
-    console.log(isAutoLogin);
     const cookie = createCookie(token, userIdString, isAutoLogin);
-    console.log(cookie);
     res.setHeader('Set-Cookie', [cookie]);
     res.sendStatus(204);
   };
