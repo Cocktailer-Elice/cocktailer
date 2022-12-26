@@ -6,6 +6,6 @@ export interface Cookie {
   isAdmin: boolean;
   isBartender: boolean;
   avatarUrl: string;
-  iat: number;
-  exp: number;
+  iat?: number;
+  exp?: number;
 }
