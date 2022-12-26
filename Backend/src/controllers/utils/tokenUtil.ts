@@ -18,8 +18,8 @@ export const createToken = (user: IUser, isAutoLogin: boolean) => {
 export const updateToken = (originalCookie: Cookie) => {
   const tokenData = originalCookie;
   const secretKey = ACCESS_KEY;
-  const { iat, exp } = originalCookie;
-  const expiresIn = exp - iat;
+  const { exp } = originalCookie;
+  const expiresIn = exp - Date.now() * 1000;
   const token = sign(tokenData, secretKey, { expiresIn });
   return token;
 };
