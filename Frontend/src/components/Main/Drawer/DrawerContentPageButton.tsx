@@ -21,9 +21,18 @@ export const DrawerContentPageButton = ({
 
 const ContentPageButton = styled.div`
   width: 100%;
-  height: 60px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+
+  background-color: #3bc9db;
+
+  font-size: 18px;
+  font-weight: 600;
+  color: whitesmoke;
+
+  :hover {
+    opacity: 0.8;
+  }
 `;
