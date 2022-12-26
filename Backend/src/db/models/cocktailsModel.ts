@@ -1,10 +1,11 @@
 import { CocktailModelType } from '../types';
-import { CocktailCreateReqData } from 'types';
+import { CocktailCreateReqData, CocktailRankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 import {
   lists,
   findCocktailId,
   findCategoryAndSearch,
+  main1,
 } from '../queries/cocktailsQuery';
 import cocktailsSchema from '../schemas/cocktailsSchema';
 
@@ -27,7 +28,7 @@ interface CocktailInterface {
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<any>;
 
-  main1(): Promise<CocktailCreateReqData[]>;
+  main1(): Promise<CocktailRankings[]>;
 }
 
 const limitEachPage = 10;
@@ -120,71 +121,11 @@ export class CocktailModel implements CocktailInterface {
     return result.deletedCount;
   };
 
-  public main1 = async (): Promise<CocktailCreateReqData[]> => {
-    const result: CocktailCreateReqData[] = await cocktailsSchema.aggregate([
-      {
-        $match: {
-          likes: {
-            $gte: 50,
-            $lte: 100,
-          },
-        },
-      },
-      {
-        $limit: 9,
-      },
-      {
-        $sort: {
-          likes: -1,
-        },
-      },
-      {
-        $limit: 10,
-      },
-      {
-        $project: {
-          _id: 0,
-          category: 0,
-          flavor: 0,
-          degree: 0,
-          ratio: 0,
-          likes: 0,
-          content: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'owner',
-          foreignField: 'id',
-          as: 'owner',
-          pipeline: [
-            {
-              $project: {
-                _id: 0,
-                name: 0,
-                email: 0,
-                password: 0,
-                birthday: 0,
-                avatarUrl: 0,
-                isAdmin: 0,
-                createdAt: 0,
-                updatedAt: 0,
-                deletedAt: 0,
-                tel: 0,
-              },
-            },
-          ],
-        },
-      },
-      {
-        $unwind: {
-          path: '$owner',
-        },
-      },
-    ]);
+  public main1 = async (): Promise<CocktailRankings[]> => {
+    const queries = main1();
+    const result: CocktailRankings[] = await cocktailsSchema.aggregate(
+      Object(queries),
+    );
 
     return result;
   };

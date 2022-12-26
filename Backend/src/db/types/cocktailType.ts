@@ -31,3 +31,14 @@ export interface CocktailModelType {
 
   readonly cocktailInfo: CocktailGetResData;
 }
+
+export interface CocktailRankings {
+  id: number;
+  img: string;
+  name: string;
+  official: boolean;
+  owner: {
+    nickname: string;
+    isBartender: boolean;
+  };
+}

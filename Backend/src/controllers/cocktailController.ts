@@ -1,5 +1,5 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData } from 'types';
+import { CocktailCreateReqData, CocktailRankings } from 'types';
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {
@@ -88,7 +88,7 @@ class CocktailController {
   };
 
   public main1 = async (req: Req, res: Res) => {
-    const result: any = await this.cocktailService.main1();
+    const result: CocktailRankings[] = await this.cocktailService.main1();
     res.status(200).json(result);
   };
 

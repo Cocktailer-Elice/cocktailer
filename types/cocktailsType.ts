@@ -49,3 +49,14 @@ export interface CocktailGetResData {
   ratio: object;
   content: string;
 }
+
+export interface CocktailRankings {
+  id: number;
+  img: string;
+  name: string;
+  official: boolean;
+  owner: {
+    nickname: string;
+    isBartender: boolean;
+  };
+}

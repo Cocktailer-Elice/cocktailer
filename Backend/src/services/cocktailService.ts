@@ -1,4 +1,4 @@
-import { CocktailServiceType } from './types';
+import { CocktailServiceType, CocktailRankings } from './types';
 
 import { cocktailModel } from '../db';
 import { AppError, errorNames } from '../routers/middlewares';
@@ -138,7 +138,7 @@ class CocktailService {
   }
 
   public async main1() {
-    const data: any = await this.cocktailModel.main1();
+    const data: CocktailRankings[] = await this.cocktailModel.main1();
 
     if (!data) {
       throw new AppError(errorNames.noDataError, 400, '데이터 불러오기 실패!!');
