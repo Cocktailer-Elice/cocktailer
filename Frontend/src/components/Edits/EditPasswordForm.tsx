@@ -16,24 +16,21 @@ export const EditPasswordForm = () => {
   });
   const navigate = useNavigate();
   const { handleSubmit, getValues } = methods;
-  const sendPasswordChangeRequest = async () => {
+  const onSubmit = async () => {
     const response = await axios.patch(CHANGE_PASSWORD, {
       password: getValues('password'),
       newPassword: getValues('newPassword'),
     });
-    if (response.status === 400) {
+    if (response.status === 204) {
       alert('다시 로그인해주세요');
       navigate('/logout');
     } else {
-      alert('Server Error');
+      alert('비밀번호 변경 실패');
     }
-  };
-  const onSubmitHandler = () => {
-    sendPasswordChangeRequest();
   };
   return (
     <FormProvider {...methods}>
-      <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
+      <UserForm onSubmit={handleSubmit(onSubmit)}>
         <UserInput
           label="password"
           id="password"

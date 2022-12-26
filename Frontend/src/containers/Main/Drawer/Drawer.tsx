@@ -3,8 +3,8 @@ import CloseButton from '@mui/icons-material/Close';
 
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
-import { loginChecker } from './../../../utils/loginChecker';
 import { contentMenus } from './../../../constants/pages';
+import { useAuthentication } from './../../../hooks/useAuthentication';
 
 interface DrawerProps {
   handleDrawerClose: () => void;
@@ -18,7 +18,7 @@ const userMenus = [
 ];
 
 export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
-  const isLoggedIn = loginChecker();
+  const isLoggedIn = useAuthentication();
 
   return (
     <>
