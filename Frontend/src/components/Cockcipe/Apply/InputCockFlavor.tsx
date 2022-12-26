@@ -1,20 +1,26 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-export const InputCockFlavor = ({ setFlavor }) => {
+interface Props {
+  setFlavor: any;
+  flavor: string[];
+}
+
+export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tag, setTag] = useState<string | null>('');
-  const [tagList, setTagList] = useState<string[]>([]);
+  const [tagList, setTagList] = useState<string[]>(
+    flavor.length > 0 ? flavor : [],
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(inputRef.current);
     setTag(e.target.value);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const newTag = inputRef.current?.value;
     if (newTag?.length !== 0 && e.key === 'Enter') {
-      setTagList((item) => [...item, newTag]);
-      setFlavor((item) => [...item, newTag]);
+      setTagList(({ item }: any) => [...item, newTag]);
+      setFlavor(({ item }: any) => [...item, newTag]);
       setTag('');
     }
   };

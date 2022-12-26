@@ -54,7 +54,7 @@ export const DetailContainer = () => {
           id={cocktailInfo.id}
           content={cocktailInfo.content}
         />
-        <ModifyButton id={cocktailInfo.id} />
+        <ModifyButton id={cocktailId} />
       </ContentContainer>
     </>
   );

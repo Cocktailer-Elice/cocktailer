@@ -3,9 +3,9 @@ import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
 // TODO aws 업로드 후 반환 이미지 url 받아오기
-export const InputTitleImg = ({ setImg }: any) => {
+export const InputTitleImg = ({ setImg, img }: any) => {
   const [files, setFiles] = useState<File | null>(null);
-  const [imgSrc, setImgsrc] = useState<string>();
+  const [imgSrc, setImgsrc] = useState<string>(img ? img : '');
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

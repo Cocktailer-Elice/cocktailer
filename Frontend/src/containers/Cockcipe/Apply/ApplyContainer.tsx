@@ -7,8 +7,6 @@ import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFla
 import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
 import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
 import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
-//import { postCockcipe } from '../../../modules/cockcipeActions';
-//import { useAppDispatch } from '../../../modules/store';
 
 export const ApplyContainer = () => {
   // state
@@ -27,8 +25,6 @@ export const ApplyContainer = () => {
   const [titleI, setTitleI] = useState<string[]>(['']);
   const [valueI, setValueI] = useState<string[]>(['']);
 
-  //const dispatch = useAppDispatch();
-
   const handleApply = () => {
     console.log(selectA, titleA, valueA);
     console.log(selectI, titleI, valueI);
@@ -46,7 +42,6 @@ export const ApplyContainer = () => {
     }
 
     const newData = {
-      owner: 1,
       name: name,
       img: img,
       degree: degree,
@@ -60,11 +55,14 @@ export const ApplyContainer = () => {
       },
     };
 
-    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
-      console.log(res);
-      console.log(newData);
-    });
-    // dispatch(postCockcipe({ newData }));
+    axios
+      .post('http://localhost:8000/api/cocktails', newData, {
+        headers: {},
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(newData);
+      });
   };
   return (
     <>
@@ -72,13 +70,14 @@ export const ApplyContainer = () => {
       <InputTitleImg setImg={setImg} />
       <InputCockInfo
         value={name}
+        degree={degree}
         setName={setName}
         setDegree={setDegree}
         setCategory={setCategory}
         category={category}
       />
-      <InputCockFlavor setFlavor={setFlavor} />
-      <InputCockContent setContent={setContent} />
+      <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
+      <InputCockContent setContent={setContent} content={content} />
       <InputRecipe
         kind="alcohol"
         select={selectA}
@@ -97,7 +96,7 @@ export const ApplyContainer = () => {
         setTitle={setTitleI}
         setValue={setValueI}
       />
-      <ApplyButton handleApply={handleApply} />
+      <ApplyButton handleApply={handleApply} name="apply" />
     </>
   );
 };

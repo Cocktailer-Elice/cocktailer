@@ -2,12 +2,16 @@ import { TextField } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 
-export const InputCockContent = ({ setContent }) => {
+interface Props {
+  setContent: any;
+  content?: string;
+}
+export const InputCockContent = ({ setContent, content }: Props) => {
   return (
     <ContentContainer>
       <TextField
         label="제조법에 대해 적어주세요"
-        placeholder="레몬 몇조각..."
+        value={content}
         rows={4}
         multiline
         sx={{ width: '300px' }}
