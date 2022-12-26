@@ -222,14 +222,12 @@ const SmallSection = styled.div`
   width: 100%;
   height: 10%;
   border: 1px solid gray;
-  margin-bottom: 10px;
 `;
 
 const BigSection = styled.div`
   width: 100%;
   height: 25%;
   border: 1px solid gray;
-  margin-bottom: 10px;
 `;
 
 const SectionHeader = styled.div`
@@ -238,6 +236,6 @@ const SectionHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 10px;
-  font-size: 16px;
+  margin: 10px 5px;
+  font-size: 14px;
 `;
