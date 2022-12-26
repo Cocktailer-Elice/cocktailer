@@ -27,6 +27,38 @@ export const findCocktailId = (id: number) => {
   ];
 };
 
+export const getCocktailLikesUser = (userId: number, cocktailId: number) => {
+  return [
+    {
+      $match: {
+        id: cocktailId,
+        likesUser: {
+          [userId]: true || false,
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        id: 0,
+        owner: 0,
+        category: 0,
+        name: 0,
+        official: 0,
+        flavor: 0,
+        degree: 0,
+        img: 0,
+        ratio: 0,
+        content: 0,
+        likes: 0,
+        createdAt: 0,
+        deletedAt: 0,
+        updatedAt: 0,
+      },
+    },
+  ];
+};
+
 export const findCategoryAndSearch = (reqData: object) => {
   /*   카테고리 / 검색   */
 

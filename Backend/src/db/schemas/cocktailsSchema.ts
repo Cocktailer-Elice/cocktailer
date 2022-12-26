@@ -76,6 +76,8 @@ const CocktailSchema: Schema = new Schema(
 
     likesUser: {
       type: Object,
+      required: true,
+      default: {},
     },
   },
 

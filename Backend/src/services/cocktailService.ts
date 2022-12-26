@@ -167,8 +167,10 @@ class CocktailService {
   }
 
   public async cocktailLikes(userId: number, cocktailId: number) {
-    console.log(userId, cocktailId);
-    await this.cocktailModel.cocktailLikes(userId, cocktailId);
+    const data: any = await this.cocktailModel.cocktailLikes(
+      userId,
+      cocktailId,
+    );
     return 'success';
   }
 
