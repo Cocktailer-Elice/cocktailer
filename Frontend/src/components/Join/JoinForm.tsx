@@ -9,12 +9,13 @@ import { Button } from '@mui/material';
 import { JoinSchema } from './JoinSchema';
 import { EmailDuplicateChecker } from '../UserForm/EmailDuplicateChecker';
 import { TelVerifier } from '../UserForm/TelVerification';
-import { useAppDispatch } from '../../store/store';
-import { userRegister } from '../../store/authActions';
 import { nicknamePrefixes } from '../../constants/nickname';
 
-export const JoinForm = () => {
-  const dispatch = useAppDispatch();
+interface JoinFormProps {
+  register: (data: UserCreateData) => void;
+}
+
+export const JoinForm = ({ register }: JoinFormProps) => {
   const methods = useForm<UserCreateData>({
     resolver: yupResolver(JoinSchema),
     mode: 'onChange',
@@ -36,7 +37,7 @@ export const JoinForm = () => {
     } else if (telVerificationEnd === false) {
       errors.tel && (errors.tel.message = '전화번호 인증을 진행해주세요');
     } else {
-      dispatch(userRegister(data));
+      register(data);
       reset();
     }
   };

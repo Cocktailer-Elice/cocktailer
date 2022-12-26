@@ -1,11 +1,8 @@
-import { Button, Grid, Paper } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MyCockflow, MyComment } from '../../../../types';
-import {
-  SectionContainer,
-  SectionWrapper,
-} from '../../components/Mypage/style';
+import { SectionContainer, SectionWrapper } from './style';
 
 interface BoardProps {
   title: string;
@@ -18,7 +15,7 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
   return (
     <SectionContainer>
       <SectionWrapper>
-        <h4>{title}</h4>
+        <BoardTitle>{title}</BoardTitle>
         {title === '나의 Cockflow' && (
           <Button onClick={() => navigate('/mypage/cockflows')}>더 보기</Button>
         )}
@@ -27,9 +24,9 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
           spacing={2}
           justifyContent="center"
           alignItems="center"
-          sx={{ fontSize: '0.7rem' }}
+          sx={{ fontSize: '0.7rem', overflow: 'hidden' }}
         >
-          {cockflow?.map(({ id, title, content }) => {
+          {cockflow?.map(({ id, title }) => {
             return (
               <Grid
                 item
@@ -37,8 +34,9 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
                 key={id}
                 onClick={() => navigate(`/cockflow/detail/${id}`)}
               >
-                <GridItem>{title}</GridItem>
-                <GridItem>{content}</GridItem>
+                <ContentWrapper>
+                  <Title>{title}</Title>
+                </ContentWrapper>
               </Grid>
             );
           })}
@@ -52,7 +50,9 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
                   navigate(`/cockflow/detail/${parentCockflow[0].id}`)
                 }
               >
-                <GridItem>{content}</GridItem>
+                <ContentWrapper>
+                  <Content>{content}</Content>
+                </ContentWrapper>
               </Grid>
             );
           })}
@@ -62,6 +62,21 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
   );
 };
 
-const GridItem = styled(Paper)`
-  text-align: center;
+const BoardTitle = styled.h4`
+  padding: 0.2rem;
 `;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  border: 1px solid #ddd;
+  padding: 0.2rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
+`;
+
+const Title = styled.span`
+  font-weight: bold;
+  margin-bottom: 0.1rem;
+`;
+const Content = styled.span``;

@@ -16,15 +16,17 @@ export const EmailDuplicateChecker = ({
   setEmailDuplicateCheck,
 }: EmailDuplicateCheckerProps) => {
   const { getValues } = useFormContext();
-  const email = getValues('email');
-
+  const [email, setEmail] = useState(getValues('email'));
   const sendEmailDuplicateCheck = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
-    if (EmailValidation.test(email)) {
+    const currentEmail = getValues('email');
+    if (EmailValidation.test(currentEmail)) {
       try {
-        const response = await axios.post(EMAIL_DUPLICATE_CHECK, { email });
+        const response = await axios.post(EMAIL_DUPLICATE_CHECK, {
+          email: currentEmail,
+        });
         if (response.status === 204) {
           setEmailDuplicateCheck(true);
         }
