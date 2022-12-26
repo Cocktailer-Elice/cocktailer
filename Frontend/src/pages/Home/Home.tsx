@@ -185,9 +185,9 @@ export const Home = () => {
         <Section>
           <HomeMainCarousel />
         </Section>
-        <Section>
+        <SmallSection>
           <HomeWidgetsContainer />
-        </Section>
+        </SmallSection>
         <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
         <BigSection>
           <HomeCocktailRankingContainer
@@ -214,6 +214,13 @@ const Container = styled.div`
 const Section = styled.div`
   width: 100%;
   height: 20%;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+`;
+
+const SmallSection = styled.div`
+  width: 100%;
+  height: 10%;
   border: 1px solid gray;
   margin-bottom: 10px;
 `;
