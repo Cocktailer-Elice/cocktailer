@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import React, { useState, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { EditAvatarFormSchema } from './EditAvatarFormSchema';
@@ -22,10 +22,10 @@ export const EditAvatarForm = () => {
   const methods = useForm<EditAvatarFormData>({
     resolver: yupResolver(EditAvatarFormSchema),
   });
-  const { register, watch } = methods;
+  const { register } = methods;
   const [preview, setPreview] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const avatar = watch('avatar');
+  const avatar = useWatch({ control: methods.control, name: 'avatar' });
 
   const getFileCode = (url: string) => {
     const { pathname } = new URL(url);
