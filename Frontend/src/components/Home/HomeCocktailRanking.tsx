@@ -14,7 +14,7 @@ export const HomeCocktailRanking = ({
 }: HomeCocktailRankingProps) => {
   return (
     <Container>
-      <Link to={`/cockcipe/detail/${cocktailRankingInfo.id}`}>
+      <CustomLink to={`/cockcipe/detail/${cocktailRankingInfo.id}`}>
         <CocktailImage src={cocktailRankingInfo.img} />
         <CocktailInfo>
           <CocktailName>{cocktailRankingInfo.name}</CocktailName>
@@ -27,7 +27,7 @@ export const HomeCocktailRanking = ({
           <OwnerName>{cocktailRankingInfo.owner.nickname}</OwnerName>
           {cocktailRankingInfo.owner.isBartender && <BartenderBadge />}
         </OwnerInfo>
-      </Link>
+      </CustomLink>
     </Container>
   );
 };
@@ -39,6 +39,12 @@ const Container = styled.div`
   :hover {
     opacity: 0.5;
   }
+`;
+
+const CustomLink = styled(Link)`
+  display: block;
+  width: 100%;
+  height: 100%;
 `;
 
 const CocktailImage = styled.img`
