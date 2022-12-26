@@ -220,15 +220,15 @@ const Section = styled.div`
 
 const SmallSection = styled.div`
   width: 100%;
-  height: 10%;
+  height: 15%;
   background-color: white;
 `;
 
 const BigSection = styled.div`
   width: 100%;
-  height: 30%;
+  height: 35%;
   background-color: white;
-  padding: 10px;
+  padding: 20px 10px;
   margin-top: 10px;
 `;
 
@@ -238,7 +238,8 @@ const SectionHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 5px;
+  margin-left: 10px;
+  margin-bottom: 5px;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.7);
   font-weight: 600;
