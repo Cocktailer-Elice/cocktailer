@@ -11,6 +11,7 @@ import { EmailDuplicateChecker } from '../UserForm/EmailDuplicateChecker';
 import { TelVerifier } from '../UserForm/TelVerification';
 import { useAppDispatch } from '../../store/store';
 import { userRegister } from '../../store/authActions';
+import { nicknamePrefixes } from '../../constants/nickname';
 
 export const JoinForm = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +28,6 @@ export const JoinForm = () => {
   const [emailDuplicateCheck, setEmailDuplicateCheck] = useState<
     boolean | null
   >(null);
-  const [telVerificationStart, setTelVerificationStart] = useState(false);
   const [telVerificationEnd, setTelVerificationEnd] = useState(false);
 
   const onSubmitHandler = (data: UserCreateData) => {
@@ -69,16 +69,18 @@ export const JoinForm = () => {
           name="tel"
           placeholder=" - 를 제외하고 입력해주세요"
         />
-        <TelVerifier
-          telVerificationStart={telVerificationStart}
-          setTelVerificationStart={setTelVerificationStart}
-          setTelVerificationEnd={setTelVerificationEnd}
-        />
+        <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
         <Select
           id="alcohol"
           label="nickname prefix"
           name="alcohol"
-          options={['랜덤', '진', '럼', '보드카', '위스키', '브랜디', '데킬라']}
+          options={nicknamePrefixes}
+        />
+        <UserInput
+          id="touse"
+          label="개인정보 수집 및 이용 동의"
+          name="touse"
+          type="checkbox"
         />
         <Button type="submit">회원가입</Button>
       </UserForm>
