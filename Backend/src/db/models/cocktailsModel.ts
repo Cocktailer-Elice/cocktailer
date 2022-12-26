@@ -10,8 +10,14 @@ import {
   findCocktailId,
   findCategoryAndSearch,
   cocktailRankings,
+  getCocktailLikesUser,
 } from '../queries/cocktailsQuery';
-import cocktailsSchema from '../schemas/cocktailsSchema';
+
+interface LikesUser {
+  likesUser: {
+    [userId: number]: boolean;
+  };
+}
 
 interface CocktailInterface {
   getHomeCocktailAndUserList(): Promise<Rankings>;
@@ -33,6 +39,8 @@ interface CocktailInterface {
     cocktailId: number,
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<any>;
+
+  cocktailLikes(userId: number, cocktailId: number): Promise<number>;
 }
 
 const limitEachPage = 10;
@@ -45,7 +53,7 @@ export class CocktailModel implements CocktailInterface {
       '-_id -email -name -password -birthday -tel -isAdmin -createdAt -updatedAt -deletedAt';
 
     const result: [CocktailRankings[], UserRanking[]] = await Promise.all([
-      cocktailsSchema.aggregate(Object(queries)),
+      CocktailSchema.aggregate(Object(queries)),
       User.find(filter, projection, {
         sort: { points: -1 },
       }).limit(10),
@@ -127,7 +135,7 @@ export class CocktailModel implements CocktailInterface {
     console.log(cocktailId);
     console.log(cocktailCreateDto);
     const id = { id: cocktailId };
-    const result = await cocktailsSchema.updateOne(id, cocktailCreateDto);
+    const result = await CocktailSchema.updateOne(id, cocktailCreateDto);
     return result;
     //   {
     //     id: 1,
@@ -137,31 +145,63 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public deleteCocktail = async (cocktailId: number) => {
-    const result = await cocktailsSchema.deleteOne({ id: cocktailId });
+    const result = await CocktailSchema.deleteOne({ id: cocktailId });
     console.log('res', result.deletedCount);
 
     return result.deletedCount;
   };
 
-  public cocktailLikes = async (userId: number, cocktailId: number) => {
-    const idDB = { id: cocktailId };
+  // public CocktailLikesUser = async (userId: number, cocktailId: number) => {
+  //   const queries = getCocktailLikesUser(userId, cocktailId);
 
-    const result = await cocktailsSchema.updateOne(
-      {
-        id: cocktailId,
-      },
-      {
-        $push: {
-          likesUser: {
-            [userId]: true,
-          },
-        },
-      },
+  //   const result: Result[] = await CocktailSchema.aggregate(Object(queries));
+  //   console.log('모델', result);
+  //   console.log(typeof result[0]);
+
+  //   return result[0];
+  // };
+
+  public cocktailLikes = async (
+    userId: number,
+    cocktailId: number,
+  ): Promise<number> => {
+    console.log(userId);
+    console.log(cocktailId);
+
+    const obj: LikesUser | null = await CocktailSchema.findOne(
+      { id: cocktailId },
+      { likesUser: 1, _id: 0 },
     );
 
-    console.log(result);
+    console.log(obj);
 
-    return result;
+    const updateData = {
+      ...obj,
+      [`${userId}`]: true,
+    };
+
+    console.log(updateData);
+
+    const update = await CocktailSchema.updateOne(
+      { id: cocktailId },
+      { likesUser: updateData },
+    );
+
+    // const obj: LikesUser | null = await CocktailSchema.findOne(
+    //   { id: cocktailId },
+    //   { likesUser: 1, _id: 0 },
+    // );
+    // console.log(obj);
+    // if (obj?.likesUser) {
+    //   obj.likesUser[`${userId}`] =
+    //     obj.likesUser[`${userId}`] === false || undefined || null
+    //       ? true
+    //       : false;
+    // }
+    // console.log(obj);
+    // const upthis = await CocktailSchema.updateOne({ id: cocktailId }, { obj });
+
+    return 11;
   };
 
   ////////////////////////////////
@@ -225,7 +265,7 @@ export class CocktailModel implements CocktailInterface {
       const mockData: any = {
         owner: userId[Number(Math.floor(Math.random() * 9))],
 
-        category: category[Number(Math.floor(Math.random() * 5))],
+        category: category[Number(Math.floor(Math.random() * 6))],
 
         name: `${title[Number(Math.floor(Math.random() * 6))]} 칵테일`,
 
