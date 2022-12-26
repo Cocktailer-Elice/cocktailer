@@ -10,7 +10,7 @@ const COOKIE_EXPIRE = process.env.COOKIE_EXPIRE as string;
 export const createToken = (user: IUser, isAutoLogin: boolean) => {
   const tokenData = user.tokenData;
   const secretKey = ACCESS_KEY;
-  const expiresIn = isAutoLogin ? ACCESS_EXPIRE : ACCESS_EXPIRE_AUTO;
+  const expiresIn = isAutoLogin ? ACCESS_EXPIRE_AUTO : ACCESS_EXPIRE;
   const token = sign(tokenData, secretKey, { expiresIn });
   return token;
 };

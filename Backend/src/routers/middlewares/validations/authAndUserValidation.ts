@@ -10,7 +10,10 @@ const authAndUserSchema = Joi.object({
     ),
   ),
   tel: Joi.string().pattern(/^(010)\d{3,4}\d{4}$/),
-  birthday: Joi.string().min(10).max(10),
+  birthday: Joi.string()
+    .min(10)
+    .max(10)
+    .pattern(new RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)),
   alcohol: Joi.string().valid(
     '랜덤',
     '진',

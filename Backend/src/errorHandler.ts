@@ -5,11 +5,11 @@ import logger from './winston';
 class AppError extends Error {
   status: number;
 
-  constructor(name: string, httpCode: number, description: string) {
+  constructor(name: string, httpCode?: number, description?: string) {
     super(description);
 
     this.name = name;
-    this.status = httpCode;
+    this.status = httpCode || 500;
   }
 }
 
@@ -41,7 +41,8 @@ const errorHandler = (
 
   if ('status' in err) {
     logger.warn(errorContent);
-    const { status = 500, message } = err;
+    let { status = 500, message } = err;
+    if (!message) message = '원인 불명 에러. 서버 담당자 문의';
     return res.status(status as number).json({ message });
   }
 

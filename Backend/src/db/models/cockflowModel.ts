@@ -9,12 +9,32 @@ import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 import Comment from '../schemas/commentSchema';
+import User from '../schemas/userSchema';
 import { db } from '../../mongodb';
+import { AppError } from '../../errorHandler';
+import { errorNames } from '../../errorNames';
 
 class CockflowMongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
-    const cockflow = await Cockflow.create(cockflowInfo);
-    return cockflow;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+
+      const updateUserFilter = { id: cockflowInfo.owner };
+      await User.updateOne(updateUserFilter, { $inc: { points: 50 } }).session(
+        session,
+      );
+
+      const cockflow = await Cockflow.create({ cockflowInfo });
+
+      await session.commitTransaction();
+      session.endSession();
+      return cockflow;
+    } catch (err) {
+      await session.abortTransaction();
+      session.endSession();
+      throw new AppError(errorNames.databaseError);
+    }
   }
 
   public async getByRequest(

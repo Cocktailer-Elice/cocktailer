@@ -23,7 +23,7 @@ class AuthController {
     const token = createToken(newUser, false);
     const cookie = createCookie(token, newUser._id, false);
     res.setHeader('Set-Cookie', [cookie]);
-    res.status(201).json(newUser.userGetResDto);
+    res.status(201).json(newUser.userGetResData);
   };
 
   public checkEmailDuplicate = async (req: Req, res: Res) => {
@@ -48,7 +48,7 @@ class AuthController {
       await redisCache.SETEX(user._id.toString(), 604800, '1');
     }
     res.setHeader('Set-Cookie', [cookie]);
-    res.status(200).json(user.userGetResDto);
+    res.status(200).json(user.userGetResData);
   };
 
   public logout = async (req: Req, res: Res) => {

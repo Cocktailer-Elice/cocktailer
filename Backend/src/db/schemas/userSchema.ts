@@ -1,7 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../types';
-import { User } from 'types';
-import { Token } from 'Backend/src/routers/middlewares/types';
 
 const UserSchema: Schema = new Schema(
   {
@@ -60,7 +58,7 @@ const UserSchema: Schema = new Schema(
   { collection: 'users', timestamps: true, versionKey: false },
 );
 
-UserSchema.virtual('userGetResDto').get(function (this: User) {
+UserSchema.virtual('userGetResData').get(function (this: IUser) {
   return {
     id: this.id,
     name: this.name,
@@ -71,7 +69,7 @@ UserSchema.virtual('userGetResDto').get(function (this: User) {
   };
 });
 
-UserSchema.virtual('tokenData').get(function (this: Token) {
+UserSchema.virtual('tokenData').get(function (this: IUser) {
   return {
     id: this.id,
     name: this.name,

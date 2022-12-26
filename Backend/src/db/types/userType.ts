@@ -54,6 +54,6 @@ export interface IUser extends Document {
   isBartender: boolean;
   deletedAt: null | number;
   points: number;
-  readonly userGetResDto: User;
+  readonly userGetResData: User;
   readonly tokenData: Cookie;
 }
