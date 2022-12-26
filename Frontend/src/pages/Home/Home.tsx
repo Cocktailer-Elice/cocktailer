@@ -7,26 +7,7 @@ import { HomeWidgetsContainer } from '../../containers/Home/HomeWidgetsContainer
 import { HomeMainCarousel } from '../../containers/Home/HomeMainCarousel';
 import { HomeCocktailRankingContainer } from '../../containers/Home/HomeCocktailRankingContainer';
 import { HomeUserRankingContainer } from '../../containers/Home/HomeUserRankingContainer';
-
-export interface CocktailRanking {
-  id: number;
-  img: string;
-  name: string;
-  official: boolean;
-  likes: number;
-  owner: {
-    nickname: string;
-    isBartender: boolean;
-  };
-}
-
-export interface UserRanking {
-  id: number;
-  avatarUrl: string;
-  nickname: string;
-  points: number;
-  isBartender: boolean;
-}
+import { CocktailRanking, UserRanking } from '../../../../types';
 
 const cocktailRankingList_mock: CocktailRanking[] = [
   {
@@ -187,9 +168,11 @@ export const Home = () => {
     useState<UserRanking[]>(userRankingList_mock);
 
   useEffect(() => {
-    axios.get('/api/cocktails/main1').then((res) => {
+    axios.get('/api/cocktails/home').then((res) => {
       console.log('axios 요청');
-      console.log(res);
+      console.log(res.data);
+      setCocktailRankingList(res.data.cocktailRanking);
+      setUserRankingList(res.data.userRanking);
     });
   }, []);
 
