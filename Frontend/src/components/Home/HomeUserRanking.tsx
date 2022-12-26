@@ -1,5 +1,5 @@
-import { UserRanking } from './../../pages/Home/Home';
 import styled from 'styled-components';
+import { UserRanking } from '../../../../types';
 
 interface HomeUserRankingProps {
   userRankingInfo: UserRanking;

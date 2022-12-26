@@ -6,8 +6,8 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
 import '../../swiper.css';
-import { UserRanking } from '../../pages/Home/Home';
 import { HomeUserRanking } from './../../components/Home/HomeUserRanking';
+import { UserRanking } from '../../../../types';
 
 interface HomeUserRankingContainerProps {
   userRankingList: UserRanking[];

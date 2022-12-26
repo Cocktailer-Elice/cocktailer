@@ -6,8 +6,8 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
 import '../../swiper.css';
-import { CocktailRanking } from '../../pages/Home/Home';
 import { HomeCocktailRanking } from './../../components/Home/HomeCocktailRanking';
+import { CocktailRanking } from '../../../../types';
 
 interface HomeCocktailRankingContainerProps {
   cocktailRankingList: CocktailRanking[];

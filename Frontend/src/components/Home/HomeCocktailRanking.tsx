@@ -1,5 +1,5 @@
-import { CocktailRanking } from './../../pages/Home/Home';
 import styled from 'styled-components';
+import { CocktailRanking } from '../../../../types';
 
 interface HomeCocktailRankingProps {
   cocktailRankingInfo: CocktailRanking;
