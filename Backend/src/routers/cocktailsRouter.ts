@@ -14,6 +14,8 @@ cocktailsRouter.get(
   asyncHandler(cocktailController.makeMockData),
 );
 
+cocktailsRouter.get('/main1', asyncHandler(cocktailController.main1));
+
 cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
 
 cocktailsRouter.get(
@@ -37,9 +39,19 @@ cocktailsRouter.post(
 
 cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
 
+cocktailsRouter.patch(
+  '/updatecocktail/:cocktailId',
+  asyncHandler(cocktailController.updateCocktail),
+);
+
 cocktailsRouter.get(
   '/userId/:userId',
   asyncHandler(cocktailController.findByUserId),
+);
+
+cocktailsRouter.delete(
+  '/deletecocktail/:cocktailId',
+  asyncHandler(cocktailController.deleteCocktail),
 );
 
 export default cocktailsRouter;

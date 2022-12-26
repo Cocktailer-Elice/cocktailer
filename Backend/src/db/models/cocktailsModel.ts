@@ -6,6 +6,7 @@ import {
   findCocktailId,
   findCategoryAndSearch,
 } from '../queries/cocktailsQuery';
+import cocktailsSchema from '../schemas/cocktailsSchema';
 
 interface CocktailInterface {
   createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
@@ -20,6 +21,13 @@ interface CocktailInterface {
     reqData: object,
     lastId: number,
   ): Promise<CocktailModelType[]>;
+
+  updateCocktail(
+    cocktailId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<any>;
+
+  main1(): Promise<CocktailCreateReqData[]>;
 }
 
 const limitEachPage = 10;
@@ -85,6 +93,98 @@ export class CocktailModel implements CocktailInterface {
     ])
       .limit(limitEachPage)
       .skip(endpoint);
+
+    return result;
+  };
+
+  public updateCocktail = async (
+    cocktailId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<any> => {
+    console.log(cocktailId);
+    console.log(cocktailCreateDto);
+    const id = { id: cocktailId };
+    const result = await cocktailsSchema.updateOne(id, cocktailCreateDto);
+    return result;
+    //   {
+    //     id: 1,
+    //   },
+    //   {},
+    // );
+  };
+
+  public deleteCocktail = async (cocktailId: number) => {
+    const result = await cocktailsSchema.deleteOne({ id: cocktailId });
+    console.log('res', result.deletedCount);
+
+    return result.deletedCount;
+  };
+
+  public main1 = async (): Promise<CocktailCreateReqData[]> => {
+    const result: CocktailCreateReqData[] = await cocktailsSchema.aggregate([
+      {
+        $match: {
+          likes: {
+            $gte: 50,
+            $lte: 100,
+          },
+        },
+      },
+      {
+        $limit: 9,
+      },
+      {
+        $sort: {
+          likes: -1,
+        },
+      },
+      {
+        $limit: 10,
+      },
+      {
+        $project: {
+          _id: 0,
+          category: 0,
+          flavor: 0,
+          degree: 0,
+          ratio: 0,
+          likes: 0,
+          content: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'owner',
+          foreignField: 'id',
+          as: 'owner',
+          pipeline: [
+            {
+              $project: {
+                _id: 0,
+                name: 0,
+                email: 0,
+                password: 0,
+                birthday: 0,
+                avatarUrl: 0,
+                isAdmin: 0,
+                createdAt: 0,
+                updatedAt: 0,
+                deletedAt: 0,
+                tel: 0,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $unwind: {
+          path: '$owner',
+        },
+      },
+    ]);
 
     return result;
   };
@@ -189,6 +289,8 @@ export class CocktailModel implements CocktailInterface {
           },
         },
         content: '이곳에 전체적인 레시피와 가니쉬를 작성',
+
+        likes: Number(Math.floor(Math.random() * 101)),
       };
 
       await CocktailSchema.create(mockData);

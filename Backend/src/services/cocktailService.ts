@@ -106,6 +106,47 @@ class CocktailService {
     return data;
   }
 
+  public async updateCocktail(
+    cocktailId: number,
+    updateCocktail: CocktailServiceType,
+  ) {
+    const data: any = await this.cocktailModel.updateCocktail(
+      cocktailId,
+      updateCocktail,
+    );
+    if (!data) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '이런! 이 칵테일은 누군가 다 마셨나봐요!! 검색하신 정보가 없어요!',
+      );
+    }
+    return data;
+  }
+
+  public async deleteCocktail(cocktailId: number) {
+    const data: number = await this.cocktailModel.deleteCocktail(cocktailId);
+    if (data === 0) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '이런! 이 칵테일은 누군가 다 마셨나봐요!! 삭제하실 정보가 없어요!',
+      );
+    }
+
+    return '칵테일을 삭제했습니다.';
+  }
+
+  public async main1() {
+    const data: any = await this.cocktailModel.main1();
+
+    if (!data) {
+      throw new AppError(errorNames.noDataError, 400, '데이터 불러오기 실패!!');
+    }
+
+    return data;
+  }
+
   ////////////////////////////////
   //       목데이터 생성기       //
   ////////////////////////////////
