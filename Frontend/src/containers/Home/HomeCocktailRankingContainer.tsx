@@ -26,9 +26,9 @@ export const HomeCocktailRankingContainer = ({
         className="mySwiper"
       >
         {cocktailRankingList.map((cocktailRankingInfo, index) => (
-          <SwiperSlide key={index}>
+          <CustomSwiperSlide key={index}>
             <HomeCocktailRanking cocktailRankingInfo={cocktailRankingInfo} />
-          </SwiperSlide>
+          </CustomSwiperSlide>
         ))}
       </Swiper>
     </Carousel>
@@ -40,4 +40,9 @@ const Carousel = styled.div`
   height: 100%;
   border: 1px solid gray;
   padding: 10px;
+`;
+
+const CustomSwiperSlide = styled(SwiperSlide)`
+  width: 10px;
+  height: 100px;
 `;

@@ -13,6 +13,7 @@ export interface CocktailRanking {
   img: string;
   name: string;
   official: boolean;
+  likes: number;
   owner: {
     nickname: string;
     isBartender: boolean;
@@ -33,6 +34,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '1위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '1위 유저 닉네임',
       isBartender: true,
@@ -43,6 +45,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '2위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '2위 유저 닉네임',
       isBartender: true,
@@ -53,6 +56,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '3위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '3위 유저 닉네임',
       isBartender: true,
@@ -63,6 +67,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '4위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '4위 유저 닉네임',
       isBartender: true,
@@ -73,6 +78,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '5위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '5위 유저 닉네임',
       isBartender: true,
@@ -83,6 +89,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '6위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '6위 유저 닉네임',
       isBartender: true,
@@ -93,6 +100,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '7위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '7위 유저 닉네임',
       isBartender: true,
@@ -103,6 +111,7 @@ const cocktailRankingList_mock: CocktailRanking[] = [
     img: 'img',
     name: '8위 칵테일 이름',
     official: false,
+    likes: 10,
     owner: {
       nickname: '8위 유저 닉네임',
       isBartender: true,
