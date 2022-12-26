@@ -6,8 +6,16 @@ import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 
 import '../../swiper.css';
+import { UserRanking } from '../../pages/Home/Home';
+import { HomeUserRanking } from './../../components/Home/HomeUserRanking';
 
-export const HomeUserRankingContainer = () => {
+interface HomeUserRankingContainerProps {
+  userRankingList: UserRanking[];
+}
+
+export const HomeUserRankingContainer = ({
+  userRankingList,
+}: HomeUserRankingContainerProps) => {
   return (
     <Carousel>
       <Swiper
@@ -17,15 +25,11 @@ export const HomeUserRankingContainer = () => {
         modules={[FreeMode, Pagination]}
         className="mySwiper"
       >
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        {userRankingList.map((userRankingInfo, index) => (
+          <SwiperSlide key={index}>
+            <HomeUserRanking userRankingInfo={userRankingInfo} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Carousel>
   );

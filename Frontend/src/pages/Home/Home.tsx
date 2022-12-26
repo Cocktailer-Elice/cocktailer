@@ -110,10 +110,72 @@ const cocktailRankingList_mock: CocktailRanking[] = [
   },
 ];
 
+const userRankingList_mock: UserRanking[] = [
+  {
+    id: 1,
+    avatarUrl: '1번 avartar url',
+    nickname: '1번 닉네임',
+    points: 10,
+    isBartender: true,
+  },
+  {
+    id: 2,
+    avatarUrl: '2번 avartar url',
+    nickname: '2번 닉네임',
+    points: 20,
+    isBartender: false,
+  },
+  {
+    id: 3,
+    avatarUrl: '3번 avartar url',
+    nickname: '3번 닉네임',
+    points: 30,
+    isBartender: true,
+  },
+  {
+    id: 4,
+    avatarUrl: '4번 avartar url',
+    nickname: '4번 닉네임',
+    points: 40,
+    isBartender: false,
+  },
+  {
+    id: 5,
+    avatarUrl: '5번 avartar url',
+    nickname: '5번 닉네임',
+    points: 50,
+    isBartender: false,
+  },
+  {
+    id: 6,
+    avatarUrl: '6번 avartar url',
+    nickname: '6번 닉네임',
+    points: 60,
+    isBartender: false,
+  },
+  {
+    id: 7,
+    avatarUrl: '7번 avartar url',
+    nickname: '7번 닉네임',
+    points: 70,
+    isBartender: false,
+  },
+  {
+    id: 8,
+    avatarUrl: '8번 avartar url',
+    nickname: '8번 닉네임',
+    points: 80,
+    isBartender: false,
+  },
+];
+
 export const Home = () => {
   const [cocktailRankingList, setCocktailRankingList] = useState<
     CocktailRanking[]
   >(cocktailRankingList_mock);
+
+  const [userRankingList, setUserRankingList] =
+    useState<UserRanking[]>(userRankingList_mock);
 
   useEffect(() => {
     axios.get('/api/cocktails/main1').then((res) => {
@@ -142,7 +204,7 @@ export const Home = () => {
         </Section>
         <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
         <Section>
-          <HomeUserRankingContainer />
+          <HomeUserRankingContainer userRankingList={userRankingList} />
         </Section>
       </Container>
     </>
