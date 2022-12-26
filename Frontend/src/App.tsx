@@ -32,7 +32,7 @@ export const App = () => {
 };
 
 const AppLayout = styled.div`
-  width: 480px;
+  max-width: 720px;
   min-height: 100vh;
   background-color: #fff;
   border: 1px solid #ddd;
