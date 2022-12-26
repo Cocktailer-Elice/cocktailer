@@ -17,13 +17,13 @@ const Widget = styled.div`
   align-items: center;
 
   border-radius: 50%;
-  background-color: ${(props) => props.theme.colors.indigo2};
+  background-color: ${(props) => props.theme.colors.indigo4};
 
   color: white;
   font-size: 11px;
   font-weight: 600;
 
   :hover {
-    opacity: 0.5;
+    opacity: 0.8;
   }
 `;
