@@ -28,7 +28,6 @@ const Container = styled.div`
   width: 100%;
   height: 60px;
   background-color: #fff;
-  border: 1px solid #ddd;
   display: flex;
   position: sticky;
   top: 0;
