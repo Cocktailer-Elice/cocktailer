@@ -8,7 +8,7 @@ interface Props {
 
 export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [tag, setTag] = useState<string | null>('');
+  const [tag, setTag] = useState<string>('');
 
   const [tagList, setTagList] = useState<string[]>([]);
 
@@ -19,15 +19,18 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
     const newTag = inputRef.current?.value;
     console.log(flavor);
     if (newTag?.length !== 0 && e.key === 'Enter') {
-      setTagList((item) => [...item, newTag]);
-      setFlavor((item) => [...item, newTag]);
+      setTagList((item: any) => [...item, newTag]);
+      setFlavor((item: any) => [...item, newTag]);
       setTag('');
     }
   };
 
   // TODO : key 값 변경하고 삭제 아이템 아이디로 삭제하기
   const deleteTagItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const deleteTagItem = event.target.parentElement.firstChild.innerText;
+    const target = event.target as HTMLElement;
+    const textNode = target.children[0] as HTMLElement;
+
+    const deleteTagItem = textNode.innerText;
     const filteredTagList = tagList?.filter(
       (tagItem) => tagItem !== deleteTagItem,
     );

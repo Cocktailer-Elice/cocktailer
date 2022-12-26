@@ -115,6 +115,7 @@ export const CategoryContainer = () => {
                 key={idx.toString()}
                 id={item.id}
                 name={item.name}
+                img={item.img}
                 official={item.official}
               />
             </Grid>

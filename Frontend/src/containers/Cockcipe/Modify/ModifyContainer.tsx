@@ -68,8 +68,8 @@ export const ModifyContainer = () => {
       content: content,
       official: false,
       ratio: {
-        alcohol: alcohoObj,
-        ingredient: IngredObj,
+        alcohol: Object.keys(alcohoObj).length && alcohoObj,
+        ingredient: Object.keys(IngredObj).length && IngredObj,
       },
     };
 
