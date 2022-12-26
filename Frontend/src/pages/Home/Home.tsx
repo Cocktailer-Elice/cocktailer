@@ -188,14 +188,14 @@ export const Home = () => {
         <SmallSection>
           <HomeWidgetsContainer />
         </SmallSection>
-        <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
         <BigSection>
+          <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
           <HomeCocktailRankingContainer
             cocktailRankingList={cocktailRankingList}
           />
         </BigSection>
-        <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
         <BigSection>
+          <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
           <HomeUserRankingContainer userRankingList={userRankingList} />
         </BigSection>
       </Container>
@@ -205,29 +205,30 @@ export const Home = () => {
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100vh - 70px);
-  padding: 5px;
+  height: calc(100vh - 60px);
   box-sizing: border-box;
-  border: 1px solid gray;
+  background-color: #f2f2f2;
 `;
 
 const Section = styled.div`
   width: 100%;
-  height: 20%;
-  border: 1px solid gray;
+  height: 25%;
   margin-bottom: 10px;
+  background-color: white;
 `;
 
 const SmallSection = styled.div`
   width: 100%;
   height: 10%;
-  border: 1px solid gray;
+  background-color: white;
 `;
 
 const BigSection = styled.div`
   width: 100%;
-  height: 25%;
-  border: 1px solid gray;
+  height: 30%;
+  background-color: white;
+  padding: 10px;
+  margin-top: 10px;
 `;
 
 const SectionHeader = styled.div`
