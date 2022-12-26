@@ -3,73 +3,56 @@ import CloseButton from '@mui/icons-material/Close';
 
 import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
-import { loginChecker } from './../../../utils/loginChecker';
+import { contentMenus } from './../../../constants/pages';
+import { useAuthentication } from './../../../hooks/useAuthentication';
 
 interface DrawerProps {
-  toggleDrawer: () => void;
+  handleDrawerClose: () => void;
 }
 
-export const Drawer = ({ toggleDrawer }: DrawerProps) => {
-  const isLoggedIn = loginChecker();
+const userMenus = [
+  { isLoggedInUserMenu: true, pageName: '마이페이지', link: '/mypage' },
+  { isLoggedInUserMenu: true, pageName: '로그아웃', link: '/logout' },
+  { isLoggedInUserMenu: false, pageName: '로그인', link: '/login' },
+  { isLoggedInUserMenu: false, pageName: '회원가입', link: '/join' },
+];
+
+export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
+  const isLoggedIn = useAuthentication();
 
   return (
     <>
-      <Dimmed onClick={toggleDrawer} />
+      <Dimmed onClick={handleDrawerClose} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
             <UserPageButtonContainer>
-              {isLoggedIn ? (
-                <>
-                  <DrawerUserPageButton
-                    pageName="마이페이지"
-                    link="/mypage"
-                    toggleDrawer={toggleDrawer}
-                  />
-                  <DrawerUserPageButton
-                    pageName="로그아웃"
-                    link="/logout"
-                    toggleDrawer={toggleDrawer}
-                  />
-                </>
-              ) : (
-                <>
-                  <DrawerUserPageButton
-                    pageName="로그인"
-                    link="/login"
-                    toggleDrawer={toggleDrawer}
-                  />
-                  <DrawerUserPageButton
-                    pageName="회원가입"
-                    link="/join"
-                    toggleDrawer={toggleDrawer}
-                  />
-                </>
+              {userMenus.map(
+                (userMenu) =>
+                  isLoggedIn === userMenu.isLoggedInUserMenu && (
+                    <DrawerUserPageButton
+                      title={userMenu.pageName}
+                      link={userMenu.link}
+                      handleDrawerClose={handleDrawerClose}
+                    />
+                  ),
               )}
             </UserPageButtonContainer>
           </TopLeftSection>
           <TopRightSection>
-            <CloseButtonWrap onClick={toggleDrawer}>
+            <CloseButtonWrap onClick={handleDrawerClose}>
               <CloseButton />
             </CloseButtonWrap>
           </TopRightSection>
         </TopSection>
         <BottomSection>
-          <DrawerContentPageButton
-            pageName="칵시피"
-            link="/cockcipe"
-            toggleDrawer={toggleDrawer}
-          />
-          <DrawerContentPageButton
-            pageName="칵플로우"
-            link="/cockflow"
-            toggleDrawer={toggleDrawer}
-          />
-          <DrawerContentPageButton
-            pageName="칵고리즘"
-            link="/cockgorithm"
-            toggleDrawer={toggleDrawer}
-          />
+          {contentMenus.map((contentMenu) => (
+            <DrawerContentPageButton
+              title={contentMenu.pageName}
+              link={contentMenu.link}
+              handleDrawerClose={handleDrawerClose}
+            />
+          ))}
         </BottomSection>
       </DrawerContainer>
     </>

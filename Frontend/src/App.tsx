@@ -6,12 +6,12 @@ import { GlobalStyles } from './GlobalStyles';
 import { Header } from './containers/Main/Header/Header';
 import { Router } from './Router';
 import { useEffect } from 'react';
-import { loginChecker } from './utils/loginChecker';
 import { useAppDispatch } from './store/store';
 import { userRefresh } from './store/authActions';
+import { useAuthentication } from './hooks/useAuthentication';
 
 export const App = () => {
-  const isLoggedIn = loginChecker();
+  const isLoggedIn = useAuthentication();
   const dispatch = useAppDispatch();
 
   useEffect(() => {

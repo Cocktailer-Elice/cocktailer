@@ -1,15 +1,23 @@
 import { EditForm } from '../../../containers/Edits/EditAvatarContainer';
-import { loginChecker } from '../../../utils/loginChecker';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { useAuthentication } from '../../../hooks/useAuthentication';
 
 export const EditAvatar = () => {
-  const isLoggedIn = loginChecker();
+  const isLoggedIn = useAuthentication();
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login');
     }
   }, [isLoggedIn]);
-  return <EditForm />;
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 아바타 변경</title>
+      </Helmet>
+      <EditForm />
+    </>
+  );
 };

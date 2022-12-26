@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 interface WidgetProps {
-  pageName: string;
+  title: string;
 }
 
-export const HomeWidget = ({ pageName }: WidgetProps) => {
-  return <Widget>{pageName}</Widget>;
+export const HomeWidget = ({ title }: WidgetProps) => {
+  return <Widget>{title}</Widget>;
 };
 
 const Widget = styled.div`
