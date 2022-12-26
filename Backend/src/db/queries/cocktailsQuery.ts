@@ -115,7 +115,7 @@ export const findCategoryAndSearch = (reqData: object) => {
   ];
 };
 
-export const main1 = () => {
+export const cocktailRankings = () => {
   return [
     {
       $match: {
@@ -143,7 +143,7 @@ export const main1 = () => {
         flavor: 0,
         degree: 0,
         ratio: 0,
-        likes: 0,
+
         content: 0,
         createdAt: 0,
         updatedAt: 0,
@@ -170,6 +170,7 @@ export const main1 = () => {
               updatedAt: 0,
               deletedAt: 0,
               tel: 0,
+              points: 0,
             },
           },
         ],

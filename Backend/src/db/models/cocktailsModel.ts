@@ -1,15 +1,21 @@
 import { CocktailModelType } from '../types';
 import { CocktailCreateReqData, CocktailRankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
+////추가됨///
+import { IUser } from '../types';
+import User from '../schemas/userSchema';
+////////////
 import {
   lists,
   findCocktailId,
   findCategoryAndSearch,
-  main1,
+  cocktailRankings,
 } from '../queries/cocktailsQuery';
 import cocktailsSchema from '../schemas/cocktailsSchema';
 
 interface CocktailInterface {
+  getHomeCocktailAndUserList(): Promise<[CocktailModelType[], IUser[]]>;
+
   createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
 
   getLists(): Promise<CocktailModelType[]>;
@@ -27,13 +33,29 @@ interface CocktailInterface {
     cocktailId: number,
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<any>;
-
-  main1(): Promise<CocktailRankings[]>;
 }
 
 const limitEachPage = 10;
 
 export class CocktailModel implements CocktailInterface {
+  public getHomeCocktailAndUserList = async (): Promise<
+    [CocktailModelType[], IUser[]]
+  > => {
+    const queries = cocktailRankings();
+    const filter = { deletedAt: null, isAdmin: false };
+    const projection =
+      '-_id -email -name -password -birthday -tel -isAdmin -createdAt -updatedAt -deletedAt';
+
+    const result: [CocktailModelType[], IUser[]] = await Promise.all([
+      cocktailsSchema.aggregate(Object(queries)),
+      User.find(filter, projection, {
+        sort: { points: -1 },
+      }).limit(10),
+    ]);
+
+    return result;
+  };
+
   public createCocktail = async (
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> => {
@@ -119,15 +141,6 @@ export class CocktailModel implements CocktailInterface {
     console.log('res', result.deletedCount);
 
     return result.deletedCount;
-  };
-
-  public main1 = async (): Promise<CocktailRankings[]> => {
-    const queries = main1();
-    const result: CocktailRankings[] = await cocktailsSchema.aggregate(
-      Object(queries),
-    );
-
-    return result;
   };
 
   ////////////////////////////////

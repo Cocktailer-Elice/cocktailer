@@ -15,9 +15,10 @@ cocktailsRouter.get(
 );
 
 ////////// Cocktail Ranking / User Ranking //////////
-cocktailsRouter.get('/home');
-
-cocktailsRouter.get('/main1', asyncHandler(cocktailController.main1));
+cocktailsRouter.get(
+  '/home',
+  asyncHandler(cocktailController.getHomeCocktailAndUserList),
+);
 
 cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
 
@@ -42,14 +43,14 @@ cocktailsRouter.post(
 
 cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
 
+cocktailsRouter.get(
+  '/my-cocktails/:userId',
+  asyncHandler(cocktailController.findByUserId),
+);
+
 cocktailsRouter.patch(
   '/updatecocktail/:cocktailId',
   asyncHandler(cocktailController.updateCocktail),
-);
-
-cocktailsRouter.get(
-  '/userId/:userId',
-  asyncHandler(cocktailController.findByUserId),
 );
 
 cocktailsRouter.delete(
