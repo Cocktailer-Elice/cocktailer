@@ -20,6 +20,5 @@ const FindsWrapper = styled.div`
 `;
 
 const FindsLink = styled(Link)`
-  cursor: pointer;
   font-size: 0.8rem;
 `;

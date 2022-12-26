@@ -7,24 +7,27 @@ import {
   HeadingLeft,
   HeadingGrid,
   HeadingRight,
-} from '../../components/Mypage/style';
+} from './style';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../../../../types';
+import { LocalBar } from '@mui/icons-material';
 
 export const Header = ({ user }: { user: User | null }) => {
   const navigate = useNavigate();
   return (
     <Heading>
       <HeadingLeft>
-        <Button
-          size="small"
-          variant="outlined"
-          type="button"
-          sx={{ width: 'max-content' }}
-          onClick={() => navigate('/bartender-apply')}
-        >
-          바텐더 인증 신청
-        </Button>
+        {user?.isBartender && <LocalBar />}
+        {!user?.isBartender && (
+          <Button
+            size="small"
+            type="button"
+            sx={{ width: 'max-content' }}
+            onClick={() => navigate('/bartender-apply')}
+          >
+            바텐더 인증 신청
+          </Button>
+        )}
       </HeadingLeft>
       <HeadingGrid>
         <Avatar>
@@ -35,7 +38,6 @@ export const Header = ({ user }: { user: User | null }) => {
       <HeadingRight>
         <Button
           size="small"
-          variant="outlined"
           type="button"
           sx={{ width: 'max-content', marginBottom: '2px' }}
           onClick={() => navigate('/mypage/edit-avatar')}
@@ -44,7 +46,6 @@ export const Header = ({ user }: { user: User | null }) => {
         </Button>
         <Button
           size="small"
-          variant="outlined"
           type="button"
           sx={{ width: 'max-content' }}
           onClick={() => navigate('/mypage/edit-password')}

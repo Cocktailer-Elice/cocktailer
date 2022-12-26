@@ -6,9 +6,11 @@ import { useNavigate } from 'react-router-dom';
 export const Logout = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(userLogout());
     navigate('/');
   }, []);
+
   return <div></div>;
 };
