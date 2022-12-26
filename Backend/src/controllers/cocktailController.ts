@@ -107,6 +107,13 @@ class CocktailController {
     res.status(200).json({ message: result });
   };
 
+  public cocktailLikes = async (req: Req, res: Res) => {
+    const cocktailId = Number(req.params.cocktailId);
+    const userId = Number(req.user.userId);
+    const result = await this.cocktailService.cocktailLikes(userId, cocktailId);
+    res.status(200).json({ success: result });
+  };
+
   ////////////////////////////////
   //       목데이터 생성기       //
   ////////////////////////////////

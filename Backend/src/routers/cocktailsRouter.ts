@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
 import { cockgorithmController } from '../controllers/cockgorithmController';
 import { asyncHandler, isLoggedIn } from './middlewares';
+import { cocktailRankings } from '../db/queries/cocktailsQuery';
 
 const cocktailsRouter: Router = Router();
 
@@ -38,7 +39,7 @@ cocktailsRouter.post(
 );
 
 //////////////////////////////////////////////////////
-//cocktailsRouter.use(isLoggedIn); ///에러시 삭제하시오//
+cocktailsRouter.use(isLoggedIn); ///에러시 삭제하시오//
 /////////////////////////////////////////////////////
 
 cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
@@ -56,6 +57,11 @@ cocktailsRouter.patch(
 cocktailsRouter.delete(
   '/deletecocktail/:cocktailId',
   asyncHandler(cocktailController.deleteCocktail),
+);
+
+cocktailsRouter.get(
+  '/likes/:cocktailId',
+  asyncHandler(cocktailController.cocktailLikes),
 );
 
 export default cocktailsRouter;

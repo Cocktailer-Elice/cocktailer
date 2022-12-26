@@ -96,6 +96,8 @@ export class CocktailModel implements CocktailInterface {
       Object(queries),
     ]);
 
+    console.log(test);
+
     const result = (await CocktailSchema.findOne({
       id: id,
     })) as CocktailModelType;
@@ -139,6 +141,27 @@ export class CocktailModel implements CocktailInterface {
     console.log('res', result.deletedCount);
 
     return result.deletedCount;
+  };
+
+  public cocktailLikes = async (userId: number, cocktailId: number) => {
+    const idDB = { id: cocktailId };
+
+    const result = await cocktailsSchema.updateOne(
+      {
+        id: cocktailId,
+      },
+      {
+        $push: {
+          likesUser: {
+            [userId]: true,
+          },
+        },
+      },
+    );
+
+    console.log(result);
+
+    return result;
   };
 
   ////////////////////////////////
@@ -243,6 +266,8 @@ export class CocktailModel implements CocktailInterface {
         content: '이곳에 전체적인 레시피와 가니쉬를 작성',
 
         likes: Number(Math.floor(Math.random() * 101)),
+
+        likesUser: {},
       };
 
       await CocktailSchema.create(mockData);
