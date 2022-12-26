@@ -118,23 +118,9 @@ export const findCategoryAndSearch = (reqData: object) => {
 export const cocktailRankings = () => {
   return [
     {
-      $match: {
-        likes: {
-          $gte: 50,
-          $lte: 100,
-        },
-      },
-    },
-    {
-      $limit: 9,
-    },
-    {
       $sort: {
         likes: -1,
       },
-    },
-    {
-      $limit: 10,
     },
     {
       $project: {

@@ -1,5 +1,5 @@
-import { CocktailModelType } from '../types';
-import { CocktailCreateReqData, CocktailRankings } from 'types';
+import { CocktailModelType, CocktailRankings, UserRanking } from '../types';
+import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 ////추가됨///
 import { IUser } from '../types';
@@ -14,7 +14,7 @@ import {
 import cocktailsSchema from '../schemas/cocktailsSchema';
 
 interface CocktailInterface {
-  getHomeCocktailAndUserList(): Promise<[CocktailModelType[], IUser[]]>;
+  getHomeCocktailAndUserList(): Promise<Rankings>;
 
   createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
 
@@ -38,22 +38,20 @@ interface CocktailInterface {
 const limitEachPage = 10;
 
 export class CocktailModel implements CocktailInterface {
-  public getHomeCocktailAndUserList = async (): Promise<
-    [CocktailModelType[], IUser[]]
-  > => {
+  public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
     const queries = cocktailRankings();
     const filter = { deletedAt: null, isAdmin: false };
     const projection =
       '-_id -email -name -password -birthday -tel -isAdmin -createdAt -updatedAt -deletedAt';
 
-    const result: [CocktailModelType[], IUser[]] = await Promise.all([
+    const result: [CocktailRankings[], UserRanking[]] = await Promise.all([
       cocktailsSchema.aggregate(Object(queries)),
       User.find(filter, projection, {
         sort: { points: -1 },
       }).limit(10),
     ]);
 
-    return result;
+    return { cocktailRankings: result[0], userRankings: result[1] };
   };
 
   public createCocktail = async (

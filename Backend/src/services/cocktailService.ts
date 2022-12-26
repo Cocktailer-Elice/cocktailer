@@ -1,4 +1,5 @@
 import { CocktailServiceType, CocktailRankings } from './types';
+import { Rankings } from 'types';
 //추가됨//
 import { IUser } from '../db/types';
 /////////
@@ -9,8 +10,8 @@ import { errorNames } from '../errorNames';
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
 
-  public async getHomeCocktailAndUserList(): Promise<any> {
-    const data: [CocktailServiceType[], IUser[]] =
+  public async getHomeCocktailAndUserList(): Promise<Rankings> {
+    const data: Rankings =
       await this.cocktailModel.getHomeCocktailAndUserList();
     if (!data) {
       throw new AppError(
