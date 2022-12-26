@@ -37,7 +37,7 @@ const AppTitle = styled.div`
   color: white;
 
   @media screen and (max-width: 500px) {
-    font-size: 24px;
+    font-size: 28px;
   }
 `;
 
