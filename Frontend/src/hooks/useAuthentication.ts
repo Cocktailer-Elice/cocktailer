@@ -1,6 +1,6 @@
 import { useAppSelector } from '../store/store';
 
-export const loginChecker = () => {
+export const useAuthentication = () => {
   const { isLoggedIn } = useAppSelector((state) => state.auth);
   return isLoggedIn;
 };
