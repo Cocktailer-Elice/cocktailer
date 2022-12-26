@@ -44,6 +44,7 @@ export const LoginForm = () => {
           label="auto login"
           name="isAutoLogin"
           type="checkbox"
+          inputStyle={{ width: 'max-content' }}
         />
         <Button type="submit">로그인</Button>
       </UserForm>
