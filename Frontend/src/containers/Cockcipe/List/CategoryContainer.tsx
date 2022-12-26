@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailListItem';
 import { SearchCocktailInput } from '../../../components/Cockcipe/List/SearchCocktailInput';
 
@@ -28,33 +28,36 @@ export const CategoryContainer = () => {
   };
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(official, nonOfficial, searchText);
-    if (official && nonOfficial) {
-      axios
-        .get(
-          `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}`,
-        )
-        .then((res) => {
-          console.log(res.data.categoryLists);
-          setCategoryList(res.data.categoryLists);
-        });
-    } else if (official && !nonOfficial) {
-      axios
-        .get(
-          `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=true`,
-        )
-        .then((res) => {
-          console.log(res.data.categoryLists);
-          setCategoryList(res.data.categoryLists);
-        });
-    } else if (!official && nonOfficial) {
-      axios
-        .get(
-          `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=false`,
-        )
-        .then((res) => {
-          console.log(res.data.categoryLists);
-          setCategoryList(res.data.categoryLists);
-        });
+    console.log(event.key);
+    if (event.key === 'Enter') {
+      if (official && nonOfficial) {
+        axios
+          .get(
+            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}`,
+          )
+          .then((res) => {
+            console.log(res.data.categoryLists);
+            setCategoryList(res.data.categoryLists);
+          });
+      } else if (official && !nonOfficial) {
+        axios
+          .get(
+            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=true`,
+          )
+          .then((res) => {
+            console.log(res.data.categoryLists);
+            setCategoryList(res.data.categoryLists);
+          });
+      } else if (!official && nonOfficial) {
+        axios
+          .get(
+            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=false`,
+          )
+          .then((res) => {
+            console.log(res.data.categoryLists);
+            setCategoryList(res.data.categoryLists);
+          });
+      }
     }
   };
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 interface Props {
   setContent: any;
-  content?: string;
+  content: string;
 }
 export const InputCockContent = ({ setContent, content }: Props) => {
   return (

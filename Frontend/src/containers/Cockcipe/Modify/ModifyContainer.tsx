@@ -14,7 +14,7 @@ export const ModifyContainer = () => {
   const [degree, setDegree] = useState<number>(0);
   const [category, setCategory] = useState<string>('');
   const [flavor, setFlavor] = useState<string[]>([]);
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>('');
   const [img, setImg] = useState<string>('');
 
   const [selectA, setSelectA] = useState<string[]>(['']);
@@ -29,18 +29,20 @@ export const ModifyContainer = () => {
   const cocktailId = url.split('/')[3];
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
-      .then((res) => {
-        console.log(res.data.cocktail);
-        const cocktail = res.data.cocktail;
-        setImg(cocktail.img);
-        setName(cocktail.name);
-        setDegree(cocktail.degree);
-        setCategory(cocktail.category);
-        setContent(cocktail.content);
-        setFlavor(cocktail.flavor);
-      });
+    const func = async () => {
+      const result = await axios.get(
+        `http://localhost:8000/api/cocktails/${cocktailId}`,
+      );
+      const cocktail = result.data.cocktail;
+      console.log(cocktail);
+      setImg(cocktail.img);
+      setName(cocktail.name);
+      setDegree(cocktail.degree);
+      setCategory(cocktail.category);
+      setContent(cocktail.content);
+      setFlavor(cocktail.flavor);
+    };
+    func();
   }, []);
 
   const handleApply = () => {
@@ -71,10 +73,12 @@ export const ModifyContainer = () => {
       },
     };
 
-    axios.put('http://localhost:8000/api/cocktails', newData).then((res) => {
-      console.log(res);
-      console.log(newData);
-    });
+    axios
+      .put(`http://localhost:8000/api/cocktails/${cocktailId}`, newData)
+      .then((res) => {
+        console.log(res);
+        console.log(newData);
+      });
   };
 
   return (

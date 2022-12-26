@@ -14,7 +14,7 @@ export const ApplyContainer = () => {
   const [degree, setDegree] = useState<number>(0);
   const [category, setCategory] = useState<string>('');
   const [flavor, setFlavor] = useState<string[]>([]);
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>('');
   const [img, setImg] = useState<string>('');
 
   const [selectA, setSelectA] = useState<string[]>(['']);
@@ -26,8 +26,6 @@ export const ApplyContainer = () => {
   const [valueI, setValueI] = useState<string[]>(['']);
 
   const handleApply = () => {
-    console.log(selectA, titleA, valueA);
-    console.log(selectI, titleI, valueI);
     let alcohoObj: any = {};
     let IngredObj: any = {};
     for (let i = 0; i < selectA.length; i++) {
