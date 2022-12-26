@@ -58,6 +58,56 @@ const cocktailRankingList_mock: CocktailRanking[] = [
       isBartender: true,
     },
   },
+  {
+    id: 4,
+    img: 'img',
+    name: '4위 칵테일 이름',
+    official: false,
+    owner: {
+      nickname: '4위 유저 닉네임',
+      isBartender: true,
+    },
+  },
+  {
+    id: 5,
+    img: 'img',
+    name: '5위 칵테일 이름',
+    official: false,
+    owner: {
+      nickname: '5위 유저 닉네임',
+      isBartender: true,
+    },
+  },
+  {
+    id: 6,
+    img: 'img',
+    name: '6위 칵테일 이름',
+    official: false,
+    owner: {
+      nickname: '6위 유저 닉네임',
+      isBartender: true,
+    },
+  },
+  {
+    id: 7,
+    img: 'img',
+    name: '7위 칵테일 이름',
+    official: false,
+    owner: {
+      nickname: '7위 유저 닉네임',
+      isBartender: true,
+    },
+  },
+  {
+    id: 8,
+    img: 'img',
+    name: '8위 칵테일 이름',
+    official: false,
+    owner: {
+      nickname: '8위 유저 닉네임',
+      isBartender: true,
+    },
+  },
 ];
 
 export const Home = () => {
