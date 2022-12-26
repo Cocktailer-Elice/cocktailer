@@ -19,14 +19,12 @@ class CockflowMongoModel implements ICockflowMongoModel {
     const session = await db.startSession();
     try {
       session.startTransaction();
+      const cockflow = await new Cockflow(cockflowInfo).save({ session });
 
       const updateUserFilter = { id: cockflowInfo.owner };
       await User.updateOne(updateUserFilter, { $inc: { points: 50 } }).session(
         session,
       );
-
-      const cockflow = await Cockflow.create({ cockflowInfo });
-
       await session.commitTransaction();
       session.endSession();
       return cockflow;

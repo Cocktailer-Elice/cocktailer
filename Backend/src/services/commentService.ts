@@ -88,7 +88,10 @@ class CommentService {
     if (comment.owner !== userId)
       throw new AppError(errorNames.authorizationError, 403, '권한 없음');
 
-    await this.dependencies.commentModel.delete(commentId);
+    await this.dependencies.commentModel.delete(
+      commentId,
+      !comment.isSubComment,
+    );
     return;
   };
 

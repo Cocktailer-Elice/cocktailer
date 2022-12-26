@@ -1,4 +1,4 @@
-import { formatCockflow } from './utils/formatCockflowUtil';
+import { formatCockflow } from './utils/formatCockflow';
 import { CockflowInfo } from '../services';
 import { cockflowModel } from '../db';
 import { AppError } from '../errorHandler';

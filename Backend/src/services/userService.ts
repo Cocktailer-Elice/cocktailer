@@ -4,6 +4,8 @@ import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 import { IUser } from '../db/types';
 import { IUserDependencies } from './types/userType';
+import { sendPasswordResetMail } from '../events/utils/mailUtil';
+import { createRandomPassword } from './utils/createRandomPassword';
 
 class UserDependencies implements IUserDependencies {
   public userModel = userModel.Mongo;
@@ -30,11 +32,18 @@ class UserService {
   };
 
   public verifyUser = async (name: string, email: string, tel: string) => {
-    const filter = { name, email, tel };
+    const filter = { name, email, tel, deletedAt: null };
     const foundUser = await this.dependencies.userModel.findByFilter(filter);
     if (!foundUser) {
       throw new AppError(errorNames.inputError, 400, '해당하는 유저 없음');
     }
+    const temporaryPassword = createRandomPassword();
+    const hashedPassword = await hash(temporaryPassword, 12);
+    await this.dependencies.userModel.update(
+      { email },
+      { password: hashedPassword },
+    );
+    await sendPasswordResetMail(email, temporaryPassword);
     return;
   };
 
