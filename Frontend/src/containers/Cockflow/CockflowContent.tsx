@@ -17,6 +17,7 @@ export const CockflowContent = () => {
   const [resData, setResData] = useState<CockflowGetResData | null>(null);
 
   const [data, setData] = useState({
+    _id: 0,
     id: 0,
     title: '',
     isBartender: false,
@@ -46,6 +47,7 @@ export const CockflowContent = () => {
         if (res.data) {
           setResData(res.data);
           const newData = {
+            _id: res.data.id,
             id: res.data.owner.id,
             title: res.data.title,
             isBartender: res.data.owner.isBartender,
