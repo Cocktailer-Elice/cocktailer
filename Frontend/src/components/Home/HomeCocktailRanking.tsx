@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 import { CocktailRanking } from '../../../../types';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { BartenderBadge } from './BartenderBadge';
 
 interface HomeCocktailRankingProps {
   cocktailRankingInfo: CocktailRanking;
@@ -25,7 +25,7 @@ export const HomeCocktailRanking = ({
         </CocktailLikes>
         <OwnerInfo>
           <OwnerName>{cocktailRankingInfo.owner.nickname}</OwnerName>
-          {cocktailRankingInfo.owner.isBartender && <CustomCheckCircleIcon />}
+          {cocktailRankingInfo.owner.isBartender && <BartenderBadge />}
         </OwnerInfo>
       </Link>
     </Container>
@@ -83,12 +83,6 @@ const OwnerInfo = styled.div`
 
 const OwnerName = styled.div`
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.8);
   font-weight: 600;
-`;
-
-const CustomCheckCircleIcon = styled(CheckCircleIcon)`
-  margin-left: 3px;
-  font-size: 15px;
-  color: ${(props) => props.theme.colors.indigo4};
 `;
