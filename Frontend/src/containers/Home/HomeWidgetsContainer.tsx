@@ -9,7 +9,7 @@ export const HomeWidgetsContainer = () => {
     <Container>
       {contentMenus.map((contentMenu, index) => (
         <Link key={index} to={contentMenu.link}>
-          <HomeWidget title={contentMenu.pageName} />
+          <HomeWidget title={contentMenu.pageName} emoji={contentMenu.emoji} />
         </Link>
       ))}
     </Container>

@@ -4,17 +4,19 @@ import { Link } from 'react-router-dom';
 interface DrawerContentPageButtonProps {
   title: string;
   link: string;
+  emoji: string;
   handleDrawerClose: () => void;
 }
 
 export const DrawerContentPageButton = ({
   title,
   link,
+  emoji,
   handleDrawerClose,
 }: DrawerContentPageButtonProps) => {
   return (
     <Link to={link} onClick={handleDrawerClose}>
-      <ContentPageButton>{title}</ContentPageButton>
+      <ContentPageButton>{`${emoji} ${title}`}</ContentPageButton>
     </Link>
   );
 };

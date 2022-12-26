@@ -52,6 +52,7 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
               key={index}
               title={contentMenu.pageName}
               link={contentMenu.link}
+              emoji={contentMenu.emoji}
               handleDrawerClose={handleDrawerClose}
             />
           ))}
