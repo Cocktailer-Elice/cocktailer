@@ -8,6 +8,7 @@ import { HomeMainCarousel } from '../../containers/Home/HomeMainCarousel';
 import { HomeCocktailRankingContainer } from '../../containers/Home/HomeCocktailRankingContainer';
 import { HomeUserRankingContainer } from '../../containers/Home/HomeUserRankingContainer';
 import { CocktailRanking, UserRanking } from '../../../../types';
+import { GET_RANKINGS_OF_COCKTAIL_AND_USER } from '../../constants/api';
 
 const cocktailRankingList_mock: CocktailRanking[] = [
   {
@@ -168,7 +169,7 @@ export const Home = () => {
     useState<UserRanking[]>(userRankingList_mock);
 
   useEffect(() => {
-    axios.get('/api/cocktails/home').then((res) => {
+    axios.get(GET_RANKINGS_OF_COCKTAIL_AND_USER).then((res) => {
       console.log('axios 요청');
       console.log(res.data);
       setCocktailRankingList(res.data.cocktailRanking);
