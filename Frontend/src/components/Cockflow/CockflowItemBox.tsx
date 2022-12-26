@@ -1,12 +1,22 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CockflowCreateReqDto } from '../../../../types/cockflowType';
 
-interface GetData {
+interface GetData extends CockflowCreateReqDto {
   key: string,
   id: string,
-  title: string,
-  content: string,
-}
+};
+
+export const CockflowItemBox = ({ id, title, content }:GetData) => {
+  return (
+    <NavLink to={`/cockflow/detail/${id}`}>
+      <Title>{title}</Title>
+      <ImgWrap>
+        <Img src={content} />
+      </ImgWrap>
+    </NavLink>
+  );
+};
 
 const NavLink = styled(Link)`
   position: relative;
@@ -49,14 +59,3 @@ const Img = styled.img`
   height: 100%;
   object-fit: cover;
 `;
-
-export const CockflowItemBox = ({ id, title, content }:GetData) => {
-  return (
-    <NavLink to={`/cockflow/detail/${id}`}>
-      <Title>{title}</Title>
-      <ImgWrap>
-        <Img src={content} />
-      </ImgWrap>
-    </NavLink>
-  );
-};

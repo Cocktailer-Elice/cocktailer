@@ -9,12 +9,12 @@ import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import { db } from '../../mongodb';
 
-class MongoModel implements ICockflowMongoModel {
+class CockflowMongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
-    const newcockflow = await Cockflow.create(cockflowInfo);
-    return newcockflow;
+    const cockflow = await Cockflow.create(cockflowInfo);
+    return cockflow;
   }
 
   public async getByRequest(
@@ -74,27 +74,24 @@ class MongoModel implements ICockflowMongoModel {
   public delete = async (cockflowId: number) => {
     const session = await db.startSession();
     session.startTransaction();
-    console.log('세션 및 트랜잭션이 정상적으로 시작됨');
-    console.log(session);
 
     const cockflowDeleteFilter = { id: cockflowId };
-    await Cockflow.deleteOne(cockflowDeleteFilter);
+    await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
 
     const commentDeleteFilter = { cockflowId };
-    await Comment.deleteMany(commentDeleteFilter);
-
-    const result = await session.commitTransaction();
-    console.log('세션이 정상적으로 커밋됨');
+    await Comment.deleteMany(commentDeleteFilter).session(session);
+    await session.commitTransaction();
     session.endSession();
-    console.log(result);
-    return result;
+    return;
   };
 }
 
-export class CockflowModel implements ICockflowModel {
-  Mongo = new MongoModel();
+const cockflowMongoModel = new CockflowMongoModel();
+
+class CockflowModel implements ICockflowModel {
+  constructor(public Mongo: CockflowMongoModel) {}
 }
 
-const cockflowModel = new CockflowModel();
+const cockflowModel = new CockflowModel(cockflowMongoModel);
 
-export { ICockflowModel, cockflowModel };
+export { CockflowModel, cockflowModel };

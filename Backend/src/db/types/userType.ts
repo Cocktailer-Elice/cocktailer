@@ -1,10 +1,11 @@
 import { UserInfo } from '../../services';
-import { Document, UpdateWriteOpResult } from 'mongoose';
+import { AnyExpression, Document, UpdateWriteOpResult } from 'mongoose';
 import { User } from 'types';
+import { Cookie } from 'Backend/src/routers/middlewares/types';
 
 export interface IUserMongoModel {
   create(userInfo: UserInfo): Promise<IUser>;
-  findAll(): Promise<IUser[]>;
+  getPosts(userId: number): Promise<AnyExpression>;
   findById(userId: number): Promise<IUser | null>;
   findByFilter(filter: FindOneFilter): Promise<IUser | null>;
   update(
@@ -23,18 +24,20 @@ export interface IUserModel {
 }
 
 export interface FindOneFilter {
+  _id?: string;
   id?: number;
   name?: string;
   email?: string;
   tel?: string;
   nickname?: string;
+  isBartender?: string;
 }
 
 export interface UpdateOneFilter {
   password?: string;
   avatarUrl?: string;
   deletedAt?: number;
-  isBartender?: boolean;
+  isBartender?: boolean | string;
   isAdmin?: boolean;
 }
 
@@ -48,7 +51,8 @@ export interface IUser extends Document {
   birthday: Date;
   avatarUrl: string;
   isAdmin: boolean;
-  isBartender: boolean;
+  isBartender: boolean | string;
   deletedAt: null | number;
   readonly userGetResDto: User;
+  readonly tokenData: Cookie;
 }

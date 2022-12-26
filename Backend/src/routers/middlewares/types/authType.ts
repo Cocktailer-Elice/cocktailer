@@ -1,12 +1,11 @@
 export interface Cookie {
-  userId: number;
+  id: number;
+  name: string;
   email: string;
   nickname: string;
   isAdmin: boolean;
   isBartender: boolean;
-}
-
-export interface Token {
-  token: string;
-  expiresIn: string;
+  avatarUrl: string;
+  iat: number;
+  exp: number;
 }

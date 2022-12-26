@@ -50,6 +50,19 @@ export interface CocktailGetResData {
   content: string;
 }
 
+export interface MyCockcipe {
+  id: number;
+  category: string;
+  name: string;
+  flavor: [string];
+  degree: number;
+  img: string;
+  ratio: object;
+  content: string;
+  likes: number;
+  createdAt: number;
+}
+
 export interface CocktailRankings {
   id: number;
   img: string;

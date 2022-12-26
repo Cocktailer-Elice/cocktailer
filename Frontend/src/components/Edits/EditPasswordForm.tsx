@@ -6,35 +6,29 @@ import { EditPasswordFormSchema } from './EditPasswordFormSchema';
 import { UserInput } from '../UserForm/UserInput';
 import { Button } from '@mui/material';
 import axios from 'axios';
-
-interface EditPasswordFormData {
-  password: string;
-  newPassword: string;
-  newPasswordCheck: string;
-}
+import { ChangePasswordReqData } from '../../../../types';
+import { CHANGE_PASSWORD } from '../../constants/api';
 
 export const EditPasswordForm = () => {
-  const methods = useForm<EditPasswordFormData>({
+  const methods = useForm<ChangePasswordReqData>({
     resolver: yupResolver(EditPasswordFormSchema),
     mode: 'onChange',
   });
   const navigate = useNavigate();
   const { handleSubmit, getValues } = methods;
   const sendPasswordChangeRequest = async () => {
-    const response = await axios.patch(
-      `http://localhost:8000/users/{userId}`,
-      getValues(),
-    ); // userId는 redux store에서 받아온다.
+    const response = await axios.patch(CHANGE_PASSWORD, {
+      password: getValues('password'),
+      newPassword: getValues('newPassword'),
+    });
     if (response.status === 400) {
       alert('다시 로그인해주세요');
-      await axios.get('http://localhost:8000/auth/logout');
-      navigate('/');
+      navigate('/logout');
     } else {
       alert('Server Error');
     }
   };
-  const onSubmitHandler = (data: EditPasswordFormData) => {
-    console.log(data);
+  const onSubmitHandler = () => {
     sendPasswordChangeRequest();
   };
   return (
