@@ -166,6 +166,12 @@ class CocktailService {
     return '칵테일을 삭제했습니다.';
   }
 
+  public async cocktailLikes(userId: number, cocktailId: number) {
+    console.log(userId, cocktailId);
+    await this.cocktailModel.cocktailLikes(userId, cocktailId);
+    return 'success';
+  }
+
   ////////////////////////////////
   //       목데이터 생성기       //
   ////////////////////////////////

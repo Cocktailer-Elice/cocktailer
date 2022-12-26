@@ -28,6 +28,8 @@ export interface CocktailModelType {
   img: string;
   ratio: Ratio;
   content: string;
+  likes: number;
+  likesUser: object;
 
   readonly cocktailInfo: CocktailGetResData;
 }
