@@ -10,7 +10,7 @@ export const TEL_VERIFICATION_END = `${API_BASE}/auth/validate-code`;
 export const VERIFY_LOGIN = `${API_BASE}/auth/verify`;
 
 // Users
-export const GET_USER = `${API_BASE}/users`;
+export const GET_USER = `${API_BASE}/users/mypage`;
 export const FIND_EMAIL = `${API_BASE}/users/find-email`;
 export const VERIFY_USER = `${API_BASE}/users/verify-user`;
 export const UPDATE_AVATAR = `${API_BASE}/users/profile`;
@@ -20,3 +20,9 @@ export const APPLY_BARTENDER = `${API_BASE}/users/apply`;
 
 // S3
 export const GET_S3_URL = `${API_BASE}/image-upload`;
+
+// mypage
+export const GET_MY_COMMENTS = `${API_BASE}/users/my-comments`;
+export const GET_MY_COCKTAILS = (userId: number) =>
+  `${API_BASE}/cocktails/${userId}`;
+export const GET_MY_COCKFLOWS = `${API_BASE}/cockflows/my-cockflows`;
