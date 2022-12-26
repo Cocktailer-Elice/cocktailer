@@ -42,6 +42,7 @@ const CocktailImage = styled.img`
   height: 60%;
   background-color: ${(props) => props.theme.colors.indigo1};
   border-radius: 5px;
+  border: 2px solid red;
 `;
 
 const CocktailInfo = styled.div`
