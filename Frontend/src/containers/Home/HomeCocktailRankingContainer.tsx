@@ -7,6 +7,7 @@ import 'swiper/css/pagination';
 
 import '../../swiper.css';
 import { CocktailRanking } from '../../pages/Home/Home';
+import { HomeCocktailRanking } from './../../components/Home/HomeCocktailRanking';
 
 interface HomeCocktailRankingContainerProps {
   cocktailRankingList: CocktailRanking[];
@@ -25,7 +26,9 @@ export const HomeCocktailRankingContainer = ({
         className="mySwiper"
       >
         {cocktailRankingList.map((cocktailRankingInfo, index) => (
-          <SwiperSlide key={index}>{cocktailRankingInfo.name}</SwiperSlide>
+          <SwiperSlide key={index}>
+            <HomeCocktailRanking cocktailRankingInfo={cocktailRankingInfo} />
+          </SwiperSlide>
         ))}
       </Swiper>
     </Carousel>
