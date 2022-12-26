@@ -7,11 +7,11 @@ import 'swiper/css/pagination';
 
 import '../../swiper.css';
 
-export const HomeSubCarousel = () => {
+export const HomeUserRankingContainer = () => {
   return (
-    <SubCarousel>
+    <Carousel>
       <Swiper
-        slidesPerView={4}
+        slidesPerView={3}
         spaceBetween={30}
         freeMode={true}
         modules={[FreeMode, Pagination]}
@@ -27,11 +27,11 @@ export const HomeSubCarousel = () => {
         <SwiperSlide>Slide 8</SwiperSlide>
         <SwiperSlide>Slide 9</SwiperSlide>
       </Swiper>
-    </SubCarousel>
+    </Carousel>
   );
 };
 
-const SubCarousel = styled.div`
+const Carousel = styled.div`
   width: 100%;
   height: 100%;
   border: 1px solid gray;
