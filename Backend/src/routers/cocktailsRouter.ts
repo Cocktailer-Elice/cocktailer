@@ -14,6 +14,9 @@ cocktailsRouter.get(
   asyncHandler(cocktailController.makeMockData),
 );
 
+////////// Cocktail Ranking / User Ranking //////////
+cocktailsRouter.get('/home');
+
 cocktailsRouter.get('/main1', asyncHandler(cocktailController.main1));
 
 cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
