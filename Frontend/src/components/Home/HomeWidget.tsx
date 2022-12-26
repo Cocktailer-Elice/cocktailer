@@ -11,11 +11,19 @@ export const HomeWidget = ({ title }: WidgetProps) => {
 const Widget = styled.div`
   width: 60px;
   height: 60px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  font-size: 12px;
-  background-color: white;
+
+  border-radius: 50%;
+  background-color: ${(props) => props.theme.colors.indigo4};
+
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+
+  :hover {
+    opacity: 0.8;
+  }
 `;
