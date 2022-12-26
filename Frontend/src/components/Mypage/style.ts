@@ -16,6 +16,9 @@ export const HeadingLeft = styled(HeadingGrid)`
   justify-content: flex-end;
   align-items: center;
   padding-bottom: 0.3rem;
+  svg {
+    transform: scale(1.2);
+  }
 `;
 
 export const HeadingRight = styled(HeadingGrid)`
@@ -41,10 +44,11 @@ export const AvatarImage = styled.img`
   height: 80px;
   border-radius: 50%;
   margin: 0.5rem;
+  border: ${({ theme }) => `${theme.colors.indigo6} 1px solid`};
 `;
 
 export const AvatarText = styled.span`
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-weight: bold;
 `;
 
@@ -59,4 +63,5 @@ export const SectionWrapper = styled.section`
   border: 1px solid #ddd;
   width: 100%;
   height: 100%;
+  padding: 0.3rem;
 `;

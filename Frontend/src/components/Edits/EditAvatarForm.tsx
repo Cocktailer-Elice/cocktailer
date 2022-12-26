@@ -9,8 +9,7 @@ import axios from 'axios';
 import { getCompressedImage } from '../../utils/imageCompression';
 import { GET_S3_URL, UPDATE_AVATAR } from '../../constants/api';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../store/store';
-import { userRefresh } from '../../store/authActions';
+import styled from 'styled-components';
 
 interface EditAvatarFormData {
   avatar?: FileList;
@@ -18,7 +17,6 @@ interface EditAvatarFormData {
 
 export const EditAvatarForm = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const methods = useForm<EditAvatarFormData>({
     resolver: yupResolver(EditAvatarFormSchema),
   });
@@ -36,10 +34,10 @@ export const EditAvatarForm = () => {
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setIsSubmitting(true);
-      const response = await axios.post(GET_S3_URL, { folder: 'avatars' });
-      const url = response.data;
       if (avatar && avatar.length > 0) {
+        setIsSubmitting(true);
+        const response = await axios.post(GET_S3_URL, { folder: 'avatars' });
+        const url = response.data;
         const file = avatar[0];
         const compressedFile = await getCompressedImage(file);
         await axios.put(url, compressedFile, {
@@ -51,8 +49,9 @@ export const EditAvatarForm = () => {
         const fileCode = getFileCode(url);
         await axios.patch(UPDATE_AVATAR, { avatarUrl: fileCode });
         alert('변경이 완료되었습니다');
-        dispatch(userRefresh());
         navigate('/mypage');
+      } else {
+        alert('파일을 선택해주세요');
       }
     } catch (e: any) {
       console.log(e);
@@ -68,14 +67,14 @@ export const EditAvatarForm = () => {
   return (
     <UserForm onSubmit={onSubmitHandler}>
       <AvatarPreviewWrapper>
-        <span> 미리보기 </span>
+        <Guide> - 미리보기 - </Guide>
         <AvatarPreview
           src={preview}
           alt={!preview ? '미리보기' : '아바타 이미지'}
         />
-        <span>이미지가 정사각형이 아니라면 찌그러질 수 있습니다</span>
+        <Guide>이미지가 정사각형이 아니라면 찌그러질 수 있습니다</Guide>
       </AvatarPreviewWrapper>
-      <input
+      <AvatarInput
         {...register('avatar')}
         id="avatar"
         name="avatar"
@@ -88,3 +87,13 @@ export const EditAvatarForm = () => {
     </UserForm>
   );
 };
+
+const Guide = styled.span`
+  font-size: 0.9rem;
+`;
+
+const AvatarInput = styled.input`
+  width: 100%;
+  height: 2rem;
+  margin-top: 1rem;
+`;
