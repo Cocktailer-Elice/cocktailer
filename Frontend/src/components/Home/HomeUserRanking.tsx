@@ -41,7 +41,7 @@ const Container = styled.div`
 
 const UserAvatarWrap = styled.div`
   width: 100%;
-  height: 50%;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,7 +66,7 @@ const UserAvatar = styled.img`
 
 const UserInfo = styled.div`
   width: 100%;
-  height: 40%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
