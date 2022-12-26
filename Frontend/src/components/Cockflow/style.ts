@@ -76,4 +76,5 @@ export const FlexMiddle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 8px 0px;
 `;

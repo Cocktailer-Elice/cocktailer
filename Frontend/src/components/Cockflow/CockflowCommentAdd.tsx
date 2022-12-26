@@ -24,9 +24,10 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   };
 
   const onSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     gets(data);
     reset();
+    window.location.replace(`/cockflow/detail/${cockflowId}`);
   };
 
   const [subComment, setSubComment] = useState(false);
@@ -42,7 +43,12 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
 
   return (
     <P15B1 key={item._id}>
-      <Comment2 value={item.content} onChange={() => { }} readOnly={true}></Comment2>
+      <Comment2
+        value={item.content}
+        onChange={() => { }}
+        maxLength={250}
+        readOnly={true}
+      />
       <Right>
         <Button variant="outlined" onClick={() => {
           if (subComment) {
@@ -61,6 +67,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
             onSubmit={handleSubmit(onSubmit)}>
             <SubTextarea
               {...register("content")}
+              maxLength={250}
               placeholder="대댓글을 입력해주세요"
             />
             <Button2
@@ -82,6 +89,9 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
 
 const Comment2 = styled.textarea`
   width: 100%;
+  height: 155px;
+  border: 1px solid #ddd;
+  margin: 18px 0px;
   padding: 15px;
   line-height: 1.8;
   border: none;
@@ -94,7 +104,7 @@ const SubComments = styled.form`
   justify-content: center;
   align-items: center;
   width: 90%;
-  height: 120px;
+  height: 150px;
   margin: 0 auto;
   &::before {
     display: block;
@@ -121,10 +131,10 @@ const SubComments = styled.form`
   }
 `;
 
-const SubTextarea = styled.input`
+const SubTextarea = styled.textarea`
   position: relative;
   width: 70%;
-  height: 90px;
+  height: 110px;
   margin-right: 13px;
   padding: 16.5px 14px;
   border: none;

@@ -1,15 +1,17 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
 import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
 import { CockflowItemBox } from '../../components/Cockflow/CockflowItemBox';
 import { P5 } from '../../components/Cockflow/style';
+import { slice20 } from '../../components/Cockflow/CockflowUtils';
+import { useInView } from 'react-intersection-observer';
 
 const List = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3,129px);
+  grid-template-columns: repeat(3, 1fr);
   -webkit-column-gap: 29px;
   column-gap: 20px;
 `;
@@ -19,71 +21,6 @@ const Item = styled.li`
   flex-wrap: wrap;
   margin-bottom: 28.9px;
 `;
-
-const mockData1 = [
-  {
-    id: '1',
-    title: 'string1',
-  }, {
-    id: '2',
-    title: 'string2',
-  }, {
-    id: '3',
-    title: 'string3',
-  }, {
-    id: '4',
-    title: 'string4',
-  }, {
-    id: '5',
-    title: 'string4',
-  }, {
-    id: '6',
-    title: 'string4',
-  }, {
-    id: '7',
-    title: 'string4',
-  }, {
-    id: '8',
-    title: 'string4',
-  }, {
-    id: '9',
-    title: 'string4',
-  }, {
-    id: '10',
-    title: 'string4',
-  }, {
-    id: '11',
-    title: 'string4',
-  }, {
-    id: '12',
-    title: 'string4',
-  }
-]
-
-const imsiData1 = [
-  {
-    "_id": "639f1573a10b5da4bacac17c",
-    "id": 4,
-    "owner": 79,
-    "title": "칵플로우 테스트",
-    "content": "오렌지주스 + 말리부랑 잘 어울리는 술이 뭘까요?",
-    "comments": [],
-    "deletedAt": null,
-    "createdAt": "2022-12-18T13:28:19.385Z",
-    "updatedAt": "2022-12-18T13:28:19.385Z",
-    "__v": 0
-  },
-  {
-    "_id": "63a15e59117f359863eccece",
-    "id": 6,
-    "owner": 92,
-    "title": "칵플로우 테스트",
-    "content": "오렌지주스 + 말리부랑 잘 어울리는 술이 뭘까요?",
-    "deletedAt": null,
-    "createdAt": "2022-12-20T07:03:53.633Z",
-    "updatedAt": "2022-12-20T07:03:53.633Z"
-  }
-]
 
 const imgArr = [
   'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg',
@@ -102,22 +39,29 @@ export const CockflowList = () => {
     content: '',
   }]);
 
-  const [pageNum, setPageNum] = useState(1)
+  const page = useRef<number>(1);
+  console.log(page)
+  const [ref, inView] = useInView();
 
-  useEffect(() => {
-
-    //axios.get 호출
-    // axios.get(`http://localhost:8000/api/cockflow`)
-    axios.get(`http://localhost:8000/api/cockflow/?q=${pageNum}`)
+  const getList = () => {
+    console.log(page)
+    axios.get(`http://localhost:8000/api/cockflow/?q=${page}`)
       .then(res => {
         console.log(res);
-        setListData(res.data.cockflows);
-        setPageNum((prev => prev + 1));
+        if (listData[0].id === '0') {
+          listData.shift();
+        }
+        setListData(() => listData.concat(res.data.cockflows));
+        page.current += 1;
       });
+  }
 
-    // setData(mockData1);
-    //  무한스크롤 - yarn add react-intersection-observer
-  }, []);
+
+  useEffect(() => {
+    if (inView) {
+      getList();
+    }
+  }, [inView, getList]);
 
   return (
     <P5>
@@ -126,11 +70,12 @@ export const CockflowList = () => {
       <List>
         {listData.map(item =>
           <Item key={item.id}>
-            <CockflowItemBox key={item.id} id={item.id} title={item.content}
+            <CockflowItemBox key={item.id} id={item.id} title={slice20(item.content)}
               content={imgArr[Math.round(Math.random() * (imgArr.length - 1))]} />
           </Item>
         )}
       </List>
+      <div ref={ref}></div>
     </P5>
   );
 };

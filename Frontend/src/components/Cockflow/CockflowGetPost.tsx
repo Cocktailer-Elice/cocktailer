@@ -2,12 +2,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export const CockflowGetPost = () => {
-  const navigate = useNavigate();
 
-  const gets = async (data: any) => {
+  const getsCockflowList = async (data: any) => {
     await axios.post('http://localhost:8000/api/cockflow', data)
       .then(function (response) {
         console.log(response);
@@ -19,11 +18,15 @@ export const CockflowGetPost = () => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
-    console.log(JSON.stringify(data));
-    alert('등록되었습니다');
-    gets(data);
-    // reset();
-    navigate(`/cockflow`);
+    if (data.title && data.content) {
+      alert('등록되었습니다');
+      getsCockflowList(data);
+      window.location.replace(`/cockflow`);
+    } else {
+      data.title
+        ? alert(`본문을 입력해주세요`)
+        : alert(`제목을 입력해주세요`)
+    }
   };
 
   return (
@@ -32,14 +35,16 @@ export const CockflowGetPost = () => {
         <InputBox
           {...register("title")}
           readOnly={false}
+          maxLength={50}
           placeholder="질문 제목을 입력해주세요" />
         <TextBox
           defaultValue=""
           {...register("content")}
           readOnly={false}
+          maxLength={250}
           placeholder='질문 내용을 입력해주세요' />
       </CockflowPostBox>
-      <CockflowEnrollBtns />
+      <CockflowEnrollBtns linkto="/cockflow" />
     </form>
   );
 };

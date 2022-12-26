@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { CockflowBadge } from '../../components/Cockflow/CockflowBadge';
 import { Middle, FlexMiddle } from '../../components/Cockflow/style';
+import { trimDate } from './CockflowUtils';
+import { CockflowEnrollBtns } from './CockflowEnrollBtns';
 
 interface dataType {
   detailData: {
@@ -16,36 +18,34 @@ interface dataType {
 
 export const CockflowDetailBox = ({ detailData }: dataType) => {
   // 수정 기능 붙으면 - 전역으로 관리 
-  const [inputActived, setInputActived] = useState(true);
+  const [inputUnActived, setinputUnActived] = useState(true);
 
   const { title, isBartender, nickname, createdAt, content } = detailData;
 
   return (
     <ContWrap>
-      <form>
+      <form>inputUnActived
         <TitleWrap>
           <div>
-            <ChangedInput type="text" value={title} readOnly={inputActived} />
-          </div><br />
-          <div>
-            <FlexMiddle>
-              <Middle>
-                {isBartender
-                  ? null
-                  : <CockflowBadge /> // 임시로 표시를 반대로.
-                }
-                <div>&nbsp;{nickname}</div>
-              </Middle>
+            <ChangedInput type="text" value={title} readOnly={inputUnActived} />
+          </div>
+          <FlexMiddle>
+            <Middle>
+              {isBartender && <CockflowBadge />}{nickname} &nbsp;
+            </Middle>
+            <div>
               <span>
-                {String(createdAt).split('T')[0].replaceAll('-', '.')}
+                {trimDate(createdAt)}
               </span>
-            </FlexMiddle>
-          </div><br />
+            </div>
+          </FlexMiddle>
           <div>
             {/* <span>(+)조회수</span> */}
           </div>
         </TitleWrap>
-        <TextBox defaultValue="" value={content} readOnly={inputActived} />
+        <TextBox defaultValue="" value={content} readOnly={inputUnActived} />
+        {!inputUnActived && <CockflowEnrollBtns type="enroll" linkto={`/cockflow`} />}
+        {inputUnActived && <CockflowEnrollBtns type="edit" linkto={`/cockflow`} />}
       </form>
     </ContWrap>
   );
@@ -82,10 +82,12 @@ const ChangedInput = styled.input`
   border: none;
   border-bottom: 1px solid #ddd;
   resize: none;
-  
+
   &:read-only {
   padding: 5px 0px;
     border: none;
     color: #555;  
+    font-size: 17px;
+    font-weight: bold;
   }
 `;

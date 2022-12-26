@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 
 const TextBox = styled.textarea`
   width: 100%;
+  height: 150px;
   padding: 16.5px 14px;
   border-color: rgba(0, 0, 0, 0.23);
   resize: none;
@@ -25,15 +26,20 @@ export const CockflowAddComment = ({ cockflowId }: any) => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     gets(data);
     reset();
+    window.location.replace(`/cockflow/detail/${cockflowId}`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <CockflowBoxTitle smallTitle="답글 달기" />
-      <TextBox placeholder='답글입력' defaultValue="" {...register("content")} />
+      <TextBox
+        placeholder='답글 입력'
+        maxLength={250}
+        defaultValue="" {...register("content")}
+      />
       <Center>
         <Button type="submit" variant="contained">등록하기</Button>
       </Center>
