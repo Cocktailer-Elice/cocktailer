@@ -237,7 +237,7 @@ const SectionHeader = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 10px 5px;
+  margin: 5px;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.7);
   font-weight: 600;
