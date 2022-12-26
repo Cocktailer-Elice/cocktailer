@@ -52,6 +52,7 @@ const UserSchema: Schema = new Schema(
     isBartender: {
       default: false,
     },
+    myLikes: [{ type: Number }],
     deletedAt: {
       type: Date,
     },
