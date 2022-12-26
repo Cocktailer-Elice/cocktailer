@@ -4,15 +4,20 @@ import { BartenderBadge } from './BartenderBadge';
 
 interface HomeUserRankingProps {
   userRankingInfo: UserRanking;
+  ranking: number;
 }
 
-export const HomeUserRanking = ({ userRankingInfo }: HomeUserRankingProps) => {
+export const HomeUserRanking = ({
+  userRankingInfo,
+  ranking,
+}: HomeUserRankingProps) => {
   return (
     <Container>
       <UserAvatarWrap>
         <UserAvatar src={userRankingInfo.avatarUrl}></UserAvatar>
       </UserAvatarWrap>
       <UserInfo>
+        <Ranking>{ranking}등</Ranking>
         <UserName>
           <UserNickname>{userRankingInfo.nickname}</UserNickname>
           {userRankingInfo.isBartender && <BartenderBadge />}
@@ -71,10 +76,21 @@ const UserInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 15px;
+  padding: 0px 5px;
 
   @media screen and (max-width: 500px) {
     margin-top: 5px;
+  }
+`;
+
+const Ranking = styled.div`
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
   }
 `;
 
@@ -91,9 +107,11 @@ const UserNickname = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
+  margin-top: 10px;
 
   @media screen and (max-width: 500px) {
-    font-size: 12px;
+    font-size: 10px;
+    margin-top: 5px;
   }
 `;
 
