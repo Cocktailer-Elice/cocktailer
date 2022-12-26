@@ -170,8 +170,6 @@ export const Home = () => {
 
   useEffect(() => {
     axios.get(GET_RANKINGS_OF_COCKTAIL_AND_USER).then((res) => {
-      console.log('axios 요청');
-      console.log(res.data);
       setCocktailRankingList(res.data.cocktailRanking);
       setUserRankingList(res.data.userRanking);
     });
