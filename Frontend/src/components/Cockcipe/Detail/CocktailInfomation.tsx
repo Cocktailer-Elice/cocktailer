@@ -69,7 +69,10 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
       </FlavorContainer>
 
       <Content>{cocktail.content}</Content>
-      <Pie data={data} />
+      <ChartWrapper>
+        <Pie data={data} />
+      </ChartWrapper>
+
       <LikeContainer>
         <LikeNumber>{like}</LikeNumber>
         <Like onClick={handleLike}>{isLike ? 'isGood' : 'Good'}</Like>
@@ -116,4 +119,8 @@ const Like = styled.div`
 `;
 const Content = styled.div`
   font-size: 20px;
+`;
+const ChartWrapper = styled.div`
+  max-width: 400px;
+  max-height: 400px;
 `;

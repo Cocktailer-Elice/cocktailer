@@ -3,7 +3,7 @@ import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailList
 import styled from 'styled-components';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
+import { Autoplay } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -18,13 +18,23 @@ interface Data {
   official: boolean;
 }
 const ListCarousel = (itemList: Data[]) => (
-  <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
+  <Swiper
+    slidesPerView={3}
+    loop={true}
+    style={{ marginBottom: '20px' }}
+    autoplay={{
+      delay: 2000,
+      disableOnInteraction: false,
+    }}
+    modules={[Autoplay]}
+  >
     {itemList?.map((item, idx) => (
       <SwiperSlide key={item.id}>
         <CocktailListItem
           key={item.id}
           name={item.name}
           official={item.official}
+          img={item.img}
           id={item.id}
         />
       </SwiperSlide>

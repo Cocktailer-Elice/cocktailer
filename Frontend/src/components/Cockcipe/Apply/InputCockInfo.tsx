@@ -7,31 +7,41 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 interface Props {
-  handleTextChange: any;
-  props: any;
+  value: string;
+  setName: any;
+  setDegree: any;
+  setCategory: any;
+  category: string;
+  degree: number;
 }
 
-export const InputCockInfo = ({ handleTextChange, props }: Props) => {
+export const InputCockInfo = ({
+  value,
+  setName,
+  setDegree,
+  setCategory,
+  category,
+  degree,
+}: Props) => {
   return (
     <>
       <InfoContainer>
         <TextField
           label="나만의 칵테일 이름"
           sx={{ marginRight: '20px;' }}
-          name="name"
-          value={props.name}
+          value={value}
           onChange={(e) => {
-            handleTextChange(e);
+            setName(e.target.value);
           }}
         />
         <TextField
           label="칵테일 도수"
           type="number"
-          name="degree"
-          value={props.degree}
+          value={degree}
           onChange={(e) => {
-            handleTextChange(e);
+            setDegree(parseInt(e.target.value));
           }}
         />
       </InfoContainer>
@@ -44,12 +54,9 @@ export const InputCockInfo = ({ handleTextChange, props }: Props) => {
           <InputLabel>카테고리 선택</InputLabel>
           <Select
             label="카테고리"
-            key={props.category}
-            name="category"
-            defaultValue={props.category}
-            onChange={(e) => {
-              handleTextChange(e);
-            }}
+            key={category}
+            defaultValue={category}
+            onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value="dry">드라이 칵테일</MenuItem>
             <MenuItem value="refreshing">리프레싱 칵테일</MenuItem>

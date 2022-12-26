@@ -33,8 +33,8 @@ export const ModifyContainer = () => {
       const result = await axios.get(
         `http://localhost:8000/api/cocktails/${cocktailId}`,
       );
+
       const cocktail = result.data.cocktail;
-      console.log(cocktail);
       setImg(cocktail.img);
       setName(cocktail.name);
       setDegree(cocktail.degree);
@@ -74,7 +74,10 @@ export const ModifyContainer = () => {
     };
 
     axios
-      .put(`http://localhost:8000/api/cocktails/${cocktailId}`, newData)
+      .patch(
+        `http://localhost:8000/api/cocktails/updatecocktail/${cocktailId}`,
+        newData,
+      )
       .then((res) => {
         console.log(res);
         console.log(newData);

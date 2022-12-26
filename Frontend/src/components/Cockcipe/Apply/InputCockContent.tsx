@@ -3,33 +3,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  handleTextChange: any;
+  setContent: any;
   content: string;
-  name: string;
 }
-export const InputCockContent = ({
-  name,
-  handleTextChange,
-  content,
-}: Props) => {
+export const InputCockContent = ({ setContent, content }: Props) => {
   return (
-    <ContentWrapper>
+    <ContentContainer>
       <TextField
         label="제조법에 대해 적어주세요"
-        name={name}
-        value={content}
+        placeholder="레몬 몇조각..."
         rows={4}
         multiline
+        value={content}
         sx={{ width: '300px' }}
-        onChange={(e) => {
-          handleTextChange(e);
-        }}
+        onChange={(e) => setContent(e.target.value)}
       />
-    </ContentWrapper>
+    </ContentContainer>
   );
 };
 
-const ContentWrapper = styled.div`
+const ContentContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;

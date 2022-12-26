@@ -1,15 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ApplyContainer } from '../../containers/Cockcipe/List/ApplyContainer';
+import { CocktailApplyBtn } from '../../components/Cockcipe/List/CocktailApplyBtn';
+import { ListHeader } from '../../components/Cockcipe/List/ListHeader';
 import { ListContainer } from '../../containers/Cockcipe/List/ListContainer';
-import { ListHeaderContainer } from '../../containers/Cockcipe/List/ListHeaderContainer';
 
 export const CockcipePage = () => {
   return (
     <>
-      <ListHeaderContainer />
+      <ListHeader />
       <ListContainer />
-      <ApplyContainer />
+      <ApplyWrapper>
+        <CocktailApplyBtn />
+      </ApplyWrapper>
     </>
   );
 };
+const ApplyWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
