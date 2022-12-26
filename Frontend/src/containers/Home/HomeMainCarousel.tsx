@@ -1,19 +1,46 @@
 import styled from 'styled-components';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-const HomeMainCarousel = () => {
+import '../../swiper.css';
+
+export const HomeMainCarousel = () => {
   return (
-    <HomeMainCarouselWrapper>
-      <span>홈 메인 캐러셀</span>
-    </HomeMainCarouselWrapper>
+    <MainCarousel>
+      <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        navigation={true}
+        modules={[Autoplay, Pagination, Navigation]}
+        className="mySwiper"
+      >
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide>Slide 7</SwiperSlide>
+        <SwiperSlide>Slide 8</SwiperSlide>
+        <SwiperSlide>Slide 9</SwiperSlide>
+      </Swiper>
+    </MainCarousel>
   );
 };
 
-const HomeMainCarouselWrapper = styled.div`
+const MainCarousel = styled.div`
   width: 100%;
-  height: 20%;
+  height: 100%;
   border: 1px solid gray;
   padding: 10px;
-  margin-bottom: 10px;
 `;
-
-export default HomeMainCarousel;

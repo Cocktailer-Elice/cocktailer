@@ -1,47 +1,39 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import { verify } from 'jsonwebtoken';
-import { UserCookie } from '../types';
-import { errorNames } from '../errors/error-names';
-import { TokenData } from '../types';
-import { userModel } from '../../../db/models/userModel';
-import { AppError } from '../errors';
-import { tokenConfig } from '../../../configs/env';
+import { Cookie } from '../types';
+
+const ACCESS_KEY = process.env.ACCESS_KEY;
 
 export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
-  const secretKey = tokenConfig.ACCESS_KEY as string;
-  console.log(req.cookies);
-  const Authorization = req.cookies.Authorization;
-
-  if (!Authorization) {
-    throw new AppError(
-      errorNames.authenticationError,
-      400,
-      'Auhorization 헤더 없음',
-    );
+  const secretKey = ACCESS_KEY as string;
+  const token = req.cookies.Authorization;
+  if (!token) {
+    return res.status(401).json({ message: '로그인 필요' });
   }
 
-  if (Authorization) {
-    const verificationResponse = (await verify(
-      Authorization,
-      secretKey,
-    )) as TokenData;
-    const userId = verificationResponse.id;
-    const foundUser = await userModel.findById(userId);
-
-    if (!foundUser) {
-      throw new AppError(
-        errorNames.authenticationError,
-        401,
-        '해당하는 유저 없음',
-      );
-    }
-    req.user = {
-      id: foundUser.id,
-      email: foundUser.email,
-      isAdmin: foundUser.isAdmin,
-      isBartender: foundUser.isBartender,
-    } as UserCookie;
-
-    next();
+  let decodedData;
+  try {
+    decodedData = verify(token, secretKey) as Cookie;
+  } catch (err: any) {
+    res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
+    return res.status(419).json({ message: '만료 또는 손상된 토큰' });
   }
+
+  // const { userId } = decodedData as Cookie;
+  // const foundUser = await userModel.Mongo.findById(userId);
+
+  // if (!foundUser) {
+  //   return res.status(401).json({ message: '해당하는 유저 없음' });
+  // }
+  req.user = {
+    userId: decodedData.userId,
+    name: decodedData.name,
+    email: decodedData.email,
+    nickname: decodedData.nickname,
+    isAdmin: decodedData.isAdmin,
+    isBartender: decodedData.isBartender,
+    avatarUrl: decodedData.avatarUrl,
+  };
+
+  next();
 };

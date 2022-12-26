@@ -1,28 +1,64 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CocktailChart from '../../../components/Cockcipe/Detail/CocktailChart';
-import CocktailFlavor from '../../../components/Cockcipe/Detail/CocktailFlavor';
-import CocktailName from '../../../components/Cockcipe/Detail/CocktailName';
-import CocktailTitleImg from '../../../components/Cockcipe/Detail/CocktailTitleImg';
-import LikeBtn from '../../../components/Cockcipe/Detail/LikeBtn';
-import ShareBtn from '../../../components/Cockcipe/Detail/ShareBtn';
+import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
+import { ModifyButton } from '../../../components/Cockcipe/Detail/ModifyButton';
+import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
 
-const DetailContainer = () => {
+interface Recipe {
+  alcohol: any;
+  ingredient: any;
+}
+export interface ICocktail {
+  name: string;
+  id: number;
+  img: string;
+  flavor: string[];
+  degree: number;
+  likes: number;
+  content: string;
+  ratio: Recipe;
+}
+
+export const DetailContainer = () => {
+  const url = window.location.pathname;
+  const cocktailId = url.split('/')[3];
+
+  const [cocktailInfo, setCocktail] = useState<ICocktail>({
+    name: '',
+    id: 0,
+    img: '',
+    flavor: [],
+    degree: 0,
+    likes: 0,
+    content: '',
+    ratio: { alcohol: {}, ingredient: {} },
+  });
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
+      .then((res) => {
+        console.log(res);
+        setCocktail(res.data.cocktail);
+      });
+  }, []);
+
   return (
-    <div>
-      <CocktailTitleImg />
+    <>
       <ContentContainer>
-        <CocktailName />
-        <CocktailFlavor />
-        <CocktailChart />
-        <LikeBtn />
-        <ShareBtn />
+        <CocktailInfomation cocktail={cocktailInfo} />
+        <ShareBtn
+          img={cocktailInfo.img}
+          name={cocktailInfo.name}
+          id={cocktailInfo.id}
+          content={cocktailInfo.content}
+        />
+        <ModifyButton id={cocktailInfo.id} />
       </ContentContainer>
-    </div>
+    </>
   );
 };
-
-export default DetailContainer;
 
 const ContentContainer = styled.div`
   display: flex;

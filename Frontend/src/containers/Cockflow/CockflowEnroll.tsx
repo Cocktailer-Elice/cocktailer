@@ -1,18 +1,14 @@
-import CockflowHeader from '../../components/Cockflow/CockflowHeader'
-import CockflowBackBtn from '../../components/Cockflow/CockflowBackBtn'
-import CockflowEnrollBox from '../../components/Cockflow/CockflowEnrollBox'
-import CockflowEnrollBtns from '../../components/Cockflow/CockflowEnrollBtns'
-import { P5 } from '../../components/Cockflow/CockflowStyle'
+import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
+import { CockflowGetPost } from '../../components/Cockflow/CockflowGetPost'
+import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
+import { P5 } from '../../components/Cockflow/style';
 
-const CockflowEnroll = () => {
+export const CockflowEnroll = () => {
   return (
     <P5>
-        <CockflowHeader />
-        <CockflowBackBtn />
-        <CockflowEnrollBox actived={false} />
-        <CockflowEnrollBtns />
+      <CockflowHeader />
+      <CockflowLinkBtn link="/cockflow" title="목록" />
+      <CockflowGetPost />
     </P5>
-  )
-}
-
-export default CockflowEnroll
+  );
+};

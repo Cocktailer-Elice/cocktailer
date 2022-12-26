@@ -1,49 +1,40 @@
-import Router from './Router';
 import styled from 'styled-components';
-
-import { createGlobalStyle } from 'styled-components';
 import { Helmet } from 'react-helmet';
-import { reset } from 'styled-reset';
-import Header from './containers/Main/Header/Header';
+import { BrowserRouter } from 'react-router-dom';
 
-const GlobalStyles = createGlobalStyle`
-  ${reset}
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    
-  }
-  
-  a {
-    text-decoration: none;
-  }
+import { GlobalStyles } from './GlobalStyles';
+import { Header } from './containers/Main/Header/Header';
+import { Router } from './Router';
+import { useEffect } from 'react';
+import { loginChecker } from './utils/loginChecker';
+import { useAppDispatch } from './store/store';
+import { userRefresh } from './store/authActions';
 
-  input:focus, textarea:focus {
-    outline: none;
-  }
-`;
+export const App = () => {
+  const isLoggedIn = loginChecker();
+  const dispatch = useAppDispatch();
 
-function App() {
+  useEffect(() => {
+    if (!isLoggedIn) {
+      dispatch(userRefresh());
+    }
+  }, [isLoggedIn]);
   return (
-    <StyledApp>
-      <Helmet></Helmet>
-      <GlobalStyles></GlobalStyles>
-      <Router></Router>
-    </StyledApp>
+    <AppLayout>
+      <Helmet />
+      <GlobalStyles />
+      <BrowserRouter>
+        <Header />
+        <Router />
+      </BrowserRouter>
+    </AppLayout>
   );
-}
+};
 
-const StyledApp = styled.div`
+const AppLayout = styled.div`
   width: 480px;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   border: 1px solid #ddd;
   margin: auto;
-  position: relative;
 `;
-
-export default App;

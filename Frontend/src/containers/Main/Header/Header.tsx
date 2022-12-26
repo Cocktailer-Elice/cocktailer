@@ -4,24 +4,43 @@ import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHam
 import { Drawer } from './../Drawer/Drawer';
 import { useState } from 'react';
 
-const Header = () => {
-  const [menuClicked, setMenuClicked] = useState(false);
+export const Header = () => {
+  const [drawer, setDrawer] = useState(false);
+
+  const toggleDrawer = () => {
+    setDrawer((curr) => !curr);
+  };
 
   return (
-    <HeaderWrapper>
-      <HeaderHamburgerButton setMenuClicked={setMenuClicked} />
-      <HeaderHomeLogo />
-      {menuClicked ? <Drawer setMenuClicked={setMenuClicked} /> : <></>}
-    </HeaderWrapper>
+    <Container>
+      <LeftSection>
+        <HeaderHamburgerButton toggleDrawer={toggleDrawer} />
+      </LeftSection>
+      <RightSection>
+        <HeaderHomeLogo />
+      </RightSection>
+      {drawer ? <Drawer toggleDrawer={toggleDrawer} /> : <></>}
+    </Container>
   );
 };
 
-const HeaderWrapper = styled.div`
+const Container = styled.div`
   width: 100%;
-  height: 50px;
+  height: 60px;
   background-color: #fff;
   border: 1px solid #ddd;
   display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 `;
 
-export default Header;
+const LeftSection = styled.div`
+  width: 70px;
+  height: 100%;
+`;
+
+const RightSection = styled.div`
+  width: calc(100% - 70px);
+  height: 100%;
+`;
