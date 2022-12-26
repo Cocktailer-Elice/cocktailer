@@ -32,7 +32,10 @@ export const HomeUserRankingContainer = ({
             {index === 0 && <Crown icon={faCrown} color="gold" />}
             {index === 1 && <Crown icon={faCrown} color="silver" />}
             {index === 2 && <Crown icon={faCrown} color="	#CD7F32" />}
-            <HomeUserRanking userRankingInfo={userRankingInfo} />
+            <HomeUserRanking
+              userRankingInfo={userRankingInfo}
+              ranking={index + 1}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
