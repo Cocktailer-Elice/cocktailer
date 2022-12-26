@@ -27,7 +27,10 @@ export const HomeCocktailRankingContainer = ({
       >
         {cocktailRankingList.map((cocktailRankingInfo, index) => (
           <SwiperSlide key={index}>
-            <HomeCocktailRanking cocktailRankingInfo={cocktailRankingInfo} />
+            <HomeCocktailRanking
+              cocktailRankingInfo={cocktailRankingInfo}
+              ranking={index + 1}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -7,17 +7,22 @@ import { BartenderBadge } from './BartenderBadge';
 
 interface HomeCocktailRankingProps {
   cocktailRankingInfo: CocktailRanking;
+  ranking: number;
 }
 
 export const HomeCocktailRanking = ({
   cocktailRankingInfo,
+  ranking,
 }: HomeCocktailRankingProps) => {
   return (
     <Container>
       <CustomLink to={`/cockcipe/detail/${cocktailRankingInfo.id}`}>
         <CocktailImage src={cocktailRankingInfo.img} />
         <CocktailInfo>
-          <CocktailName>{cocktailRankingInfo.name}</CocktailName>
+          <CocktailTitle>
+            <Ranking>{ranking}등</Ranking>
+            <CocktailName>{cocktailRankingInfo.name}</CocktailName>
+          </CocktailTitle>
         </CocktailInfo>
         <CocktailLikes>
           <CustomThumbUpIcon />
@@ -62,10 +67,32 @@ const CocktailInfo = styled.div`
   margin-top: 10px;
 `;
 
+const CocktailTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const CocktailName = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: ${(props) => props.theme.colors.indigo7};
+  word-break: keep-all;
+
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
+`;
+
+const Ranking = styled.div`
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+  margin-right: 5px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
 
 const CustomThumbUpIcon = styled(ThumbUpIcon)`
@@ -73,6 +100,10 @@ const CustomThumbUpIcon = styled(ThumbUpIcon)`
   margin-left: 5px;
   margin-right: 3px;
   color: ${(props) => props.theme.colors.indigo4};
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
 `;
 
 const CocktailLikes = styled.div`
@@ -83,6 +114,10 @@ const CocktailLikes = styled.div`
   font-weight: bold;
   margin-top: 8px;
   color: ${(props) => props.theme.colors.indigo4};
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+  }
 `;
 
 const OwnerInfo = styled.div`
@@ -96,4 +131,8 @@ const OwnerName = styled.div`
   font-size: 12px;
   color: rgba(0, 0, 0, 0.8);
   font-weight: 600;
+
+  @media screen and (max-width: 500px) {
+    font-size: 11px;
+  }
 `;
