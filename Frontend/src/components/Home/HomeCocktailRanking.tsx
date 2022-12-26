@@ -99,7 +99,7 @@ const CustomThumbUpIcon = styled(ThumbUpIcon)`
   font-size: 12px;
   margin-left: 5px;
   margin-right: 3px;
-  color: ${(props) => props.theme.colors.indigo4};
+  color: rgba(0, 0, 0, 0.8);
 
   @media screen and (max-width: 500px) {
     font-size: 10px;
@@ -113,7 +113,8 @@ const CocktailLikes = styled.div`
   font-size: 11px;
   font-weight: bold;
   margin-top: 8px;
-  color: ${(props) => props.theme.colors.indigo4};
+
+  color: rgba(0, 0, 0, 0.8);
 
   @media screen and (max-width: 500px) {
     font-size: 10px;
