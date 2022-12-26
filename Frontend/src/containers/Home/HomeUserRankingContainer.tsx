@@ -20,7 +20,7 @@ export const HomeUserRankingContainer = ({
     <Carousel>
       <Swiper
         slidesPerView={3}
-        spaceBetween={30}
+        spaceBetween={10}
         freeMode={true}
         modules={[FreeMode, Pagination]}
         className="mySwiper"
