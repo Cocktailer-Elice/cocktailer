@@ -26,7 +26,7 @@ export const HomeUserRanking = ({ userRankingInfo }: HomeUserRankingProps) => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: ${(props) => props.theme.colors.indigo0};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -102,7 +102,7 @@ const UserPoint = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.8);
+  color: ${(props) => props.theme.colors.indigo5};
   margin-top: 10px;
 
   @media screen and (max-width: 500px) {
