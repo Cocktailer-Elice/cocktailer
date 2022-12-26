@@ -98,6 +98,7 @@ const UserName = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 `;
 
 const UserNickname = styled.div`
@@ -107,7 +108,6 @@ const UserNickname = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
-  margin-top: 10px;
 
   @media screen and (max-width: 500px) {
     font-size: 10px;
