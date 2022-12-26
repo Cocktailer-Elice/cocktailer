@@ -1,5 +1,4 @@
 import { Header } from '../../containers/Mypage/Header';
-import { loginChecker } from '../../utils/loginChecker';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WithdrawlButton } from '../../components/Mypage/WithdrawlButton';
@@ -10,9 +9,10 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { GET_USER } from '../../constants/api';
 import { MyPostsResData } from '../../../../types';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 export const Mypage = () => {
-  const isLoggedIn = loginChecker();
+  const isLoggedIn = useAuthentication();
   const user = getCurrentUser();
   const navigate = useNavigate();
   const [userData, setUserData] = useState<MyPostsResData>();

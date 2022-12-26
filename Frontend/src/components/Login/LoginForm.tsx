@@ -9,7 +9,7 @@ import { userLogin } from '../../store/authActions';
 import { useAppDispatch } from '../../store/store';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginChecker } from '../../utils/loginChecker';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 export const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ export const LoginForm = () => {
     resolver: yupResolver(LoginSchema),
     mode: 'onChange',
   });
-  const isLoggedIn = loginChecker();
+  const isLoggedIn = useAuthentication();
   const { handleSubmit, reset } = methods;
   const onSubmitHandler = (data: LoginReqData) => {
     dispatch(userLogin(data));
@@ -38,6 +38,12 @@ export const LoginForm = () => {
           label="password"
           type="password"
           name="password"
+        />
+        <UserInput
+          id="isAutoLogin"
+          label="auto login"
+          name="isAutoLogin"
+          type="checkbox"
         />
         <Button type="submit">로그인</Button>
       </UserForm>
