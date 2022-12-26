@@ -8,9 +8,9 @@ import {
 import { CommentInfo } from '../../services';
 import { IComment } from '../types';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import { db } from '../../mongodb';
 
-class MongoModel implements ICommentMongoModel {
+class CommentMongoModel implements ICommentMongoModel {
   public async create(
     commentInfo: CommentInfo | SubCommentInfo,
   ): Promise<IComment> {
@@ -63,10 +63,12 @@ class MongoModel implements ICommentMongoModel {
   }
 }
 
-export class CommentModel implements ICommentModel {
-  Mongo = new MongoModel();
+const commentMongoModel = new CommentMongoModel();
+
+class CommentModel implements ICommentModel {
+  constructor(public Mongo: CommentMongoModel) {}
 }
 
-const commentModel = new CommentModel();
+const commentModel = new CommentModel(commentMongoModel);
 
-export { ICommentModel, commentModel };
+export { CommentModel, commentModel, CommentMongoModel };

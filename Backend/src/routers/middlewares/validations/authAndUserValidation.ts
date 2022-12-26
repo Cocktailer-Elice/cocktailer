@@ -10,7 +10,7 @@ const authAndUserSchema = Joi.object({
     ),
   ),
   tel: Joi.string().pattern(/^(010)\d{3,4}\d{4}$/),
-  birthday: Joi.string(),
+  birthday: Joi.string().min(10).max(10),
   alcohol: Joi.string().valid(
     '랜덤',
     '진',
@@ -27,6 +27,7 @@ const authAndUserSchema = Joi.object({
     ),
   ),
   avatarUrl: Joi.string().min(13).max(13),
+  isAutoLogin: Joi.boolean(),
 });
 
 export const authAndUserValidator = (req: Req, res: Res, next: Next) => {

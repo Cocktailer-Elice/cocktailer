@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Mongoose } from 'mongoose';
 import logger from './winston';
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -11,13 +11,25 @@ mongoose.set('debug', isDev);
 
 const DB_URL: string = MONGO_URL || '❌ MongoDB 서버 연결 실패,,,';
 
-mongoose.connect(DB_URL);
-const db = mongoose.connection;
+class MongoDb {
+  public readonly db: mongoose.Connection;
 
-db.on('connected', () => {
-  logger.info(`⭕ MongoDB 서버 연결 완료! URL: ${DB_URL}`);
-});
+  constructor() {
+    this.db = mongoose.createConnection(DB_URL);
+  }
 
-db.on('error', () => logger.error(DB_URL));
+  public connect = () => {
+    mongoose.connect(DB_URL);
+    this.db.on('connected', () => {
+      logger.info(`⭕ MongoDB 서버 연결 완료! URL: ${DB_URL}`);
+    });
 
-export default db;
+    this.db.on('error', () => logger.error(DB_URL));
+  };
+}
+
+const mongoDb = new MongoDb();
+
+export const db = mongoDb.db;
+
+export default mongoDb;

@@ -9,9 +9,9 @@ import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import { db } from '../../mongodb';
 
-class MongoModel implements ICockflowMongoModel {
+class CockflowMongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
     const cockflow = await Cockflow.create(cockflowInfo);
     return cockflow;
@@ -86,10 +86,12 @@ class MongoModel implements ICockflowMongoModel {
   };
 }
 
-export class CockflowModel implements ICockflowModel {
-  Mongo = new MongoModel();
+const cockflowMongoModel = new CockflowMongoModel();
+
+class CockflowModel implements ICockflowModel {
+  constructor(public Mongo: CockflowMongoModel) {}
 }
 
-const cockflowModel = new CockflowModel();
+const cockflowModel = new CockflowModel(cockflowMongoModel);
 
-export { ICockflowModel, cockflowModel };
+export { CockflowModel, cockflowModel };
