@@ -1,4 +1,4 @@
-import { Grid, Paper } from '@mui/material';
+import { Button, Grid, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MyCockflow, MyComment } from '../../../../types';
@@ -19,6 +19,9 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
     <SectionContainer>
       <SectionWrapper>
         <h4>{title}</h4>
+        {title === '나의 Cockflow' && (
+          <Button onClick={() => navigate('/mypage/cockflows')}>더 보기</Button>
+        )}
         <Grid
           container
           spacing={2}
@@ -32,7 +35,7 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
                 item
                 xs={6}
                 key={id}
-                onClick={() => navigate(`/cockflow/${id}`)}
+                onClick={() => navigate(`/cockflow/detail/${id}`)}
               >
                 <GridItem>{title}</GridItem>
                 <GridItem>{content}</GridItem>
@@ -45,7 +48,9 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
                 item
                 xs={6}
                 key={idx}
-                onClick={() => navigate(`/cockflow/${parentCockflow[0].id}`)}
+                onClick={() =>
+                  navigate(`/cockflow/detail/${parentCockflow[0].id}`)
+                }
               >
                 <GridItem>{content}</GridItem>
               </Grid>

@@ -8,6 +8,7 @@ import { EditAvatar } from '../pages/Mypage/Edit/EditAvatar';
 import { EditPassword } from '../pages/Mypage/Edit/EditPassword';
 import { BartenderApply } from '../pages/Mypage/BartenderApply';
 import { Logout } from '../pages/Logout/Logout';
+import { Details } from '../pages/Mypage/Details';
 
 export const UserRouter = () => {
   return (
@@ -21,6 +22,16 @@ export const UserRouter = () => {
       <Route path="/find-email" element={<FindEmail />} />
       <Route path="/find-password" element={<FindPassword />} />
       <Route path="/logout" element={<Logout />} />
+      {/* <Route path="/mypage/comments" element={<Details detail="내 댓글" title="내 댓글"/>} /> */}
+      <Route
+        path="/mypage/cockflows"
+        element={<Details title="내 칵플로우" />}
+      />
+      <Route
+        path="/mypage/likes"
+        element={<Details title="좋아요한 칵시피" />}
+      />
+      <Route path="/mypage/cockcipes" element={<Details title="내 칵시피" />} />
     </Routes>
   );
 };

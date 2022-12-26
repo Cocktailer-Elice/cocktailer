@@ -11,18 +11,13 @@ import { timeFormat } from '../../utils/timeFormat';
 import { BottomLineInput } from './styles';
 
 interface TelVerifierProps {
-  telVerificationStart: boolean;
-  setTelVerificationStart: React.Dispatch<React.SetStateAction<boolean>>;
   setTelVerificationEnd: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const TelVerifier = ({
-  telVerificationStart,
-  setTelVerificationStart,
-  setTelVerificationEnd,
-}: TelVerifierProps) => {
+export const TelVerifier = ({ setTelVerificationEnd }: TelVerifierProps) => {
   const { getValues } = useFormContext();
   const tel: string = getValues('tel');
+  const [telVerificationStart, setTelVerificationStart] = useState(false);
   const [code, setCode] = useState('');
   const [time, setTime] = useState(179);
   const [success, setSuccess] = useState(false);
@@ -102,9 +97,7 @@ export const TelVerifier = ({
           <Button onClick={endTelVerification}>인증하기</Button>
         </>
       ) : (
-        <>
-          <Button onClick={startTelVerification}>전화번호 인증하기</Button>
-        </>
+        <Button onClick={startTelVerification}>전화번호 인증하기</Button>
       )}
       {success && <span>인증 성공</span>}
     </div>

@@ -43,7 +43,9 @@ class UserController {
     const originalCookie = req.user;
     const token = updateToken(originalCookie);
     const isAutoLogin = (await redisCache.exists(userIdString)) ? true : false;
+    console.log(isAutoLogin);
     const cookie = createCookie(token, userIdString, isAutoLogin);
+    console.log(cookie);
     res.setHeader('Set-Cookie', [cookie]);
     res.sendStatus(204);
   };

@@ -1,11 +1,13 @@
 import { CocktailModelType } from '../types';
-import { CocktailCreateReqData } from 'types';
+import { CocktailCreateReqData, CocktailRankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 import {
   lists,
   findCocktailId,
   findCategoryAndSearch,
+  main1,
 } from '../queries/cocktailsQuery';
+import cocktailsSchema from '../schemas/cocktailsSchema';
 
 interface CocktailInterface {
   createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
@@ -20,6 +22,13 @@ interface CocktailInterface {
     reqData: object,
     lastId: number,
   ): Promise<CocktailModelType[]>;
+
+  updateCocktail(
+    cocktailId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<any>;
+
+  main1(): Promise<CocktailRankings[]>;
 }
 
 const limitEachPage = 10;
@@ -85,6 +94,38 @@ export class CocktailModel implements CocktailInterface {
     ])
       .limit(limitEachPage)
       .skip(endpoint);
+
+    return result;
+  };
+
+  public updateCocktail = async (
+    cocktailId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<any> => {
+    console.log(cocktailId);
+    console.log(cocktailCreateDto);
+    const id = { id: cocktailId };
+    const result = await cocktailsSchema.updateOne(id, cocktailCreateDto);
+    return result;
+    //   {
+    //     id: 1,
+    //   },
+    //   {},
+    // );
+  };
+
+  public deleteCocktail = async (cocktailId: number) => {
+    const result = await cocktailsSchema.deleteOne({ id: cocktailId });
+    console.log('res', result.deletedCount);
+
+    return result.deletedCount;
+  };
+
+  public main1 = async (): Promise<CocktailRankings[]> => {
+    const queries = main1();
+    const result: CocktailRankings[] = await cocktailsSchema.aggregate(
+      Object(queries),
+    );
 
     return result;
   };
@@ -189,6 +230,8 @@ export class CocktailModel implements CocktailInterface {
           },
         },
         content: '이곳에 전체적인 레시피와 가니쉬를 작성',
+
+        likes: Number(Math.floor(Math.random() * 101)),
       };
 
       await CocktailSchema.create(mockData);

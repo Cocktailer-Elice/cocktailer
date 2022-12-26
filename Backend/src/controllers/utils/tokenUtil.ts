@@ -19,7 +19,11 @@ export const updateToken = (originalCookie: Cookie) => {
   const tokenData = originalCookie;
   const secretKey = ACCESS_KEY;
   const { exp } = originalCookie;
-  const expiresIn = exp - Date.now() * 1000;
+  const expiresIn = (exp as number) - Date.now() * 1000;
+  if (tokenData.exp) {
+    delete tokenData.exp;
+    delete tokenData.iat;
+  }
   const token = sign(tokenData, secretKey, { expiresIn });
   return token;
 };

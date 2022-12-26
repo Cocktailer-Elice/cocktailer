@@ -1,5 +1,5 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData } from 'types';
+import { CocktailCreateReqData, CocktailRankings } from 'types';
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {
@@ -66,6 +66,30 @@ class CocktailController {
       );
 
     res.status(200).json({ categoryLists: categoryLists });
+  };
+
+  public updateCocktail = async (req: Req, res: Res) => {
+    const cocktailId = Number(req.params.cocktailId);
+    const updateCocktailInfo: CocktailCreateReqData = req.body;
+    const result: any = await this.cocktailService.updateCocktail(
+      cocktailId,
+      updateCocktailInfo,
+    );
+
+    res.status(200).json({ updateCocktailInfo: updateCocktailInfo });
+  };
+
+  public deleteCocktail = async (req: Req, res: Res) => {
+    const cocktailId = Number(req.params.cocktailId);
+    const result: string = await this.cocktailService.deleteCocktail(
+      cocktailId,
+    );
+    res.status(200).json({ message: result });
+  };
+
+  public main1 = async (req: Req, res: Res) => {
+    const result: CocktailRankings[] = await this.cocktailService.main1();
+    res.status(200).json(result);
   };
 
   ////////////////////////////////
