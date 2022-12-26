@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailListItem';
 import { SearchCocktailInput } from '../../../components/Cockcipe/List/SearchCocktailInput';
 
@@ -17,10 +17,50 @@ interface Data {
 export const CategoryContainer = () => {
   const [official, setOfficial] = useState<boolean>(true);
   const [nonOfficial, setNonOfficial] = useState<boolean>(true);
+  const [searchText, setSearchText] = useState<string>('');
   const url = window.location.pathname;
   const categoryId = url.split('/')[3];
 
   const [categoryList, setCategoryList] = useState<Data[]>();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchText(event.target.value);
+  };
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log(official, nonOfficial, searchText);
+    console.log(event.key);
+    if (event.key === 'Enter') {
+      if (official && nonOfficial) {
+        axios
+          .get(
+            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}`,
+          )
+          .then((res) => {
+            console.log(res.data.categoryLists);
+            setCategoryList(res.data.categoryLists);
+          });
+      } else if (official && !nonOfficial) {
+        axios
+          .get(
+            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=true`,
+          )
+          .then((res) => {
+            console.log(res.data.categoryLists);
+            setCategoryList(res.data.categoryLists);
+          });
+      } else if (!official && nonOfficial) {
+        axios
+          .get(
+            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=false`,
+          )
+          .then((res) => {
+            console.log(res.data.categoryLists);
+            setCategoryList(res.data.categoryLists);
+          });
+      }
+    }
+  };
+
   useEffect(() => {
     if (official && nonOfficial) {
       axios
@@ -47,6 +87,8 @@ export const CategoryContainer = () => {
           console.log(res.data.categoryLists);
           setCategoryList(res.data.categoryLists);
         });
+    } else {
+      setCategoryList([]);
     }
   }, [official, nonOfficial]);
   return (
@@ -57,6 +99,9 @@ export const CategoryContainer = () => {
         setOfficial={setOfficial}
         nonOfficial={nonOfficial}
         setNonOfficial={setNonOfficial}
+        search={searchText}
+        handleChange={handleChange}
+        handleSearch={handleSearch}
       />
       <Box sx={{ flexGrow: 1 }}>
         <Grid

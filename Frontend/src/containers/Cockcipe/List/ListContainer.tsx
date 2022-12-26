@@ -3,7 +3,7 @@ import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailList
 import styled from 'styled-components';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
+import { Autoplay } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -17,6 +17,30 @@ interface Data {
   category: string;
   official: boolean;
 }
+const ListCarousel = (itemList: Data[]) => (
+  <Swiper
+    slidesPerView={3}
+    loop={true}
+    style={{ marginBottom: '20px' }}
+    autoplay={{
+      delay: 2000,
+      disableOnInteraction: false,
+    }}
+    modules={[Autoplay]}
+  >
+    {itemList?.map((item, idx) => (
+      <SwiperSlide key={item.id}>
+        <CocktailListItem
+          key={item.id}
+          name={item.name}
+          official={item.official}
+          img={item.img}
+          id={item.id}
+        />
+      </SwiperSlide>
+    ))}
+  </Swiper>
+);
 
 export const ListContainer = () => {
   const [dryList, setDryList] = useState<Data[]>([]);
@@ -45,104 +69,37 @@ export const ListContainer = () => {
         <Category>드라이 칵테일</Category>
         <MorePageBtn category="dry" />
       </CategoryContainer>
-
-      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
-        {dryList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem
-              key={idx}
-              name={item.name}
-              official={item.official}
-              id={item.id}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {ListCarousel(dryList)}
 
       <CategoryContainer>
         <Category>리프레싱 칵테일</Category>
         <MorePageBtn category="refreshing" />
       </CategoryContainer>
-      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
-        {refreshList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem
-              key={idx}
-              name={item.name}
-              official={item.official}
-              id={item.id}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {ListCarousel(refreshList)}
 
       <CategoryContainer>
         <Category>프루트 칵테일</Category>
         <MorePageBtn category="fruit" />
       </CategoryContainer>
-      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
-        {fruitList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem
-              key={idx}
-              name={item.name}
-              official={item.official}
-              id={item.id}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {ListCarousel(fruitList)}
 
       <CategoryContainer>
         <Category>스위트 칵테일</Category>
         <MorePageBtn category="sweet" />
       </CategoryContainer>
-      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
-        {sweetList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem
-              key={idx}
-              name={item.name}
-              official={item.official}
-              id={item.id}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {ListCarousel(sweetList)}
 
       <CategoryContainer>
         <Category>스무디 칵테일</Category>
         <MorePageBtn category="smoothie" />
       </CategoryContainer>
-      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
-        {smoothieList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem
-              key={idx}
-              name={item.name}
-              official={item.official}
-              id={item.id}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {ListCarousel(smoothieList)}
 
       <CategoryContainer>
         <Category>핫 칵테일</Category>
         <MorePageBtn category="hot" />
       </CategoryContainer>
-      <Swiper slidesPerView={3} loop={true} style={{ marginBottom: '20px' }}>
-        {hotList?.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <CocktailListItem
-              key={idx}
-              name={item.name}
-              official={item.official}
-              id={item.id}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {ListCarousel(hotList)}
     </>
   );
 };

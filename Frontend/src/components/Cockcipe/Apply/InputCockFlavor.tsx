@@ -1,17 +1,23 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-export const InputCockFlavor = ({ setFlavor }) => {
+interface Props {
+  setFlavor: React.Dispatch<React.SetStateAction<string[]>>;
+  flavor: string[];
+}
+
+export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tag, setTag] = useState<string | null>('');
+
   const [tagList, setTagList] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(inputRef.current);
     setTag(e.target.value);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const newTag = inputRef.current?.value;
+    console.log(flavor);
     if (newTag?.length !== 0 && e.key === 'Enter') {
       setTagList((item) => [...item, newTag]);
       setFlavor((item) => [...item, newTag]);
@@ -19,11 +25,13 @@ export const InputCockFlavor = ({ setFlavor }) => {
     }
   };
 
+  // TODO : key 값 변경하고 삭제 아이템 아이디로 삭제하기
   const deleteTagItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     const deleteTagItem = event.target.parentElement.firstChild.innerText;
     const filteredTagList = tagList?.filter(
       (tagItem) => tagItem !== deleteTagItem,
     );
+    setFlavor(filteredTagList);
     setTagList(filteredTagList);
   };
 
@@ -31,14 +39,23 @@ export const InputCockFlavor = ({ setFlavor }) => {
     <>
       <p>Flavor</p>
       <TagBox>
-        {tagList?.map((tagItem, index) => {
-          return (
-            <TagItem key={index}>
-              <Text>{tagItem}</Text>
-              <Button onClick={deleteTagItem}>X</Button>
-            </TagItem>
-          );
-        })}
+        {flavor
+          ? flavor.map((tagItem, index) => {
+              return (
+                <TagItem key={index}>
+                  <Text>{tagItem}</Text>
+                  <Button onClick={deleteTagItem}>X</Button>
+                </TagItem>
+              );
+            })
+          : tagList.map((tagItem, index) => {
+              return (
+                <TagItem key={index}>
+                  <Text>{tagItem}</Text>
+                  <Button onClick={deleteTagItem}>X</Button>
+                </TagItem>
+              );
+            })}
         <TagInput
           type="text"
           placeholder="Press enter to add tags"

@@ -2,7 +2,11 @@ import { TextField } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 
-export const InputCockContent = ({ setContent }) => {
+interface Props {
+  setContent: any;
+  content: string;
+}
+export const InputCockContent = ({ setContent, content }: Props) => {
   return (
     <ContentContainer>
       <TextField
@@ -10,6 +14,7 @@ export const InputCockContent = ({ setContent }) => {
         placeholder="레몬 몇조각..."
         rows={4}
         multiline
+        value={content}
         sx={{ width: '300px' }}
         onChange={(e) => setContent(e.target.value)}
       />

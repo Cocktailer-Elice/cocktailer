@@ -14,6 +14,7 @@ interface Props {
   setDegree: any;
   setCategory: any;
   category: string;
+  degree: number;
 }
 
 export const InputCockInfo = ({
@@ -22,6 +23,7 @@ export const InputCockInfo = ({
   setDegree,
   setCategory,
   category,
+  degree,
 }: Props) => {
   return (
     <>
@@ -37,6 +39,7 @@ export const InputCockInfo = ({
         <TextField
           label="칵테일 도수"
           type="number"
+          value={degree}
           onChange={(e) => {
             setDegree(parseInt(e.target.value));
           }}
@@ -51,11 +54,12 @@ export const InputCockInfo = ({
           <InputLabel>카테고리 선택</InputLabel>
           <Select
             label="카테고리"
-            value={category}
+            key={category}
+            defaultValue={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value="dry">드라이 칵테일</MenuItem>
-            <MenuItem value="refresh">리프레싱 칵테일</MenuItem>
+            <MenuItem value="refreshing">리프레싱 칵테일</MenuItem>
             <MenuItem value="fruit">프루트 칵테일</MenuItem>
             <MenuItem value="sweet">스위트 칵테일</MenuItem>
             <MenuItem value="smoothie">스무디 칵테일</MenuItem>

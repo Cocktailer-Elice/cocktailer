@@ -1,7 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { ApplyButton } from '../../../components/Cockcipe/Apply/ApplyButton';
+import { InputCockContent } from '../../../components/Cockcipe/Apply/InputCockContent';
+import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
 import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
+import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
+import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
 
 export const ModifyContainer = () => {
   // state
@@ -9,7 +14,7 @@ export const ModifyContainer = () => {
   const [degree, setDegree] = useState<number>(0);
   const [category, setCategory] = useState<string>('');
   const [flavor, setFlavor] = useState<string[]>([]);
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>('');
   const [img, setImg] = useState<string>('');
 
   const [selectA, setSelectA] = useState<string[]>(['']);
@@ -24,19 +29,23 @@ export const ModifyContainer = () => {
   const cocktailId = url.split('/')[3];
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
-      .then((res) => {
-        console.log(res.data);
-        setName(res.data.cocktail.name);
-      });
+    const func = async () => {
+      const result = await axios.get(
+        `http://localhost:8000/api/cocktails/${cocktailId}`,
+      );
+
+      const cocktail = result.data.cocktail;
+      setImg(cocktail.img);
+      setName(cocktail.name);
+      setDegree(cocktail.degree);
+      setCategory(cocktail.category);
+      setContent(cocktail.content);
+      setFlavor(cocktail.flavor);
+    };
+    func();
   }, []);
 
-  //const dispatch = useAppDispatch();
-
   const handleApply = () => {
-    console.log(selectA, titleA, valueA);
-    console.log(selectI, titleI, valueI);
     let alcohoObj: any = {};
     let IngredObj: any = {};
     for (let i = 0; i < selectA.length; i++) {
@@ -51,7 +60,6 @@ export const ModifyContainer = () => {
     }
 
     const newData = {
-      owner: 1,
       name: name,
       img: img,
       degree: degree,
@@ -65,19 +73,50 @@ export const ModifyContainer = () => {
       },
     };
 
-    // dispatch(postCockcipe({ newData }));
+    axios
+      .patch(
+        `http://localhost:8000/api/cocktails/updatecocktail/${cocktailId}`,
+        newData,
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(newData);
+      });
   };
 
   return (
     <>
       <Header>수정하기</Header>
+      <InputTitleImg img={img} setImg={setImg} />
       <InputCockInfo
         value={name}
         setName={setName}
+        degree={degree}
         setDegree={setDegree}
         setCategory={setCategory}
         category={category}
       />
+      <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
+      <InputCockContent content={content} setContent={setContent} />
+      <InputRecipe
+        kind="alcohol"
+        select={selectA}
+        title={titleA}
+        value={valueA}
+        setSelect={setSelectA}
+        setTitle={setTitleA}
+        setValue={setValueA}
+      />
+      <InputRecipe
+        kind="drink"
+        select={selectI}
+        title={titleI}
+        value={valueI}
+        setSelect={setSelectI}
+        setTitle={setTitleI}
+        setValue={setValueI}
+      />
+      <ApplyButton handleApply={handleApply} name="modify" />
     </>
   );
 };
