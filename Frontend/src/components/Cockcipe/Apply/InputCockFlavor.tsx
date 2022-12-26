@@ -31,6 +31,7 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
     const filteredTagList = tagList?.filter(
       (tagItem) => tagItem !== deleteTagItem,
     );
+    setFlavor(filteredTagList);
     setTagList(filteredTagList);
   };
 

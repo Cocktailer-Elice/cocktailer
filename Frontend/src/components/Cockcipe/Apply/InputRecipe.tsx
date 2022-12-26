@@ -26,7 +26,10 @@ export const InputRecipe = ({
   setTitle,
   setValue,
 }: Props) => {
-  const [count, setCount] = useState<number[]>([0]);
+  console.log();
+  const [count, setCount] = useState<number[]>(
+    title.length > 0 ? Array.from({ length: title.length }, () => 0) : [0],
+  );
   const [ingredient, setIngredient] = useState<string[]>();
   const [alcohol, setAlcohol] = useState<string[]>();
 

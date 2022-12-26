@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import styled from 'styled-components';
 import { ApplyButton } from '../../../components/Cockcipe/Apply/ApplyButton';
 import { InputCockContent } from '../../../components/Cockcipe/Apply/InputCockContent';
@@ -8,13 +8,24 @@ import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo'
 import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
 import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
 
+import cockcipeReducer from './cockcipeReducer';
+const initState = {
+  name: '',
+  degree: 1,
+  category: '',
+  content: '',
+};
 export const ApplyContainer = () => {
-  // state
-  const [name, setName] = useState<string>('');
-  const [degree, setDegree] = useState<number>(0);
-  const [category, setCategory] = useState<string>('');
+  const [inputState, dispatch] = useReducer(cockcipeReducer, initState);
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: 'INPUTVALUE',
+      payload: { name, value },
+    });
+  };
+
   const [flavor, setFlavor] = useState<string[]>([]);
-  const [content, setContent] = useState<string>('');
   const [img, setImg] = useState<string>('');
 
   const [selectA, setSelectA] = useState<string[]>(['']);
@@ -28,6 +39,7 @@ export const ApplyContainer = () => {
   const handleApply = () => {
     let alcohoObj: any = {};
     let IngredObj: any = {};
+    console.log(inputState);
     for (let i = 0; i < selectA.length; i++) {
       if (alcohoObj[selectA[i]])
         alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
@@ -40,12 +52,12 @@ export const ApplyContainer = () => {
     }
 
     const newData = {
-      name: name,
+      name: inputState.name,
       img: img,
-      degree: degree,
-      category: category,
+      degree: inputState.degree,
+      category: inputState.category,
       flavor: flavor,
-      content: content,
+      content: inputState.content,
       official: false,
       ratio: {
         alcohol: alcohoObj,
@@ -53,29 +65,22 @@ export const ApplyContainer = () => {
       },
     };
 
-    axios
-      .post('http://localhost:8000/api/cocktails', newData, {
-        headers: {},
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(newData);
-      });
+    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
+      console.log(res);
+      console.log(newData);
+    });
   };
   return (
     <>
       <Header>칵테일 레시피 등록하기</Header>
       <InputTitleImg setImg={setImg} />
-      <InputCockInfo
-        value={name}
-        degree={degree}
-        setName={setName}
-        setDegree={setDegree}
-        setCategory={setCategory}
-        category={category}
+      <InputCockInfo props={inputState} handleTextChange={handleTextChange} />
+      <InputCockContent
+        name="content"
+        content={inputState.content}
+        handleTextChange={handleTextChange}
       />
       <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
-      <InputCockContent setContent={setContent} content={content} />
       <InputRecipe
         kind="alcohol"
         select={selectA}

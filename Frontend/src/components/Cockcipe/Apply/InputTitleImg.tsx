@@ -45,6 +45,7 @@ export const InputTitleImg = ({ setImg, img }: any) => {
         <input
           type="file"
           id="input_img"
+          name="img"
           style={{ display: 'none' }}
           onChange={onChooseImg}
         />

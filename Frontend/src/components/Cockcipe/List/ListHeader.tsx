@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const ListHeaderContainer = () => {
+export const ListHeader = () => {
   return <Header>ListHeaderContainer</Header>;
 };
 
