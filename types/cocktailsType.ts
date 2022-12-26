@@ -1,5 +1,25 @@
 //types
 
+export interface CocktailRanking {
+  id: number;
+  img: string;
+  name: string;
+  official: boolean;
+  owner: {
+    nickname: string;
+    isBartender: boolean;
+  };
+  likes: number;
+}
+
+export interface UserRanking {
+  id: number;
+  avatarUrl: string;
+  nickname: string;
+  points: number;
+  isBartender: boolean;
+}
+
 export interface CocktailCreateReqData {
   owner: number;
   category: string;
@@ -63,13 +83,7 @@ export interface MyCockcipe {
   createdAt: number;
 }
 
-export interface CocktailRankings {
-  id: number;
-  img: string;
-  name: string;
-  official: boolean;
-  owner: {
-    nickname: string;
-    isBartender: boolean;
-  };
+export interface Rankings {
+  cocktailRankings: CocktailRanking[];
+  userRankings: UserRanking[];
 }

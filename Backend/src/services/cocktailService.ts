@@ -1,11 +1,27 @@
 import { CocktailServiceType, CocktailRankings } from './types';
-
+import { Rankings } from 'types';
+//추가됨//
+import { IUser } from '../db/types';
+/////////
 import { cocktailModel } from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
+
+  public async getHomeCocktailAndUserList(): Promise<Rankings> {
+    const data: Rankings =
+      await this.cocktailModel.getHomeCocktailAndUserList();
+    if (!data) {
+      throw new AppError(
+        errorNames.noDataError,
+        400,
+        '칵테일 / 유저랭킹 조회실패!',
+      );
+    }
+    return data;
+  }
 
   public async createCocktail(
     cocktailCreateDto: CocktailServiceType,
@@ -148,16 +164,6 @@ class CocktailService {
     }
 
     return '칵테일을 삭제했습니다.';
-  }
-
-  public async main1() {
-    const data: CocktailRankings[] = await this.cocktailModel.main1();
-
-    if (!data) {
-      throw new AppError(errorNames.noDataError, 400, '데이터 불러오기 실패!!');
-    }
-
-    return data;
   }
 
   ////////////////////////////////

@@ -41,4 +41,13 @@ export interface CocktailRankings {
     nickname: string;
     isBartender: boolean;
   };
+  likes: number;
+}
+
+export interface UserRanking {
+  id: number;
+  avatarUrl: string;
+  nickname: string;
+  points: number;
+  isBartender: boolean;
 }

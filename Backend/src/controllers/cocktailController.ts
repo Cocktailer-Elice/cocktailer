@@ -1,9 +1,29 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData, CocktailRankings } from 'types';
+import {
+  CocktailCreateReqData,
+  CocktailRanking,
+  Rankings,
+  UserRanking,
+} from 'types';
+//추가됨//
+import { IUser } from '../db/types';
+/////////
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {
   private readonly cocktailService = new CocktailService();
+
+  public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
+    console.log('getHomeCocktailAndUserList');
+
+    const data: Rankings =
+      await this.cocktailService.getHomeCocktailAndUserList();
+
+    res.status(200).json({
+      cocktailRanking: data.cocktailRankings,
+      userRanking: data.userRankings,
+    });
+  };
 
   public createCocktail = async (req: Req, res: Res) => {
     console.log('createCocktail');
@@ -85,11 +105,6 @@ class CocktailController {
       cocktailId,
     );
     res.status(200).json({ message: result });
-  };
-
-  public main1 = async (req: Req, res: Res) => {
-    const result: CocktailRankings[] = await this.cocktailService.main1();
-    res.status(200).json(result);
   };
 
   ////////////////////////////////

@@ -51,8 +51,9 @@ export interface IUser extends Document {
   birthday: Date;
   avatarUrl: string;
   isAdmin: boolean;
-  isBartender: boolean | string;
+  isBartender: boolean;
   deletedAt: null | number;
+  points: number;
   readonly userGetResDto: User;
   readonly tokenData: Cookie;
 }
