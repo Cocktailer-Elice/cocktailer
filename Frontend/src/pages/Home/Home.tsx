@@ -238,4 +238,6 @@ const SectionHeader = styled.div`
   align-items: center;
   margin: 10px 5px;
   font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 600;
 `;

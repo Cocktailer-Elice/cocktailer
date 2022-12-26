@@ -9,7 +9,9 @@ interface HomeUserRankingProps {
 export const HomeUserRanking = ({ userRankingInfo }: HomeUserRankingProps) => {
   return (
     <Container>
-      <UserAvatar src={userRankingInfo.avatarUrl}></UserAvatar>
+      <UserAvatarWrap>
+        <UserAvatar src={userRankingInfo.avatarUrl}></UserAvatar>
+      </UserAvatarWrap>
       <UserInfo>
         <UserName>
           <UserNickname>{userRankingInfo.nickname}</UserNickname>
@@ -31,6 +33,18 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 15px 5px;
+
+  @media screen and (max-width: 500px) {
+    padding: 5px;
+  }
+`;
+
+const UserAvatarWrap = styled.div`
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const UserAvatar = styled.img`
@@ -38,6 +52,16 @@ const UserAvatar = styled.img`
   height: 100px;
   border-radius: 50%;
   border: 2px solid red;
+
+  @media screen and (max-width: 500px) {
+    width: 75px;
+    height: 75px;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -47,6 +71,11 @@ const UserInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
+
+  @media screen and (max-width: 500px) {
+    margin-top: 5px;
+  }
 `;
 
 const UserName = styled.div`
@@ -62,6 +91,10 @@ const UserNickname = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8);
+
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
 const UserPoint = styled.div`
@@ -71,4 +104,9 @@ const UserPoint = styled.div`
   font-size: 12px;
   color: rgba(0, 0, 0, 0.8);
   margin-top: 10px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 10px;
+    margin-top: 5px;
+  }
 `;
