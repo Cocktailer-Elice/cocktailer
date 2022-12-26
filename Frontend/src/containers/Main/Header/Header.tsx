@@ -43,4 +43,5 @@ const LeftSection = styled.div`
 const RightSection = styled.div`
   width: calc(100% - 70px);
   height: 100%;
+  background-color: ${(props) => props.theme.colors.indigo4};
 `;
