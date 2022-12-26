@@ -13,7 +13,7 @@ class CocktailService {
     const brand: string[] = [];
     const volume: number[] = [];
 
-    const alcohol: object = {
+    const alcohol: any = {
       name: name,
       brand: brand,
       volume: volume,
@@ -24,22 +24,34 @@ class CocktailService {
       volume: volume,
     };
 
-    const key1 = Object.keys(cocktailCreateDto.ratio.alcohol);
+    const alcoholMap = Object.keys(cocktailCreateDto.ratio.alcohol);
+    const ingredientMap = Object.keys(cocktailCreateDto.ratio.ingredient);
 
-    const key2 = key1.map((e1) => {
-      ingredient.name = e1;
-      console.log(e1);
+    alcoholMap.map((e1) => {
+      name.push(e1);
       const obj1 = cocktailCreateDto.ratio.alcohol[e1];
-      console.log(obj1);
       obj1.map((e2, idx2) => {
-        ingredient.brand = String(Object.keys(e2));
-        ingredient.volume = Number(Object.values(e2));
-        console.log(e2);
+        brand.push(String(Object.keys(e2)));
+        volume.push(Number(Object.values(e2)));
       });
+      alcohol.brand = brand;
+      alcohol.volume = volume;
     });
 
-    console.log(alcohol);
-    console.log(ingredient);
+    console.log('aaa', alcohol);
+
+    ingredientMap.map((e1) => {
+      name.push(e1);
+      const obj1 = cocktailCreateDto.ratio.ingredient[e1];
+      obj1.map((e2, idx2) => {
+        brand.push(String(Object.keys(e2)));
+        volume.push(Number(Object.values(e2)));
+      });
+      ingredient.brand = brand;
+      ingredient.volume = volume;
+    });
+
+    console.log('iii', ingredient);
 
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,

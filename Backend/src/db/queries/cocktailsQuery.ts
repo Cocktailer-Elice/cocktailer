@@ -47,7 +47,71 @@ export const findCategoryAndSearch = (reqData: object) => {
       $match: makeMatchForm(),
     },
     { $sort: { id: -1, createdAt: -1 } },
-    { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+    {
+      $project: {
+        _id: 0,
+        flavor: 0,
+        degree: 0,
+        ratio: 0,
+        likes: 0,
+        content: 0,
+        createdAt: 0,
+        deletedAt: 0,
+        updatedAt: 0,
+      },
+    },
+    {
+      $sort: {
+        likes: -1,
+      },
+    },
+    {
+      $limit: 10,
+    },
+    {
+      $project: {
+        _id: 0,
+        flavor: 0,
+        degree: 0,
+        ratio: 0,
+        likes: 0,
+        content: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'owner',
+        foreignField: 'id',
+        as: 'owner',
+        pipeline: [
+          {
+            $project: {
+              _id: 0,
+              id: 0,
+              name: 0,
+              email: 0,
+              password: 0,
+              birthday: 0,
+              avatarUrl: 0,
+              isAdmin: 0,
+              points: 0,
+              createdAt: 0,
+              updatedAt: 0,
+              deletedAt: 0,
+              tel: 0,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $unwind: {
+        path: '$owner',
+      },
+    },
   ];
 };
 
