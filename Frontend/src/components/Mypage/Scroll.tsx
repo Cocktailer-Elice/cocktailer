@@ -21,7 +21,7 @@ export const Scroll = ({ data }: ScrollProps) => {
               <Grid
                 item
                 key={id}
-                onClick={() => navigate(`/cockflows/detail/${id}`)}
+                onClick={() => navigate(`/cockcipe/detail/${id}`)}
               >
                 <GridContent>
                   <img
