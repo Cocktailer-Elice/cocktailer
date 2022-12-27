@@ -173,7 +173,7 @@ export class CocktailModel implements CocktailInterface {
       },
     );
 
-    return obj?.likes;
+    return likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1;
   };
 
   ////////////////////////////////
