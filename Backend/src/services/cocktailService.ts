@@ -1,4 +1,8 @@
-import { CocktailServiceType, CocktailRankings } from './types';
+import {
+  CocktailServiceType,
+  CocktailRankings,
+  LikesUserResult,
+} from './types';
 import { Rankings } from 'types';
 //추가됨//
 import { IUser } from '../db/types';
@@ -167,10 +171,21 @@ class CocktailService {
   }
 
   public async cocktailLikes(userId: number, cocktailId: number) {
-    const data: any = await this.cocktailModel.cocktailLikes(
+    const data: LikesUserResult = await this.cocktailModel.cocktailLikes(
       userId,
       cocktailId,
     );
+
+    console.log(data);
+
+    if (
+      data.acknowledged !== true &&
+      data.modifiedCount !== 1 &&
+      data.matchedCount !== 1
+    ) {
+      throw new AppError(errorNames.noDataError, 400, '좋아요 요청 실패!!');
+    }
+
     return 'success';
   }
 

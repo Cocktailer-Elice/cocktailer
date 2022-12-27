@@ -47,3 +47,10 @@ export interface UserRanking {
   points: number;
   isBartender: boolean;
 }
+
+export interface LikesUserResult {
+  acknowledged: boolean;
+  modifiedCount: number;
+  upsertedCount: number;
+  matchedCount: number;
+}

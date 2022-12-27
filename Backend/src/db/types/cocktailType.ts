@@ -1,5 +1,6 @@
 //model
 
+import { ObjectId } from 'mongoose';
 import { CocktailGetResData } from 'types';
 type Ratio = {
   alcohol: {
@@ -52,4 +53,12 @@ export interface UserRanking {
   nickname: string;
   points: number;
   isBartender: boolean;
+}
+
+export interface LikesUserResult {
+  acknowledged: boolean;
+  modifiedCount: number;
+
+  upsertedCount: number;
+  matchedCount: number;
 }
