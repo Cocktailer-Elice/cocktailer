@@ -1,6 +1,11 @@
 import { ICommentDependencies, SubCommentInfo } from './types/commentType';
 import { CommentInfo } from '../services';
-import { cockflowModel, commentModel, ICommentMongoModel } from '../db';
+import {
+  cockflowModel,
+  commentModel,
+  IComment,
+  ICommentMongoModel,
+} from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 

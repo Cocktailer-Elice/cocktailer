@@ -26,11 +26,11 @@ class CockflowMongoModel implements ICockflowMongoModel {
         session,
       );
       await session.commitTransaction();
-      session.endSession();
+      await session.endSession();
       return cockflow;
     } catch (err) {
       await session.abortTransaction();
-      session.endSession();
+      await session.endSession();
       throw new AppError(errorNames.databaseError);
     }
   }
@@ -40,7 +40,7 @@ class CockflowMongoModel implements ICockflowMongoModel {
     cockflowsPerRequest: number,
   ): Promise<ICockflow[]> {
     const filter = { deletedAt: null };
-    const projection = '-_id -owner -title -deletedAt -createdAt -updatedAt';
+    const projection = '-_id -owner -content -deletedAt -createdAt -updatedAt';
     const option = { sort: { createdAt: -1 } };
     const cockflows = await Cockflow.find(filter, projection, option)
       .skip((scroll - 1) * cockflowsPerRequest)
@@ -91,16 +91,21 @@ class CockflowMongoModel implements ICockflowMongoModel {
 
   public delete = async (cockflowId: number) => {
     const session = await db.startSession();
-    session.startTransaction();
+    try {
+      session.startTransaction();
+      const cockflowDeleteFilter = { id: cockflowId };
+      await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
 
-    const cockflowDeleteFilter = { id: cockflowId };
-    await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
-
-    const commentDeleteFilter = { cockflowId };
-    await Comment.deleteMany(commentDeleteFilter).session(session);
-    await session.commitTransaction();
-    session.endSession();
-    return;
+      const commentDeleteFilter = { cockflowId };
+      await Comment.deleteMany(commentDeleteFilter).session(session);
+      await session.commitTransaction();
+      await session.endSession();
+      return;
+    } catch (err) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw new AppError(errorNames.databaseError);
+    }
   };
 }
 

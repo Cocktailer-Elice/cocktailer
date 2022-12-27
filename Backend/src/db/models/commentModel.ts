@@ -29,11 +29,11 @@ class CommentMongoModel implements ICommentMongoModel {
         session,
       );
       await session.commitTransaction();
-      session.endSession();
+      await session.endSession();
       return comment;
     } catch (err) {
       await session.abortTransaction();
-      session.endSession();
+      await session.endSession();
       throw new AppError(errorNames.databaseError);
     }
   }
@@ -68,22 +68,22 @@ class CommentMongoModel implements ICommentMongoModel {
     return result;
   };
 
-  public async delete(commentId: string, isChildComment: boolean) {
+  public async delete(commentId: string, isParentComment: boolean) {
     const session = await db.startSession();
     try {
       session.startTransaction();
-      const commentDeleteFilter = { id: commentId };
+      const commentDeleteFilter = { _id: commentId };
       await Comment.deleteOne(commentDeleteFilter).session(session);
-      if (isChildComment) {
+      if (isParentComment) {
         const childCommentDeleteFilter = { parentCommentId: commentId };
         await Comment.deleteMany(childCommentDeleteFilter).session(session);
       }
       await session.commitTransaction();
-      session.endSession();
+      await session.endSession();
       return;
     } catch (err) {
       await session.abortTransaction();
-      session.endSession();
+      await session.endSession();
       throw new AppError(errorNames.databaseError);
     }
   }
