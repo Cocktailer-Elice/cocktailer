@@ -7,9 +7,9 @@ import { contentMenus } from './../../constants/pages';
 export const HomeWidgetsContainer = () => {
   return (
     <Container>
-      {contentMenus.map((contentMenu) => (
-        <Link to={contentMenu.link}>
-          <HomeWidget title={contentMenu.pageName} />
+      {contentMenus.map((contentMenu, index) => (
+        <Link key={index} to={contentMenu.link}>
+          <HomeWidget title={contentMenu.pageName} emoji={contentMenu.emoji} />
         </Link>
       ))}
     </Container>
@@ -22,6 +22,5 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid gray;
   padding: 30px;
 `;

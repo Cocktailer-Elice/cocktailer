@@ -1,12 +1,10 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { MyCockcipe } from '../../../../types';
-import {
-  SectionContainer,
-  SectionWrapper,
-} from '../../components/Mypage/style';
+import { SectionContainer, SectionWrapper } from './style';
 
 interface SectionProps {
   title: string;
@@ -19,7 +17,7 @@ export const Carousel = ({ title, cockcipes, type }: SectionProps) => {
   return (
     <SectionContainer>
       <SectionWrapper>
-        <h4>{title}</h4>
+        <CarouselTitle>{title}</CarouselTitle>
         {!cockcipes && <div>비어있음</div>}
         <Button
           onClick={() =>
@@ -60,3 +58,7 @@ export const Carousel = ({ title, cockcipes, type }: SectionProps) => {
     </SectionContainer>
   );
 };
+
+const CarouselTitle = styled.h4`
+  padding: 0.2rem;
+`;
