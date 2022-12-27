@@ -1,6 +1,5 @@
 import { Header } from '../../components/Mypage/Header';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { WithdrawlButton } from '../../components/Mypage/WithdrawlButton';
 import { Board } from '../../components/Mypage/Board';
 import { Carousel } from '../../components/Mypage/Carousel';
@@ -8,15 +7,12 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { GET_USER } from '../../constants/api';
 import { MyPostsResData } from '../../../../types';
-import { useAuthentication } from '../../hooks/useAuthentication';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { withLogin } from '../../common/withLogin';
 import { Container } from '@mui/material';
 
 const Mypage = () => {
-  const isLoggedIn = useAuthentication();
   const user = useCurrentUser();
-  const navigate = useNavigate();
   const [userData, setUserData] = useState<MyPostsResData>();
 
   const getUserData = async () => {
@@ -27,12 +23,6 @@ const Mypage = () => {
   useEffect(() => {
     getUserData().then((res) => setUserData(res[0]));
   }, []);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn]);
 
   return (
     <>

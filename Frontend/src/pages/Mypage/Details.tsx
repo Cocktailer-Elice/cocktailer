@@ -5,7 +5,11 @@ import { withLogin } from '../../common/withLogin';
 import { DetailHeading } from '../../components/Mypage/DetailHeading';
 import { Scroll } from '../../components/Mypage/Scroll';
 import { LongBoard } from '../../components/Mypage/LongBoard';
-import { GET_MY_COCKFLOWS, GET_MY_COCKTAILS } from '../../constants/api';
+import {
+  GET_MY_COCKFLOWS,
+  GET_MY_COCKTAILS,
+  GET_MY_COMMENTS,
+} from '../../constants/api';
 import axios from 'axios';
 import { Container } from '@mui/material';
 
@@ -20,14 +24,15 @@ const Details = ({ title }: DetailPageProps) => {
 
   const getData = async () => {
     switch (detail) {
-      case 'cockcipes':
-        const { data: cockcipes } = await axios.get(GET_MY_COCKTAILS);
-        return setData(cockcipes);
+      // case 'cockcipes':
+      //   const { data: cockcipes } = await axios.get(GET_MY_COCKTAILS);
+      //   return setData(cockcipes);
       // case 'likes':
       //   const { data: likes } = await axios.get();
       //   return setData(likes);
       case 'cockflows':
         const { data: cockflows } = await axios.get(GET_MY_COCKFLOWS);
+        console.log(cockflows);
         return setData(cockflows);
     }
   };
