@@ -134,6 +134,7 @@ export class CocktailModel implements CocktailInterface {
     reqData: ReqData,
     endpoint: number,
   ): Promise<CocktailModelType[]> => {
+    console.log(reqData);
     const queries = findCategoryAndSearchQuery(reqData);
 
     const count: number = await CocktailSchema.count({

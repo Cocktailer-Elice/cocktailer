@@ -65,10 +65,13 @@ class CocktailController {
     console.log('findCocktailCategoryAndSearch');
 
     interface ReqData {
+      category: string;
       [optionKey: string]: string;
     }
 
-    const reqData: ReqData = {};
+    const reqData: ReqData = {
+      category: String(req.query.category),
+    };
 
     if (req.query.official) {
       reqData.official = String(req.query.official);
@@ -76,6 +79,8 @@ class CocktailController {
     if (req.query.keyword) {
       reqData.keyword = String(req.query.keyword);
     }
+
+    console.log(reqData);
 
     const endpoint = Number(req.query.endpoint) || 0;
 
