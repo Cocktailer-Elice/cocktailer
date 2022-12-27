@@ -10,19 +10,6 @@ import { useInView } from 'react-intersection-observer';
 import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
 
-const List = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  -webkit-column-gap: 29px;
-  column-gap: 20px;
-`;
-
-const Item = styled.li`
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 28.9px;
-`;
-
 const imgArr = [
   'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg',
   'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg',
@@ -40,29 +27,35 @@ export const CockflowPage = () => {
     content: '',
   }]);
 
-  const page = useRef<number>(1);
-  console.log(page)
+  const [loading, setLoading] = useState(false);
+
+  const [page, setPage] = useState(1);
+
+  const [maxPage, setMaxpage] = useState(1);
+
   const [ref, inView] = useInView();
 
   const getList = () => {
-    console.log(page)
+    setLoading(true);
     axios.get(`/api/cockflow/?q=${page}`)
       .then(res => {
-        console.log(res);
+        setMaxpage(res.data.maxRequest);
         if (listData[0].id === '0') {
           listData.shift();
         }
         setListData(() => listData.concat(res.data.cockflows));
-        page.current += 1;
       });
+    setLoading(false);
   }
 
-
   useEffect(() => {
-    if (inView) {
-      getList();
+    if (inView && !loading) {
+      setPage(prevState => prevState + 1);
+      if (page <= maxPage) {
+        getList();
+      }
     }
-  }, [inView, getList]);
+  }, [inView]);
 
   return (
     <Container>
@@ -83,6 +76,18 @@ export const CockflowPage = () => {
         <p ref={ref}></p>
       </P5>
     </Container>
-
   );
 };
+
+const List = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  -webkit-column-gap: 29px;
+  column-gap: 20px;
+`;
+
+const Item = styled.li`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 28.9px;
+`;
