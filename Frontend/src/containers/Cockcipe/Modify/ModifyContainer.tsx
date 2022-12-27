@@ -116,7 +116,9 @@ export const ModifyContainer = () => {
         setTitle={setTitleI}
         setValue={setValueI}
       />
-      <ApplyButton handleApply={handleApply} name="modify" />
+      <ApplyPlace>
+        <ApplyButton handleApply={handleApply} name="apply" />
+      </ApplyPlace>
     </>
   );
 };
@@ -125,4 +127,10 @@ const Header = styled.div`
   color: #3b5bdb;
   text-align: center;
   margin-top: 20px;
+`;
+
+const ApplyPlace = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 40px;
 `;

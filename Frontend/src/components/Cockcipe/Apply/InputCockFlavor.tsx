@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { TextField } from '@mui/material';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 interface Props {
@@ -17,7 +18,6 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const newTag = inputRef.current?.value;
-    console.log(flavor);
     if (newTag?.length !== 0 && e.key === 'Enter') {
       setTagList((item: any) => [...item, newTag]);
       setFlavor((item: any) => [...item, newTag]);
@@ -28,9 +28,9 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   // TODO : key 값 변경하고 삭제 아이템 아이디로 삭제하기
   const deleteTagItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLElement;
-    const textNode = target.children[0] as HTMLElement;
-
-    const deleteTagItem = textNode.innerText;
+    const textNode = target.parentElement as HTMLElement;
+    const firstNode = textNode.firstChild as HTMLElement;
+    const deleteTagItem = firstNode.innerText;
     const filteredTagList = tagList?.filter(
       (tagItem) => tagItem !== deleteTagItem,
     );
@@ -39,8 +39,7 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   };
 
   return (
-    <>
-      <p>Flavor</p>
+    <FlavorWrapper>
       <TagBox>
         {flavor
           ? flavor.map((tagItem, index) => {
@@ -61,7 +60,7 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
             })}
         <TagInput
           type="text"
-          placeholder="Press enter to add tags"
+          placeholder="칵테일 맛을 적어주세요"
           tabIndex={2}
           onChange={handleChange}
           ref={inputRef}
@@ -69,12 +68,19 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
           onKeyPress={handleKeyPress}
         />
       </TagBox>
-    </>
+    </FlavorWrapper>
   );
 };
 
+const FlavorWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+`;
 const TagBox = styled.div`
   display: flex;
+  width: 440px;
   align-items: center;
   flex-wrap: wrap;
   min-height: 50px;
@@ -82,7 +88,6 @@ const TagBox = styled.div`
   padding: 0 10px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-
   &:focus-within {
     border-color: #868e96;
   }
@@ -94,8 +99,8 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   margin-left: 5px;
   background-color: white;
   border-radius: 50%;
@@ -110,7 +115,7 @@ const TagItem = styled.div`
   background-color: #4c6ef5;
   border-radius: 5px;
   color: white;
-  font-size: 13px;
+  font-size: 15px;
 `;
 const TagInput = styled.input`
   display: inline-flex;
@@ -118,4 +123,5 @@ const TagInput = styled.input`
   border: none;
   outline: none;
   cursor: text;
+  font-size: 15px;
 `;

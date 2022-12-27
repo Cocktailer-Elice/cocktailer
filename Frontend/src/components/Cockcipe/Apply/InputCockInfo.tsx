@@ -27,28 +27,10 @@ export const InputCockInfo = ({
 }: Props) => {
   return (
     <>
-      <InfoContainer>
-        <TextField
-          label="나만의 칵테일 이름"
-          sx={{ marginRight: '20px;' }}
-          value={value}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <TextField
-          label="칵테일 도수"
-          type="number"
-          value={degree}
-          onChange={(e) => {
-            setDegree(parseInt(e.target.value));
-          }}
-        />
-      </InfoContainer>
       <CategoryContainer>
         <FormControl
           sx={{
-            width: '200px',
+            width: '440px',
           }}
         >
           <InputLabel>카테고리 선택</InputLabel>
@@ -67,6 +49,25 @@ export const InputCockInfo = ({
           </Select>
         </FormControl>
       </CategoryContainer>
+
+      <InfoContainer>
+        <TextField
+          label="나만의 칵테일 이름"
+          sx={{ marginRight: '20px;' }}
+          value={value}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <TextField
+          label="칵테일 도수"
+          type="number"
+          value={degree}
+          onChange={(e) => {
+            setDegree(parseInt(e.target.value));
+          }}
+        />
+      </InfoContainer>
     </>
   );
 };
@@ -76,13 +77,11 @@ const InfoContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
 
 const CategoryContainer = styled.div`
   display: flex;
-
   justify-content: center;
   align-items: center;
+  margin: 20px 0;
 `;

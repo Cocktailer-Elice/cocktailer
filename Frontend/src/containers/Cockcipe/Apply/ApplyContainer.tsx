@@ -85,6 +85,7 @@ export const ApplyContainer = () => {
         setTitle={setTitleA}
         setValue={setValueA}
       />
+
       <InputRecipe
         kind="drink"
         select={selectI}
@@ -94,7 +95,9 @@ export const ApplyContainer = () => {
         setTitle={setTitleI}
         setValue={setValueI}
       />
-      <ApplyButton handleApply={handleApply} name="apply" />
+      <ApplyPlace>
+        <ApplyButton handleApply={handleApply} name="apply" />
+      </ApplyPlace>
     </>
   );
 };
@@ -104,4 +107,11 @@ const Header = styled.div`
   color: #3b5bdb;
   text-align: center;
   margin-top: 20px;
+  font-weight: 800;
+`;
+
+const ApplyPlace = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 40px;
 `;

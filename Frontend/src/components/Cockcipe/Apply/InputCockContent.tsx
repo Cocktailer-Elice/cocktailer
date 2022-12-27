@@ -15,7 +15,7 @@ export const InputCockContent = ({ setContent, content }: Props) => {
         rows={4}
         multiline
         value={content}
-        sx={{ width: '300px' }}
+        sx={{ width: '440px' }}
         onChange={(e) => setContent(e.target.value)}
       />
     </ContentContainer>

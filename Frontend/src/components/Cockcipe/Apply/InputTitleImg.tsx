@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 // TODO aws 업로드 후 반환 이미지 url 받아오기
 export const InputTitleImg = ({ setImg, img }: any) => {
   const [imgSrc, setImgsrc] = useState<string>(img ? img : '');
@@ -38,9 +38,9 @@ export const InputTitleImg = ({ setImg, img }: any) => {
   };
   return (
     <ImgContainer>
-      <>
+      <InsertWrapper>
         <label htmlFor="input_img">
-          <InsertImg>대표 사진 등록</InsertImg>
+          <AddPhotoAlternateIcon fontSize="large" />
         </label>
         <input
           type="file"
@@ -49,7 +49,7 @@ export const InputTitleImg = ({ setImg, img }: any) => {
           style={{ display: 'none' }}
           onChange={onChooseImg}
         />
-      </>
+      </InsertWrapper>
       <PreviewImg>
         {imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />}
       </PreviewImg>
@@ -57,25 +57,21 @@ export const InputTitleImg = ({ setImg, img }: any) => {
   );
 };
 
-const PreviewImg = styled.div``;
+const PreviewImg = styled.div`
+  border: 2px solid #dee2e6;
+  border-radius: 15px;
+  width: 300px;
+  height: 300px;
+  margin-left: 30px;
+`;
+const InsertWrapper = styled.div`
+  margin-right: 30px;
+`;
 
 const ImgContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-`;
-
-const InsertImg = styled.div`
-  border: #087f5b solid 5px;
-  border-radius: 10px;
-  font-size: 20px;
-  padding: 10px;
-
-  &:hover {
-    color: white;
-    border: #38d9a9 solid 5px;
-    background-color: #38d9a9;
-  }
 `;
