@@ -4,10 +4,9 @@ import { Rankings } from 'types';
 import { cocktailModel } from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
+
 interface ReqData {
-  category: string;
-  official: string;
-  keyword: string;
+  [optionKey: string]: string;
 }
 
 class CocktailService {

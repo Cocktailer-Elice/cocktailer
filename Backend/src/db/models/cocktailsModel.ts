@@ -44,11 +44,8 @@ interface CocktailInterface {
 
   cocktailLikes(userId: number, cocktailId: number): Promise<number>;
 }
-
 interface ReqData {
-  category: string;
-  official: string;
-  keyword: string;
+  [optionKey: string]: string;
 }
 
 const limitEachPage = 10;

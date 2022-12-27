@@ -65,23 +65,17 @@ class CocktailController {
     console.log('findCocktailCategoryAndSearch');
 
     interface ReqData {
-      category: string;
-      official: string;
-      keyword: string;
+      [optionKey: string]: string;
     }
 
-    const reqData: ReqData = {
-      category: String(req.query.category),
-      official: String(req.query.official),
-      keyword: String(req.query.keyword),
-    };
+    const reqData: ReqData = {};
 
-    // if (req.query.official) {
-    //   reqData.official = req.query.official;
-    // }
-    // if (req.query.keyword) {
-    //   reqData.keyword = req.query.keyword;
-    // }
+    if (req.query.official) {
+      reqData.official = String(req.query.official);
+    }
+    if (req.query.keyword) {
+      reqData.keyword = String(req.query.keyword);
+    }
 
     const endpoint = Number(req.query.endpoint) || 0;
 
