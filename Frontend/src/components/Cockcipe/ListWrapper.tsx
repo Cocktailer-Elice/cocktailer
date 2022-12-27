@@ -8,6 +8,7 @@ import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { MorePageBtn } from './List/MorePageBtn';
+import { GET_COCKTAILS } from '../../constants/api';
 
 // useEffect 데이터 get 후 칵테일 리스트 map 출력
 interface Data {
@@ -51,7 +52,7 @@ export const ListWrapper = () => {
   const [hotList, setHotList] = useState<Data[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/cocktails/lists').then((res) => {
+    axios.get(GET_COCKTAILS).then((res) => {
       console.log(res.data);
       console.log(res.data.lists[0]);
       setDryList(res.data.lists[0]['dry']);

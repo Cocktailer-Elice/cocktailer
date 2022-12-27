@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { GET_DETAIL_COCKTAIL } from '../../constants/api';
 import { CocktailInfomation } from './Detail/CocktailInfomation';
 import { DeleteButton } from './Detail/DeleteButton';
 import { ModifyButton } from './Detail/ModifyButton';
@@ -23,7 +24,7 @@ export interface ICocktail {
 
 export const DetailWrapper = () => {
   const url = window.location.pathname;
-  const cocktailId = url.split('/')[3];
+  const cocktailId = parseInt(url.split('/')[3]);
 
   const [cocktailInfo, setCocktail] = useState<ICocktail>({
     name: '',
@@ -37,12 +38,10 @@ export const DetailWrapper = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
-      .then((res) => {
-        console.log(res);
-        setCocktail(res.data.cocktail);
-      });
+    axios.get(GET_DETAIL_COCKTAIL(cocktailId)).then((res) => {
+      console.log(res);
+      setCocktail(res.data.cocktail);
+    });
   }, []);
 
   return (
@@ -52,7 +51,7 @@ export const DetailWrapper = () => {
         <ShareBtn
           img={cocktailInfo.img}
           name={cocktailInfo.name}
-          id={cocktailInfo.id}
+          id={cocktailId}
           content={cocktailInfo.content}
         />
         <ButtonWrapper>

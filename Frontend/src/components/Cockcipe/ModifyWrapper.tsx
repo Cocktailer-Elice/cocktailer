@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { GET_DETAIL_COCKTAIL, PATCH_COCKTAIL } from '../../constants/api';
 import { ApplyButton } from './Apply/ApplyButton';
 import { InputCockContent } from './Apply/InputCockContent';
 import { InputCockFlavor } from './Apply/InputCockFlavor';
@@ -26,13 +27,11 @@ export const ModifyWrapper = () => {
   const [valueI, setValueI] = useState<string[]>(['']);
 
   const url = window.location.pathname;
-  const cocktailId = url.split('/')[3];
+  const cocktailId = parseInt(url.split('/')[3]);
 
   useEffect(() => {
     const func = async () => {
-      const result = await axios.get(
-        `http://localhost:8000/api/cocktails/${cocktailId}`,
-      );
+      const result = await axios.get(GET_DETAIL_COCKTAIL(cocktailId));
       const cocktail = result.data.cocktail;
       setImg(cocktail.img);
       setName(cocktail.name);
@@ -72,15 +71,10 @@ export const ModifyWrapper = () => {
       },
     };
 
-    axios
-      .patch(
-        `http://localhost:8000/api/cocktails/updatecocktail/${cocktailId}`,
-        newData,
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(newData);
-      });
+    axios.patch(PATCH_COCKTAIL(cocktailId), newData).then((res) => {
+      console.log(res);
+      console.log(newData);
+    });
   };
 
   return (

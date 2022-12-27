@@ -6,6 +6,13 @@ import { CocktailListItem } from './List/CocktailListItem';
 import { SearchCocktailInput } from './List/SearchCocktailInput';
 import { useInView } from 'react-intersection-observer';
 import { CategoryListItem } from './List/CategoryListItem';
+import {
+  FIND_CATEGORY_COCKTAILS,
+  FIND_CATEGORY_COCKTAILS_OFFI,
+  GET_CATEGORY_COCKTAILS,
+  GET_CATEGORY_COCKTAILS_OFFI,
+  GET_COCKTAILS_SCROLL,
+} from '../../constants/api';
 interface Obj {
   nickname: string;
   isBartender: boolean;
@@ -34,16 +41,12 @@ export const CategoryWrapper = () => {
   const [end, setEnd] = useState<number>(10);
   const getList = () => {
     if (end < 10) return;
-    axios
-      .get(
-        `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=&official=&endpoint=${page.current}`,
-      )
-      .then((res) => {
-        console.log(res.data);
-        setCategoryList(() => categoryList.concat(res.data.categoryLists));
-        page.current += 10;
-        setEnd(res.data.categoryLists.length);
-      });
+    axios.get(GET_COCKTAILS_SCROLL(categoryId, page.current)).then((res) => {
+      console.log(res.data);
+      setCategoryList(() => categoryList.concat(res.data.categoryLists));
+      page.current += 10;
+      setEnd(res.data.categoryLists.length);
+    });
   };
 
   useEffect(() => {
@@ -62,27 +65,21 @@ export const CategoryWrapper = () => {
     if (event.key === 'Enter') {
       if (official && nonOfficial) {
         axios
-          .get(
-            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}`,
-          )
+          .get(FIND_CATEGORY_COCKTAILS(categoryId, searchText))
           .then((res) => {
             console.log(res.data.categoryLists);
             setCategoryList(res.data.categoryLists);
           });
       } else if (official && !nonOfficial) {
         axios
-          .get(
-            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=true`,
-          )
+          .get(FIND_CATEGORY_COCKTAILS_OFFI(categoryId, searchText, true))
           .then((res) => {
             console.log(res.data.categoryLists);
             setCategoryList(res.data.categoryLists);
           });
       } else if (!official && nonOfficial) {
         axios
-          .get(
-            `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=${searchText}&official=false`,
-          )
+          .get(FIND_CATEGORY_COCKTAILS_OFFI(categoryId, searchText, false))
           .then((res) => {
             console.log(res.data.categoryLists);
             setCategoryList(res.data.categoryLists);
@@ -93,27 +90,17 @@ export const CategoryWrapper = () => {
 
   useEffect(() => {
     if (official && nonOfficial) {
-      axios
-        .get(`http://localhost:8000/api/cocktails/?category=${categoryId}`)
-        .then((res) => {
-          setCategoryList(res.data.categoryLists);
-        });
+      axios.get(GET_CATEGORY_COCKTAILS(categoryId)).then((res) => {
+        setCategoryList(res.data.categoryLists);
+      });
     } else if (official && !nonOfficial) {
-      axios
-        .get(
-          `http://localhost:8000/api/cocktails/?category=${categoryId}&official=true`,
-        )
-        .then((res) => {
-          setCategoryList(res.data.categoryLists);
-        });
+      axios.get(GET_CATEGORY_COCKTAILS_OFFI(categoryId, true)).then((res) => {
+        setCategoryList(res.data.categoryLists);
+      });
     } else if (!official && nonOfficial) {
-      axios
-        .get(
-          `http://localhost:8000/api/cocktails/?category=${categoryId}&official=false`,
-        )
-        .then((res) => {
-          setCategoryList(res.data.categoryLists);
-        });
+      axios.get(GET_CATEGORY_COCKTAILS_OFFI(categoryId, false)).then((res) => {
+        setCategoryList(res.data.categoryLists);
+      });
     } else {
       setCategoryList([]);
     }

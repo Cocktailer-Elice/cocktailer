@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { SHARE_KAKAO } from '../../../constants/api';
 import { shareKakao } from './shareKaKao';
 
 type CockProps = {
@@ -8,13 +9,13 @@ type CockProps = {
   img: string;
   content: string;
 };
-
+// TODO : 배포전 카카오 공유 링크 수정
 export const ShareBtn = ({ id, name, img, content }: CockProps) => {
   return (
     <KakaoBtn
       onClick={() =>
         shareKakao(
-          `http://127.0.0.1:5173/cockcipe/detail/${id}`,
+          `http://localhost:5173/cockcipe/detail/${id}`,
           img,
           name,
           content,

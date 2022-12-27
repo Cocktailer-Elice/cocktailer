@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useReducer, useState } from 'react';
 import styled from 'styled-components';
+import { POST_COCKTAIL } from '../../constants/api';
 import { ApplyButton } from './Apply/ApplyButton';
 import { InputCockContent } from './Apply/InputCockContent';
 import { InputCockFlavor } from './Apply/InputCockFlavor';
@@ -54,7 +55,7 @@ export const ApplyWrapper = () => {
     };
 
     axios
-      .post('http://localhost:8000/api/cocktails', newData, {
+      .post(POST_COCKTAIL, newData, {
         headers: {},
       })
       .then((res) => {

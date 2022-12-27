@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { GET_S3_URL } from '../../../constants/api';
 // TODO aws 업로드 후 반환 이미지 url 받아오기
 export const InputTitleImg = ({ setImg, img }: any) => {
   const [imgSrc, setImgsrc] = useState<string>(img ? img : '');
@@ -19,7 +20,7 @@ export const InputTitleImg = ({ setImg, img }: any) => {
       const formData = new FormData();
       formData.append('image', file);
       axios
-        .post('http://localhost:8000/api/image-upload', {
+        .post(GET_S3_URL, {
           folder: 'seeun-test',
         })
         .then((res) => {

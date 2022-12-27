@@ -3,7 +3,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 interface Props {
-  id: string;
+  id: number;
 }
 export const DeleteButton = ({ id }: Props) => {
   const handleDelete = () => {

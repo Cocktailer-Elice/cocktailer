@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { FormControl, InputLabel, TextField, MenuItem } from '@mui/material';
 import Select from '@mui/material/Select';
 import axios from 'axios';
+import { GET_INDEGRIENT } from '../../../constants/api';
 
 interface Props {
   kind: string;
@@ -88,7 +89,7 @@ export const InputRecipe = ({
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/ingredients').then((res) => {
+    axios.get(GET_INDEGRIENT).then((res) => {
       setIngredient(res.data.getIngredient.ingredient);
       setAlcohol(res.data.getIngredient.alcohol);
     });
