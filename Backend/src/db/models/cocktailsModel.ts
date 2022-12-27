@@ -208,6 +208,10 @@ export class CocktailModel implements CocktailInterface {
       },
     );
 
+    ///      user Array 반환      ///
+
+    ///      user Array 반환      ///
+
     return likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1;
   };
 
