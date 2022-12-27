@@ -9,6 +9,7 @@ import { CockflowCommentBox } from '../../components/Cockflow/CockflowCommentBox
 import { P5 } from '../../components/Cockflow/style';
 import { CockflowGetResData } from '../../../../types/cockflowType';
 import { Container } from '../../components/Cockflow/style';
+import { Helmet } from 'react-helmet';
 
 export const CockflowDetail = () => {
   let params = useParams();
@@ -67,6 +68,9 @@ export const CockflowDetail = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Cocktailer | 칵플로우 상세보기</title>
+      </Helmet>
       <CockflowHeader />
       <P5>
         <CockflowLinkBtn link='/cockflow' title='목록' />

@@ -8,6 +8,7 @@ import { P5 } from '../../components/Cockflow/style';
 import { slice20 } from '../../components/Cockflow/CockflowUtils';
 import { useInView } from 'react-intersection-observer';
 import { Container } from '../../components/Cockflow/style';
+import { Helmet } from 'react-helmet';
 
 const List = styled.ul`
   display: grid;
@@ -65,6 +66,9 @@ export const CockflowPage = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Cocktailer | 칵플로우</title>
+      </Helmet>
       <P5>
         <CockflowHeader />
         <CockflowLinkBtn link="/cockflow/new" title="질문하기" />
