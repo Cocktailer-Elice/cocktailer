@@ -31,13 +31,20 @@ export const JoinForm = ({ register }: JoinFormProps) => {
   >(null);
   const [telVerificationEnd, setTelVerificationEnd] = useState(false);
 
-  const onSubmitHandler = (data: UserCreateData) => {
+  const onSubmitHandler = ({
+    name,
+    email,
+    password,
+    birthday,
+    tel,
+    alcohol,
+  }: UserCreateData) => {
     if (emailDuplicateCheck === false) {
       errors.email && (errors.email.message = '이메일 인증을 진행해주세요');
     } else if (telVerificationEnd === false) {
       errors.tel && (errors.tel.message = '전화번호 인증을 진행해주세요');
     } else {
-      register(data);
+      register({ name, email, password, birthday, tel, alcohol });
       reset();
     }
   };

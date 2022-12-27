@@ -16,8 +16,8 @@ export const LoginForm = ({ login }: LoginFormProps) => {
     mode: 'onChange',
   });
   const { handleSubmit, reset } = methods;
-  const onSubmitHandler = (data: LoginReqData) => {
-    login(data);
+  const onSubmitHandler = ({ email, password }: LoginReqData) => {
+    login({ email, password });
     reset();
   };
   return (
