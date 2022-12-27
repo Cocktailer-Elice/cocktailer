@@ -28,6 +28,12 @@ cocktailsRouter.get(
 );
 
 cocktailsRouter.get(
+  '/my-cocktails',
+  isLoggedIn,
+  asyncHandler(cocktailController.findByUserId),
+);
+
+cocktailsRouter.get(
   '/:cocktailId',
   asyncHandler(cocktailController.findCocktailId),
 );

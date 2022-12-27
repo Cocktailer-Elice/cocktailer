@@ -80,6 +80,8 @@ export class CocktailModel implements CocktailInterface {
   public createCocktail = async (
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> => {
+    //transection 적용!!!
+
     const newMyCocktail: CocktailModelType = await CocktailSchema.create(
       cocktailCreateDto,
     );

@@ -40,7 +40,9 @@ class CocktailController {
   public findByUserId = async (req: Req, res: Res) => {
     console.log('findByUserId');
 
-    const userId = req.user;
+    const userId = req.user.userId;
+
+    console.log(userId);
 
     const lists = await this.cocktailService.findByUserId(userId);
 
