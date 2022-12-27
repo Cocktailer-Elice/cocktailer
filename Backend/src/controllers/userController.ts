@@ -27,6 +27,13 @@ class UserController {
     res.sendStatus(204);
   };
 
+  public sendCode = async (req: Req, res: Res) => {
+    const { tel } = req.body;
+    checkReqBody(tel);
+    await this.userService.sendCode(tel);
+    res.sendStatus(204);
+  };
+
   public changePassword = async (req: Req, res: Res) => {
     const { password, newPassword } = req.body;
     checkReqBody(password, newPassword);

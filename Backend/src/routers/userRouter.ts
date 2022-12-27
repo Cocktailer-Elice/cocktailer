@@ -9,7 +9,7 @@ const router: Router = Router();
 router.use(authAndUserValidator);
 router.post('/find-email', asyncHandler(userController.findUserEmail));
 router.post('/verify-user', asyncHandler(userController.verifyUser));
-// 비밀번호 찾기를 어떻게 구현할 지 고민
+router.post('/send-code', asyncHandler(userController.sendCode));
 router.use(isLoggedIn);
 router.patch('/', asyncHandler(userController.changePassword));
 router.delete('/', asyncHandler(userController.softDeleteUser));

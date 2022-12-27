@@ -6,6 +6,8 @@ import { IUser } from '../db/types';
 import { IUserDependencies } from './types/userType';
 import { sendPasswordResetMail } from '../events/utils/mailUtil';
 import { createRandomPassword } from './utils/createRandomPassword';
+import { redisCache } from '../redis';
+import { createRandomNumber, sendAuthCodeMessage } from './utils';
 
 class UserDependencies implements IUserDependencies {
   public userModel = userModel.Mongo;
@@ -44,6 +46,19 @@ class UserService {
       { password: hashedPassword },
     );
     await sendPasswordResetMail(email, temporaryPassword);
+    return;
+  };
+
+  public sendCode = async (tel: string) => {
+    if (await redisCache.exists(tel)) {
+      redisCache.del(tel);
+    }
+    const code = createRandomNumber(6, false) as string;
+    const response = await sendAuthCodeMessage(tel, code);
+    if (response.status !== 202) {
+      throw new AppError(errorNames.businessError, 500, '문자 전송 실패');
+    }
+    await redisCache.SETEX(tel, 180, code);
     return;
   };
 
