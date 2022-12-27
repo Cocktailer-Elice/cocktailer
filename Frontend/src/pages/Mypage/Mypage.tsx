@@ -1,6 +1,5 @@
 import { Header } from '../../components/Mypage/Header';
 import { useEffect, useState } from 'react';
-import { WithdrawlButton } from '../../components/Mypage/WithdrawlButton';
 import { Board } from '../../components/Mypage/Board';
 import { Carousel } from '../../components/Mypage/Carousel';
 import { Helmet } from 'react-helmet';
@@ -10,6 +9,7 @@ import { MyPostsResData } from '../../../../types';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { withLogin } from '../../common/withLogin';
 import { Container } from '@mui/material';
+import { WithDrawlContainer } from '../../containers/Mypage/WithDrawlContainer';
 
 const Mypage = () => {
   const user = useCurrentUser();
@@ -44,7 +44,7 @@ const Mypage = () => {
         <Board title="나의 Cockflow" cockflow={userData?.cockflows} />
         <Board title="나의 Cockflow Comments" comments={userData?.comments} />
       </Container>
-      <WithdrawlButton />
+      <WithDrawlContainer />
     </>
   );
 };
