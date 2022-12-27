@@ -8,7 +8,7 @@ import { useState } from 'react';
 export const CockflowGetPost = () => {
 
   const postCockflowList = async (data: any) => {
-    await axios.post('http://localhost:8000/api/cockflow', data)
+    await axios.post('/api/cockflow', data)
       .then(function (response) {
         console.log(response);
       })

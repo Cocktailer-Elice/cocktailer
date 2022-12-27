@@ -45,7 +45,7 @@ export const CockflowList = () => {
 
   const getList = () => {
     console.log(page)
-    axios.get(`http://localhost:8000/api/cockflow/?q=${page}`)
+    axios.get(`/api/cockflow/?q=${page}`)
       .then(res => {
         console.log(res);
         if (listData[0].id === '0') {

@@ -40,8 +40,7 @@ export const CockflowContent = () => {
   });
 
   useEffect(() => {
-    axios.get<CockflowGetResData | any>(`http://localhost:8000/api/cockflow/${_id}`)
-      // axios.get<CockflowGetResData>(`http://localhost:8000/api/cockflow/6`)
+    axios.get<CockflowGetResData | any>(`/api/cockflow/${_id}`)
       .then(res => {
         console.log(res)
         if (res.data) {

@@ -25,12 +25,6 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
   const [newTitle, setNewTitle] = useState(title);
   const [newContent, setNewContent] = useState(content);
 
-
-  const [updateData, setUpdateData] = useState({
-    'title': '',
-    'content': ''
-  })
-
   useEffect(() => {
     setNewTitle(title);
     setNewContent(content);
@@ -62,8 +56,6 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
     setNewContent(e.currentTarget.value);
   }
 
-
-
   return (
     <ContWrap>
       <form>
@@ -86,9 +78,6 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
               </span>
             </div>
           </FlexMiddle>
-          <div>
-            {/* <span>(+)조회수</span> */}
-          </div>
         </TitleWrap>
         <TextBox
           defaultValue=""

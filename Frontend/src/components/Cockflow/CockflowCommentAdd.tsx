@@ -13,7 +13,7 @@ const postAdopted = () => {
 export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   const { register, handleSubmit, reset } = useForm();
   const gets = async (data: any) => {
-    await axios.post(`http://localhost:8000/api/cockflow/${cockflowId}/comments/${commentId}`, data)
+    await axios.post(`/api/cockflow/${cockflowId}/comments/${commentId}`, data)
       .then(function (response) {
         console.log(response);
       })
