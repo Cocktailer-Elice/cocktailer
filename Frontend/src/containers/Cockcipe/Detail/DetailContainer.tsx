@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
+import { DeleteButton } from '../../../components/Cockcipe/Detail/DeleteButton';
 import { ModifyButton } from '../../../components/Cockcipe/Detail/ModifyButton';
 import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
 
@@ -46,7 +47,7 @@ export const DetailContainer = () => {
 
   return (
     <>
-      <ContentContainer>
+      <ContentWrapper>
         <CocktailInfomation cocktail={cocktailInfo} />
         <ShareBtn
           img={cocktailInfo.img}
@@ -54,15 +55,22 @@ export const DetailContainer = () => {
           id={cocktailInfo.id}
           content={cocktailInfo.content}
         />
-        <ModifyButton id={cocktailId} />
-      </ContentContainer>
+        <ButtonWrapper>
+          <ModifyButton id={cocktailId} />
+          <DeleteButton id={cocktailId} />
+        </ButtonWrapper>
+      </ContentWrapper>
     </>
   );
 };
 
-const ContentContainer = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
 `;

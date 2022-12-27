@@ -10,5 +10,13 @@ export const ModifyButton = ({ id }: Props) => {
 
 const Modify = styled(Link)`
   margin: 15px;
-  border: 1px solid black;
+  background-color: #3b5bdb;
+  color: #dbe4ff;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  &:hover {
+    color: #3b5bdb;
+    background-color: #dbe4ff;
+  }
 `;

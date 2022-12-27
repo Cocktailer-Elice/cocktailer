@@ -21,16 +21,23 @@ export const ShareBtn = ({ id, name, img, content }: CockProps) => {
         )
       }
     >
-      카카오톡으로 공유하기
+      <img src="/assets/images/kakao.png" alt="카카오톡 공유 보내기 버튼" />
+      <Text>카카오톡으로 공유하기</Text>
     </KakaoBtn>
   );
 };
 
 const KakaoBtn = styled.div`
-  background-color: #4263eb;
   height: auto;
-  color: #edf2ff;
-  padding: 0.2rem;
   box-sizing: border-box;
   margin: 15px 0;
+  border-radius: 12px;
+  background-color: #fee000;
+  display: flex;
+  padding-left: 10px;
+`;
+const Text = styled.p`
+  font-size: 18px;
+  font-weight: 800;
+  padding: 10px;
 `;
