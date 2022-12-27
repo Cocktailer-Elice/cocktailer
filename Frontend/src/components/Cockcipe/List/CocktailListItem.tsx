@@ -7,9 +7,10 @@ interface Props {
   id: string;
   name: string;
   official: boolean;
+  img: string;
 }
 
-export const CocktailListItem = ({ id, name, official }: Props) => {
+export const CocktailListItem = ({ id, name, official, img }: Props) => {
   const navigate = useNavigate();
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event);
@@ -17,17 +18,30 @@ export const CocktailListItem = ({ id, name, official }: Props) => {
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
-      {id}는{name}
-      {official ? <OfficialBadge /> : null}
+      <ImgBox>
+        <img src={img} alt="칵테일 이미지" />
+      </ImgBox>
+
+      <>
+        <p>
+          {name}
+          {official ? <OfficialBadge /> : null}
+        </p>
+      </>
     </ThumbnailBox>
   );
 };
 
+// TODO : 이미지 출력 시 사이즈 조정
 const ThumbnailBox = styled.div`
   box-sizing: border-box;
-  background-color: #bac8ff;
   border-radius: 10px;
+  background-color: aliceblue;
   width: auto;
-  height: 100px;
+  height: auto;
   margin: 10px;
+`;
+const ImgBox = styled.div`
+  width: 150px;
+  height: 150px;
 `;

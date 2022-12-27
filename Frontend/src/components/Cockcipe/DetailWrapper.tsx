@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
-import { ModifyButton } from '../../../components/Cockcipe/Detail/ModifyButton';
-import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
+import { GET_DETAIL_COCKTAIL } from '../../constants/api';
+import { CocktailInfomation } from './Detail/CocktailInfomation';
+import { DeleteButton } from './Detail/DeleteButton';
+import { ModifyButton } from './Detail/ModifyButton';
+import { ShareBtn } from './Detail/ShareBtn';
 
 interface Recipe {
   alcohol: any;
@@ -20,9 +22,9 @@ export interface ICocktail {
   ratio: Recipe;
 }
 
-export const DetailContainer = () => {
+export const DetailWrapper = () => {
   const url = window.location.pathname;
-  const cocktailId = url.split('/')[3];
+  const cocktailId = parseInt(url.split('/')[3]);
 
   const [cocktailInfo, setCocktail] = useState<ICocktail>({
     name: '',
@@ -36,33 +38,38 @@ export const DetailContainer = () => {
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/cocktails/${cocktailId}`)
-      .then((res) => {
-        console.log(res);
-        setCocktail(res.data.cocktail);
-      });
+    axios.get(GET_DETAIL_COCKTAIL(cocktailId)).then((res) => {
+      console.log(res);
+      setCocktail(res.data.cocktail);
+    });
   }, []);
 
   return (
     <>
-      <ContentContainer>
+      <ContentWrapper>
         <CocktailInfomation cocktail={cocktailInfo} />
         <ShareBtn
           img={cocktailInfo.img}
           name={cocktailInfo.name}
-          id={cocktailInfo.id}
+          id={cocktailId}
           content={cocktailInfo.content}
         />
-        <ModifyButton id={cocktailInfo.id} />
-      </ContentContainer>
+        <ButtonWrapper>
+          <ModifyButton id={cocktailId} />
+          <DeleteButton id={cocktailId} />
+        </ButtonWrapper>
+      </ContentWrapper>
     </>
   );
 };
 
-const ContentContainer = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
 `;

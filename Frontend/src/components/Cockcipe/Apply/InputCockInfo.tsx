@@ -14,6 +14,7 @@ interface Props {
   setDegree: any;
   setCategory: any;
   category: string;
+  degree: number;
 }
 
 export const InputCockInfo = ({
@@ -22,9 +23,33 @@ export const InputCockInfo = ({
   setDegree,
   setCategory,
   category,
+  degree,
 }: Props) => {
   return (
     <>
+      <CategoryContainer>
+        <FormControl
+          sx={{
+            width: '440px',
+          }}
+        >
+          <InputLabel>카테고리 선택</InputLabel>
+          <Select
+            label="카테고리"
+            key={category}
+            defaultValue={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <MenuItem value="dry">드라이 칵테일</MenuItem>
+            <MenuItem value="refreshing">리프레싱 칵테일</MenuItem>
+            <MenuItem value="fruit">프루트 칵테일</MenuItem>
+            <MenuItem value="sweet">스위트 칵테일</MenuItem>
+            <MenuItem value="smoothie">스무디 칵테일</MenuItem>
+            <MenuItem value="hot">핫 칵테일</MenuItem>
+          </Select>
+        </FormControl>
+      </CategoryContainer>
+
       <InfoContainer>
         <TextField
           label="나만의 칵테일 이름"
@@ -37,32 +62,12 @@ export const InputCockInfo = ({
         <TextField
           label="칵테일 도수"
           type="number"
+          value={degree}
           onChange={(e) => {
             setDegree(parseInt(e.target.value));
           }}
         />
       </InfoContainer>
-      <CategoryContainer>
-        <FormControl
-          sx={{
-            width: '200px',
-          }}
-        >
-          <InputLabel>카테고리 선택</InputLabel>
-          <Select
-            label="카테고리"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <MenuItem value="dry">드라이 칵테일</MenuItem>
-            <MenuItem value="refresh">리프레싱 칵테일</MenuItem>
-            <MenuItem value="fruit">프루트 칵테일</MenuItem>
-            <MenuItem value="sweet">스위트 칵테일</MenuItem>
-            <MenuItem value="smoothie">스무디 칵테일</MenuItem>
-            <MenuItem value="hot">핫 칵테일</MenuItem>
-          </Select>
-        </FormControl>
-      </CategoryContainer>
     </>
   );
 };
@@ -72,13 +77,11 @@ const InfoContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
 
 const CategoryContainer = styled.div`
   display: flex;
-
   justify-content: center;
   align-items: center;
+  margin: 20px 0;
 `;

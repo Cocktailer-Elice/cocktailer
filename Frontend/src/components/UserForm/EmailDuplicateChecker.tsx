@@ -1,10 +1,11 @@
-import { Alert, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import { EMAIL_DUPLICATE_CHECK } from '../../constants/api';
 import { EmailValidation } from '../../constants/regex';
+import { Alert } from './styles';
 
 interface EmailDuplicateCheckerProps {
   emailDuplicateCheck: boolean | null;
@@ -16,15 +17,17 @@ export const EmailDuplicateChecker = ({
   setEmailDuplicateCheck,
 }: EmailDuplicateCheckerProps) => {
   const { getValues } = useFormContext();
-  const email = getValues('email');
-
+  const [email, setEmail] = useState(getValues('email'));
   const sendEmailDuplicateCheck = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
-    if (EmailValidation.test(email)) {
+    const currentEmail = getValues('email');
+    if (EmailValidation.test(currentEmail)) {
       try {
-        const response = await axios.post(EMAIL_DUPLICATE_CHECK, { email });
+        const response = await axios.post(EMAIL_DUPLICATE_CHECK, {
+          email: currentEmail,
+        });
         if (response.status === 204) {
           setEmailDuplicateCheck(true);
         }
@@ -42,6 +45,7 @@ export const EmailDuplicateChecker = ({
       <EmailDuplicateCheckButton
         onClick={sendEmailDuplicateCheck}
         disabled={Boolean(emailDuplicateCheck)}
+        sx={{ padding: '0' }}
       >
         이메일 중복 확인
       </EmailDuplicateCheckButton>
@@ -49,16 +53,18 @@ export const EmailDuplicateChecker = ({
         {emailDuplicateCheck === null ? (
           <></>
         ) : emailDuplicateCheck === false ? (
-          <Alert severity="error">이미 사용중인 이메일입니다</Alert>
+          <Alert>이미 사용중인 이메일입니다</Alert>
         ) : (
-          <Alert severity="success">사용 가능한 이메일입니다</Alert>
+          <Alert className="success">사용 가능한 이메일입니다</Alert>
         )}
       </EmailDuplicateMessageWrapper>
     </>
   );
 };
 
-const EmailDuplicateCheckButton = styled(Button)``;
+const EmailDuplicateCheckButton = styled(Button)`
+  font-size: 0.7rem;
+`;
 
 const EmailDuplicateMessageWrapper = styled.div`
   height: max-content;
