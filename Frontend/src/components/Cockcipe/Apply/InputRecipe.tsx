@@ -3,9 +3,9 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import styled from 'styled-components';
 import { FormControl, InputLabel, TextField, MenuItem } from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import axios from 'axios';
-import { number } from 'yup/lib/locale';
+import { GET_INDEGRIENT } from '../../../constants/api';
 
 interface Props {
   kind: string;
@@ -26,14 +26,16 @@ export const InputRecipe = ({
   setTitle,
   setValue,
 }: Props) => {
-  const [count, setCount] = useState<number[]>([0]);
+  console.log();
+  const [count, setCount] = useState<number[]>(
+    title.length > 0 ? Array.from({ length: title.length }, () => 0) : [0],
+  );
   const [ingredient, setIngredient] = useState<string[]>();
   const [alcohol, setAlcohol] = useState<string[]>();
 
   const handleAddRecipe = () => {
     setCount((prev) => [...prev, 0]);
   };
-
   const handleSelectChange = (event: any, index: number) => {
     console.log(event.target.value);
     setSelect((prev: any) => [
@@ -42,7 +44,6 @@ export const InputRecipe = ({
       ...prev.slice(index + 1),
     ]);
   };
-
   const handleTitleChange = (event: any, index: number) => {
     setTitle((prev: any) => [
       ...prev.slice(0, index),
@@ -88,7 +89,7 @@ export const InputRecipe = ({
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/ingredients').then((res) => {
+    axios.get(GET_INDEGRIENT).then((res) => {
       setIngredient(res.data.getIngredient.ingredient);
       setAlcohol(res.data.getIngredient.alcohol);
     });
@@ -96,8 +97,15 @@ export const InputRecipe = ({
 
   return (
     <>
-      <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
-      <AddIcon onClick={handleAddRecipe} />
+      <RecipeAddWrapper>
+        <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
+        <AddIcon
+          onClick={handleAddRecipe}
+          fontSize="large"
+          sx={{ marginRight: '40px' }}
+        />
+      </RecipeAddWrapper>
+
       {count &&
         count.map((item, idx) => (
           <RecipeContainer id={idx.toString()} key={idx}>
@@ -149,18 +157,22 @@ export const InputRecipe = ({
   );
 };
 
-// onBlur={() => {
-//   getRecipe({
-//     ratio: { select, title, value },
-//   });
-// }}
 const RecipeContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 `;
 
 const RecipeHeader = styled.div`
   font-size: 20px;
-  margin-right: 10px;
+  color: #495057;
+  font-weight: 700;
+  margin-left: 40px;
+`;
+
+const RecipeAddWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
