@@ -64,14 +64,17 @@ export class CocktailModel implements CocktailInterface {
       }).limit(10),
     ]);
 
-    const cocktailRankings = {
-      ...result[0],
-      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${result[0]}`,
-    };
+    const cocktailRanking: CocktailRankings[] = [];
 
-    console.log(cocktailRankings);
+    result[0].map((e) => {
+      const obj = {
+        ...e,
+        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${e.img}`,
+      };
+      cocktailRanking.push(obj);
+    });
 
-    return { cocktailRankings: result[0], userRankings: result[1] };
+    return { cocktailRankings: cocktailRanking, userRankings: result[1] };
   };
 
   public createCocktail = async (
@@ -134,13 +137,7 @@ export class CocktailModel implements CocktailInterface {
     reqData: ReqData,
     endpoint: number,
   ): Promise<CocktailModelType[]> => {
-    console.log(reqData);
     const queries = findCategoryAndSearchQuery(reqData);
-
-    const count: number = await CocktailSchema.count({
-      category: reqData?.category,
-    });
-    console.log(count);
 
     const result: CocktailModelType[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -172,8 +169,6 @@ export class CocktailModel implements CocktailInterface {
       id,
       cocktailCreateDto,
     );
-
-    console.log(result);
 
     return result;
   };

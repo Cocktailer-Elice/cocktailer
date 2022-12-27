@@ -17,6 +17,7 @@ type Ratio = {
     ];
   };
 };
+
 export interface CocktailModelType {
   id: number;
   owner: number;
