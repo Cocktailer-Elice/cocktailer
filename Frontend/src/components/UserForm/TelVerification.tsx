@@ -12,10 +12,14 @@ import { timeFormat } from '../../utils/timeFormat';
 import { BottomLineInput } from './styles';
 
 interface TelVerifierProps {
+  type: string;
   setTelVerificationEnd: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const TelVerifier = ({ setTelVerificationEnd }: TelVerifierProps) => {
+export const TelVerifier = ({
+  type,
+  setTelVerificationEnd,
+}: TelVerifierProps) => {
   const { getValues } = useFormContext();
   const [telVerificationStart, setTelVerificationStart] = useState(false);
   const [code, setCode] = useState('');
@@ -31,7 +35,9 @@ export const TelVerifier = ({ setTelVerificationEnd }: TelVerifierProps) => {
     const tel = getValues<string>('tel');
     if (TelValidation.test(tel)) {
       try {
-        const response = await axios.post(TEL_VERIFICATION_START, { tel });
+        const response = await axios.post(TEL_VERIFICATION_START(type), {
+          tel,
+        });
         if (response.status === 204) {
           setTelVerificationStart(true);
         }
@@ -98,16 +104,22 @@ export const TelVerifier = ({ setTelVerificationEnd }: TelVerifierProps) => {
             onChange={onChangeHandler}
             placeholder="인증번호를 입력해주세요"
           />
-          <VerifyButton onClick={endTelVerification}>인증하기</VerifyButton>
+          <VerifyButton onClick={endTelVerification} disabled={success}>
+            인증하기
+          </VerifyButton>
         </Wrapper>
       ) : (
         <Wrapper>
-          <VerifyButton onClick={startTelVerification}>
+          <VerifyButton onClick={startTelVerification} disabled={success}>
             전화번호 인증하기
           </VerifyButton>
         </Wrapper>
       )}
-      {success && <span>인증 성공</span>}
+      {success && (
+        <Wrapper>
+          <span>인증 성공</span>
+        </Wrapper>
+      )}
     </div>
   );
 };

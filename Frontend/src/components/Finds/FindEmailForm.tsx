@@ -9,20 +9,16 @@ import axios from 'axios';
 import { FIND_EMAIL } from '../../constants/api';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-
-interface FindEmailFormData {
-  name: string;
-  tel: string;
-}
+import { FindEmailReqData } from '../../../../types';
 
 export const FindEmailForm = () => {
   const navigate = useNavigate();
-  const methods = useForm<FindEmailFormData>({
+  const methods = useForm<FindEmailReqData>({
     resolver: yupResolver(FindEmailSchema),
   });
   const { handleSubmit } = methods;
   const [email, setEmail] = useState<string>('');
-  const onSubmitHandler = async (data: FindEmailFormData) => {
+  const onSubmitHandler = async (data: FindEmailReqData) => {
     const response = await axios.post(FIND_EMAIL, data);
     setEmail(response.data.email);
   };

@@ -34,6 +34,10 @@ export const UserRouter = () => {
         path="/mypage/cockcipes"
         element={<DetailsWithLogin title="내 칵시피" />}
       />
+      <Route
+        path="/mypage/comments"
+        element={<DetailsWithLogin title="내가 남긴 댓글" />}
+      />
     </Routes>
   );
 };

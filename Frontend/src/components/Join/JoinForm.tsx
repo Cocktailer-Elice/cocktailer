@@ -76,7 +76,10 @@ export const JoinForm = ({ register }: JoinFormProps) => {
             name="tel"
             placeholder=" - 를 제외하고 입력해주세요"
           />
-          <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
+          <TelVerifier
+            type="auth"
+            setTelVerificationEnd={setTelVerificationEnd}
+          />
           <Select
             id="alcohol"
             label="nickname prefix"
