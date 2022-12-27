@@ -11,7 +11,7 @@ import Cockflow from '../schemas/cockflowSchema';
 import Comment from '../schemas/commentSchema';
 import User from '../schemas/userSchema';
 import { db } from '../../mongodb';
-import { AppError } from '../../errorHandler';
+import { AppError } from '../../appError';
 import { errorNames } from '../../errorNames';
 
 class CockflowMongoModel implements ICockflowMongoModel {

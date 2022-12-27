@@ -4,7 +4,7 @@ import { Rankings } from 'types';
 import { IUser } from '../db/types';
 /////////
 import { cocktailModel } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 
 class CocktailService {

@@ -10,7 +10,7 @@ import { IComment } from '../types';
 import Comment from '../schemas/commentSchema';
 import User from '../schemas/userSchema';
 import { db } from '../../mongodb';
-import { AppError } from '../../errorHandler';
+import { AppError } from '../../appError';
 import { errorNames } from '../../errorNames';
 
 class CommentMongoModel implements ICommentMongoModel {

@@ -44,11 +44,8 @@ class UserMongoModel implements IUserMongoModel {
     return result;
   };
 
-  public softDelete = async (
-    filter: FindOneFilter,
-    update: UpdateOneFilter,
-  ) => {
-    const result = await User.updateOne(filter, update);
+  public delete = async (filter: FindOneFilter) => {
+    const result = await User.deleteOne(filter);
     return result;
   };
 

@@ -12,7 +12,7 @@ router.post('/verify-user', asyncHandler(userController.verifyUser));
 router.post('/send-code', asyncHandler(userController.sendCode));
 router.use(isLoggedIn);
 router.patch('/', asyncHandler(userController.changePassword));
-router.delete('/', asyncHandler(userController.softDeleteUser));
+router.delete('/', asyncHandler(userController.deleteUser));
 router.get('/mypage', asyncHandler(userController.getMyPosts));
 router.patch('/profile', asyncHandler(userController.updateUserProfile));
 router.patch('/apply', asyncHandler(userController.updateUserState));

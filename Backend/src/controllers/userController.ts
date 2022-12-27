@@ -61,9 +61,9 @@ class UserController {
     res.sendStatus(204);
   };
 
-  public softDeleteUser = async (req: Req, res: Res) => {
+  public deleteUser = async (req: Req, res: Res) => {
     const { userId } = req.user;
-    await this.userService.softDeleteUser(userId);
+    await this.userService.deleteUser(userId);
     res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     res.sendStatus(204);
   };

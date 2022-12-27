@@ -1,17 +1,7 @@
+import { AppError } from 'Backend/src/appError';
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import fs from 'fs';
-import logger from './winston';
-
-class AppError extends Error {
-  status: number;
-
-  constructor(name: string, httpCode?: number, description?: string) {
-    super(description);
-
-    this.name = name;
-    this.status = httpCode || 500;
-  }
-}
+import logger from '../../../winston';
 
 const logError = (method: string, url: string, errorContent: string) => {
   const now = new Date();
@@ -50,4 +40,4 @@ const errorHandler = (
   return res.status(500).json({ message: '원인 불명 에러. 서버 담당자 문의' });
 };
 
-export { AppError, errorHandler };
+export { errorHandler };

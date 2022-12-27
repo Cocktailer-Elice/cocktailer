@@ -1,5 +1,5 @@
 import { userModel } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 import { IAdminDependencies } from './types/adminType';
 

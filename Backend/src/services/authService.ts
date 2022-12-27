@@ -3,7 +3,7 @@ import { createRandomNumber, sendAuthCodeMessage } from './utils';
 import { hash, compare } from 'bcrypt';
 import { UserCreateData, LoginReqData } from 'types';
 import { userModel } from '../db/models/userModel';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 import { redisCache } from '../redis';
 import { IAuthDependencies } from './types';
@@ -87,7 +87,7 @@ class AuthService {
   };
 
   public checkEmailDuplicate = async (email: string) => {
-    const filter = { email, deletedAt: null };
+    const filter = { email };
     const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
@@ -105,7 +105,7 @@ class AuthService {
   };
 
   private checkNicknameDuplicate = async (nickname: string) => {
-    const filter = { nickname };
+    const filter = { nickname, deletedAt: null };
     const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');

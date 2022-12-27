@@ -1,10 +1,10 @@
 import { compare, hash } from 'bcrypt';
 import { userModel } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 import { IUser } from '../db/types';
 import { IUserDependencies } from './types/userType';
-import { sendPasswordResetMail } from '../events/utils/mailUtil';
+import { sendPasswordResetMail } from '../events/utils/sendMail';
 import { createRandomPassword } from './utils/createRandomPassword';
 import { redisCache } from '../redis';
 import { createRandomNumber, sendAuthCodeMessage } from './utils';
@@ -107,12 +107,9 @@ class UserService {
     return;
   };
 
-  public softDeleteUser = async (userId: number) => {
+  public deleteUser = async (userId: number) => {
     const filter = { id: userId };
-    const update = {
-      deletedAt: Date.now(),
-    };
-    await this.dependencies.userModel.softDelete(filter, update);
+    await this.dependencies.userModel.delete(filter);
     return;
   };
 }

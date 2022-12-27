@@ -1,4 +1,4 @@
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 import { UserCreateData } from 'types';
 import { Request as Req, Response as Res } from 'express';
@@ -6,7 +6,7 @@ import { LoginReqData } from 'types';
 import authService from '../services/authService';
 import { createToken, createCookie, checkReqBody } from './utils';
 import { redisCache } from '../redis';
-import { sendWelcomMail } from '../events/utils/mailUtil';
+import { sendWelcomMail } from '../events/utils/sendMail';
 
 class AuthController {
   private readonly authService = authService;

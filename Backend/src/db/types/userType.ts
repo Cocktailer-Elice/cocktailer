@@ -12,10 +12,7 @@ export interface IUserMongoModel {
     filter: FindOneFilter,
     update: UpdateOneFilter,
   ): Promise<UpdateWriteOpResult>;
-  softDelete(
-    filter: FindOneFilter,
-    update: UpdateOneFilter,
-  ): Promise<UpdateWriteOpResult>;
+  delete(filter: FindOneFilter): Promise<AnyExpression>;
   checkDuplicate(filter: FindOneFilter): Promise<boolean>;
 }
 

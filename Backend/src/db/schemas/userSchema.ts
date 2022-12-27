@@ -15,7 +15,6 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
       index: true,
-      unique: false,
     },
     password: {
       type: String,
@@ -23,8 +22,8 @@ const UserSchema: Schema = new Schema(
     },
     nickname: {
       type: String,
+      require: true,
       index: true,
-      unique: false,
     },
     birthday: {
       type: String,
@@ -34,7 +33,6 @@ const UserSchema: Schema = new Schema(
       type: String,
       required: true,
       index: true,
-      unique: false,
     },
     avatarUrl: {
       type: String,
