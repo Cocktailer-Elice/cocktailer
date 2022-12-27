@@ -111,12 +111,12 @@ class CocktailController {
 
     const userId = Number(req.user.userId);
 
-    const result: boolean = await this.cocktailService.cocktailLikes(
+    const result: number = await this.cocktailService.cocktailLikes(
       userId,
       cocktailId,
     );
 
-    res.status(200).json({ success: result });
+    res.status(200).json({ likes: result });
   };
 
   ////////////////////////////////

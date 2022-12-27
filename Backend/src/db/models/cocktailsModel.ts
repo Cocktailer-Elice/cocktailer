@@ -40,7 +40,7 @@ interface CocktailInterface {
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<UpdateResult>;
 
-  cocktailLikes(userId: number, cocktailId: number): Promise<UpdateResult>;
+  cocktailLikes(userId: number, cocktailId: number): Promise<number>;
 }
 
 const limitEachPage = 10;
@@ -147,7 +147,7 @@ export class CocktailModel implements CocktailInterface {
   public cocktailLikes = async (
     userId: number,
     cocktailId: number,
-  ): Promise<UpdateResult> => {
+  ): Promise<number> => {
     const obj: LikesUser | null = await CocktailSchema.findOne(
       { id: cocktailId },
       { likes: 1, likesUser: 1, _id: 0 },
@@ -173,7 +173,7 @@ export class CocktailModel implements CocktailInterface {
       },
     );
 
-    return updateResult;
+    return obj?.likes;
   };
 
   ////////////////////////////////
