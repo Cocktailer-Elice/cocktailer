@@ -27,7 +27,6 @@ export const CockflowDetail = () => {
     content: ''
   });
 
-
   const [comments, setComments] = useState({
     "_id": "",
     "owner": {
@@ -62,8 +61,6 @@ export const CockflowDetail = () => {
           };
         };
       });
-
-
   }, []);
 
   return (
