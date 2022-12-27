@@ -24,7 +24,7 @@ class Server {
       cors({
         origin: true,
         credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'HEAD'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
       }),
     );
 
@@ -50,12 +50,9 @@ class Server {
 
     this.setRouter();
     this.app.listen(port, () => {
-      // const n = 1;
-      // console.log(cron.getTasks());
-      // cron.schedule('* * * * * *', () => {
-      //   console.log('1초 마다 실행 중!');
-      // });
-      // console.log(cron.getTasks());
+      cron.schedule('* 5 * * * 1', () => {
+        redisCache.del('ranking');
+      });
       logger.info(
         `💣 ${port}번 PORT에서 서버를 시작합니다. http://localhost:${port}`,
       );

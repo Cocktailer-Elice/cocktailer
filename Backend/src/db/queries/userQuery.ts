@@ -104,4 +104,47 @@ export const userQueries = {
       },
     },
   ],
+
+  findByRanking: () => [
+    {
+      $match: {
+        deletedAt: null,
+        isAdmin: false,
+      },
+    },
+    {
+      $sort: {
+        points: -1,
+      },
+    },
+    {
+      $limit: 10,
+    },
+    {
+      $project: {
+        _id: 0,
+        createdAt: 0,
+        name: 0,
+        updatedAt: 0,
+        isAdmin: 0,
+        email: 0,
+        password: 0,
+        birthday: 0,
+        tel: 0,
+        myLikes: 0,
+        isPasswordTemporary: 0,
+        isApplyingBartender: 0,
+      },
+    },
+    {
+      $set: {
+        avatarUrl: {
+          $concat: [
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/',
+            '$avatarUrl',
+          ],
+        },
+      },
+    },
+  ],
 };

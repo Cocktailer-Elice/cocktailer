@@ -20,6 +20,7 @@ import {
 
 import { AppError } from './../../appError';
 import { errorNames } from '../../errorNames';
+import { userQueries } from '../queries/userQuery';
 
 interface CocktailInterface {
   getHomeCocktailAndUserList(): Promise<Rankings>;
@@ -53,15 +54,11 @@ const limitEachPage = 10;
 export class CocktailModel implements CocktailInterface {
   public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
     const queries = cocktailRankingsQuery();
-    const filter = { deletedAt: null, isAdmin: false };
-    const projection =
-      '-_id -email -name -password -birthday -tel -isAdmin -createdAt -updatedAt -deletedAt';
+    const usersQueries = userQueries.findByRanking();
 
     const result: [CocktailRankings[], UserRanking[]] = await Promise.all([
       CocktailSchema.aggregate(Object(queries)),
-      User.find(filter, projection, {
-        sort: { points: -1 },
-      }).limit(10),
+      User.aggregate(Object(usersQueries)),
     ]);
 
     const cocktailRanking: CocktailRankings[] = [];
