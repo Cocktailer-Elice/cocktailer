@@ -1,16 +1,23 @@
 import styled from 'styled-components';
-import { red, grey } from '@mui/material/colors';
+import { red, grey, green } from '@mui/material/colors';
+
+export const FormWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
 
 export const UserForm = styled.form`
-  padding: 2rem;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
 `;
 
 export const FormHeading = styled.h3`
-  font-size: 2rem;
+  font-size: 1.3rem;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
@@ -23,8 +30,7 @@ export const LabelInputWrapper = styled.div`
   align-items: center;
   label {
     text-transform: capitalize;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 `;
 
@@ -34,7 +40,13 @@ export const BottomLineInput = styled.input`
   padding-left: 0.5rem;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  &:active {
+    font-size: 0.8rem;
+  }
+  &::placeholder {
+    font-size: 0.7rem;
+  }
 `;
 
 export const BottomLineSelect = styled.select`
@@ -60,4 +72,7 @@ export const Alert = styled.div`
   justify-content: center;
   color: ${grey[800]};
   background-color: ${red[100]};
+  &.success {
+    background-color: ${green[200]};
+  }
 `;

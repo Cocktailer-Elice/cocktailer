@@ -18,7 +18,7 @@ export const LongBoard = ({ data }: LongBoardProps) => {
               <Grid
                 item
                 key={id}
-                lg={4}
+                lg={6}
                 onClick={() => navigate(`/cockflow/detail/${id}`)}
                 sx={{ cursor: 'pointer', padding: '.5rem' }}
               >
@@ -47,8 +47,8 @@ const ContentWrapper = styled.div`
 const Title = styled.span`
   font-weight: bold;
   margin-bottom: 0.1rem;
-  flex: 0.5;
+  flex: 1;
 `;
 const Content = styled.span`
-  flex: 1;
+  flex: 2;
 `;

@@ -10,8 +10,8 @@ export const AvatarPreviewWrapper = styled.div`
 `;
 
 export const AvatarPreview = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   border: ${({ theme }) => `1px solid ${theme.colors.indigo6}`};
 `;

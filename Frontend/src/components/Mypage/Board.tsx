@@ -68,8 +68,8 @@ const BoardTitle = styled.h4`
 
 const ContentWrapper = styled.div`
   display: flex;
-  border: 1px solid #ddd;
-  padding: 0.2rem;
+  border: 1px solid ${({ theme }) => theme.colors.indigo6};
+  padding: 0.5rem;
   justify-content: center;
   align-items: center;
   font-size: 0.6rem;
