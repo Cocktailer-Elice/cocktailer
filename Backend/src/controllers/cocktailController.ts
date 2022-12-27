@@ -1,13 +1,6 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import {
-  CocktailCreateReqData,
-  CocktailRanking,
-  Rankings,
-  UserRanking,
-} from 'types';
-//추가됨//
-import { IUser } from '../db/types';
-/////////
+import { CocktailCreateReqData, Rankings } from 'types';
+
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {
@@ -38,6 +31,7 @@ class CocktailController {
 
   public getLists = async (req: Req, res: Res) => {
     console.log('getLists');
+
     const lists = await this.cocktailService.getLists();
 
     res.status(200).json({ lists: lists });
@@ -45,7 +39,8 @@ class CocktailController {
 
   public findByUserId = async (req: Req, res: Res) => {
     console.log('findByUserId');
-    const userId = Number(req.params.userId);
+
+    const userId = req.user;
 
     const lists = await this.cocktailService.findByUserId(userId);
 
@@ -55,27 +50,37 @@ class CocktailController {
   public findCocktailId = async (req: Req, res: Res) => {
     console.log('findCocktailId');
 
+    // const userId = req.user;
+
     const cocktailId = Number(req.params.cocktailId);
 
-    const cocktail = await this.cocktailService.findCocktailId(cocktailId);
+    const cocktail = await this.cocktailService.findCocktailId(cocktailId, 108);
 
-    res.status(200).json({ cocktail: cocktail.cocktailInfo });
+    console.log(cocktail);
+
+    res.status(200).json(cocktail);
   };
 
   public findCocktailCategoryAndSearch = async (req: Req, res: Res) => {
     console.log('findCocktailCategoryAndSearch');
 
-    const reqData: any = {};
-
-    if (req.query.category) {
-      reqData.category = req.query.category;
+    interface ReqData {
+      category: string;
+      [optionKey: string]: string;
     }
+
+    const reqData: ReqData = {
+      category: String(req.query.category),
+    };
+
     if (req.query.official) {
-      reqData.official = req.query.official;
+      reqData.official = String(req.query.official);
     }
     if (req.query.keyword) {
-      reqData.keyword = req.query.keyword;
+      reqData.keyword = String(req.query.keyword);
     }
+
+    console.log(reqData);
 
     const endpoint = Number(req.query.endpoint) || 0;
 
@@ -90,7 +95,9 @@ class CocktailController {
 
   public updateCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
+
     const updateCocktailInfo: CocktailCreateReqData = req.body;
+
     const result: any = await this.cocktailService.updateCocktail(
       cocktailId,
       updateCocktailInfo,
@@ -101,17 +108,25 @@ class CocktailController {
 
   public deleteCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
+
     const result: string = await this.cocktailService.deleteCocktail(
       cocktailId,
     );
+
     res.status(200).json({ message: result });
   };
 
   public cocktailLikes = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
+
     const userId = Number(req.user.userId);
-    const result = await this.cocktailService.cocktailLikes(userId, cocktailId);
-    res.status(200).json({ success: result });
+
+    const result: number = await this.cocktailService.cocktailLikes(
+      userId,
+      cocktailId,
+    );
+
+    res.status(200).json({ likes: result });
   };
 
   ////////////////////////////////
@@ -120,7 +135,9 @@ class CocktailController {
 
   public makeMockData = async (req: Req, res: Res) => {
     console.log('생성기 시작 _controller');
+
     const result: any = await this.cocktailService.makeMockData();
+
     res.status(200).json({ result: result });
   };
 }

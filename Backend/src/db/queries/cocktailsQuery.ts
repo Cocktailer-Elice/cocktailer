@@ -1,4 +1,4 @@
-export const lists = () => {
+export const listsQuery = () => {
   /*   전체 6개씩   */
 
   const $facet: any = {};
@@ -17,17 +17,27 @@ export const lists = () => {
   return { $facet: $facet };
 };
 
-export const findCocktailId = (id: number) => {
+export const findCocktailIdQuery = (id: number) => {
   /*   id   */
   return [
     {
       $match: { id: id },
     },
-    { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+    {
+      $project: {
+        _id: 0,
+        createdAt: 0,
+        deletedAt: 0,
+        updatedAt: 0,
+      },
+    },
   ];
 };
 
-export const getCocktailLikesUser = (userId: number, cocktailId: number) => {
+export const getCocktailLikesUserQuery = (
+  userId: number,
+  cocktailId: number,
+) => {
   return [
     {
       $match: {
@@ -59,7 +69,7 @@ export const getCocktailLikesUser = (userId: number, cocktailId: number) => {
   ];
 };
 
-export const findCategoryAndSearch = (reqData: object) => {
+export const findCategoryAndSearchQuery = (reqData: object) => {
   /*   카테고리 / 검색   */
 
   const makeMatchForm = () => {
@@ -78,7 +88,7 @@ export const findCategoryAndSearch = (reqData: object) => {
     {
       $match: makeMatchForm(),
     },
-    { $sort: { id: -1, createdAt: -1 } },
+    { $sort: { createdAt: -1 } },
     {
       $project: {
         _id: 0,
@@ -89,26 +99,6 @@ export const findCategoryAndSearch = (reqData: object) => {
         content: 0,
         createdAt: 0,
         deletedAt: 0,
-        updatedAt: 0,
-      },
-    },
-    {
-      $sort: {
-        likes: -1,
-      },
-    },
-    {
-      $limit: 10,
-    },
-    {
-      $project: {
-        _id: 0,
-        flavor: 0,
-        degree: 0,
-        ratio: 0,
-        likes: 0,
-        content: 0,
-        createdAt: 0,
         updatedAt: 0,
       },
     },
@@ -147,7 +137,7 @@ export const findCategoryAndSearch = (reqData: object) => {
   ];
 };
 
-export const cocktailRankings = () => {
+export const cocktailRankingsQuery = () => {
   return [
     {
       $sort: {

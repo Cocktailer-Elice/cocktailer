@@ -1,11 +1,13 @@
-import { CocktailServiceType, CocktailRankings } from './types';
+import { CocktailServiceType, UpdateResult } from './types';
 import { Rankings } from 'types';
-//추가됨//
-import { IUser } from '../db/types';
-/////////
+
 import { cocktailModel } from '../db';
 import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
+
+interface ReqData {
+  [optionKey: string]: string;
+}
 
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
@@ -26,50 +28,6 @@ class CocktailService {
   public async createCocktail(
     cocktailCreateDto: CocktailServiceType,
   ): Promise<number> {
-    const name: string[] = [];
-    const brand: string[] = [];
-    const volume: number[] = [];
-
-    const alcohol: any = {
-      name: name,
-      brand: brand,
-      volume: volume,
-    };
-
-    const ingredient: any = {
-      brand: brand,
-      volume: volume,
-    };
-
-    const alcoholMap = Object.keys(cocktailCreateDto.ratio.alcohol);
-    const ingredientMap = Object.keys(cocktailCreateDto.ratio.ingredient);
-
-    alcoholMap.map((e1) => {
-      name.push(e1);
-      const obj1 = cocktailCreateDto.ratio.alcohol[e1];
-      obj1.map((e2, idx2) => {
-        brand.push(String(Object.keys(e2)));
-        volume.push(Number(Object.values(e2)));
-      });
-      alcohol.brand = brand;
-      alcohol.volume = volume;
-    });
-
-    console.log('aaa', alcohol);
-
-    ingredientMap.map((e1) => {
-      name.push(e1);
-      const obj1 = cocktailCreateDto.ratio.ingredient[e1];
-      obj1.map((e2, idx2) => {
-        brand.push(String(Object.keys(e2)));
-        volume.push(Number(Object.values(e2)));
-      });
-      ingredient.brand = brand;
-      ingredient.volume = volume;
-    });
-
-    console.log('iii', ingredient);
-
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,
     });
@@ -101,8 +59,8 @@ class CocktailService {
     return data;
   }
 
-  public async findCocktailId(id: number) {
-    const data = await this.cocktailModel.findCocktailId(id);
+  public async findCocktailId(cocktailId: number, userId: number) {
+    const data = await this.cocktailModel.findCocktailId(cocktailId, userId);
 
     if (!data) {
       throw new AppError(
@@ -116,7 +74,7 @@ class CocktailService {
   }
 
   public async findCocktailCategoryAndSearch(
-    reqData: object,
+    reqData: ReqData,
     endpoint: number,
   ) {
     const data = await this.cocktailModel.findCocktailCategoryAndSearch(
@@ -124,12 +82,8 @@ class CocktailService {
       endpoint,
     );
 
-    if (!data) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '이런! 이 칵테일은 누군가 다 마셨나봐요!! 검색하신 정보가 없어요!',
-      );
+    if (data.length === 0) {
+      throw new AppError(errorNames.noDataError, 400, 'noDataError');
     }
 
     return data;
@@ -139,22 +93,27 @@ class CocktailService {
     cocktailId: number,
     updateCocktail: CocktailServiceType,
   ) {
-    const data: any = await this.cocktailModel.updateCocktail(
+    // 트랜젝션 처리!! //
+    const data: UpdateResult = await this.cocktailModel.updateCocktail(
       cocktailId,
       updateCocktail,
     );
+
     if (!data) {
       throw new AppError(
         errorNames.noDataError,
         400,
-        '이런! 이 칵테일은 누군가 다 마셨나봐요!! 검색하신 정보가 없어요!',
+        '이런! 칵테일 업데이트에 실패했습니다! 잠시후 재시도 해주시거나, 관리자에게 문의하세요!',
       );
     }
+
     return data;
   }
 
   public async deleteCocktail(cocktailId: number) {
+    // 트랜젝션 처리!! //
     const data: number = await this.cocktailModel.deleteCocktail(cocktailId);
+
     if (data === 0) {
       throw new AppError(
         errorNames.noDataError,
@@ -167,11 +126,24 @@ class CocktailService {
   }
 
   public async cocktailLikes(userId: number, cocktailId: number) {
-    const data: any = await this.cocktailModel.cocktailLikes(
+    // 트랜젝션 처리!! //
+    const data: number = await this.cocktailModel.cocktailLikes(
       userId,
       cocktailId,
     );
-    return 'success';
+
+    if (
+      typeof data !== 'number'
+      // data.acknowledged !== true &&
+      // data.modifiedCount !== 1 &&
+      // data.matchedCount !== 1
+    ) {
+      throw new AppError(errorNames.noDataError, 400, '좋아요 요청 실패!!');
+    }
+
+    //아래 user 콜렉션에 likes 누른 id 추가로직
+
+    return data;
   }
 
   ////////////////////////////////
