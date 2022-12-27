@@ -35,7 +35,6 @@ export const InputRecipe = ({
   const handleAddRecipe = () => {
     setCount((prev) => [...prev, 0]);
   };
-
   const handleSelectChange = (event: any, index: number) => {
     console.log(event.target.value);
     setSelect((prev: any) => [
@@ -44,7 +43,6 @@ export const InputRecipe = ({
       ...prev.slice(index + 1),
     ]);
   };
-
   const handleTitleChange = (event: any, index: number) => {
     setTitle((prev: any) => [
       ...prev.slice(0, index),

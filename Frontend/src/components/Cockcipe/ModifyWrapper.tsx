@@ -33,7 +33,6 @@ export const ModifyWrapper = () => {
       const result = await axios.get(
         `http://localhost:8000/api/cocktails/${cocktailId}`,
       );
-
       const cocktail = result.data.cocktail;
       setImg(cocktail.img);
       setName(cocktail.name);
