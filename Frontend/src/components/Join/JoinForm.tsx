@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
-import { UserForm } from '../UserForm/styles';
+import { FormWrapper, UserForm } from '../UserForm/styles';
 import { UserCreateData } from '../../../../types';
 import { UserInput } from '../UserForm/UserInput';
 import { Select } from '../UserForm/Select';
@@ -44,47 +44,55 @@ export const JoinForm = ({ register }: JoinFormProps) => {
 
   return (
     <FormProvider {...methods}>
-      <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
-        <UserInput id="name" label="name" name="name" />
-        <UserInput id="email" label="email" name="email" type="email" />
-        <EmailDuplicateChecker
-          emailDuplicateCheck={emailDuplicateCheck}
-          setEmailDuplicateCheck={setEmailDuplicateCheck}
-        />
-        <UserInput
-          id="password"
-          label="password"
-          name="password"
-          type="password"
-        />
-        <UserInput
-          id="passwordCheck"
-          label="password check"
-          name="passwordCheck"
-          type="password"
-        />
-        <UserInput id="birthday" label="birthday" name="birthday" type="date" />
-        <UserInput
-          id="tel"
-          label="phone"
-          name="tel"
-          placeholder=" - 를 제외하고 입력해주세요"
-        />
-        <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
-        <Select
-          id="alcohol"
-          label="nickname prefix"
-          name="alcohol"
-          options={nicknamePrefixes}
-        />
-        <UserInput
-          id="touse"
-          label="개인정보 수집 및 이용 동의"
-          name="touse"
-          type="checkbox"
-        />
-        <Button type="submit">회원가입</Button>
-      </UserForm>
+      <FormWrapper>
+        <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
+          <UserInput id="name" label="name" name="name" />
+          <UserInput id="email" label="email" name="email" type="email" />
+          <EmailDuplicateChecker
+            emailDuplicateCheck={emailDuplicateCheck}
+            setEmailDuplicateCheck={setEmailDuplicateCheck}
+          />
+          <UserInput
+            id="password"
+            label="password"
+            name="password"
+            type="password"
+          />
+          <UserInput
+            id="passwordCheck"
+            label="password check"
+            name="passwordCheck"
+            type="password"
+          />
+          <UserInput
+            id="birthday"
+            label="birthday"
+            name="birthday"
+            type="date"
+          />
+          <UserInput
+            id="tel"
+            label="phone"
+            name="tel"
+            placeholder=" - 를 제외하고 입력해주세요"
+          />
+          <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
+          <Select
+            id="alcohol"
+            label="nickname prefix"
+            name="alcohol"
+            options={nicknamePrefixes}
+          />
+          <UserInput
+            id="touse"
+            label="서비스 이용 동의"
+            name="touse"
+            type="checkbox"
+            inputStyle={{ width: 'max-content', marginLeft: '1rem' }}
+          />
+          <Button type="submit">회원가입</Button>
+        </UserForm>
+      </FormWrapper>
     </FormProvider>
   );
 };

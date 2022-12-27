@@ -4,6 +4,7 @@ import { FormHeading } from '../../components/UserForm/styles';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Finds from '../../components/Login/Finds';
 
 export const Login = () => {
   const isLoggedIn = useAuthentication();
@@ -22,6 +23,7 @@ export const Login = () => {
       </Helmet>
       <FormHeading>로그인</FormHeading>
       <LoginContainer />
+      <Finds />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { UserForm } from '../UserForm/styles';
+import { FormWrapper, UserForm } from '../UserForm/styles';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginReqData } from '../../../../types';
@@ -22,23 +22,25 @@ export const LoginForm = ({ login }: LoginFormProps) => {
   };
   return (
     <FormProvider {...methods}>
-      <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
-        <UserInput id="email" label="Email" type="email" name="email" />
-        <UserInput
-          id="password"
-          label="password"
-          type="password"
-          name="password"
-        />
-        <UserInput
-          id="isAutoLogin"
-          label="auto login"
-          name="isAutoLogin"
-          type="checkbox"
-          inputStyle={{ width: 'max-content' }}
-        />
-        <Button type="submit">로그인</Button>
-      </UserForm>
+      <FormWrapper>
+        <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
+          <UserInput id="email" label="Email" type="email" name="email" />
+          <UserInput
+            id="password"
+            label="password"
+            type="password"
+            name="password"
+          />
+          <UserInput
+            id="isAutoLogin"
+            label="auto login"
+            name="isAutoLogin"
+            type="checkbox"
+            inputStyle={{ width: 'max-content' }}
+          />
+          <Button type="submit">로그인</Button>
+        </UserForm>
+      </FormWrapper>
     </FormProvider>
   );
 };

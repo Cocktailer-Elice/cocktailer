@@ -18,7 +18,7 @@ export const Carousel = ({ title, cockcipes, type }: SectionProps) => {
     <SectionContainer>
       <SectionWrapper>
         <CarouselTitle>{title}</CarouselTitle>
-        {!cockcipes && <div>비어있음</div>}
+        {!cockcipes && <Empty>비어있음</Empty>}
         <Button
           onClick={() =>
             navigate(`/mypage/${type === 'likes' ? type : 'cockcipes'}`)
@@ -61,4 +61,13 @@ export const Carousel = ({ title, cockcipes, type }: SectionProps) => {
 
 const CarouselTitle = styled.h4`
   padding: 0.2rem;
+`;
+
+const Empty = styled.div`
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
 `;

@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import styled from 'styled-components';
 import {
   TEL_VERIFICATION_END,
   TEL_VERIFICATION_START,
@@ -89,7 +90,7 @@ export const TelVerifier = ({ setTelVerificationEnd }: TelVerifierProps) => {
   return (
     <div>
       {telVerificationStart ? (
-        <>
+        <Wrapper>
           <span>{timeFormat(time)}</span>
           <BottomLineInput
             type="text"
@@ -97,12 +98,27 @@ export const TelVerifier = ({ setTelVerificationEnd }: TelVerifierProps) => {
             onChange={onChangeHandler}
             placeholder="인증번호를 입력해주세요"
           />
-          <Button onClick={endTelVerification}>인증하기</Button>
-        </>
+          <VerifyButton onClick={endTelVerification}>인증하기</VerifyButton>
+        </Wrapper>
       ) : (
-        <Button onClick={startTelVerification}>전화번호 인증하기</Button>
+        <Wrapper>
+          <VerifyButton onClick={startTelVerification}>
+            전화번호 인증하기
+          </VerifyButton>
+        </Wrapper>
       )}
       {success && <span>인증 성공</span>}
     </div>
   );
 };
+
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const VerifyButton = styled(Button)`
+  font-size: 0.7rem;
+`;

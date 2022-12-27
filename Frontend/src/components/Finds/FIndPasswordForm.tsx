@@ -1,4 +1,4 @@
-import { UserForm } from '../UserForm/styles';
+import { FormWrapper, UserForm } from '../UserForm/styles';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UserInput } from '../UserForm/UserInput';
@@ -30,18 +30,20 @@ export const FindPasswordForm = () => {
   };
   return (
     <FormProvider {...methods}>
-      <UserForm onSubmit={methods.handleSubmit(onSubmit)}>
-        <UserInput id="name" label="name" name="name" />
-        <UserInput id="email" label="email" name="email" type="email" />
-        <UserInput
-          id="tel"
-          label="Phone"
-          name="tel"
-          placeholder=" - 를 제외하고 입력해 주세요"
-        />
-        <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
-        <Button type="submit">비밀번호 찾기</Button>
-      </UserForm>
+      <FormWrapper>
+        <UserForm onSubmit={methods.handleSubmit(onSubmit)}>
+          <UserInput id="name" label="name" name="name" />
+          <UserInput id="email" label="email" name="email" type="email" />
+          <UserInput
+            id="tel"
+            label="Phone"
+            name="tel"
+            placeholder=" - 를 제외하고 입력해 주세요"
+          />
+          <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
+          <Button type="submit">비밀번호 찾기</Button>
+        </UserForm>
+      </FormWrapper>
     </FormProvider>
   );
 };

@@ -7,7 +7,8 @@ export const Heading = styled.h3`
 `;
 
 export const HeadingGrid = styled.div`
-  border: 1px solid #ddd;
+  border: none;
+  margin-bottom: 1rem;
 `;
 
 export const HeadingLeft = styled(HeadingGrid)`
@@ -54,13 +55,13 @@ export const AvatarText = styled.span`
 
 export const SectionContainer = styled.div`
   width: 100%;
-  height: 25vh;
+  min-height: 15vh;
+  max-height: 25vh;
   margin-bottom: 0.25rem;
   padding: 0.5rem;
 `;
 
 export const SectionWrapper = styled.section`
-  border: 1px solid #ddd;
   width: 100%;
   height: 100%;
   padding: 0.3rem;
