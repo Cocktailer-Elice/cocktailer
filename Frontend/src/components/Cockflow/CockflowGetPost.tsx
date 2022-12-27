@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 
 export const CockflowGetPost = () => {
 
