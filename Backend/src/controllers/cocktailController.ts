@@ -54,6 +54,8 @@ class CocktailController {
 
     const cocktail = await this.cocktailService.findCocktailId(cocktailId);
 
+    console.log(cocktail);
+
     res.status(200).json({ cocktail: cocktail.cocktailInfo });
   };
 

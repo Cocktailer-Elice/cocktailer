@@ -98,6 +98,7 @@ export class CocktailModel implements CocktailInterface {
   public findCocktailId = async (
     id: number,
   ): Promise<CocktailModelType | null> => {
+    console.log('fci사용중');
     const result = (await CocktailSchema.findOne({
       id: id,
     })) as CocktailModelType;
