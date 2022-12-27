@@ -18,7 +18,10 @@ export const CocktailListItem = ({ id, name, official, img }: Props) => {
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
-      <img src={img} alt="칵테일 이미지" />
+      <ImgBox>
+        <img src={img} alt="칵테일 이미지" />
+      </ImgBox>
+
       <>
         <p>
           {name}
@@ -37,4 +40,8 @@ const ThumbnailBox = styled.div`
   width: auto;
   height: auto;
   margin: 10px;
+`;
+const ImgBox = styled.div`
+  width: 150px;
+  height: 150px;
 `;

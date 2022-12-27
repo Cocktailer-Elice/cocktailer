@@ -1,10 +1,10 @@
 import { Box, Grid } from '@mui/material';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailListItem';
 import { SearchCocktailInput } from '../../../components/Cockcipe/List/SearchCocktailInput';
-
+import { useInView } from 'react-intersection-observer';
 interface Data {
   name: string;
   img: string;
@@ -13,19 +13,41 @@ interface Data {
   official: boolean;
 }
 
-// TODO : 카테고리별 아이템 출력하기
+// TODO : 무한스크롤
 export const CategoryContainer = () => {
-  const [official, setOfficial] = useState<boolean>(true);
-  const [nonOfficial, setNonOfficial] = useState<boolean>(true);
-  const [searchText, setSearchText] = useState<string>('');
   const url = window.location.pathname;
   const categoryId = url.split('/')[3];
 
-  const [categoryList, setCategoryList] = useState<Data[]>();
+  const [official, setOfficial] = useState<boolean>(true);
+  const [nonOfficial, setNonOfficial] = useState<boolean>(true);
+  const [searchText, setSearchText] = useState<string>('');
+  const page = useRef<number>(10);
+  const [categoryList, setCategoryList] = useState<Data[]>([]);
+  const [ref, inView] = useInView();
+
+  const getList = () => {
+    console.log(page);
+    axios
+      .get(
+        `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=&official=&endpoint=${page.current}`,
+      )
+      .then((res) => {
+        console.log(res.data);
+        setCategoryList(() => categoryList.concat(res.data.categoryLists));
+        page.current += 10;
+      });
+  };
+
+  useEffect(() => {
+    if (inView && categoryList.length !== 0) {
+      getList();
+    }
+  }, [inView, getList]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchText(event.target.value);
   };
+
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
     console.log(official, nonOfficial, searchText);
     console.log(event.key);
@@ -66,7 +88,6 @@ export const CategoryContainer = () => {
       axios
         .get(`http://localhost:8000/api/cocktails/?category=${categoryId}`)
         .then((res) => {
-          console.log(res.data.categoryLists);
           setCategoryList(res.data.categoryLists);
         });
     } else if (official && !nonOfficial) {
@@ -75,7 +96,6 @@ export const CategoryContainer = () => {
           `http://localhost:8000/api/cocktails/?category=${categoryId}&official=true`,
         )
         .then((res) => {
-          console.log(res.data.categoryLists);
           setCategoryList(res.data.categoryLists);
         });
     } else if (!official && nonOfficial) {
@@ -84,13 +104,13 @@ export const CategoryContainer = () => {
           `http://localhost:8000/api/cocktails/?category=${categoryId}&official=false`,
         )
         .then((res) => {
-          console.log(res.data.categoryLists);
           setCategoryList(res.data.categoryLists);
         });
     } else {
       setCategoryList([]);
     }
   }, [official, nonOfficial]);
+
   return (
     <>
       <CategoryHeader>{categoryId}</CategoryHeader>
@@ -121,6 +141,7 @@ export const CategoryContainer = () => {
             </Grid>
           ))}
         </Grid>
+        <div ref={ref}></div>
       </Box>
     </>
   );
