@@ -38,10 +38,11 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
       .then(function (response) {
         console.log(response);
         alert('채택하였습니다.');
+        window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
       .catch(function (error) {
         console.log(error);
-        alert('이미 채택한 답이 있습니다.');
+        alert('본인 댓글은 채택이 불가능합니다.');
       });
   };
 
