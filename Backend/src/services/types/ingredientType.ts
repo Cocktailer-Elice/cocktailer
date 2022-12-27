@@ -1,4 +1,4 @@
-export interface Ingredient {
-  id: string;
-  dummy01: string;
+export interface IngredientObject {
+  alcohol: [];
+  ingredient: [];
 }

@@ -2,20 +2,18 @@ import {
   CocktailModelType,
   CocktailRankings,
   UserRanking,
-  LikesUserResult,
+  UpdateResult,
+  LikesUser,
 } from '../types';
 import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
 ////추가됨///
-import { IUser } from '../types';
 import User from '../schemas/userSchema';
 ////////////
 import {
   lists,
-  findCocktailId,
   findCategoryAndSearch,
   cocktailRankings,
-  getCocktailLikesUser,
 } from '../queries/cocktailsQuery';
 
 import { AppError } from '../../errorHandler';
@@ -40,9 +38,9 @@ interface CocktailInterface {
   updateCocktail(
     cocktailId: number,
     cocktailCreateDto: CocktailCreateReqData,
-  ): Promise<any>;
+  ): Promise<UpdateResult>;
 
-  cocktailLikes(userId: number, cocktailId: number): Promise<LikesUserResult>;
+  cocktailLikes(userId: number, cocktailId: number): Promise<UpdateResult>;
 }
 
 const limitEachPage = 10;
@@ -100,14 +98,6 @@ export class CocktailModel implements CocktailInterface {
   public findCocktailId = async (
     id: number,
   ): Promise<CocktailModelType | null> => {
-    const queries = findCocktailId(id);
-
-    const test: CocktailModelType[] = await CocktailSchema.aggregate([
-      Object(queries),
-    ]);
-
-    console.log(test);
-
     const result = (await CocktailSchema.findOne({
       id: id,
     })) as CocktailModelType;
@@ -119,8 +109,6 @@ export class CocktailModel implements CocktailInterface {
     reqData: object,
     endpoint: number,
   ): Promise<CocktailModelType[]> => {
-    console.log(reqData);
-    console.log(endpoint);
     const queries = findCategoryAndSearch(reqData);
 
     const result: CocktailModelType[] = await CocktailSchema.aggregate([
@@ -137,22 +125,21 @@ export class CocktailModel implements CocktailInterface {
   public updateCocktail = async (
     cocktailId: number,
     cocktailCreateDto: CocktailCreateReqData,
-  ): Promise<any> => {
-    console.log(cocktailId);
-    console.log(cocktailCreateDto);
+  ): Promise<UpdateResult> => {
     const id = { id: cocktailId };
-    const result = await CocktailSchema.updateOne(id, cocktailCreateDto);
+
+    const result: UpdateResult = await CocktailSchema.updateOne(
+      id,
+      cocktailCreateDto,
+    );
+
+    console.log(result);
+
     return result;
-    //   {
-    //     id: 1,
-    //   },
-    //   {},
-    // );
   };
 
   public deleteCocktail = async (cocktailId: number) => {
     const result = await CocktailSchema.deleteOne({ id: cocktailId });
-    console.log('res', result.deletedCount);
 
     return result.deletedCount;
   };
@@ -160,16 +147,11 @@ export class CocktailModel implements CocktailInterface {
   public cocktailLikes = async (
     userId: number,
     cocktailId: number,
-  ): Promise<LikesUserResult> => {
-    interface LikesUser {
-      likesUser: {
-        [userId: number]: boolean;
-      };
-    }
-
-    const obj: LikesUser | null = await CocktailSchema.findOne({
-      id: cocktailId,
-    });
+  ): Promise<UpdateResult> => {
+    const obj: LikesUser | null = await CocktailSchema.findOne(
+      { id: cocktailId },
+      { likes: 1, likesUser: 1, _id: 0 },
+    );
 
     const likesUser = obj?.likesUser;
 
@@ -183,9 +165,12 @@ export class CocktailModel implements CocktailInterface {
 
     likesUser[userId] = likesUser[userId] === true ? false : true;
 
-    const updateResult: LikesUserResult = await CocktailSchema.updateOne(
+    const updateResult: UpdateResult = await CocktailSchema.updateOne(
       { id: cocktailId },
-      { likesUser: likesUser },
+      {
+        likes: likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1,
+        likesUser: likesUser,
+      },
     );
 
     return updateResult;

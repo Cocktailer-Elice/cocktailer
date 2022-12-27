@@ -60,7 +60,6 @@ export const getCocktailLikesUser = (userId: number, cocktailId: number) => {
 };
 
 export const findCategoryAndSearch = (reqData: object) => {
-  console.log('카테고리 검색 사용중');
   /*   카테고리 / 검색   */
 
   const makeMatchForm = () => {
@@ -72,7 +71,6 @@ export const findCategoryAndSearch = (reqData: object) => {
     if ('official' in reqData)
       obj.official = reqData.official === 'true' ? true : false;
 
-    console.log(obj);
     return obj;
   };
 
@@ -91,18 +89,6 @@ export const findCategoryAndSearch = (reqData: object) => {
         content: 0,
         createdAt: 0,
         deletedAt: 0,
-        updatedAt: 0,
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        flavor: 0,
-        degree: 0,
-        ratio: 0,
-        likes: 0,
-        content: 0,
-        createdAt: 0,
         updatedAt: 0,
       },
     },

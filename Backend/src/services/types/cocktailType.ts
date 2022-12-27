@@ -48,7 +48,7 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
-export interface LikesUserResult {
+export interface UpdateResult {
   acknowledged: boolean;
   modifiedCount: number;
   upsertedCount: number;

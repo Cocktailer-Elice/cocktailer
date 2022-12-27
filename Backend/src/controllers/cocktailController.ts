@@ -1,13 +1,6 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import {
-  CocktailCreateReqData,
-  CocktailRanking,
-  Rankings,
-  UserRanking,
-} from 'types';
-//추가됨//
-import { IUser } from '../db/types';
-/////////
+import { CocktailCreateReqData, Rankings } from 'types';
+
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {
@@ -47,7 +40,7 @@ class CocktailController {
   public findByUserId = async (req: Req, res: Res) => {
     console.log('findByUserId');
 
-    const userId = Number(req.params.userId);
+    const userId = req.user;
 
     const lists = await this.cocktailService.findByUserId(userId);
 
@@ -118,7 +111,7 @@ class CocktailController {
 
     const userId = Number(req.user.userId);
 
-    const result: string = await this.cocktailService.cocktailLikes(
+    const result: boolean = await this.cocktailService.cocktailLikes(
       userId,
       cocktailId,
     );
