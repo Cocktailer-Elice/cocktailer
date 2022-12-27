@@ -37,7 +37,7 @@ const NavLink = styled(Link)`
 
 const Title = styled.div`
   position: absolute;
-  width: 5rem;
+  width: 65%;
   font-size: 12px;
   top: 50%;
   left: 50%;
@@ -48,7 +48,8 @@ const Title = styled.div`
   line-height: 1.5;
   text-overflow: ellipsis;
   overflow: hidden;
-  word-break: break-word;
+  // word-break: break-word;
+  word-break: keep-all;
 `;
 
 const ImgWrap = styled.div`

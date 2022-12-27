@@ -24,7 +24,7 @@ const imgArr = [
 export const CockflowPage = () => {
   const [listData, setListData] = useState([{
     id: '0',
-    content: '',
+    title: '',
   }]);
 
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,7 @@ export const CockflowPage = () => {
         <List>
           {listData.map(item =>
             <Item key={item.id}>
-              <CockflowItemBox key={item.id} id={item.id} title={slice20(item.content)}
+              <CockflowItemBox key={item.id} id={item.id} title={slice20(item.title)}
                 content={imgArr[Math.round(Math.random() * (imgArr.length - 1))]} />
             </Item>
           )}

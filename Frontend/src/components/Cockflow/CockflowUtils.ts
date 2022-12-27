@@ -1,8 +1,8 @@
 export const slice20 = (item: string) => {
     return (
-        item.length <= 10
+        item.length <= 15
             ? item
-            : String(item).slice(0, 10).concat('...')
+            : String(item).slice(0, 15).concat('...')
     );
 };
 
