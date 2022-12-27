@@ -4,6 +4,11 @@ import { Rankings } from 'types';
 import { cocktailModel } from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
+interface ReqData {
+  category: string;
+  official: string;
+  keyword: string;
+}
 
 class CocktailService {
   private readonly cocktailModel = cocktailModel;
@@ -70,7 +75,7 @@ class CocktailService {
   }
 
   public async findCocktailCategoryAndSearch(
-    reqData: object,
+    reqData: ReqData,
     endpoint: number,
   ) {
     const data = await this.cocktailModel.findCocktailCategoryAndSearch(
@@ -79,11 +84,7 @@ class CocktailService {
     );
 
     if (data.length === 0) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '이런! 검색하신 칵테일은 누군가 다 마셨나봐요!! 검색하신 정보가 없어요!',
-      );
+      throw new AppError(errorNames.noDataError, 400, 'noDataError');
     }
 
     return data;
