@@ -12,7 +12,6 @@ const postAdopted = () => {
 
 export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   const { register, handleSubmit, reset } = useForm();
-
   const gets = async (data: any) => {
     await axios.post(`http://localhost:8000/api/cockflow/${cockflowId}/comments/${commentId}`, data)
       .then(function (response) {
@@ -32,7 +31,6 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
 
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
-
   useEffect(() => {
     if (item.subComments.length > 0) {
       const contArr = item.subComments.map((items: any) => items.content)
@@ -40,7 +38,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
       console.log(contArr)
     };
   }, [item]);
-
+  
   return (
     <P15B1 key={item._id}>
       <Comment2

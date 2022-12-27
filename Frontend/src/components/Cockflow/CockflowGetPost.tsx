@@ -2,11 +2,12 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
+import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 export const CockflowGetPost = () => {
 
-  const getsCockflowList = async (data: any) => {
+  const postCockflowList = async (data: any) => {
     await axios.post('http://localhost:8000/api/cockflow', data)
       .then(function (response) {
         console.log(response);
@@ -20,7 +21,7 @@ export const CockflowGetPost = () => {
   const onSubmit = (data: any) => {
     if (data.title && data.content) {
       alert('등록되었습니다');
-      getsCockflowList(data);
+      postCockflowList(data);
       window.location.replace(`/cockflow`);
     } else {
       data.title
@@ -44,7 +45,7 @@ export const CockflowGetPost = () => {
           maxLength={250}
           placeholder='질문 내용을 입력해주세요' />
       </CockflowPostBox>
-      <CockflowEnrollBtns linkto="/cockflow" />
+      <CockflowEnrollBtns linkto="/cockflow" typeBtn="submit" />
     </form>
   );
 };

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { CockflowBadge } from '../../components/Cockflow/CockflowBadge';
 import { Middle, FlexMiddle } from '../../components/Cockflow/style';
 import { trimDate } from './CockflowUtils';
@@ -19,19 +19,62 @@ interface dataType {
 };
 
 export const CockflowDetailBox = ({ detailData }: dataType) => {
-  // 수정 기능 붙으면 - 전역으로 관리 
-  console.log(detailData)
-  console.log(detailData._id)
   const [inputUnActived, setinputUnActived] = useState(true);
+  const { title, isBartender, nickname, createdAt, content } = { ...detailData };
 
-  const { title, isBartender, nickname, createdAt, content } = detailData;
+  const [newTitle, setNewTitle] = useState(title);
+  const [newContent, setNewContent] = useState(content);
+
+
+  const [updateData, setUpdateData] = useState({
+    'title': '',
+    'content': ''
+  })
+
+  useEffect(() => {
+    setNewTitle(title);
+    setNewContent(content);
+  }, [title, content]);
+
+  const editFn = () => {
+    setinputUnActived(() => !inputUnActived);
+  };
+
+  const updateAxios = async () => {
+    const copiedData = {
+      title: newTitle,
+      content: newContent
+    }
+
+    console.log(copiedData)
+    await axios.put(`/api/cockflow/${detailData._id}`, copiedData)
+      .then(() => {
+        alert('수정되었습니다.');
+        window.location.replace(`/cockflow/detail/${detailData._id}`);
+      }).catch(() => alert('권한이 없습니다.'))
+  };
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(e.currentTarget.value);
+  };
+
+  const handleTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setNewContent(e.currentTarget.value);
+  }
+
+
 
   return (
     <ContWrap>
       <form>
         <TitleWrap>
           <div>
-            <ChangedInput type="text" value={title} readOnly={inputUnActived} />
+            <ChangedInput
+              type="text"
+              value={newTitle}
+              onChange={handleInput}
+              readOnly={inputUnActived}
+            />
           </div>
           <FlexMiddle>
             <Middle>
@@ -47,9 +90,29 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
             {/* <span>(+)조회수</span> */}
           </div>
         </TitleWrap>
-        <TextBox defaultValue="" value={content} readOnly={inputUnActived} />
-        {!inputUnActived && <CockflowEnrollBtns type="enroll" linkto={`/cockflow`} />}
-        {inputUnActived && <CockflowEnrollBtns type="edit" linkto={`/cockflow`} pageId={detailData._id} />}
+        <TextBox
+          defaultValue=""
+          value={newContent}
+          onChange={handleTextArea}
+          readOnly={inputUnActived}
+        />
+        {!inputUnActived &&
+          <CockflowEnrollBtns
+            typeBtn="button"
+            pageId={detailData._id}
+            linkto={`/cockflow`}
+            editFn={editFn}
+            updateAxios={updateAxios}
+          />}
+        {
+          inputUnActived
+          && <CockflowEnrollBtns
+            typeBtn="edit"
+            linkto={`/cockflow`}
+            pageId={detailData._id}
+            editFn={editFn}
+          />
+        }
       </form>
     </ContWrap>
   );

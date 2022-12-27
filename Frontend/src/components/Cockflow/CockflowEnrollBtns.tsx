@@ -6,12 +6,18 @@ import { Center } from './style';
 
 interface btnType {
     linkto: string | boolean,
-    type?: string,
-    deleteFn?(): void,
+    typeBtn?: string,
+    editFn?(): void,
     pageId?: number
+    updateAxios?(): void
 }
 
-export const CockflowEnrollBtns = ({ linkto = "/cockflow", type = "enroll", pageId }: btnType) => {
+interface putType {
+    "title": string,
+    "content": string
+}
+
+export const CockflowEnrollBtns = ({ linkto = "/cockflow", typeBtn = "button", pageId, editFn, updateAxios }: btnType) => {
     const deleteFn = async () => {
         await axios.delete(`/api/cockflow/${pageId}`)
             .then(() => {
@@ -20,25 +26,56 @@ export const CockflowEnrollBtns = ({ linkto = "/cockflow", type = "enroll", page
             }).catch(() => alert('권한이 없습니다.'))
     };
 
+    const refresh = (): void => {
+        window.location.replace(`/cockflow/detail/${pageId}`);
+    }
+
     return (
         <Center>
             {
-                type === "enroll"
-                    // window.location.pathname === '/cockflow/new'
-                    ?
+                (typeBtn === "submit")
+                && (
                     <>
-                        <Button type='submit' variant="contained">등록하기</Button>
+                        <Button
+                            type={`${typeBtn}`}
+                            variant="contained"
+                        // onClick={updateAxios}
+                        >
+                            등록하기
+                        </Button>
                         &nbsp;&nbsp;
                         <Link to={`${linkto}`}>
                             <Button variant="outlined">취소하기</Button>
                         </Link>
                     </>
-                    :
+                )
+            }
+
+            {
+                typeBtn === "button"
+                && (
                     <>
-                        <Button type='button' variant="contained">수정하기</Button>
+                        <Button
+                            type={`${typeBtn}`}
+                            variant="contained"
+                            onClick={updateAxios}
+                        >
+                            수정완료
+                        </Button>
+                        &nbsp;&nbsp;
+                        <Button type='button' variant="outlined" onClick={refresh}>취소하기</Button>
+                    </>
+                )
+            }
+            {
+                (typeBtn === "edit")
+                && (
+                    <>
+                        <Button type='button' variant="contained" onClick={editFn}>수정하기</Button>
                         &nbsp;&nbsp;
                         <Button type='button' variant="outlined" onClick={deleteFn}>삭제하기</Button>
                     </>
+                )
             }
         </Center>
     );
