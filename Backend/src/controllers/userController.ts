@@ -1,5 +1,4 @@
 import { Request as Req, Response as Res } from 'express';
-import { sendPasswordResetMail } from '../events/utils/mailUtil';
 import { redisCache } from '../redis';
 import userService from '../services/userService';
 import { checkReqBody, createCookie, updateToken } from './utils';

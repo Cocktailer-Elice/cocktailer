@@ -43,7 +43,7 @@ class UserService {
     const hashedPassword = await hash(temporaryPassword, 12);
     await this.dependencies.userModel.update(
       { email },
-      { password: hashedPassword },
+      { password: hashedPassword, isPasswordTemporary: true },
     );
     await sendPasswordResetMail(email, temporaryPassword);
     return;
@@ -102,7 +102,7 @@ class UserService {
 
   public updateUserState = async (userId: number) => {
     const filter = { id: userId };
-    const update = { isBartender: 'waiting' };
+    const update = { isApplyingBartender: true };
     await this.dependencies.userModel.update(filter, update);
     return;
   };
@@ -110,7 +110,6 @@ class UserService {
   public softDeleteUser = async (userId: number) => {
     const filter = { id: userId };
     const update = {
-      nickname: null,
       deletedAt: Date.now(),
     };
     await this.dependencies.userModel.softDelete(filter, update);

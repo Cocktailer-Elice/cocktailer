@@ -11,7 +11,7 @@ class AdminService {
   constructor(public dependencies: AdminDependencies) {}
 
   public getUsersApplyingBartender = async () => {
-    const filter = { isBartender: 'waiting' };
+    const filter = { isApplyingBartender: true };
     const projection =
       '-_id -password -nickname -avatarUrl -isAdmin -updatedAt';
     const users = await this.dependencies.userModel.findByApplying(
@@ -24,7 +24,7 @@ class AdminService {
   public verifyBartender = async (userId: number) => {
     const filter = { id: userId };
     const user = await this.dependencies.userModel.findByFilter(filter);
-    if (!user || user.deletedAt) {
+    if (!user || !user.isApplyingBartender || user.deletedAt) {
       throw new AppError(errorNames.inputError, 400, '해당하는 유저 없음');
     }
     if (user.isBartender === true) {

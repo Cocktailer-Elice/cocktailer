@@ -30,6 +30,7 @@ export interface FindOneFilter {
   email?: string;
   tel?: string;
   nickname?: string;
+  isApplyingBartender?: boolean;
   isBartender?: string;
 }
 
@@ -39,6 +40,8 @@ export interface UpdateOneFilter {
   deletedAt?: number;
   isBartender?: boolean | string;
   isAdmin?: boolean;
+  isPasswordTemporary?: boolean;
+  isApplyingBartender?: boolean;
 }
 
 export interface IUser extends Document {
@@ -54,6 +57,8 @@ export interface IUser extends Document {
   isBartender: boolean;
   deletedAt: null | number;
   points: number;
+  isPasswordTemporary: boolean;
+  isApplyingBartender: boolean;
   readonly userGetResData: User;
   readonly tokenData: Cookie;
 }
