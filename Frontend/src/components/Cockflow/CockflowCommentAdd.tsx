@@ -4,14 +4,18 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { CockflowMoreComment } from './CockflowMoreComment';
-import { P15B1, Right } from './style';
+import { Adopted, FlexLeft, FlexRight, IconWrap } from './style';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
-const postAdopted = () => {
-
-};
+interface CommentType {
+  item: String[],
+}
 
 export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   const { register, handleSubmit, reset } = useForm();
+  console.log('item');
+  console.log(item);
   const gets = async (data: any) => {
     await axios.post(`/api/cockflow/${cockflowId}/comments/${commentId}`, data)
       .then(function (response) {
@@ -29,8 +33,36 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
     window.location.replace(`/cockflow/detail/${cockflowId}`);
   };
 
+  const commAdopted = () => {
+    axios.patch(`/api/cockflow/${cockflowId}/comments/${commentId}`)
+      .then(function (response) {
+        console.log(response);
+        alert('채택하였습니다.');
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert('이미 채택한 답이 있습니다.');
+      });
+  };
+
+  const commDelete = async () => {
+    await axios.delete(`api/cockflow/${cockflowId}/comments/${commentId}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((response) => {
+        console.log(response);
+      })
+  }
+
+  const commEdit = () => {
+
+  }
+
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
+  const [isAdopt, setIsAdopt] = useState(false);
+
   useEffect(() => {
     if (item.subComments.length > 0) {
       const contArr = item.subComments.map((items: any) => items.content)
@@ -47,7 +79,19 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
         maxLength={250}
         readOnly={true}
       />
-      <Right>
+      <FlexLeft>
+        {
+          item.isAdopted && <Adopted>✨ 채택된 답변  </Adopted>
+        }
+        {item.owner.nickname}
+      </FlexLeft>
+      <FlexRight>
+        <IconWrap type='button' onClick={commDelete}>
+          <DeleteIc />
+        </IconWrap>
+        <IconWrap type='button' onClick={commEdit}>
+          <EditIc />
+        </IconWrap>
         <Button variant="outlined" onClick={() => {
           if (subComment) {
             setSubComment(false)
@@ -56,8 +100,8 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
           setSubComment(true)
           return;
         }}>댓글달기</Button>&nbsp;&nbsp;
-        <Button variant="contained" onClick={postAdopted}>채택하기</Button>
-      </Right>
+        <Button variant="contained" onClick={commAdopted}>채택하기</Button>
+      </FlexRight>
       {
         subComment
           ?
@@ -93,6 +137,10 @@ const Comment2 = styled.textarea`
   border: 1px solid #ddd;
   border-radius: 9px;
   resize: none;
+
+  &:read-only {
+    border: 1px solid #eee;
+  }
 `;
 
 const SubComments = styled.form`
@@ -153,3 +201,11 @@ const Button2 = styled(Button)`
     color: #fff;
   }
 `;
+
+const DeleteIc = styled(DeleteIcon)`
+  font-size: 18px;
+`
+
+const EditIc = styled(EditIcon)`
+  font-size: 18px;
+`
