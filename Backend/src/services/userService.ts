@@ -107,9 +107,10 @@ class UserService {
     return;
   };
 
-  public deleteUser = async (userId: number) => {
+  public softDeleteUser = async (userId: number) => {
     const filter = { id: userId };
-    await this.dependencies.userModel.delete(filter);
+    const update = { nickname: '탈퇴한 유저', deletedAt: Date.now() };
+    await this.dependencies.userModel.softDelete(filter, update);
     return;
   };
 }

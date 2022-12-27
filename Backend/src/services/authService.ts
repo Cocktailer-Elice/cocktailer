@@ -17,14 +17,6 @@ class AuthService {
 
   public signup = async (userCreateData: UserCreateData) => {
     const { email, password, alcohol, tel } = userCreateData;
-    // const isTelVerifed = await redisCache.GET(`${tel}_validated`);
-    // if (isTelVerifed !== '1') {
-    //   throw new AppError(
-    //     errorNames.authenticationError,
-    //     401,
-    //     '인증 후 1시간 초과',
-    //   );
-    // }
 
     await this.checkEmailDuplicate(email);
     await this.checkTelDuplicate(tel);
@@ -47,14 +39,8 @@ class AuthService {
 
   public login = async (userData: LoginReqData) => {
     const { email, password } = userData;
-    const filter = { email };
+    const filter = { email, deletedAt: null };
     const user = await this.dependencies.userModel.findByFilter(filter);
-    if (!user) {
-      throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
-    }
-    if (user.deletedAt) {
-      throw new AppError(errorNames.authenticationError, 401, '탈퇴한 유저');
-    }
     if (!user || !(await compare(password, user.password))) {
       throw new AppError(errorNames.inputError, 400, `이메일/비밀번호 재확인`);
     }
@@ -87,7 +73,7 @@ class AuthService {
   };
 
   public checkEmailDuplicate = async (email: string) => {
-    const filter = { email };
+    const filter = { email, deletedAt: null };
     const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
@@ -105,7 +91,7 @@ class AuthService {
   };
 
   private checkNicknameDuplicate = async (nickname: string) => {
-    const filter = { nickname, deletedAt: null };
+    const filter = { nickname };
     const result = await this.dependencies.userModel.checkDuplicate(filter);
     if (result) {
       throw new AppError(errorNames.DuplicationError, 400, '이메일 중복');
