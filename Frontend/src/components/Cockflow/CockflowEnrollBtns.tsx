@@ -19,11 +19,14 @@ interface putType {
 
 export const CockflowEnrollBtns = ({ linkto = "/cockflow", typeBtn = "button", pageId, editFn, updateAxios }: btnType) => {
     const deleteFn = async () => {
-        await axios.delete(`/api/cockflow/${pageId}`)
-            .then(() => {
-                alert('삭제되었습니다.');
-                window.location.replace(`/cockflow`);
-            }).catch(() => alert('권한이 없습니다.'))
+
+        if (confirm('삭제하시겠습니까?')) {
+            await axios.delete(`/api/cockflow/${pageId}`)
+                .then(() => {
+                    alert('삭제되었습니다.');
+                    window.location.replace(`/cockflow`);
+                }).catch(() => alert('권한이 없습니다.'))
+        }
     };
 
     const refresh = (): void => {
@@ -39,7 +42,6 @@ export const CockflowEnrollBtns = ({ linkto = "/cockflow", typeBtn = "button", p
                         <Button
                             type={`${typeBtn}`}
                             variant="contained"
-                        // onClick={updateAxios}
                         >
                             등록하기
                         </Button>

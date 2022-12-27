@@ -27,7 +27,6 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   };
 
   const onSubmit = (data: any) => {
-    // alert(JSON.stringify(data));
     gets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
@@ -47,14 +46,18 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   };
 
   const commDelete = async () => {
-    await axios.delete(`api/cockflow/${cockflowId}/comments/${commentId}`)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((response) => {
-        console.log(response);
-      })
-  }
+    if (confirm('댓글을 삭제하시겠습니까?')) {
+      await axios.delete(`http://localhost:5173/api/cockflow/${cockflowId}/comments/${commentId}`)
+        .then((response) => {
+          console.log(response);
+          alert('삭제 완료 되었습니다.');
+          window.location.replace(`/cockflow/detail/${cockflowId}`);
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+    };
+  };
 
   const commEdit = () => {
 
