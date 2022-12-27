@@ -23,7 +23,14 @@ export const findCocktailId = (id: number) => {
     {
       $match: { id: id },
     },
-    { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+    {
+      $project: {
+        _id: 0,
+        createdAt: 0,
+        deletedAt: 0,
+        updatedAt: 0,
+      },
+    },
   ];
 };
 

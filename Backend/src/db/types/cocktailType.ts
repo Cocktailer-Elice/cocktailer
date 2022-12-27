@@ -29,9 +29,31 @@ export interface CocktailModelType {
   ratio: Ratio;
   content: string;
   likes: number;
-  likesUser: object;
-
+  likesUser: {
+    [uid: string]: boolean;
+  };
   readonly cocktailInfo: CocktailGetResData;
+}
+
+export interface FindCocktailId {
+  cocktail: {
+    id: number;
+    owner: number;
+    category: string;
+    name: string;
+    official: boolean;
+    flavor: string;
+    degree: number;
+    img: string;
+    ratio: Ratio;
+    content: string;
+    likes: number;
+    likesUser: {
+      [uid: string]: boolean;
+    };
+    readonly cocktailInfo: CocktailGetResData;
+  };
+  liked: boolean;
 }
 
 export interface CocktailRankings {

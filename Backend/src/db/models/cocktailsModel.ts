@@ -1,5 +1,6 @@
 import {
   CocktailModelType,
+  FindCocktailId,
   CocktailRankings,
   UserRanking,
   UpdateResult,
@@ -14,6 +15,7 @@ import {
   lists,
   findCategoryAndSearch,
   cocktailRankings,
+  findCocktailId,
 } from '../queries/cocktailsQuery';
 
 import { AppError } from '../../errorHandler';
@@ -28,7 +30,7 @@ interface CocktailInterface {
 
   findByUserId(userId: number): Promise<CocktailModelType[]>;
 
-  findCocktailId(id: number): Promise<CocktailModelType | null>;
+  findCocktailId(id: number, userId: number): Promise<FindCocktailId | null>;
 
   findCocktailCategoryAndSearch(
     reqData: object,
@@ -96,14 +98,27 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public findCocktailId = async (
-    id: number,
-  ): Promise<CocktailModelType | null> => {
-    console.log('fci사용중');
-    const result = (await CocktailSchema.findOne({
-      id: id,
-    })) as CocktailModelType;
+    cocktailId: number,
+    userId: number,
+  ): Promise<FindCocktailId | null> => {
+    const queries = findCocktailId(cocktailId);
+    const findCocktail: CocktailModelType[] = await CocktailSchema.aggregate(
+      Object(queries),
+    );
 
-    return result;
+    const cocktail = {
+      ...findCocktail[0],
+      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${findCocktail[0].img}`,
+    };
+
+    console.log(findCocktail[0]);
+    const liked = findCocktail[0].likesUser?.[userId]
+      ? findCocktail[0].likesUser?.[userId] === true
+        ? true
+        : false
+      : false;
+
+    return { cocktail: cocktail, liked: liked };
   };
 
   public findCocktailCategoryAndSearch = async (

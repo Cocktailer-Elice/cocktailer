@@ -50,13 +50,15 @@ class CocktailController {
   public findCocktailId = async (req: Req, res: Res) => {
     console.log('findCocktailId');
 
+    // const userId = req.user;
+
     const cocktailId = Number(req.params.cocktailId);
 
-    const cocktail = await this.cocktailService.findCocktailId(cocktailId);
+    const cocktail = await this.cocktailService.findCocktailId(cocktailId, 108);
 
     console.log(cocktail);
 
-    res.status(200).json({ cocktail: cocktail.cocktailInfo });
+    res.status(200).json(cocktail);
   };
 
   public findCocktailCategoryAndSearch = async (req: Req, res: Res) => {

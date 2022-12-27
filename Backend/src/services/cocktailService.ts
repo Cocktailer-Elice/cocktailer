@@ -24,58 +24,6 @@ class CocktailService {
   public async createCocktail(
     cocktailCreateDto: CocktailServiceType,
   ): Promise<number> {
-    //////////////////////////////////////////////////////////////
-    ////////////////////////////실험중/////////////////////////////
-    //////////////////////////////////////////////////////////////
-
-    const name: string[] = [];
-    const brand: string[] = [];
-    const volume: number[] = [];
-
-    const alcohol: any = {
-      name: name,
-      brand: brand,
-      volume: volume,
-    };
-
-    const ingredient: any = {
-      brand: brand,
-      volume: volume,
-    };
-
-    const alcoholMap = Object.keys(cocktailCreateDto.ratio.alcohol);
-    const ingredientMap = Object.keys(cocktailCreateDto.ratio.ingredient);
-
-    alcoholMap.map((e1) => {
-      name.push(e1);
-      const obj1 = cocktailCreateDto.ratio.alcohol[e1];
-      obj1.map((e2, idx2) => {
-        brand.push(String(Object.keys(e2)));
-        volume.push(Number(Object.values(e2)));
-      });
-      alcohol.brand = brand;
-      alcohol.volume = volume;
-    });
-
-    console.log('aaa', alcohol);
-
-    ingredientMap.map((e1) => {
-      name.push(e1);
-      const obj1 = cocktailCreateDto.ratio.ingredient[e1];
-      obj1.map((e2, idx2) => {
-        brand.push(String(Object.keys(e2)));
-        volume.push(Number(Object.values(e2)));
-      });
-      ingredient.brand = brand;
-      ingredient.volume = volume;
-    });
-
-    console.log(ingredient);
-
-    //////////////////////////////////////////////////////////////
-    ////////////////////////////실험중/////////////////////////////
-    //////////////////////////////////////////////////////////////
-
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,
     });
@@ -107,8 +55,8 @@ class CocktailService {
     return data;
   }
 
-  public async findCocktailId(id: number) {
-    const data = await this.cocktailModel.findCocktailId(id);
+  public async findCocktailId(cocktailId: number, userId: number) {
+    const data = await this.cocktailModel.findCocktailId(cocktailId, userId);
 
     if (!data) {
       throw new AppError(
