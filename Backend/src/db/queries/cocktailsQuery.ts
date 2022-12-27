@@ -27,6 +27,38 @@ export const findCocktailId = (id: number) => {
   ];
 };
 
+export const getCocktailLikesUser = (userId: number, cocktailId: number) => {
+  return [
+    {
+      $match: {
+        id: cocktailId,
+        likesUser: {
+          [userId]: true || false,
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        id: 0,
+        owner: 0,
+        category: 0,
+        name: 0,
+        official: 0,
+        flavor: 0,
+        degree: 0,
+        img: 0,
+        ratio: 0,
+        content: 0,
+        likes: 0,
+        createdAt: 0,
+        deletedAt: 0,
+        updatedAt: 0,
+      },
+    },
+  ];
+};
+
 export const findCategoryAndSearch = (reqData: object) => {
   /*   카테고리 / 검색   */
 
@@ -46,7 +78,7 @@ export const findCategoryAndSearch = (reqData: object) => {
     {
       $match: makeMatchForm(),
     },
-    { $sort: { id: -1, createdAt: -1 } },
+    { $sort: { createdAt: -1 } },
     {
       $project: {
         _id: 0,
@@ -57,26 +89,6 @@ export const findCategoryAndSearch = (reqData: object) => {
         content: 0,
         createdAt: 0,
         deletedAt: 0,
-        updatedAt: 0,
-      },
-    },
-    {
-      $sort: {
-        likes: -1,
-      },
-    },
-    {
-      $limit: 10,
-    },
-    {
-      $project: {
-        _id: 0,
-        flavor: 0,
-        degree: 0,
-        ratio: 0,
-        likes: 0,
-        content: 0,
-        createdAt: 0,
         updatedAt: 0,
       },
     },
@@ -115,27 +127,14 @@ export const findCategoryAndSearch = (reqData: object) => {
   ];
 };
 
-export const main1 = () => {
+export const cocktailRankings = () => {
   return [
-    {
-      $match: {
-        likes: {
-          $gte: 50,
-          $lte: 100,
-        },
-      },
-    },
-    {
-      $limit: 9,
-    },
     {
       $sort: {
         likes: -1,
       },
     },
-    {
-      $limit: 10,
-    },
+    { $limit: 10 },
     {
       $project: {
         _id: 0,
@@ -143,7 +142,7 @@ export const main1 = () => {
         flavor: 0,
         degree: 0,
         ratio: 0,
-        likes: 0,
+
         content: 0,
         createdAt: 0,
         updatedAt: 0,
@@ -170,6 +169,7 @@ export const main1 = () => {
               updatedAt: 0,
               deletedAt: 0,
               tel: 0,
+              points: 0,
             },
           },
         ],

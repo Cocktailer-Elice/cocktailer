@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
 import { cockgorithmController } from '../controllers/cockgorithmController';
 import { asyncHandler, isLoggedIn } from './middlewares';
+import { cocktailRankings } from '../db/queries/cocktailsQuery';
 
 const cocktailsRouter: Router = Router();
 
@@ -15,9 +16,10 @@ cocktailsRouter.get(
 );
 
 ////////// Cocktail Ranking / User Ranking //////////
-cocktailsRouter.get('/home');
-
-cocktailsRouter.get('/main1', asyncHandler(cocktailController.main1));
+cocktailsRouter.get(
+  '/home',
+  asyncHandler(cocktailController.getHomeCocktailAndUserList),
+);
 
 cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
 
@@ -37,24 +39,29 @@ cocktailsRouter.post(
 );
 
 //////////////////////////////////////////////////////
-//cocktailsRouter.use(isLoggedIn); ///에러시 삭제하시오//
+cocktailsRouter.use(isLoggedIn); ///에러시 삭제하시오//
 /////////////////////////////////////////////////////
 
 cocktailsRouter.post('/', asyncHandler(cocktailController.createCocktail));
+
+cocktailsRouter.get(
+  '/my-cocktails/:userId',
+  asyncHandler(cocktailController.findByUserId),
+);
 
 cocktailsRouter.patch(
   '/updatecocktail/:cocktailId',
   asyncHandler(cocktailController.updateCocktail),
 );
 
-cocktailsRouter.get(
-  '/userId/:userId',
-  asyncHandler(cocktailController.findByUserId),
-);
-
 cocktailsRouter.delete(
   '/deletecocktail/:cocktailId',
   asyncHandler(cocktailController.deleteCocktail),
+);
+
+cocktailsRouter.get(
+  '/likes/:cocktailId',
+  asyncHandler(cocktailController.cocktailLikes),
 );
 
 export default cocktailsRouter;

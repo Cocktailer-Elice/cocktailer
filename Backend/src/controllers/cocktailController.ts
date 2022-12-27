@@ -1,9 +1,22 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData, CocktailRankings } from 'types';
+import { CocktailCreateReqData, Rankings } from 'types';
+
 import CocktailService from '../services/cocktailService';
 
 class CocktailController {
   private readonly cocktailService = new CocktailService();
+
+  public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
+    console.log('getHomeCocktailAndUserList');
+
+    const data: Rankings =
+      await this.cocktailService.getHomeCocktailAndUserList();
+
+    res.status(200).json({
+      cocktailRanking: data.cocktailRankings,
+      userRanking: data.userRankings,
+    });
+  };
 
   public createCocktail = async (req: Req, res: Res) => {
     console.log('createCocktail');
@@ -18,6 +31,7 @@ class CocktailController {
 
   public getLists = async (req: Req, res: Res) => {
     console.log('getLists');
+
     const lists = await this.cocktailService.getLists();
 
     res.status(200).json({ lists: lists });
@@ -25,7 +39,8 @@ class CocktailController {
 
   public findByUserId = async (req: Req, res: Res) => {
     console.log('findByUserId');
-    const userId = Number(req.params.userId);
+
+    const userId = req.user;
 
     const lists = await this.cocktailService.findByUserId(userId);
 
@@ -70,7 +85,9 @@ class CocktailController {
 
   public updateCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
+
     const updateCocktailInfo: CocktailCreateReqData = req.body;
+
     const result: any = await this.cocktailService.updateCocktail(
       cocktailId,
       updateCocktailInfo,
@@ -81,15 +98,25 @@ class CocktailController {
 
   public deleteCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
+
     const result: string = await this.cocktailService.deleteCocktail(
       cocktailId,
     );
+
     res.status(200).json({ message: result });
   };
 
-  public main1 = async (req: Req, res: Res) => {
-    const result: CocktailRankings[] = await this.cocktailService.main1();
-    res.status(200).json(result);
+  public cocktailLikes = async (req: Req, res: Res) => {
+    const cocktailId = Number(req.params.cocktailId);
+
+    const userId = Number(req.user.userId);
+
+    const result: boolean = await this.cocktailService.cocktailLikes(
+      userId,
+      cocktailId,
+    );
+
+    res.status(200).json({ success: result });
   };
 
   ////////////////////////////////
@@ -98,7 +125,9 @@ class CocktailController {
 
   public makeMockData = async (req: Req, res: Res) => {
     console.log('생성기 시작 _controller');
+
     const result: any = await this.cocktailService.makeMockData();
+
     res.status(200).json({ result: result });
   };
 }

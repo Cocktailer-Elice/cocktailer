@@ -1,3 +1,4 @@
+import { number, object } from 'joi';
 import { Schema, model, connection } from 'mongoose';
 import { CocktailModelType } from '../types';
 
@@ -71,6 +72,12 @@ const CocktailSchema: Schema = new Schema(
     likes: {
       type: Number,
       default: 0,
+    },
+
+    likesUser: {
+      type: Object,
+      required: true,
+      default: {},
     },
   },
 
