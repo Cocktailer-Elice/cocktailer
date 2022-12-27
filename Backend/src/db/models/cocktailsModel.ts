@@ -18,7 +18,7 @@ import {
   findCocktailIdQuery,
 } from '../queries/cocktailsQuery';
 
-import { AppError } from '../../errorHandler';
+import { AppError } from './../../appError';
 import { errorNames } from '../../errorNames';
 
 interface CocktailInterface {
