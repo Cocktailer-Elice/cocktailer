@@ -1,47 +1,66 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import { TextField } from '@mui/material';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
-export const InputCockFlavor = ({ setFlavor }) => {
+interface Props {
+  setFlavor: React.Dispatch<React.SetStateAction<string[]>>;
+  flavor: string[];
+}
+
+export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [tag, setTag] = useState<string | null>('');
+  const [tag, setTag] = useState<string>('');
+
   const [tagList, setTagList] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(inputRef.current);
     setTag(e.target.value);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const newTag = inputRef.current?.value;
     if (newTag?.length !== 0 && e.key === 'Enter') {
-      setTagList((item) => [...item, newTag]);
-      setFlavor((item) => [...item, newTag]);
+      setTagList((item: any) => [...item, newTag]);
+      setFlavor((item: any) => [...item, newTag]);
       setTag('');
     }
   };
 
+  // TODO : key 값 변경하고 삭제 아이템 아이디로 삭제하기
   const deleteTagItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const deleteTagItem = event.target.parentElement.firstChild.innerText;
+    const target = event.target as HTMLElement;
+    const textNode = target.parentElement as HTMLElement;
+    const firstNode = textNode.firstChild as HTMLElement;
+    const deleteTagItem = firstNode.innerText;
     const filteredTagList = tagList?.filter(
       (tagItem) => tagItem !== deleteTagItem,
     );
+    setFlavor(filteredTagList);
     setTagList(filteredTagList);
   };
 
   return (
-    <>
-      <p>Flavor</p>
+    <FlavorWrapper>
       <TagBox>
-        {tagList?.map((tagItem, index) => {
-          return (
-            <TagItem key={index}>
-              <Text>{tagItem}</Text>
-              <Button onClick={deleteTagItem}>X</Button>
-            </TagItem>
-          );
-        })}
+        {flavor
+          ? flavor.map((tagItem, index) => {
+              return (
+                <TagItem key={index}>
+                  <Text>{tagItem}</Text>
+                  <Button onClick={deleteTagItem}>X</Button>
+                </TagItem>
+              );
+            })
+          : tagList.map((tagItem, index) => {
+              return (
+                <TagItem key={index}>
+                  <Text>{tagItem}</Text>
+                  <Button onClick={deleteTagItem}>X</Button>
+                </TagItem>
+              );
+            })}
         <TagInput
           type="text"
-          placeholder="Press enter to add tags"
+          placeholder="칵테일 맛을 적어주세요"
           tabIndex={2}
           onChange={handleChange}
           ref={inputRef}
@@ -49,12 +68,19 @@ export const InputCockFlavor = ({ setFlavor }) => {
           onKeyPress={handleKeyPress}
         />
       </TagBox>
-    </>
+    </FlavorWrapper>
   );
 };
 
+const FlavorWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+`;
 const TagBox = styled.div`
   display: flex;
+  width: 440px;
   align-items: center;
   flex-wrap: wrap;
   min-height: 50px;
@@ -62,7 +88,6 @@ const TagBox = styled.div`
   padding: 0 10px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-
   &:focus-within {
     border-color: #868e96;
   }
@@ -74,8 +99,8 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   margin-left: 5px;
   background-color: white;
   border-radius: 50%;
@@ -90,7 +115,7 @@ const TagItem = styled.div`
   background-color: #4c6ef5;
   border-radius: 5px;
   color: white;
-  font-size: 13px;
+  font-size: 15px;
 `;
 const TagInput = styled.input`
   display: inline-flex;
@@ -98,4 +123,5 @@ const TagInput = styled.input`
   border: none;
   outline: none;
   cursor: text;
+  font-size: 15px;
 `;

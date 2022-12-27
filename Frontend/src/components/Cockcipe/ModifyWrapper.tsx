@@ -1,22 +1,21 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ApplyButton } from '../../../components/Cockcipe/Apply/ApplyButton';
-import { InputCockContent } from '../../../components/Cockcipe/Apply/InputCockContent';
-import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
-import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
-import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
-import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
-//import { postCockcipe } from '../../../modules/cockcipeActions';
-//import { useAppDispatch } from '../../../modules/store';
+import { GET_DETAIL_COCKTAIL, PATCH_COCKTAIL } from '../../constants/api';
+import { ApplyButton } from './Apply/ApplyButton';
+import { InputCockContent } from './Apply/InputCockContent';
+import { InputCockFlavor } from './Apply/InputCockFlavor';
+import { InputCockInfo } from './Apply/InputCockInfo';
+import { InputRecipe } from './Apply/InputRecipe';
+import { InputTitleImg } from './Apply/InputTitleImg';
 
-export const ApplyContainer = () => {
+export const ModifyWrapper = () => {
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
   const [category, setCategory] = useState<string>('');
   const [flavor, setFlavor] = useState<string[]>([]);
-  const [content, setContent] = useState<string>();
+  const [content, setContent] = useState<string>('');
   const [img, setImg] = useState<string>('');
 
   const [selectA, setSelectA] = useState<string[]>(['']);
@@ -27,11 +26,24 @@ export const ApplyContainer = () => {
   const [titleI, setTitleI] = useState<string[]>(['']);
   const [valueI, setValueI] = useState<string[]>(['']);
 
-  //const dispatch = useAppDispatch();
+  const url = window.location.pathname;
+  const cocktailId = parseInt(url.split('/')[3]);
+
+  useEffect(() => {
+    const func = async () => {
+      const result = await axios.get(GET_DETAIL_COCKTAIL(cocktailId));
+      const cocktail = result.data.cocktail;
+      setImg(cocktail.img);
+      setName(cocktail.name);
+      setDegree(cocktail.degree);
+      setCategory(cocktail.category);
+      setContent(cocktail.content);
+      setFlavor(cocktail.flavor);
+    };
+    func();
+  }, []);
 
   const handleApply = () => {
-    console.log(selectA, titleA, valueA);
-    console.log(selectI, titleI, valueI);
     let alcohoObj: any = {};
     let IngredObj: any = {};
     for (let i = 0; i < selectA.length; i++) {
@@ -46,7 +58,6 @@ export const ApplyContainer = () => {
     }
 
     const newData = {
-      owner: 1,
       name: name,
       img: img,
       degree: degree,
@@ -55,30 +66,31 @@ export const ApplyContainer = () => {
       content: content,
       official: false,
       ratio: {
-        alcohol: alcohoObj,
-        ingredient: IngredObj,
+        alcohol: Object.keys(alcohoObj).length && alcohoObj,
+        ingredient: Object.keys(IngredObj).length && IngredObj,
       },
     };
 
-    axios.post('http://localhost:8000/api/cocktails', newData).then((res) => {
+    axios.patch(PATCH_COCKTAIL(cocktailId), newData).then((res) => {
       console.log(res);
       console.log(newData);
     });
-    // dispatch(postCockcipe({ newData }));
   };
+
   return (
     <>
-      <Header>칵테일 레시피 등록하기</Header>
-      <InputTitleImg setImg={setImg} />
+      <Header>수정하기</Header>
+      <InputTitleImg img={img} setImg={setImg} />
       <InputCockInfo
         value={name}
         setName={setName}
+        degree={degree}
         setDegree={setDegree}
         setCategory={setCategory}
         category={category}
       />
-      <InputCockFlavor setFlavor={setFlavor} />
-      <InputCockContent setContent={setContent} />
+      <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
+      <InputCockContent content={content} setContent={setContent} />
       <InputRecipe
         kind="alcohol"
         select={selectA}
@@ -97,14 +109,21 @@ export const ApplyContainer = () => {
         setTitle={setTitleI}
         setValue={setValueI}
       />
-      <ApplyButton handleApply={handleApply} />
+      <ApplyPlace>
+        <ApplyButton handleApply={handleApply} name="apply" />
+      </ApplyPlace>
     </>
   );
 };
-
 const Header = styled.div`
   font-size: 24px;
   color: #3b5bdb;
   text-align: center;
   margin-top: 20px;
+`;
+
+const ApplyPlace = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 40px;
 `;

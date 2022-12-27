@@ -1,7 +1,15 @@
 import React from 'react';
-import { ApplyButton } from '../../components/Cockcipe/Apply/ApplyButton';
-import { ApplyContainer } from '../../containers/Cockcipe/Apply/ApplyContainer';
+import { Helmet } from 'react-helmet';
+
+import { ApplyWrapper } from '../../components/Cockcipe/ApplyWrapper';
 
 export const CockApplyPage = () => {
-  return <ApplyContainer />;
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 칵테일 등록</title>
+      </Helmet>
+      <ApplyWrapper />
+    </>
+  );
 };
