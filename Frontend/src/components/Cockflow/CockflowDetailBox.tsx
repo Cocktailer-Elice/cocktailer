@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { CockflowBadge } from '../../components/Cockflow/CockflowBadge';
-import { Middle, FlexMiddle } from '../../components/Cockflow/style';
+import { Middle, FlexRight } from '../../components/Cockflow/style';
 import { trimDate } from './CockflowUtils';
 import { CockflowEnrollBtns } from './CockflowEnrollBtns';
 import axios from 'axios';
@@ -68,7 +68,7 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
               readOnly={inputUnActived}
             />
           </div>
-          <FlexMiddle>
+          <FlexRight>
             <Middle>
               {isBartender && <CockflowBadge />}{nickname} &nbsp;
             </Middle>
@@ -77,7 +77,7 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
                 {trimDate(createdAt)}
               </span>
             </div>
-          </FlexMiddle>
+          </FlexRight>
         </TitleWrap>
         <TextBox
           defaultValue=""
@@ -108,42 +108,47 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
 };
 
 const ContWrap = styled.div`
-  // border: 1px solid #ddd;
-  border-radius: 7px;
+  border-radius: 9px;
   overflow: hidden;
   color: #555;
+  border: 1px solid #ddd;
+  padding: 18px 15px;
 `;
 
 const TitleWrap = styled.div`
   width: 100%;
-  padding: 0px 15px;
   border: none;
   border-bottom: 1px solid #ddd;
   font-size: 13px;
 `;
 
 const TextBox = styled.textarea`
-  width: 100%;
+  display: block;
+  width: 99%;
+  margin: 10px auto;
   padding: 10.5px 15px;
   border: none;
   resize: none;
   height: 190px;
   line-height: 1.6;
+
+  &:not(:read-only){
+    border: 1px solid #ccc;
+  }
 `;
 
 const ChangedInput = styled.input`
   display: block;
   width: 100%;
   padding: 16.5px 15px;
-  border: none;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
   resize: none;
+  padding: 6px 12px;
+  color: #555;  
+  font-size: 17px;
+  font-weight: bold;
 
   &:read-only {
-  padding: 5px 0px;
     border: none;
-    color: #555;  
-    font-size: 17px;
-    font-weight: bold;
   }
 `;

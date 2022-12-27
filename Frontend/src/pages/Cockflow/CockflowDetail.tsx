@@ -6,7 +6,7 @@ import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
 import { CockflowDetailBox } from '../../components/Cockflow/CockflowDetailBox';
 import { CockflowAddComment } from '../../components/Cockflow/CockflowAddComment';
 import { CockflowCommentBox } from '../../components/Cockflow/CockflowCommentBox';
-import { P5 } from '../../components/Cockflow/style';
+import { P10P15 } from '../../components/Cockflow/style';
 import { CockflowGetResData } from '../../../../types/cockflowType';
 import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
@@ -69,14 +69,14 @@ export const CockflowDetail = () => {
         <title>Cocktailer | 칵플로우 상세보기</title>
       </Helmet>
       <CockflowHeader />
-      <P5>
+      <P10P15>
         <CockflowLinkBtn link='/cockflow' title='목록' />
         <CockflowDetailBox detailData={data} />
         {/* (+)삭제를 위해 넘겨줘야하는 값 key={data.id} */}
         <br />
         <CockflowAddComment cockflowId={_id} />
         <CockflowCommentBox cockflowId={_id} commentlist={comments} commentId={'16'} />
-      </P5>
+      </P10P15>
     </Container>
   );
 };

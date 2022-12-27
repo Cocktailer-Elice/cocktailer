@@ -38,9 +38,9 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
       console.log(contArr)
     };
   }, [item]);
-  
+
   return (
-    <P15B1 key={item._id}>
+    <div key={item._id}>
       <Comment2
         value={item.content}
         onChange={() => { }}
@@ -76,23 +76,22 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
           </SubComments>
           : null
       }
-      <P15B1>
-        {
-          moreComments.map((co, index) => <CockflowMoreComment content={co} key={index} />)
-        }
-      </P15B1>
-    </P15B1>
+      {
+        moreComments.map((co, index) => <CockflowMoreComment content={co} key={index} />)
+      }
+    </div>
   );
 };
 
 const Comment2 = styled.textarea`
+  display: block;
   width: 100%;
   height: 155px;
-  border: 1px solid #ddd;
-  margin: 18px 0px;
+  margin: 0px auto;
   padding: 15px;
   line-height: 1.8;
-  border: none;
+  border: 1px solid #ddd;
+  border-radius: 9px;
   resize: none;
 `;
 

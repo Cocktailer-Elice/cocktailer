@@ -5,14 +5,6 @@ import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 
-const TextBox = styled.textarea`
-  width: 100%;
-  height: 150px;
-  padding: 16.5px 14px;
-  border-color: rgba(0, 0, 0, 0.23);
-  resize: none;
-`;
-
 export const CockflowAddComment = ({ cockflowId }: any) => {
   const gets = async (data: any) => {
     await axios.post(`/api/cockflow/${cockflowId}/comments`, data)
@@ -46,3 +38,12 @@ export const CockflowAddComment = ({ cockflowId }: any) => {
     </form>
   );
 };
+
+const TextBox = styled.textarea`
+  border-radius: 9px;
+  width: 100%;
+  height: 150px;
+  padding: 16.5px 14px;
+  border-color: rgba(0, 0, 0, 0.23);
+  resize: none;
+`;

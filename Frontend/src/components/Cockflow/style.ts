@@ -26,12 +26,15 @@ export const CommentStyle = styled.textarea`
     line-height: 1.8;
     border: none;
     resize: none;
-
 `;
 
 export const P5 = styled.div`
     padding: 5px;
 `;
+
+export const P10P15 = styled.div`
+    padding: 10px 15px;
+`
 
 export const P15B1 = styled.div`
     padding: 15px 20px;
@@ -41,8 +44,8 @@ export const P15B1 = styled.div`
 export const P50B1 = styled.div`
     position: relative;
     padding: 0 50px;
-    border-top: 1px solid #ddd; 
     margin-top: 15px;
+
     &::before {
         content: '';
         display: block;
@@ -54,6 +57,7 @@ export const P50B1 = styled.div`
         background: #ddd;
         z-index: 1;
     }
+
     &::after {
         content: '';
         display: block;
@@ -75,6 +79,13 @@ export const Middle = styled.div`
 export const FlexMiddle = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin: 8px 0px;
+`;
+
+export const FlexRight = styled.div`
+    display: flex;
+    justify-content: right;
     align-items: center;
     margin: 8px 0px;
 `;
