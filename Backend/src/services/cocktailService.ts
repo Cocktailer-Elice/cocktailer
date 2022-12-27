@@ -185,7 +185,7 @@ class CocktailService {
     );
 
     if (
-      typeof data !== number
+      typeof data !== 'number'
       // data.acknowledged !== true &&
       // data.modifiedCount !== 1 &&
       // data.matchedCount !== 1
