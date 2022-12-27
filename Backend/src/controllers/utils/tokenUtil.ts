@@ -1,6 +1,6 @@
 import { IUser } from '../../db';
 import { sign } from 'jsonwebtoken';
-import { Cookie } from '../../routers/middlewares/types';
+import { Cookie, Token } from '../../routers/middlewares/types';
 
 const ACCESS_KEY = process.env.ACCESS_KEY as string;
 const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE as string;
@@ -10,20 +10,20 @@ const COOKIE_EXPIRE = process.env.COOKIE_EXPIRE as string;
 export const createToken = (user: IUser, isAutoLogin: boolean) => {
   const tokenData = user.tokenData;
   const secretKey = ACCESS_KEY;
-  const expiresIn = isAutoLogin ? ACCESS_EXPIRE : ACCESS_EXPIRE_AUTO;
+  const expiresIn = isAutoLogin ? ACCESS_EXPIRE_AUTO : ACCESS_EXPIRE;
   const token = sign(tokenData, secretKey, { expiresIn });
   return token;
 };
 
-export const updateToken = (originalCookie: Cookie) => {
-  const tokenData = originalCookie;
+export const updateToken = (originalCookie: Cookie, avatarUrl: string) => {
+  const tokenData = { ...originalCookie };
+  (tokenData as Token).id = originalCookie.userId;
+  tokenData.avatarUrl = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${avatarUrl}`;
+  delete tokenData.userId;
   const secretKey = ACCESS_KEY;
   const { exp } = originalCookie;
-  const expiresIn = (exp as number) - Date.now() * 1000;
-  if (tokenData.exp) {
-    delete tokenData.exp;
-    delete tokenData.iat;
-  }
+  const expiresIn = (exp as number) - Math.floor(Date.now() / 1000);
+  delete tokenData.exp;
   const token = sign(tokenData, secretKey, { expiresIn });
   return token;
 };

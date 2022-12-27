@@ -44,7 +44,6 @@ export const isLoggedIn = async (req: Req, res: Res, next: Next) => {
     isAdmin: decodedData.isAdmin,
     isBartender: decodedData.isBartender,
     avatarUrl: decodedData.avatarUrl,
-    iat: decodedData.iat,
     exp: decodedData.exp,
   };
   next();

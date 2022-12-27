@@ -1,7 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../types';
-import { User } from 'types';
-import { Cookie } from 'Backend/src/routers/middlewares/types';
 
 const UserSchema: Schema = new Schema(
   {
@@ -25,7 +23,8 @@ const UserSchema: Schema = new Schema(
     },
     nickname: {
       type: String,
-      unique: true,
+      index: true,
+      unique: false,
     },
     birthday: {
       type: String,
@@ -52,7 +51,19 @@ const UserSchema: Schema = new Schema(
     isBartender: {
       default: false,
     },
-    myLikes: [{ type: Number }],
+    myLikes: [
+      {
+        type: Number,
+      },
+    ],
+    isPasswordTemporary: {
+      type: Boolean,
+      default: false,
+    },
+    isApplyingBartender: {
+      type: Boolean,
+      default: false,
+    },
     deletedAt: {
       type: Date,
     },
@@ -60,7 +71,7 @@ const UserSchema: Schema = new Schema(
   { collection: 'users', timestamps: true, versionKey: false },
 );
 
-UserSchema.virtual('userGetResDto').get(function (this: User) {
+UserSchema.virtual('userGetResData').get(function (this: IUser) {
   return {
     id: this.id,
     name: this.name,
@@ -68,10 +79,11 @@ UserSchema.virtual('userGetResDto').get(function (this: User) {
     nickname: this.nickname,
     avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
     isBartender: this.isBartender === true ? true : false,
+    isPasswordTemporary: this.isPasswordTemporary ? true : false,
   };
 });
 
-UserSchema.virtual('tokenData').get(function (this: Cookie) {
+UserSchema.virtual('tokenData').get(function (this: IUser) {
   return {
     id: this.id,
     name: this.name,

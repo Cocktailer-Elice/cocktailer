@@ -1,6 +1,11 @@
 import { ICommentDependencies, SubCommentInfo } from './types/commentType';
 import { CommentInfo } from '../services';
-import { cockflowModel, commentModel } from '../db';
+import {
+  cockflowModel,
+  commentModel,
+  IComment,
+  ICommentMongoModel,
+} from '../db';
 import { AppError } from '../errorHandler';
 import { errorNames } from '../errorNames';
 
@@ -88,7 +93,10 @@ class CommentService {
     if (comment.owner !== userId)
       throw new AppError(errorNames.authorizationError, 403, '권한 없음');
 
-    await this.dependencies.commentModel.delete(commentId);
+    await this.dependencies.commentModel.delete(
+      commentId,
+      !comment.isSubComment,
+    );
     return;
   };
 

@@ -26,6 +26,13 @@ class UserController {
     res.sendStatus(204);
   };
 
+  public sendCode = async (req: Req, res: Res) => {
+    const { tel } = req.body;
+    checkReqBody(tel);
+    await this.userService.sendCode(tel);
+    res.sendStatus(204);
+  };
+
   public changePassword = async (req: Req, res: Res) => {
     const { password, newPassword } = req.body;
     checkReqBody(password, newPassword);
@@ -41,11 +48,9 @@ class UserController {
     await this.userService.updateUserProfile(userId, avatarUrl);
     const userIdString = req.cookies.Authorization.split('/')[1];
     const originalCookie = req.user;
-    const token = updateToken(originalCookie);
+    const token = updateToken(originalCookie, avatarUrl);
     const isAutoLogin = (await redisCache.exists(userIdString)) ? true : false;
-    console.log(isAutoLogin);
     const cookie = createCookie(token, userIdString, isAutoLogin);
-    console.log(cookie);
     res.setHeader('Set-Cookie', [cookie]);
     res.sendStatus(204);
   };
