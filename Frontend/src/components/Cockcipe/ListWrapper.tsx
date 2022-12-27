@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailListItem';
+import { CocktailListItem } from './List/CocktailListItem';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,7 +7,7 @@ import { Autoplay } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { MorePageBtn } from '../../../components/Cockcipe/List/MorePageBtn';
+import { MorePageBtn } from './List/MorePageBtn';
 
 // useEffect 데이터 get 후 칵테일 리스트 map 출력
 interface Data {
@@ -42,7 +42,7 @@ const ListCarousel = (itemList: Data[]) => (
   </Swiper>
 );
 
-export const ListContainer = () => {
+export const ListWrapper = () => {
   const [dryList, setDryList] = useState<Data[]>([]);
   const [refreshList, setRefreshList] = useState<Data[]>([]);
   const [fruitList, setFruitList] = useState<Data[]>([]);

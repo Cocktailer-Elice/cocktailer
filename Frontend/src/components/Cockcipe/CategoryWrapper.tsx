@@ -2,19 +2,26 @@ import { Box, Grid } from '@mui/material';
 import axios from 'axios';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { CocktailListItem } from '../../../components/Cockcipe/List/CocktailListItem';
-import { SearchCocktailInput } from '../../../components/Cockcipe/List/SearchCocktailInput';
+import { CocktailListItem } from './List/CocktailListItem';
+import { SearchCocktailInput } from './List/SearchCocktailInput';
 import { useInView } from 'react-intersection-observer';
+import { CategoryListItem } from './List/CategoryListItem';
+interface Obj {
+  nickname: string;
+  isBartender: boolean;
+}
+
 interface Data {
   name: string;
   img: string;
   id: string;
   category: string;
   official: boolean;
+  owner: Obj;
 }
 
 // TODO : 무한스크롤
-export const CategoryContainer = () => {
+export const CategoryWrapper = () => {
   const url = window.location.pathname;
   const categoryId = url.split('/')[3];
 
@@ -24,9 +31,9 @@ export const CategoryContainer = () => {
   const page = useRef<number>(10);
   const [categoryList, setCategoryList] = useState<Data[]>([]);
   const [ref, inView] = useInView();
-
+  const [end, setEnd] = useState<number>(10);
   const getList = () => {
-    console.log(page);
+    if (end < 10) return;
     axios
       .get(
         `http://localhost:8000/api/cocktails/?category=${categoryId}&keyword=&official=&endpoint=${page.current}`,
@@ -35,6 +42,7 @@ export const CategoryContainer = () => {
         console.log(res.data);
         setCategoryList(() => categoryList.concat(res.data.categoryLists));
         page.current += 10;
+        setEnd(res.data.categoryLists.length);
       });
   };
 
@@ -113,7 +121,7 @@ export const CategoryContainer = () => {
 
   return (
     <>
-      <CategoryHeader>{categoryId}</CategoryHeader>
+      <CategoryHeader>{categoryId.toUpperCase()} Cocktail</CategoryHeader>
       <SearchCocktailInput
         official={official}
         setOfficial={setOfficial}
@@ -131,12 +139,13 @@ export const CategoryContainer = () => {
         >
           {categoryList?.map((item, idx) => (
             <Grid item xs={2} sm={4} md={4} key={idx}>
-              <CocktailListItem
+              <CategoryListItem
                 key={idx.toString()}
                 id={item.id}
                 name={item.name}
                 img={item.img}
                 official={item.official}
+                owner={item.owner}
               />
             </Grid>
           ))}

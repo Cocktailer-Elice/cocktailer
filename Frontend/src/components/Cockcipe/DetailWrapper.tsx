@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { CocktailInfomation } from '../../../components/Cockcipe/Detail/CocktailInfomation';
-import { DeleteButton } from '../../../components/Cockcipe/Detail/DeleteButton';
-import { ModifyButton } from '../../../components/Cockcipe/Detail/ModifyButton';
-import { ShareBtn } from '../../../components/Cockcipe/Detail/ShareBtn';
+import { CocktailInfomation } from './Detail/CocktailInfomation';
+import { DeleteButton } from './Detail/DeleteButton';
+import { ModifyButton } from './Detail/ModifyButton';
+import { ShareBtn } from './Detail/ShareBtn';
 
 interface Recipe {
   alcohol: any;
@@ -21,7 +21,7 @@ export interface ICocktail {
   ratio: Recipe;
 }
 
-export const DetailContainer = () => {
+export const DetailWrapper = () => {
   const url = window.location.pathname;
   const cocktailId = url.split('/')[3];
 

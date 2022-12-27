@@ -1,14 +1,14 @@
 import axios from 'axios';
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ApplyButton } from '../../../components/Cockcipe/Apply/ApplyButton';
-import { InputCockContent } from '../../../components/Cockcipe/Apply/InputCockContent';
-import { InputCockFlavor } from '../../../components/Cockcipe/Apply/InputCockFlavor';
-import { InputCockInfo } from '../../../components/Cockcipe/Apply/InputCockInfo';
-import { InputRecipe } from '../../../components/Cockcipe/Apply/InputRecipe';
-import { InputTitleImg } from '../../../components/Cockcipe/Apply/InputTitleImg';
+import { ApplyButton } from './Apply/ApplyButton';
+import { InputCockContent } from './Apply/InputCockContent';
+import { InputCockFlavor } from './Apply/InputCockFlavor';
+import { InputCockInfo } from './Apply/InputCockInfo';
+import { InputRecipe } from './Apply/InputRecipe';
+import { InputTitleImg } from './Apply/InputTitleImg';
 
-export const ApplyContainer = () => {
+export const ModifyWrapper = () => {
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
@@ -24,6 +24,26 @@ export const ApplyContainer = () => {
   const [selectI, setSelectI] = useState<string[]>(['']);
   const [titleI, setTitleI] = useState<string[]>(['']);
   const [valueI, setValueI] = useState<string[]>(['']);
+
+  const url = window.location.pathname;
+  const cocktailId = url.split('/')[3];
+
+  useEffect(() => {
+    const func = async () => {
+      const result = await axios.get(
+        `http://localhost:8000/api/cocktails/${cocktailId}`,
+      );
+
+      const cocktail = result.data.cocktail;
+      setImg(cocktail.img);
+      setName(cocktail.name);
+      setDegree(cocktail.degree);
+      setCategory(cocktail.category);
+      setContent(cocktail.content);
+      setFlavor(cocktail.flavor);
+    };
+    func();
+  }, []);
 
   const handleApply = () => {
     let alcohoObj: any = {};
@@ -48,34 +68,36 @@ export const ApplyContainer = () => {
       content: content,
       official: false,
       ratio: {
-        alcohol: alcohoObj,
-        ingredient: IngredObj,
+        alcohol: Object.keys(alcohoObj).length && alcohoObj,
+        ingredient: Object.keys(IngredObj).length && IngredObj,
       },
     };
 
     axios
-      .post('http://localhost:8000/api/cocktails', newData, {
-        headers: {},
-      })
+      .patch(
+        `http://localhost:8000/api/cocktails/updatecocktail/${cocktailId}`,
+        newData,
+      )
       .then((res) => {
         console.log(res);
         console.log(newData);
       });
   };
+
   return (
     <>
-      <Header>칵테일 레시피 등록하기</Header>
-      <InputTitleImg setImg={setImg} />
+      <Header>수정하기</Header>
+      <InputTitleImg img={img} setImg={setImg} />
       <InputCockInfo
         value={name}
-        degree={degree}
         setName={setName}
+        degree={degree}
         setDegree={setDegree}
         setCategory={setCategory}
         category={category}
       />
       <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
-      <InputCockContent setContent={setContent} content={content} />
+      <InputCockContent content={content} setContent={setContent} />
       <InputRecipe
         kind="alcohol"
         select={selectA}
@@ -85,7 +107,6 @@ export const ApplyContainer = () => {
         setTitle={setTitleA}
         setValue={setValueA}
       />
-
       <InputRecipe
         kind="drink"
         select={selectI}
@@ -101,13 +122,11 @@ export const ApplyContainer = () => {
     </>
   );
 };
-
 const Header = styled.div`
   font-size: 24px;
   color: #3b5bdb;
   text-align: center;
   margin-top: 20px;
-  font-weight: 800;
 `;
 
 const ApplyPlace = styled.div`
