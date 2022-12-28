@@ -10,14 +10,17 @@ interface Props {
 export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [tag, setTag] = useState<string>('');
-
   const [tagList, setTagList] = useState<string[]>([]);
-
+  const [error, setError] = useState<boolean>(true);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTag(e.target.value);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const newTag = inputRef.current?.value;
+    if (tagList.length > 10) {
+      alert('태그 그만.. 살려주세요');
+      return;
+    }
     if (newTag?.length !== 0 && e.key === 'Enter') {
       setTagList((item: any) => [...item, newTag]);
       setFlavor((item: any) => [...item, newTag]);
@@ -64,9 +67,15 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
           onChange={handleChange}
           ref={inputRef}
           value={tag}
+          required
           onKeyPress={handleKeyPress}
         />
       </TagBox>
+      {tagList.length || flavor.length ? (
+        ''
+      ) : (
+        <Error>칵테일 태그를 달아주세요!</Error>
+      )}
     </FlavorWrapper>
   );
 };
@@ -75,7 +84,13 @@ const FlavorWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   margin: 20px 0;
+`;
+const Error = styled.div`
+  color: #f03e3e;
+  font-size: 12px;
+  font-weight: 800;
 `;
 const TagBox = styled.div`
   display: flex;

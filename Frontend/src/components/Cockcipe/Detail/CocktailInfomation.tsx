@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import LocalBarIcon from '@mui/icons-material/LocalBar';
 import { ICocktail } from '../DetailWrapper';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
+import { LIKE_COCKTAIL } from '../../../constants/api';
 
 type CockProps = {
   cocktail: ICocktail;
@@ -61,9 +63,8 @@ export const CocktailInfomation = ({
 
   const handleLike = () => {
     axios
-      .get(`http://localhost:8000/api/cocktails/likes/${cocktailId}`)
+      .get(LIKE_COCKTAIL(cocktailId))
       .then((res) => {
-        console.log(res.data);
         setLiked(!isliked);
         setLike(res.data.likes);
       })
@@ -74,12 +75,15 @@ export const CocktailInfomation = ({
   }, [cocktail.likes]);
   return (
     <>
-      <Img src="/assets/images/testimg.svg" width="300" height="300" />
+      <Img src={cocktail.img} width="300" height="300" />
       <TitleContainer>
         <Name>{cocktail.name}</Name>
         <Degree>&nbsp;&nbsp;({cocktail.degree}%)</Degree>
       </TitleContainer>
-
+      <Nickname>
+        작성자 : {cocktail.owner.nickname}
+        {cocktail.owner.isBartender && <LocalBarIcon />}
+      </Nickname>
       <FlavorContainer>
         {cocktail.flavor.map((item: string, idx) => (
           <FlavorTag key={idx}>{item}</FlavorTag>
@@ -110,9 +114,12 @@ const TitleContainer = styled.div`
   display: flex;
 `;
 const Name = styled.p`
-  font-size: 20px;
+  font-size: 25px;
 `;
-
+const NickContainer = styled.div``;
+const Nickname = styled.p`
+  font-size: 15px;
+`;
 const Degree = styled.p`
   font-size: 15px;
 `;
@@ -139,6 +146,9 @@ const Content = styled.div`
   background-color: #edf2ff;
   border-radius: 10px;
   height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const LikeContainer = styled.div`
   display: flex;

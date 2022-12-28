@@ -10,6 +10,9 @@ import { InputCockInfo } from './Apply/InputCockInfo';
 import { InputRecipe } from './Apply/InputRecipe';
 import { InputTitleImg } from './Apply/InputTitleImg';
 
+// TODO : 값 비어있으면 에러 처리 (validation)
+// TODO : 도수 0~100
+// TODO : 이미지 미리보기 띄우기
 export const ModifyWrapper = () => {
   const navigate = useNavigate();
   // state
@@ -75,15 +78,18 @@ export const ModifyWrapper = () => {
 
     if (
       !Object.keys(alcohoObj).every((current) => current !== '') ||
-      !Object.keys(IngredObj).every((current) => current !== '')
+      !Object.keys(IngredObj).every((current) => current !== '') ||
+      !name ||
+      !img ||
+      !category ||
+      !content ||
+      !flavor
     ) {
       alert('비어있는 값이 있습니다!');
     } else {
       axios
         .patch(PATCH_COCKTAIL(cocktailId), newData)
         .then((res) => {
-          console.log(res);
-          console.log(newData);
           navigate(`/cockcipe/detail/${cocktailId}`);
         })
         .catch((err) =>

@@ -19,6 +19,8 @@ interface ApplyProps {
 interface Obj {
   [anykey: string]: [{ [anykey: string]: number }];
 }
+// TODO : 값 비어있으면 에러 처리 (validation)
+// TODO : 도수 0~100
 export const ApplyWrapper = ({ apply }: ApplyProps) => {
   const navigate = useNavigate();
   // state
@@ -65,20 +67,19 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
       },
     };
 
-    apply(newData);
-
-    // axios
-    //   .post(POST_COCKTAIL, newData, {
-    //     headers: {},
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(newData);
-    //     navigate(`/cockcipe/detail/${res.data.data}`);
-    //   })
-    //   .catch((err) =>
-    //     alert('등록하는데 문제가 발생했습니다! 관리자에게 문의해보세요'),
-    //   );
+    if (
+      !Object.keys(alcohoObj).every((current) => current !== '') ||
+      !Object.keys(IngredObj).every((current) => current !== '') ||
+      !name ||
+      !img ||
+      !category ||
+      !content ||
+      !flavor
+    ) {
+      alert('비어있는 값이 있습니다!');
+    } else {
+      apply(newData);
+    }
   };
   return (
     <>
