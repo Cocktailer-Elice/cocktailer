@@ -38,6 +38,8 @@ export const CockgorithmModal = ({
   const { isOpen: isGameResultOpen, handleOpen: handleGameResultOpen } =
     useToggle(false);
 
+  const [isFoundCocktail, setIsFoundCocktail] = useState<boolean>(false);
+
   const [filters, setFilters] = useState<CockgorithmReqData>({
     category: '',
     alcohol: '',
@@ -58,11 +60,15 @@ export const CockgorithmModal = ({
             await axios.post(GET_COCKGORITHM_COCKTAIL, filters)
           ).data;
 
+          console.log('response');
+          console.log(response);
+
           if (response.isFound) {
             const fetchedCocktail = response.data as CockgorithmCocktail;
+            setIsFoundCocktail(true);
             setCocktailInfo(fetchedCocktail);
           } else {
-            console.log('');
+            setIsFoundCocktail(false);
           }
         } catch (error) {
           alert(error);
@@ -90,8 +96,10 @@ export const CockgorithmModal = ({
             />
           ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
-          ) : (
+          ) : isFoundCocktail ? (
             <CockgorithmGameResult cocktailInfo={cocktailInfo} />
+          ) : (
+            <CockgorithmGameResult />
           )}
         </MainSection>
         <CustomCloseButton onClick={handleModalClose} />

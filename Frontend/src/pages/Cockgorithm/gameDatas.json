@@ -18,7 +18,7 @@
         "question": "베이스는 뭐로 갈까요!",
         "filterName": "alcohol",
         "options": [
-          { "optionName": "진", "filterValue": "진" },
+          { "optionName": "잔", "filterValue": "잔" },
           { "optionName": "럼", "filterValue": "럼" },
           { "optionName": "보드카", "filterValue": "보드카" },
           { "optionName": "위스키", "filterValue": "위스키" },
