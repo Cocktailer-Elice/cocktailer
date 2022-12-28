@@ -57,5 +57,8 @@ export const PATCH_COCKTAIL = (cocktailId: number) =>
   `${API_BASE}/cocktails/updatecocktail/${cocktailId}`;
 export const GET_INDEGRIENT = `${API_BASE}/ingredients`;
 export const SHARE_KAKAO = (id: number) => `cockcipe/detail/${id}`;
+
+// Cockgorithm
+export const GET_COCKGORITHM_COCKTAIL = `${API_BASE}/cocktails/cockgorithm`;
 export const LIKE_COCKTAIL = (cocktailId: number) =>
   `${API_BASE}/cocktails/likes/${cocktailId}`;

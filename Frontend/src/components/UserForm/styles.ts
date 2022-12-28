@@ -10,6 +10,7 @@ export const FormWrapper = styled.div`
 
 export const UserForm = styled.form`
   padding: 2rem 0;
+  width: 70%;
   display: flex;
   flex-direction: column;
 `;
@@ -66,6 +67,7 @@ export const ErrorWrapper = styled.div`
 
 export const Alert = styled.div`
   font-size: 0.6rem;
+  width: 100%;
   height: 1rem;
   display: flex;
   align-items: center;

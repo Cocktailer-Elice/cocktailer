@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
+import { FreeMode, Scrollbar, Pagination } from 'swiper';
 
 import '../../swiper.css';
 import { HomeCocktailRanking } from './../../components/Home/HomeCocktailRanking';
@@ -19,19 +16,20 @@ export const HomeCocktailRankingContainer = ({
   return (
     <Carousel>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={3.2}
         spaceBetween={10}
         freeMode={true}
-        modules={[FreeMode, Pagination]}
-        className="mySwiper"
+        modules={[FreeMode, Scrollbar, Pagination]}
+        className="cocktailRankingSwiper"
+        scrollbar={{ draggable: true }}
       >
         {cocktailRankingList.map((cocktailRankingInfo, index) => (
-          <SwiperSlide key={index}>
+          <CustomSwiperSlide key={index}>
             <HomeCocktailRanking
               cocktailRankingInfo={cocktailRankingInfo}
               ranking={index + 1}
             />
-          </SwiperSlide>
+          </CustomSwiperSlide>
         ))}
       </Swiper>
     </Carousel>
@@ -42,4 +40,8 @@ const Carousel = styled.div`
   width: 100%;
   height: 90%;
   padding: 5px;
+`;
+
+const CustomSwiperSlide = styled(SwiperSlide)`
+  height: 90%;
 `;

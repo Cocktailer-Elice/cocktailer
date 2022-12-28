@@ -46,9 +46,6 @@ export const JoinForm = ({ isLoggedIn, register }: JoinFormProps) => {
       errors.tel && (errors.tel.message = '전화번호 인증을 진행해주세요');
     } else {
       register({ name, email, password, birthday, tel, alcohol });
-      if (!isLoggedIn) {
-        alert('회원가입에 실패했습니다. 다시 시도해주세요');
-      }
       reset();
     }
   };

@@ -68,4 +68,8 @@ const EmailDuplicateCheckButton = styled(Button)`
 
 const EmailDuplicateMessageWrapper = styled.div`
   height: max-content;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
 `;

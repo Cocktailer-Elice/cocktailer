@@ -228,6 +228,10 @@ const BigSection = styled.div`
   background-color: white;
   padding: 20px 10px;
   margin-top: 10px;
+
+  @media screen and (max-width: 500px) {
+    height: 30%;
+  }
 `;
 
 const SectionHeader = styled.div`
