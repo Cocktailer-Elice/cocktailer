@@ -14,13 +14,17 @@ export const CockgorithmGameResult = ({
     <GameResult>
       {cocktailInfo && (
         <>
-          <CocktailTitle>"{cocktailInfo.name}"를 추천드려요!</CocktailTitle>
-          <CocktailImage src={cocktailInfo.img}></CocktailImage>
-          <CocktailContent>{cocktailInfo.content}</CocktailContent>
-          <CocktailDegree>도수 : {cocktailInfo.degree} 도</CocktailDegree>
-          <Link to={`/cockcipe/detail/${cocktailInfo.id}`}>
+          <CocktailTitle>"{cocktailInfo.name}"를 추천드릴게요!</CocktailTitle>
+          <CocktailImageWrapper>
+            <CocktailImage src={cocktailInfo.img} />
+          </CocktailImageWrapper>
+          <CocktailInfo>
+            <CocktailContent>{cocktailInfo.content}</CocktailContent>
+            <CocktailDegree>도수 : {cocktailInfo.degree} 도</CocktailDegree>
+          </CocktailInfo>
+          <CustomLink to={`/cockcipe/detail/${cocktailInfo.id}`}>
             상세 정보 보러 가기
-          </Link>
+          </CustomLink>
         </>
       )}
       {!cocktailInfo && (
@@ -36,49 +40,93 @@ export const CockgorithmGameResult = ({
 
 const GameResult = styled.div`
   width: 100%;
-  height: 450px;
+  height: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: whitesmoke;
 `;
 
 const CocktailTitle = styled.div`
   width: 100%;
-  height: 100px;
-  padding: 10px;
+  height: 10%;
+  padding: 20px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: brown;
+  color: #69db7c;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+
+  @media screen and (max-width: 500px) {
+    font-size: 18px;
+  }
+`;
+
+const CocktailImageWrapper = styled.div`
+  width: 100%;
+  height: 40%;
+  margin: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CocktailImage = styled.img`
-  display: block;
-  width: 120px;
-  height: 240px;
-  background-color: blue;
+  width: 50%;
+  min-width: 200px;
+  height: 100%;
+  border: 2px solid red;
 `;
 
-const CocktailDegree = styled.div`
+const CocktailInfo = styled.div`
   width: 100%;
-  height: 100px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background-color: red;
+  height: 45%;
+  border: 5px solid ${(props) => props.theme.colors.indigo9};
+  border-radius: 20px;
+  background-color: ${(props) => props.theme.colors.indigo5};
 `;
 
 const CocktailContent = styled.div`
   width: 100%;
-  height: 400px;
-  padding: 10px;
+  height: 70%;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  padding: 15px;
+  color: white;
+  font-size: 14px;
+`;
+
+const CocktailDegree = styled.div`
+  width: 100%;
+  height: 30%;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: orange;
+
+  padding: 10px;
+  color: #212529;
+  font-size: 13px;
+  font-weight: 600;
+`;
+
+const CustomLink = styled(Link)`
+  width: 100%;
+  height: 5%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 14px;
+  padding: 10px;
+  color: ${(props) => props.theme.colors.indigo1};
 `;
 
 const CocktailNotFound = styled.div`
@@ -90,9 +138,11 @@ const CocktailNotFound = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   font-size: 18px;
+  color: white;
 
   @media screen and (max-width: 500px) {
-    height: 80%;
-    font-size: 16px;
+    height: 60%;
+    font-size: 14px;
+    padding: 10px;
   }
 `;
