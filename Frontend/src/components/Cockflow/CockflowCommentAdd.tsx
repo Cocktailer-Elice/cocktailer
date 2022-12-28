@@ -6,17 +6,19 @@ import styled from 'styled-components';
 import { CockflowMoreComment } from './CockflowMoreComment';
 import { Adopted, FlexLeft, FlexRight, IconWrap } from './style';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useAuthentication } from '../../hooks/useAuthentication';
 import EditIcon from '@mui/icons-material/Edit';
-
-interface CommentType {
-  item: String[],
-}
 
 export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   const { register, handleSubmit, reset } = useForm();
-  console.log('item');
-  console.log(item);
-  const gets = async (data: any) => {
+  const [readonly, setReadonly] = useState(true);
+  const [commentValue, setCommentValue] = useState(' ');
+  const [subComment, setSubComment] = useState(false);
+  const [moreComments, setMoreComments] = useState([]);
+
+  const isLoggedIn = useAuthentication();
+
+  const commentsGets = async (data: any) => {
     await axios.post(`/api/cockflow/${cockflowId}/comments/${commentId}`, data)
       .then(function (response) {
         console.log(response);
@@ -26,16 +28,37 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
       });
   };
 
+  const commentsPuts = async () => {
+    const data = {
+      "content": commentValue
+    }
+
+    await axios.put(`/api/cockflow/${cockflowId}/comments/${commentId}`, data)
+      .then(function (response) {
+        console.log(response);
+        alert('수정 되었습니다.');
+        window.location.replace(`/cockflow/detail/${cockflowId}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const onSubmit = (data: any) => {
-    gets(data);
+    commentsGets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
+  };
+
+  const onCommentChange = (event: React.ChangeEventHandler<HTMLTextAreaElement> | any): void => {
+    if (event) {
+      setCommentValue(event.currentTarget.value);
+    }
   };
 
   const commAdopted = () => {
     axios.patch(`/api/cockflow/${cockflowId}/comments/${commentId}`)
       .then(function (response) {
-        console.log(response);
         alert('채택하였습니다.');
         window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
@@ -49,7 +72,6 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
     if (confirm('댓글을 삭제하시겠습니까?')) {
       await axios.delete(`http://localhost:5173/api/cockflow/${cockflowId}/comments/${commentId}`)
         .then((response) => {
-          console.log(response);
           alert('삭제 완료 되었습니다.');
           window.location.replace(`/cockflow/detail/${cockflowId}`);
         })
@@ -60,28 +82,24 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   };
 
   const commEdit = () => {
-
+    setReadonly(prev => !prev);
   }
-
-  const [subComment, setSubComment] = useState(false);
-  const [moreComments, setMoreComments] = useState([]);
-  const [isAdopt, setIsAdopt] = useState(false);
 
   useEffect(() => {
     if (item.subComments.length > 0) {
       const contArr = item.subComments.map((items: any) => items.content)
       setMoreComments(contArr)
-      console.log(contArr)
     };
+    setCommentValue(item.content);
   }, [item]);
 
   return (
     <div key={item._id}>
       <Comment2
-        value={item.content}
-        onChange={() => { }}
+        value={commentValue}
+        onChange={onCommentChange}
         maxLength={250}
-        readOnly={true}
+        readOnly={readonly}
       />
       <FlexLeft>
         {
@@ -89,25 +107,40 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
         }
         {item.owner.nickname}
       </FlexLeft>
-      <FlexRight>
-        <IconWrap type='button' onClick={commDelete}>
-          <DeleteIc />
-        </IconWrap>
-        <IconWrap type='button' onClick={commEdit}>
-          <EditIc />
-        </IconWrap>
-        <Button variant="outlined" onClick={() => {
-          if (subComment) {
-            setSubComment(false)
-            return;
-          };
-          setSubComment(true)
-          return;
-        }}>댓글달기</Button>&nbsp;&nbsp;
-        <Button variant="contained" onClick={commAdopted}>채택하기</Button>
-      </FlexRight>
       {
-        subComment
+        isLoggedIn && (
+          readonly
+            ? (
+              <FlexRight>
+                <IconWrap type='button' onClick={commDelete}>
+                  <DeleteIc />
+                </IconWrap>
+                <IconWrap type='button' onClick={commEdit}>
+                  <EditIc />
+                </IconWrap>
+                <Button variant="outlined" onClick={() => {
+                  if (subComment) {
+                    setSubComment(false)
+                    return;
+                  };
+                  setSubComment(true)
+                  return;
+                }}>댓글달기</Button>&nbsp;&nbsp;
+                <Button variant="contained" onClick={commAdopted}>채택하기</Button>
+              </FlexRight>
+            )
+            : (
+              <FlexRight>
+                <Button variant="contained" onClick={() => commentsPuts()}>수정완료</Button>&nbsp;&nbsp;
+                <Button variant="outlined" onClick={() => { setReadonly(prev => !prev) }}>취소하기</Button>
+              </FlexRight>
+            )
+
+        )
+      }
+
+      {
+        (subComment && readonly)
           ?
           <SubComments
             onSubmit={handleSubmit(onSubmit)}>
@@ -154,7 +187,8 @@ const SubComments = styled.form`
   align-items: center;
   width: 90%;
   height: 150px;
-  margin: 0 auto;
+  margin: 20px auto;
+
   &::before {
     display: block;
     content: '';
