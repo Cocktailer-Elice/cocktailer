@@ -15,12 +15,7 @@ class CocktailController {
   private readonly cocktailService = new CocktailService();
 
   public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
-    console.log('getHomeCocktailAndUserList');
-
-    // 인국님 테스트 해보세용
-    // await redisCache.del('ranking'); //얘는 캐시 지우는 애
     const cachedValue = (await redisCache.get('ranking')) as string;
-    console.log(cachedValue);
 
     const data: Rankings = cachedValue
       ? JSON.parse(cachedValue)
@@ -31,7 +26,6 @@ class CocktailController {
       userRanking: data.userRankings,
     });
 
-    // 나중에 캐싱 테스트용 콘솔로그는 지워주세용
     if (!cachedValue) {
       await redisCache.set('ranking', JSON.stringify(data));
       cachingEvents.emit('rankingCachingUpdate');
