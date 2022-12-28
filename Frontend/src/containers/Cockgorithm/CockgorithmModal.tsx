@@ -7,13 +7,13 @@ import { CockgorithmGameContent } from './../../components/Cockgorithm/Cockgorit
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import { useToggle } from './../../utils/customHooks';
 import {
   CockgorithmReqData,
   CockgorithmCocktail,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
 import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
+import { useToggle } from './../../hooks/useToggle';
 
 interface CockgorithmModalProps {
   handleModalClose: () => void;
