@@ -75,7 +75,7 @@ export class CocktailModel implements CocktailInterface {
     result[0].map((e) => {
       const obj = {
         ...e,
-        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${e.img}`,
+        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${e.img}`,
       };
       cocktailRanking.push(obj);
     });
@@ -206,7 +206,6 @@ export class CocktailModel implements CocktailInterface {
         cocktailObj,
       ).session(session);
 
-      console.log(result);
       if (result.modifiedCount === 0 && result.matchedCount === 0) {
         throw new AppError(errorNames.databaseError);
       }

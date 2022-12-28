@@ -38,7 +38,7 @@ class UserMongoModel implements IUserMongoModel {
     );
     likes.forEach(
       (like) =>
-        (like.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${like.img}`),
+        (like.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${like.img}`),
     );
     return likes;
   };
