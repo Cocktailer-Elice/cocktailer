@@ -91,6 +91,7 @@ const GameEmoji = styled.div`
 const GameTitle = styled.div`
   font-size: 18px;
   color: white;
+  margin-top: 15px;
 
   @media screen and (max-width: 500px) {
     font-size: 14px;
