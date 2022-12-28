@@ -6,9 +6,9 @@ import { CockflowNew } from '../pages/Cockflow/CockflowNew'
 export const CockflowRouter = () => {
   return (
     <Routes>
-      <Route path="/cockflow" element={<CockflowPage />}></Route>
-      <Route path="/cockflow/new" element={<CockflowNew />}></Route>
-      <Route path="/cockflow/detail/:cockflowId" element={<CockflowDetail />}></Route>
+      <Route path="/cockflow" element={<CockflowPage />} />
+      <Route path="/cockflow/new" element={<CockflowNew />} />
+      <Route path="/cockflow/detail/:cockflowId" element={<CockflowDetail />} />
     </Routes>
   );
 };

@@ -36,18 +36,24 @@ export const DetailWrapper = () => {
     content: '',
     ratio: { alcohol: {}, ingredient: {} },
   });
+  const [liked, setLiked] = useState<boolean>(false);
 
   useEffect(() => {
     axios.get(GET_DETAIL_COCKTAIL(cocktailId)).then((res) => {
       console.log(res);
       setCocktail(res.data.cocktail);
+      setLiked(res.data.liked);
     });
   }, []);
 
   return (
     <>
       <ContentWrapper>
-        <CocktailInfomation cocktail={cocktailInfo} />
+        <CocktailInfomation
+          cocktail={cocktailInfo}
+          isliked={liked}
+          setLiked={setLiked}
+        />
         <ShareBtn
           img={cocktailInfo.img}
           name={cocktailInfo.name}
