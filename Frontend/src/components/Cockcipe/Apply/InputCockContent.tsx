@@ -15,7 +15,9 @@ export const InputCockContent = ({ setContent, content }: Props) => {
         rows={4}
         multiline
         value={content}
-        sx={{ width: '300px' }}
+        inputProps={{ maxLength: 300 }}
+        error={content === '' ? true : false}
+        sx={{ width: '440px' }}
         onChange={(e) => setContent(e.target.value)}
       />
     </ContentContainer>

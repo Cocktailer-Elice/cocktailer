@@ -5,6 +5,7 @@ import {
   userLogout,
   userRegister,
   userRefresh,
+  userDelete,
 } from './authActions';
 
 interface LoggedInState {
@@ -66,6 +67,17 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
     });
     builder.addCase(userRefresh.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(userDelete.pending, (state, action) => {
+      state.user = state.user;
+      state.isLoggedIn = state.isLoggedIn;
+    });
+    builder.addCase(userDelete.fulfilled, (state, action) => {
+      state.user = null;
+      state.isLoggedIn = false;
+    });
+    builder.addCase(userDelete.rejected, (state, action) => {
       state.error = action.error.message;
     });
   },

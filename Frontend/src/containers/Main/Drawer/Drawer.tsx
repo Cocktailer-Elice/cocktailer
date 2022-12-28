@@ -5,6 +5,7 @@ import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUser
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 import { contentMenus } from './../../../constants/pages';
 import { useAuthentication } from './../../../hooks/useAuthentication';
+import { useCurrentUser } from './../../../hooks/useCurrentUser';
 
 interface DrawerProps {
   handleDrawerClose: () => void;
@@ -19,6 +20,7 @@ const userMenus = [
 
 export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
   const isLoggedIn = useAuthentication();
+  const user = useCurrentUser();
 
   return (
     <>
@@ -26,11 +28,15 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
+            {isLoggedIn && (
+              <LoggedInUserInfo>{`${user?.nickname} 님 환영합니다.`}</LoggedInUserInfo>
+            )}
             <UserPageButtonContainer>
               {userMenus.map(
-                (userMenu) =>
+                (userMenu, index) =>
                   isLoggedIn === userMenu.isLoggedInUserMenu && (
                     <DrawerUserPageButton
+                      key={index}
                       title={userMenu.pageName}
                       link={userMenu.link}
                       handleDrawerClose={handleDrawerClose}
@@ -41,15 +47,17 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
           </TopLeftSection>
           <TopRightSection>
             <CloseButtonWrap onClick={handleDrawerClose}>
-              <CloseButton />
+              <CustomCloseButton />
             </CloseButtonWrap>
           </TopRightSection>
         </TopSection>
         <BottomSection>
-          {contentMenus.map((contentMenu) => (
+          {contentMenus.map((contentMenu, index) => (
             <DrawerContentPageButton
+              key={index}
               title={contentMenu.pageName}
               link={contentMenu.link}
+              emoji={contentMenu.emoji}
               handleDrawerClose={handleDrawerClose}
             />
           ))}
@@ -62,7 +70,7 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
 const Dimmed = styled.div`
   width: 100%;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
   left: 0;
   top: 0;
@@ -70,48 +78,54 @@ const Dimmed = styled.div`
 `;
 
 const DrawerContainer = styled.div`
-  width: 300px;
+  width: 60%;
   height: 100vh;
-  border: 1px solid gray;
   position: absolute;
-  background-color: white;
+  background-color: #15aabf;
   left: -1px;
   top: 0;
   z-index: 11;
+
+  @media screen and (max-width: 500px) {
+    width: 75%;
+  }
 `;
 
 const TopSection = styled.div`
   width: 100%;
-  height: 80px;
-  border: 1px solid gray;
   display: flex;
 `;
 
 const TopLeftSection = styled.div`
   width: calc(100% - 50px);
-  height: 100%;
-  border: 1px solid gray;
+  padding: 30px;
 `;
 
 const TopRightSection = styled.div`
-  width: 50px;
-  height: 100%;
-  border: 1px solid gray;
+  width: 30px;
+  margin-right: 30px;
 `;
 
 const BottomSection = styled.div`
   width: 100%;
   height: calc(100% - 50px);
-  border: 1px solid gray;
+`;
+
+const LoggedInUserInfo = styled.div`
+  width: 100%;
+  height: 30px;
+  margin: auto;
+  padding: 0px 20px;
+  color: #0b7285;
+  font-weight: bold;
 `;
 
 const UserPageButtonContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 50px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border: 1px solid gray;
 `;
 
 const CloseButtonWrap = styled.div`
@@ -120,5 +134,10 @@ const CloseButtonWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+`;
+
+const CustomCloseButton = styled(CloseButton)`
+  color: whitesmoke;
+  font-size: 30px;
+  cursor: pointer;
 `;

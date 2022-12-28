@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
 import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
 import { Drawer } from './../Drawer/Drawer';
-import { useToggle } from '../../../utils/customHooks';
+import { useToggle } from './../../../hooks/useToggle';
 
 export const Header = () => {
   const {
@@ -28,7 +28,6 @@ const Container = styled.div`
   width: 100%;
   height: 60px;
   background-color: #fff;
-  border: 1px solid #ddd;
   display: flex;
   position: sticky;
   top: 0;

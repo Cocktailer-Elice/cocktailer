@@ -35,6 +35,5 @@ const AppLayout = styled.div`
   max-width: 720px;
   min-height: 100vh;
   background-color: #fff;
-  border: 1px solid #ddd;
   margin: auto;
 `;

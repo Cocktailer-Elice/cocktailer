@@ -78,6 +78,32 @@ export interface CocktailObj {
   content: string;
 }
 
+export interface CocktailApplyData {
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string[];
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+}
+
 export interface FindCocktailId {
   cocktailId: number;
 }
