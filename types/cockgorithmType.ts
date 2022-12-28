@@ -14,6 +14,11 @@ export interface ProcessedMaterail {
 }
 
 export interface CockgorithmResData {
+  isFound: boolean;
+  data?: CockgorithmCocktail;
+}
+
+export interface CockgorithmCocktail {
   id: number;
   name: string;
   img: string;

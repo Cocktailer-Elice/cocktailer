@@ -10,8 +10,10 @@ import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
 import { useToggle } from './../../utils/customHooks';
 import {
   CockgorithmReqData,
+  CockgorithmCocktail,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
+import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
 
 interface CockgorithmModalProps {
   handleModalClose: () => void;
@@ -44,7 +46,7 @@ export const CockgorithmModal = ({
   });
 
   const [cocktailInfo, setCocktailInfo] =
-    useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+    useState<CockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
   useEffect(() => {
     if (isLoadingOpen) {
@@ -52,16 +54,16 @@ export const CockgorithmModal = ({
 
       setTimeout(async () => {
         try {
-          const response = await axios.post(
-            'http://localhost:8000/api/cocktails/cockgorithm',
-            filters,
-          );
+          const response: CockgorithmResData = (
+            await axios.post(GET_COCKGORITHM_COCKTAIL, filters)
+          ).data;
 
-          console.log('response');
-          console.log(response);
-
-          const fetchedCocktail = response.data.data;
-          setCocktailInfo(fetchedCocktail);
+          if (response.isFound) {
+            const fetchedCocktail = response.data as CockgorithmCocktail;
+            setCocktailInfo(fetchedCocktail);
+          } else {
+            console.log('');
+          }
         } catch (error) {
           alert(error);
         } finally {

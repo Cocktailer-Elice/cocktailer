@@ -67,6 +67,7 @@ const Game = styled.div<{ nth: number }>`
   background-color: ${(props) =>
     props.nth ? gameColors[props.nth] : '#ff6b6b'};
   border-radius: 30px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
 
   cursor: pointer;
 
