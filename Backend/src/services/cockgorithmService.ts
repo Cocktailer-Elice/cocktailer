@@ -1,23 +1,23 @@
-import { CockgorithmServiceType, ProcessedMaterial, Material } from './types';
+import { ProcessedMaterial } from './types';
 import { cockgorithmModel } from '../db';
-import { AppError } from '../appError';
-import { errorNames } from '../errorNames';
 
 class CockgorithmService {
   private readonly cockgorithmModel = cockgorithmModel;
 
-  public async activateCockgorithm(material: ProcessedMaterial) {
+  public activateCockgorithm = async (material: ProcessedMaterial) => {
     const data = await this.cockgorithmModel.activateCockgorithm(material);
-
-    if (!data) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '죄송합니다 다시 검색해 주시기 바립니다.',
-      );
-    }
-
+    // const pickedCocktail = this.pickRandomCocktail(data);
     return data;
-  }
+  };
+
+  private pickRandomCocktail = (cocktails: string) => {
+    // 아예 없음
+
+    // 완벽히 일치
+
+    // 일치하는 데이터 없음
+
+    return;
+  };
 }
 export default CockgorithmService;
