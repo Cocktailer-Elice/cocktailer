@@ -5,6 +5,7 @@ import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUser
 import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
 import { contentMenus } from './../../../constants/pages';
 import { useAuthentication } from './../../../hooks/useAuthentication';
+import { useCurrentUser } from './../../../hooks/useCurrentUser';
 
 interface DrawerProps {
   handleDrawerClose: () => void;
@@ -19,6 +20,7 @@ const userMenus = [
 
 export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
   const isLoggedIn = useAuthentication();
+  const user = useCurrentUser();
 
   return (
     <>
@@ -26,6 +28,9 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
+            {isLoggedIn && (
+              <LoggedInUserInfo>{`${user?.nickname} 님 환영합니다.`}</LoggedInUserInfo>
+            )}
             <UserPageButtonContainer>
               {userMenus.map(
                 (userMenu, index) =>
@@ -88,19 +93,16 @@ const DrawerContainer = styled.div`
 
 const TopSection = styled.div`
   width: 100%;
-  height: 100px;
   display: flex;
 `;
 
 const TopLeftSection = styled.div`
   width: calc(100% - 50px);
-  height: 100%;
   padding: 30px;
 `;
 
 const TopRightSection = styled.div`
   width: 30px;
-  height: 100%;
   margin-right: 30px;
 `;
 
@@ -109,9 +111,18 @@ const BottomSection = styled.div`
   height: calc(100% - 50px);
 `;
 
+const LoggedInUserInfo = styled.div`
+  width: 100%;
+  height: 30px;
+  margin: auto;
+  padding: 0px 20px;
+  color: #0b7285;
+  font-weight: bold;
+`;
+
 const UserPageButtonContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 50px;
   display: flex;
   justify-content: space-around;
   align-items: center;
