@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
+import { FreeMode, Scrollbar, Pagination } from 'swiper';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -21,14 +18,15 @@ export const HomeUserRankingContainer = ({
   return (
     <Carousel>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={3.2}
         spaceBetween={10}
         freeMode={true}
-        modules={[FreeMode, Pagination]}
-        className="mySwiper"
+        modules={[FreeMode, Scrollbar, Pagination]}
+        className="userRankingSwiper"
+        scrollbar={{ draggable: true }}
       >
         {userRankingList.map((userRankingInfo, index) => (
-          <SwiperSlide key={index}>
+          <CustomSwiperSlide key={index}>
             {index === 0 && <Crown icon={faCrown} color="gold" />}
             {index === 1 && <Crown icon={faCrown} color="silver" />}
             {index === 2 && <Crown icon={faCrown} color="	#CD7F32" />}
@@ -36,7 +34,7 @@ export const HomeUserRankingContainer = ({
               userRankingInfo={userRankingInfo}
               ranking={index + 1}
             />
-          </SwiperSlide>
+          </CustomSwiperSlide>
         ))}
       </Swiper>
     </Carousel>
@@ -47,6 +45,10 @@ const Carousel = styled.div`
   width: 100%;
   height: 90%;
   padding: 10px;
+`;
+
+const CustomSwiperSlide = styled(SwiperSlide)`
+  height: 90%;
 `;
 
 const Crown = styled(FontAwesomeIcon)`
