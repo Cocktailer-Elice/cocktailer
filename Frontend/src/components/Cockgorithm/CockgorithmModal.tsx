@@ -1,55 +1,40 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import CloseButton from '@mui/icons-material/Close';
 
-import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
-import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
-import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
-import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import { CockgorithmGameLoading } from './CockgorithmGameLoading';
 import {
-  CockgorithmReqData,
   CockgorithmCocktail,
+  CockgorithmReqData,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
 import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
-import { useToggle } from './../../hooks/useToggle';
+import { IGame } from '../../store/cockgorithmSlice';
+import { CockgorithmGameContentContainer } from './../../containers/Cockgorithm/CockgorithmGameContentContainer';
+import { CockgorithmGameResultContainer } from './../../containers/Cockgorithm/CockgorithmGameResultContainer';
 
 interface CockgorithmModalProps {
-  handleModalClose: () => void;
-  seletedGame: IGame;
+  selectedGame: IGame;
+  filters: CockgorithmReqData;
+  isLoadingOpen: boolean;
+  isGameResultOpen: boolean;
+  setIsModalOpen: (boolean: boolean) => void;
+  setIsFoundCocktail: (boolean: boolean) => void;
+  setCocktailInfo: (cocktailInfo: CockgorithmCocktail) => void;
+  setIsGameResultOpen: (boolean: boolean) => void;
 }
 
-const cocktailMockData = {
-  id: 1,
-  name: '마티니 블루',
-  img: '칵테일 이미지 URL',
-  degree: 1,
-  content: '마티니 블루는 주절주절',
-};
-
 export const CockgorithmModal = ({
-  handleModalClose,
-  seletedGame,
+  selectedGame,
+  filters,
+  isLoadingOpen,
+  isGameResultOpen,
+  setIsModalOpen,
+  setIsFoundCocktail,
+  setCocktailInfo,
+  setIsGameResultOpen,
 }: CockgorithmModalProps) => {
-  const { isOpen: isLoadingOpen, handleOpen: handleLoadingOpen } =
-    useToggle(false);
-
-  const { isOpen: isGameResultOpen, handleOpen: handleGameResultOpen } =
-    useToggle(false);
-
-  const [isFoundCocktail, setIsFoundCocktail] = useState<boolean>(false);
-
-  const [filters, setFilters] = useState<CockgorithmReqData>({
-    category: '',
-    alcohol: '',
-    degree: '',
-    ingredients: [],
-  });
-
-  const [cocktailInfo, setCocktailInfo] =
-    useState<CockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
-
   useEffect(() => {
     if (isLoadingOpen) {
       console.log('유저 응답', filters);
@@ -73,7 +58,7 @@ export const CockgorithmModal = ({
         } catch (error) {
           alert(error);
         } finally {
-          handleGameResultOpen();
+          setIsGameResultOpen(true);
         }
       }, 2000);
     }
@@ -81,30 +66,24 @@ export const CockgorithmModal = ({
 
   return (
     <>
-      <Dimmed onClick={handleModalClose} />
+      <Dimmed onClick={() => setIsModalOpen(false)} />
       <Modal>
         <MainSection>
           <GameTitle>
             <span>
-              {seletedGame.gameEmoji}
-              {seletedGame.message}
+              {selectedGame.gameEmoji}
+              {selectedGame.message}
             </span>
           </GameTitle>
           {!isLoadingOpen ? (
-            <CockgorithmGameContent
-              selectedGame={seletedGame}
-              handleLoadingOpen={handleLoadingOpen}
-              setFilters={setFilters}
-            />
+            <CockgorithmGameContentContainer />
           ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
-          ) : isFoundCocktail ? (
-            <CockgorithmGameResult cocktailInfo={cocktailInfo} />
           ) : (
-            <CockgorithmGameResult />
+            <CockgorithmGameResultContainer />
           )}
         </MainSection>
-        <CustomCloseButton onClick={handleModalClose} />
+        <CustomCloseButton onClick={() => setIsModalOpen(false)} />
       </Modal>
     </>
   );
@@ -189,6 +168,7 @@ const CustomCloseButton = styled(CloseButton)`
   right: 20px;
 
   color: white;
+  cursor: pointer;
 
   @media screen and (max-width: 500px) {
     width: 25px;
