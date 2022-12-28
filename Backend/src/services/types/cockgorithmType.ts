@@ -1,3 +1,5 @@
+import { CockgorithmResData } from 'types';
+
 export interface CockgorithmServiceType {
   category: string;
   alcohol: string;
@@ -20,4 +22,8 @@ export interface Material {
   alcohol: string;
   category: string;
   ingredients: [];
+}
+
+interface CockgorithmResults {
+  cocktails: CockgorithmResData[];
 }

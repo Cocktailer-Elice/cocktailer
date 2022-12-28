@@ -19,7 +19,6 @@ interface Props {
 export const CategoryListItem = ({ id, name, official, img, owner }: Props) => {
   const navigate = useNavigate();
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
-    console.log(event);
     navigate(`/cockcipe/detail/${id}`);
   };
   return (

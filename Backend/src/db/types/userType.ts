@@ -59,6 +59,7 @@ export interface IUser extends Document {
   points: number;
   isPasswordTemporary: boolean;
   isApplyingBartender: boolean;
+  myLikes: number[];
   readonly userGetResData: User;
   readonly tokenData: Cookie;
 }

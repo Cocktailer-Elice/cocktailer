@@ -19,6 +19,10 @@ const CockflowSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    isAdopted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { collection: 'cockflows', timestamps: true, versionKey: false },
 );

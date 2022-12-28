@@ -1,7 +1,7 @@
 import { formatCockflow } from './utils/formatCockflow';
 import { CockflowInfo } from '../services';
 import { cockflowModel } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 
 class CockflowDependencies implements CockflowDependencies {
