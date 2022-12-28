@@ -1,31 +1,30 @@
 //model
 
 import { CocktailGetResData } from 'types';
-type Ratio = {
-  alcohol: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-  ingredient: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-};
 
-export interface CocktailCreateAndUpdate {
+export interface CocktailObj {
   category: string;
   name: string;
   official: boolean;
   flavor: string;
   degree: number;
   img: string;
-  ratio: Ratio;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
   content: string;
 }
 
@@ -38,7 +37,22 @@ export interface CocktailModelType {
   flavor: string;
   degree: number;
   img: string;
-  ratio: Ratio;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
   content: string;
   likes: number;
   likesUser: {
@@ -57,7 +71,22 @@ export interface FindCocktailId {
     flavor: string;
     degree: number;
     img: string;
-    ratio: Ratio;
+    ratio: {
+      alcohol: {
+        [anykey: string]: [
+          {
+            [anykey: string]: number;
+          },
+        ];
+      };
+      ingredient: {
+        [anykey: string]: [
+          {
+            [anykey: string]: number;
+          },
+        ];
+      };
+    };
     content: string;
     likes: number;
     likesUser: {

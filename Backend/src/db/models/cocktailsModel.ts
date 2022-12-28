@@ -5,7 +5,7 @@ import {
   UserRanking,
   UpdateResult,
   LikesUser,
-  CocktailCreateAndUpdate,
+  CocktailObj,
 } from '../types';
 import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
@@ -82,16 +82,14 @@ export class CocktailModel implements CocktailInterface {
     return { cocktailRankings: cocktailRanking, userRankings: result[1] };
   };
 
-  public createCocktail = async (
-    cocktailCreateDto: CocktailCreateAndUpdate,
-  ): Promise<number> => {
+  public createCocktail = async (cocktailObj: CocktailObj): Promise<number> => {
     const session = await db.startSession();
 
     try {
       session.startTransaction();
 
       const newMyCocktail: CocktailModelType = await new CocktailSchema(
-        cocktailCreateDto,
+        cocktailObj,
       ).save({
         session,
       });
@@ -195,7 +193,7 @@ export class CocktailModel implements CocktailInterface {
   public updateCocktail = async (
     cocktailId: number,
     userId: number,
-    cocktailCreateDto: CocktailCreateAndUpdate,
+    cocktailObj: CocktailObj,
   ): Promise<UpdateResult> => {
     const session = await db.startSession();
 
@@ -204,7 +202,7 @@ export class CocktailModel implements CocktailInterface {
 
       const result: UpdateResult = await CocktailSchema.updateOne(
         { id: cocktailId, owner: userId },
-        cocktailCreateDto,
+        cocktailObj,
       ).session(session);
 
       await session.commitTransaction();
@@ -285,18 +283,6 @@ export class CocktailModel implements CocktailInterface {
         { id: userId },
         { [option]: { myLikes: cocktailId } },
       ).session(session);
-
-      // if (likesUser[userId]) {
-      //   await User.update(
-      //     { id: userId },
-      //     { $push: { myLikes: cocktailId } },
-      //   ).session(session);
-      // } else {
-      //   await User.update(
-      //     { id: userId },
-      //     { $pull: { myLikes: cocktailId } },
-      //   ).session(session);
-      // }
 
       await session.commitTransaction();
 

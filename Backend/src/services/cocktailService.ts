@@ -1,8 +1,4 @@
-import {
-  CocktailServiceType,
-  UpdateResult,
-  CocktailCreateAndUpdate,
-} from './types';
+import { CocktailServiceType, UpdateResult, CocktailObj } from './types';
 import { Rankings } from 'types';
 
 import { cocktailModel } from '../db';
@@ -29,11 +25,9 @@ class CocktailService {
     return data;
   }
 
-  public async createCocktail(
-    cocktailCreateDto: CocktailCreateAndUpdate,
-  ): Promise<number> {
+  public async createCocktail(cocktailObj: CocktailObj): Promise<number> {
     const data: number = await this.cocktailModel.createCocktail({
-      ...cocktailCreateDto,
+      ...cocktailObj,
     });
 
     if (!data) {
@@ -64,7 +58,6 @@ class CocktailService {
   }
 
   public async findCocktailId(cocktailId: number, userId: number | null) {
-    console.log(userId);
     const data = await this.cocktailModel.findCocktailId(cocktailId, userId);
 
     if (!data) {
@@ -97,13 +90,12 @@ class CocktailService {
   public async updateCocktail(
     cocktailId: number,
     userId: number,
-    updateCocktail: CocktailServiceType,
+    cocktailObj: CocktailObj,
   ) {
-    // 트랜젝션 처리!! //
     const data: UpdateResult = await this.cocktailModel.updateCocktail(
       cocktailId,
       userId,
-      updateCocktail,
+      cocktailObj,
     );
 
     if (!data) {
@@ -114,7 +106,7 @@ class CocktailService {
       );
     }
 
-    return data;
+    return cocktailId;
   }
 
   public async deleteCocktail(userId: number, cocktailId: number) {
