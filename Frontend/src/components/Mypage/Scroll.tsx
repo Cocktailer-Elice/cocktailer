@@ -56,6 +56,12 @@ const GridContent = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0.4rem;
+  max-width: 100px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  span {
+    font-size: 0.7rem;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
 `;

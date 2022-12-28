@@ -18,7 +18,9 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
         <BoardTitle>{title}</BoardTitle>
         <Button
           onClick={() =>
-            navigate(`/mypage/${cockflow ? 'cockflows' : 'comments'}`)
+            navigate(
+              `/mypage/${title === '나의 Cockflow' ? 'cockflows' : 'comments'}`,
+            )
           }
         >
           더 보기
