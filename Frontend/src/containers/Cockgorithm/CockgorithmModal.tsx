@@ -85,8 +85,10 @@ export const CockgorithmModal = ({
       <Modal>
         <MainSection>
           <GameTitle>
-            {seletedGame.gameEmoji}
-            {seletedGame.gameTitle}
+            <span>
+              {seletedGame.gameEmoji}
+              {seletedGame.message}
+            </span>
           </GameTitle>
           {!isLoadingOpen ? (
             <CockgorithmGameContent
@@ -167,7 +169,9 @@ const GameTitle = styled.div`
   align-items: center;
 
   font-size: 20px;
+  padding: 0px 20px;
   color: white;
+  line-height: 1.5;
 
   @media screen and (max-width: 500px) {
     font-size: 12px;

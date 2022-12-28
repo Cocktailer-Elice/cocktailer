@@ -88,8 +88,9 @@ const GameContent = styled.div`
 `;
 
 const Question = styled.div`
-  padding: 50px 10px;
   height: 10%;
+  margin-top: 10px;
+  padding: 10px;
   font-size: 20px;
   font-weight: bold;
   display: flex;
@@ -103,8 +104,8 @@ const Question = styled.div`
 
 const OptionContainer = styled.div`
   width: 100%;
-  height: 90%;
-  margin: 50px 20px;
+  height: 50%;
+  margin: 30px 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 5px;
