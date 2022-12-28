@@ -3,7 +3,7 @@ import { CocktailListItem } from './List/CocktailListItem';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper';
+import { Autoplay, Scrollbar } from 'swiper';
 import 'swiper/css'; //basic
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -27,7 +27,8 @@ const ListCarousel = (itemList: Data[]) => (
       delay: 2000,
       disableOnInteraction: false,
     }}
-    modules={[Autoplay]}
+    scrollbar={true}
+    modules={[Autoplay, Scrollbar]}
   >
     {itemList?.map((item, idx) => (
       <SwiperSlide key={item.id}>
@@ -108,7 +109,7 @@ export const ListWrapper = () => {
 const Category = styled.p`
   font-size: 20px;
   font-weight: 600;
-  color: #212529;
+  color: #495057;
   margin-left: 20px;
 `;
 

@@ -24,9 +24,9 @@ export const CategoryListItem = ({ id, name, official, img, owner }: Props) => {
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
+      <Badge>{official ? <OfficialBadge /> : null}</Badge>
       <ImgBox>
-        {official ? <OfficialBadge /> : null}
-        <img src={img} alt="칵테일 이미지" />
+        <img src={img} alt="칵테일 이미지" width="150" height="150" />
       </ImgBox>
       <>
         <Title>{name}</Title>
@@ -36,24 +36,42 @@ export const CategoryListItem = ({ id, name, official, img, owner }: Props) => {
   );
 };
 
-// TODO : 이미지 출력 시 사이즈 조정
 const ThumbnailBox = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
   background-color: aliceblue;
-  width: auto;
-  height: auto;
   margin: 10px;
+  cursor: pointer;
+  @media screen and (max-width: 450px) {
+    width: 150px;
+  }
+  position: relative;
+`;
+const Badge = styled.div`
+  position: absolute;
+  top: 3%;
+  left: 85%;
 `;
 const ImgBox = styled.div`
   width: 150px;
-  height: 150px;
-  background-color: palegreen;
+  margin: 0 auto;
+  @media screen and (max-width: 450px) {
+    width: 120px;
+    & > img {
+      width: 120px;
+      height: 120px;
+    }
+  }
 `;
 const Title = styled.div`
-  font-size: 18px;
-  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #495057;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const NickName = styled.div`
   font-size: 14px;
+  margin-bottom: 10px;
 `;

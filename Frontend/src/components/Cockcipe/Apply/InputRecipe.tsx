@@ -35,7 +35,6 @@ export const InputRecipe = ({
     setCount((prev) => [...prev, 0]);
   };
   const handleSelectChange = (event: any, index: number) => {
-    console.log(event.target.value);
     setSelect((prev: any) => [
       ...prev.slice(0, index),
       event.target.value,
@@ -97,11 +96,22 @@ export const InputRecipe = ({
     <>
       <RecipeAddWrapper>
         <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
-        <AddIcon
-          onClick={handleAddRecipe}
-          fontSize="large"
-          sx={{ marginRight: '40px' }}
-        />
+        {count.length > 3 ? (
+          <AddIcon
+            fontSize="large"
+            sx={{
+              marginRight: '40px',
+              color: '#f03e3e',
+              cursor: 'not-allowed',
+            }}
+          />
+        ) : (
+          <AddIcon
+            onClick={handleAddRecipe}
+            fontSize="large"
+            sx={{ marginRight: '40px' }}
+          />
+        )}
       </RecipeAddWrapper>
 
       {count.map((item, idx) => (
@@ -137,6 +147,7 @@ export const InputRecipe = ({
             variant="standard"
             type="text"
             value={title[idx]}
+            inputProps={{ maxLength: 15 }}
             sx={{ marginRight: '10px;' }}
             onChange={(e) => handleTitleChange(e, idx)}
           />
@@ -144,12 +155,29 @@ export const InputRecipe = ({
             label="용량"
             variant="standard"
             type="number"
+            inputProps={{ maxLength: 999 }}
             value={value[idx]}
             onChange={(e) => handleValueChange(e, idx)}
           />
-          <ClearIcon id={idx.toString()} onClick={handleDelete} />
+          {count.length === 1 ? (
+            <ClearIcon
+              id={idx.toString()}
+              sx={{
+                marginRight: '40px',
+                color: '#f03e3e',
+                cursor: 'not-allowed',
+              }}
+            />
+          ) : (
+            <ClearIcon id={idx.toString()} onClick={handleDelete} />
+          )}
         </RecipeContainer>
       ))}
+      {count.length > 3 || count.length === 1 ? (
+        <AlertError>재료는 1개 이상 4개 미만 넣어주세요</AlertError>
+      ) : (
+        ''
+      )}
     </>
   );
 };
@@ -172,4 +200,11 @@ const RecipeAddWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+`;
+
+const AlertError = styled.div`
+  font-size: 12px;
+  color: #f03e3e;
+  align-items: center;
+  text-align: center;
 `;
