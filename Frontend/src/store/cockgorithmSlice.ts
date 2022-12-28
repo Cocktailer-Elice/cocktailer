@@ -75,7 +75,7 @@ export const cockgorithmSlice = createSlice({
   initialState: cockgorithmInitialState,
   reducers: {
     resetCockgorithmState(state, action) {
-      return { ...state, ...cockgorithmInitialState };
+      return { ...cockgorithmInitialState };
     },
     setSelectedGame(state, action: GamePayload) {
       return { ...state, selectedGame: action.payload };
