@@ -146,7 +146,6 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
             }}>댓글달기</Button>&nbsp;&nbsp;
           </FlexRight>
         )
-
       }
 
       {
