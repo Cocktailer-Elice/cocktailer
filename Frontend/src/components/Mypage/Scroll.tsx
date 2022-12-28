@@ -1,26 +1,55 @@
-import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { CocktailGetResData, MyCockcipe } from '../../../../types';
+import { MyCockcipe, MyLike } from '../../../../types';
 import { Empty } from './style';
 
 interface ScrollProps {
+  type: string;
+  likes?: MyLike[];
   data?: {
-    lists: MyCockcipe[] | CocktailGetResData[];
+    lists: MyCockcipe[];
   };
 }
 
-export const Scroll = ({ data }: ScrollProps) => {
+export const Scroll = ({ type, likes, data }: ScrollProps) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      {data ? (
-        <Grid container columns={3} spacing={3}>
-          {data?.lists.map(({ id, name, img }) => {
+      {type === 'likes' ? (
+        <GridContainer>
+          {likes?.map(({ id, name, img }) => {
             return (
-              <Grid
-                item
+              <GridContentWrapper
                 key={id}
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(`/cockcipe/detail/${id}`)}
+              >
+                <GridContent>
+                  <img
+                    src={
+                      img === 'testedURL'
+                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
+                        : img
+                    }
+                    alt={name}
+                    style={{ maxWidth: '100px' }}
+                  />
+                  <span>{name}</span>
+                </GridContent>
+              </GridContentWrapper>
+            );
+          })}
+        </GridContainer>
+      ) : (
+        type === 'likes' && <Empty>좋아요한 내용 없음</Empty>
+      )}
+      {data?.lists?.length !== 0 ? (
+        <GridContainer>
+          {data?.lists?.map(({ id, name, img }) => {
+            return (
+              <GridContentWrapper
+                key={id}
+                style={{ cursor: 'pointer' }}
                 onClick={() => navigate(`/cockcipe/detail/${id}`)}
               >
                 <GridContent>
@@ -35,12 +64,12 @@ export const Scroll = ({ data }: ScrollProps) => {
                   />
                   <span>{name}</span>
                 </GridContent>
-              </Grid>
+              </GridContentWrapper>
             );
           })}
-        </Grid>
+        </GridContainer>
       ) : (
-        <Empty>내용 없음</Empty>
+        <Empty>등록된 내용 없음</Empty>
       )}
     </Wrapper>
   );
@@ -48,8 +77,20 @@ export const Scroll = ({ data }: ScrollProps) => {
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+`;
+
+const GridContentWrapper = styled.div`
+  min-width: max-content;
 `;
 
 const GridContent = styled.div`
