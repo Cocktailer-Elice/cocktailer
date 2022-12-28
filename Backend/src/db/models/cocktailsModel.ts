@@ -147,7 +147,7 @@ export class CocktailModel implements CocktailInterface {
 
     const cocktail = {
       ...findCocktail[0],
-      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${findCocktail[0].img}`,
+      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${findCocktail[0].img}`,
     };
 
     const liked = findCocktail[0].likesUser?.[userId]
@@ -176,7 +176,7 @@ export class CocktailModel implements CocktailInterface {
     result.map((e) => {
       const obj = {
         ...e,
-        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${e.img}`,
+        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${e.img}`,
       };
 
       cocktailList.push(obj);
