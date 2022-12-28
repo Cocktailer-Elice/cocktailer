@@ -12,8 +12,8 @@ export class CockgorithmModel implements CockgorithmInterface {
     material: Material,
   ): Promise<CocktailModelType[]> => {
     const { alcohol, category } = material;
-    const filterMinDegree = material.minDegree - 5;
-    const filterMaxDegree = material.maxDegree + 5;
+    const filterMinDegree = material.minDegree - 8;
+    const filterMaxDegree = material.maxDegree + 8;
 
     const cocktails: CocktailModelType[] = await CocktailSchema.aggregate(
       findByCockgorithm(category, filterMinDegree, filterMaxDegree, alcohol),

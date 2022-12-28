@@ -9,3 +9,12 @@ export const authContants = {
     '나의 웬수',
   ],
 };
+
+// export const cockgorithmDefaultResult = {
+//   id: 18,
+//   name: '소맥',
+//   degree: 8,
+//   img: 'https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/testedURL',
+//   content:
+//     '이런! 칵테일러의 빅데이터를 전부 조사했지만 일치하는 결과가 없어요 😅 더 많은 레시피를 준비해 놓을게요 😊',
+// };
