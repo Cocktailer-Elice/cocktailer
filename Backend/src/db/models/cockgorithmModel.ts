@@ -1,41 +1,24 @@
-import { CockgorithmModelType, Material } from '../types';
-
-import { firstSearch } from '../queries/cockgorithmQuery';
+import { CockgorithmModelType, CocktailModelType, Material } from '../types';
+import { findByCockgorithm } from '../queries/cockgorithmQuery';
 
 import CocktailSchema from '../schemas/cocktailsSchema';
 
 interface CockgorithmInterface {
-  activateCockgorithm(material: Material): Promise<CockgorithmModelType>;
+  activateCockgorithm(material: Material): Promise<CockgorithmModelType[]>;
 }
 
 export class CockgorithmModel implements CockgorithmInterface {
   public activateCockgorithm = async (
     material: Material,
-  ): Promise<CockgorithmModelType> => {
-    // material 을 사용할것!!
+  ): Promise<CocktailModelType[]> => {
+    const { alcohol, category } = material;
+    const filterMinDegree = material.minDegree - 5;
+    const filterMaxDegree = material.maxDegree + 5;
 
-    const alcohol = `ratio.alcohol.${material.alcohol}`;
-    const ingredient1 = `ratio.ingredient.${material.ingredients[0]}`;
-    const ingredient2 = `ratio.ingredient.${material.ingredients[1]}`;
-
-    //아래 주입??
-
-    console.log(material);
-
-    const result1: CockgorithmModelType[] = await CocktailSchema.aggregate(
-      firstSearch(material),
+    const cocktails: CocktailModelType[] = await CocktailSchema.aggregate(
+      findByCockgorithm(category, filterMinDegree, filterMaxDegree, alcohol),
     );
-
-    console.log('////////////////////////////');
-    console.log(result1);
-    console.log('////////////////////////////');
-
-    const formatedCocktail = {
-      ...result1[0],
-      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${result1[0].img}`,
-    };
-
-    return formatedCocktail;
+    return cocktails;
   };
 }
 
