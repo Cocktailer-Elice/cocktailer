@@ -9,6 +9,8 @@ import { slice20 } from '../../components/Cockflow/CockflowUtils';
 import { useInView } from 'react-intersection-observer';
 import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
+import { useAuthentication } from '../../hooks/useAuthentication';
+
 
 const imgArr = [
   'https://cdn.pixabay.com/photo/2013/02/21/19/06/drink-84533_960_720.jpg',
@@ -34,6 +36,8 @@ export const CockflowPage = () => {
   const [maxPage, setMaxpage] = useState(1);
 
   const [ref, inView] = useInView();
+
+  const isLoggedIn = useAuthentication();
 
   const getList = () => {
     setLoading(true);
@@ -64,7 +68,9 @@ export const CockflowPage = () => {
       </Helmet>
       <P5>
         <CockflowHeader />
-        <CockflowLinkBtn link="/cockflow/new" title="질문하기" />
+        {
+          isLoggedIn && <CockflowLinkBtn link="/cockflow/new" title="질문하기" />
+        }
         <List>
           {listData.map(item =>
             <Item key={item.id}>

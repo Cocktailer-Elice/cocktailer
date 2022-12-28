@@ -10,10 +10,13 @@ import { P10P15 } from '../../components/Cockflow/style';
 import { CockflowGetResData } from '../../../../types/cockflowType';
 import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 export const CockflowDetail = () => {
   let params = useParams();
   const _id = params.cockflowId;
+
+  const isLoggedIn = useAuthentication();
 
   const [resData, setResData] = useState<CockflowGetResData | null>(null);
 
@@ -72,9 +75,8 @@ export const CockflowDetail = () => {
       <P10P15>
         <CockflowLinkBtn link='/cockflow' title='목록' />
         <CockflowDetailBox detailData={data} />
-        {/* (+)삭제를 위해 넘겨줘야하는 값 key={data.id} */}
         <br />
-        <CockflowAddComment cockflowId={_id} />
+        {isLoggedIn && <CockflowAddComment cockflowId={_id} />}
         <CockflowCommentBox cockflowId={_id} commentlist={comments} commentId={'16'} />
       </P10P15>
     </Container>

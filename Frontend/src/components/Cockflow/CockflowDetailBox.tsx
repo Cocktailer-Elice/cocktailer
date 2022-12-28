@@ -5,6 +5,7 @@ import { Middle, FlexRight } from '../../components/Cockflow/style';
 import { trimDate } from './CockflowUtils';
 import { CockflowEnrollBtns } from './CockflowEnrollBtns';
 import axios from 'axios';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 interface dataType {
   detailData: {
@@ -25,6 +26,8 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
   const [newTitle, setNewTitle] = useState(title);
   const [newContent, setNewContent] = useState(content);
 
+  const isLoggedIn = useAuthentication();
+
   useEffect(() => {
     setNewTitle(title);
     setNewContent(content);
@@ -40,7 +43,6 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
       content: newContent
     }
 
-    console.log(copiedData)
     await axios.put(`/api/cockflow/${detailData._id}`, copiedData)
       .then(() => {
         alert('수정되었습니다.');
@@ -85,22 +87,23 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
           onChange={handleTextArea}
           readOnly={inputUnActived}
         />
-        {!inputUnActived &&
-          <CockflowEnrollBtns
-            typeBtn="button"
-            pageId={detailData._id}
-            linkto={`/cockflow`}
-            editFn={editFn}
-            updateAxios={updateAxios}
-          />}
         {
-          inputUnActived
-          && <CockflowEnrollBtns
-            typeBtn="edit"
-            linkto={`/cockflow`}
-            pageId={detailData._id}
-            editFn={editFn}
-          />
+          isLoggedIn && (
+            inputUnActived
+              ? (<CockflowEnrollBtns
+                typeBtn="edit"
+                linkto={`/cockflow`}
+                pageId={detailData._id}
+                editFn={editFn}
+              />)
+              : (<CockflowEnrollBtns
+                typeBtn="button"
+                pageId={detailData._id}
+                linkto={`/cockflow`}
+                editFn={editFn}
+                updateAxios={updateAxios}
+              />)
+          )
         }
       </form>
     </ContWrap>
