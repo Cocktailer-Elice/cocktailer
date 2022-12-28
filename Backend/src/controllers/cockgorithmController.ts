@@ -1,9 +1,5 @@
 import { Request as Req, Response as Res } from 'express';
-import {
-  CockgorithmReqData,
-  ProcessedMaterail,
-  CockgorithmResData,
-} from 'types';
+import { CockgorithmReqData, ProcessedMaterail } from 'types';
 import CockgorithmService from '../services/cockgorithmService';
 
 class CockgorithmController {

@@ -1,10 +1,9 @@
-import { Request as Req, Response as Res, NextFunction as Next } from 'express';
+import { Request as Req, Response as Res } from 'express';
 import {
   CocktailCreateReqData,
   Rankings,
   CocktailObj,
   UpdateResult,
-  CocktailLists,
 } from 'types';
 import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
@@ -155,8 +154,6 @@ class CocktailController {
   ////////////////////////////////
 
   public makeMockData = async (req: Req, res: Res) => {
-    console.log('생성기 시작 _controller');
-
     const result: any = await this.cocktailService.makeMockData();
 
     res.status(200).json({ result: result });

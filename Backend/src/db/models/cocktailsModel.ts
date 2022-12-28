@@ -7,7 +7,6 @@ import {
   UpdateResult,
   LikesUser,
   CocktailObj,
-  CocktailLists,
 } from '../types';
 import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
@@ -193,8 +192,6 @@ export class CocktailModel implements CocktailInterface {
     userId: number,
     cocktailObj: CocktailObj,
   ): Promise<UpdateResult> => {
-    const session = await db.startSession();
-
     const result: DBUpdateResult = await CocktailSchema.updateOne(
       { id: cocktailId, owner: userId },
       cocktailObj,
