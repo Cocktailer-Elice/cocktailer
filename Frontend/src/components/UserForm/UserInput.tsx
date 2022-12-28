@@ -8,6 +8,7 @@ interface InputProps {
   name: string;
   type?: string;
   placeholder?: string;
+  inputStyle?: React.CSSProperties;
 }
 
 export const UserInput = ({
@@ -16,6 +17,7 @@ export const UserInput = ({
   name,
   type = 'text',
   placeholder = '',
+  inputStyle,
 }: InputProps) => {
   const { register } = useFormContext();
   return (
@@ -27,6 +29,7 @@ export const UserInput = ({
           type={type}
           id={id}
           placeholder={placeholder}
+          style={inputStyle}
         />
       </LabelInputWrapper>
       <UserInputError name={name} />

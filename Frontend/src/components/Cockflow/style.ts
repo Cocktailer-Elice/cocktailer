@@ -26,13 +26,15 @@ export const CommentStyle = styled.textarea`
     line-height: 1.8;
     border: none;
     resize: none;
-
 `;
-
 
 export const P5 = styled.div`
     padding: 5px;
 `;
+
+export const P10P15 = styled.div`
+    padding: 10px 15px;
+`
 
 export const P15B1 = styled.div`
     padding: 15px 20px;
@@ -42,8 +44,8 @@ export const P15B1 = styled.div`
 export const P50B1 = styled.div`
     position: relative;
     padding: 0 50px;
-    border-top: 1px solid #ddd; 
     margin-top: 15px;
+
     &::before {
         content: '';
         display: block;
@@ -55,6 +57,7 @@ export const P50B1 = styled.div`
         background: #ddd;
         z-index: 1;
     }
+
     &::after {
         content: '';
         display: block;
@@ -71,10 +74,47 @@ export const P50B1 = styled.div`
 export const Middle = styled.div`
     display: flex;
     align-items: center;
-`
+`;
+
+export const FlexLeft = styled.div`
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 8px 0px;
+`;
 
 export const FlexMiddle = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-`
+    margin: 8px 0px;
+`;
+
+export const FlexRight = styled.div`
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    margin: 8px 0px;
+`;
+
+export const IconWrap = styled.button`
+    border-radius: 20%;
+    color: #606060;
+    padding: 7px 9px;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background: #fff;
+`;
+
+export const Adopted = styled.div`
+    height: 24px;
+    padding: 0 8px 0 7px;
+    line-height: 24px;
+    border-radius: 4px;
+    background: #5c7cfa;
+    margin-right: 8px;
+    text-align: center;
+    font-size: 10px;
+    color: #fff;
+`;

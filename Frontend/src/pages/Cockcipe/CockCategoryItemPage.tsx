@@ -1,6 +1,14 @@
 import React from 'react';
-import { CategoryContainer } from '../../containers/Cockcipe/List/CategoryContainer';
+import { Helmet } from 'react-helmet';
+import { CategoryWrapper } from '../../components/Cockcipe/CategoryWrapper';
 
 export const CockCategoryItemPage = () => {
-  return <CategoryContainer />;
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 칵테일 목록</title>
+      </Helmet>
+      <CategoryWrapper />
+    </>
+  );
 };

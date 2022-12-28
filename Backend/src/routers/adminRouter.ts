@@ -6,6 +6,7 @@ import { asyncHandler } from './middlewares';
 const router: Router = Router();
 
 router.use(adminValidator, isLoggedIn, isAdmin);
+router.get('/get-applying', adminController.getUsersApplyingBartender);
 router.patch(
   '/verify-bartender',
   asyncHandler(adminController.verifyBartender),
