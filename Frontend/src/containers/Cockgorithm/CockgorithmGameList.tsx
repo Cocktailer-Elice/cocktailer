@@ -7,6 +7,21 @@ interface CockgorithmGameListProps {
   handleGameClick: (game: IGame) => void;
 }
 
+const gameColors = [
+  '#ff6b6b',
+  '#f06595',
+  '#cc5de8',
+  '#845ef7',
+  '#5c7cfa',
+  '#339af0',
+  '#22b8cf',
+  '#20c997',
+  '#51cf66',
+  '#94d82d',
+  '#fcc419',
+  '#ff922b',
+];
+
 export const CockgorithmGameList = ({
   gameDatas,
   handleGameClick,
@@ -16,6 +31,7 @@ export const CockgorithmGameList = ({
       {gameDatas.map((game, index) => (
         <Game
           key={index}
+          nth={index}
           onClick={() => {
             handleGameClick(game);
           }}
@@ -37,7 +53,7 @@ const GameList = styled.div`
   padding: 30px 0px;
 `;
 
-const Game = styled.div`
+const Game = styled.div<{ nth: number }>`
   width: 70%;
   height: 120px;
 
@@ -48,8 +64,8 @@ const Game = styled.div`
 
   padding: 20px;
   margin-bottom: 40px;
-
-  background-color: ${(props) => props.theme.colors.indigo5};
+  background-color: ${(props) =>
+    props.nth ? gameColors[props.nth] : '#ff6b6b'};
   border-radius: 30px;
 
   cursor: pointer;
