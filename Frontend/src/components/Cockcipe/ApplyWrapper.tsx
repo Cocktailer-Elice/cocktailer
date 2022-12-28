@@ -1,11 +1,8 @@
-import axios from 'axios';
-import React, { useReducer, useState } from 'react';
-import { useNavigate } from 'react-router';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import { CocktailApplyData } from '../../../../types';
-import { POST_COCKTAIL } from '../../constants/api';
-import { useAppSelector } from '../../store/store';
+
 import { ApplyButton } from './Apply/ApplyButton';
 import { InputCockContent } from './Apply/InputCockContent';
 import { InputCockFlavor } from './Apply/InputCockFlavor';
@@ -21,7 +18,6 @@ interface Obj {
 }
 
 export const ApplyWrapper = ({ apply }: ApplyProps) => {
-  const navigate = useNavigate();
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);

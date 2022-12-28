@@ -13,19 +13,13 @@ interface Props {
 export const CocktailListItem = ({ id, name, official, img }: Props) => {
   const navigate = useNavigate();
   const handleDetailPage = (event: React.MouseEvent<HTMLDivElement>) => {
-    console.log(event);
     navigate(`/cockcipe/detail/${id}`);
   };
   return (
     <ThumbnailBox onClick={handleDetailPage}>
       <ImgBox>
         <Badge>{official ? <OfficialBadge /> : null}</Badge>
-        <img
-          src="/assets/images/testimg.svg"
-          alt="칵테일 이미지"
-          width="150"
-          height="150"
-        />
+        <img src={img} alt="칵테일 이미지" width="150" height="150" />
       </ImgBox>
       <>
         <CocktailName>{name}</CocktailName>
