@@ -24,15 +24,15 @@ export const UserRouter = () => {
       <Route path="/bartender-apply" element={<BartenderApplyWithLogin />} />
       <Route
         path="/mypage/cockflows"
-        element={<DetailsWithLogin title="내 칵플로우" />}
+        element={<DetailsWithLogin title="나의 Cockflow" />}
       />
       <Route
         path="/mypage/likes"
-        element={<DetailsWithLogin title="좋아요한 칵시피" />}
+        element={<DetailsWithLogin title="좋아요한 Cockcipe" />}
       />
       <Route
         path="/mypage/cockcipes"
-        element={<DetailsWithLogin title="내 칵시피" />}
+        element={<DetailsWithLogin title="나의 Cockcipe" />}
       />
       <Route
         path="/mypage/comments"

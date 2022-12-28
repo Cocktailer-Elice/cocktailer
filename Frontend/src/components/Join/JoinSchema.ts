@@ -36,5 +36,5 @@ export const JoinSchema = yup.object().shape({
   alcohol: yup.string(),
   touse: yup
     .boolean()
-    .test('touse', '약관에 동의해주세요', (value) => value === true),
+    .test('touse', '이용에 동의해주세요', (value) => value === true),
 });

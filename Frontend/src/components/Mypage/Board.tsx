@@ -2,28 +2,30 @@ import { Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { MyCockflow, MyComment } from '../../../../types';
-import { SectionContainer, SectionWrapper } from './style';
+import { Empty, SectionContainer, SectionWrapper } from './style';
 
 interface BoardProps {
   title: string;
+  type: string;
   cockflow?: MyCockflow[];
   comments?: MyComment[];
 }
 
-export const Board = ({ title, cockflow, comments }: BoardProps) => {
+export const Board = ({ title, type, cockflow, comments }: BoardProps) => {
   const navigate = useNavigate();
   return (
     <SectionContainer>
       <SectionWrapper>
         <BoardTitle>{title}</BoardTitle>
         <Button
+          sx={{ fontSize: '0.7rem' }}
           onClick={() =>
             navigate(
-              `/mypage/${title === '나의 Cockflow' ? 'cockflows' : 'comments'}`,
+              `/mypage/${type === 'cockflow' ? 'cockflows' : 'comments'}`,
             )
           }
         >
-          더 보기
+          전체 보기
         </Button>
         <Grid
           container
@@ -39,6 +41,7 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
                 xs={6}
                 key={id}
                 onClick={() => navigate(`/cockflow/detail/${id}`)}
+                sx={{ cursor: 'pointer' }}
               >
                 <ContentWrapper>
                   <Title>{title}</Title>
@@ -46,12 +49,12 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
               </Grid>
             );
           })}
-          {comments?.map(({ content, parentCockflow }, idx) => {
+          {comments?.map(({ content, parentCockflow }) => {
             return (
               <Grid
                 item
                 xs={6}
-                key={idx}
+                key={parentCockflow[0].id}
                 onClick={() =>
                   navigate(`/cockflow/detail/${parentCockflow[0].id}`)
                 }
