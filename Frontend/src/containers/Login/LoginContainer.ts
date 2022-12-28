@@ -2,11 +2,7 @@ import { connect } from 'react-redux';
 import { LoginReqData } from '../../../../types';
 import { LoginForm } from '../../components/Login/LoginForm';
 import { userLogin } from '../../store/authActions';
-import { AppDispatch, RootState } from '../../store/store';
-
-const mapStateToProps = (state: RootState) => ({
-  isLoggedIn: state.auth.isLoggedIn,
-});
+import { AppDispatch } from '../../store/store';
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   login: (data: LoginReqData) => {
@@ -18,7 +14,4 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
   },
 });
 
-export const LoginContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoginForm);
+export const LoginContainer = connect(null, mapDispatchToProps)(LoginForm);

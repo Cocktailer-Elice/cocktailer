@@ -7,11 +7,10 @@ import { Button } from '@mui/material';
 import { LoginSchema } from './LoginSchema';
 
 interface LoginFormProps {
-  isLoggedIn: boolean;
   login: (data: LoginReqData) => void;
 }
 
-export const LoginForm = ({ isLoggedIn, login }: LoginFormProps) => {
+export const LoginForm = ({ login }: LoginFormProps) => {
   const methods = useForm<LoginReqData>({
     resolver: yupResolver(LoginSchema),
     mode: 'onChange',
