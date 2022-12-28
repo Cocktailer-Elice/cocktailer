@@ -49,6 +49,11 @@ export const userQueries = {
               likesUser: 0,
               createdAt: 0,
               flavor: 0,
+              official: 0,
+              degree: 0,
+              category: 0,
+              likes: 0,
+              content: 0,
             },
           },
         ],
@@ -57,6 +62,16 @@ export const userQueries = {
     {
       $unwind: {
         path: '$myList',
+      },
+    },
+    {
+      $set: {
+        'myList.img': {
+          $concat: [
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/',
+            '$myList.img',
+          ],
+        },
       },
     },
     {
@@ -86,6 +101,14 @@ export const userQueries = {
               owner: 0,
               ratio: 0,
               updatedAt: 0,
+              likesUser: 0,
+              createdAt: 0,
+              flavor: 0,
+              official: 0,
+              degree: 0,
+              category: 0,
+              likes: 0,
+              content: 0,
             },
           },
         ],
@@ -106,6 +129,8 @@ export const userQueries = {
               _id: 0,
               owner: 0,
               updatedAt: 0,
+              isAdopted: 0,
+              createdAt: 0,
             },
           },
         ],
@@ -141,6 +166,7 @@ export const userQueries = {
             $project: {
               owner: 0,
               updatedAt: 0,
+              createdAt: 0,
             },
           },
         ],
@@ -148,7 +174,6 @@ export const userQueries = {
     },
     {
       $project: {
-        _id: 0,
         id: 0,
       },
     },

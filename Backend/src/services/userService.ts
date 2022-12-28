@@ -22,6 +22,12 @@ class UserService {
     return myPosts;
   };
 
+  public getMyLikes = async (userId: number) => {
+    const myLikes = await this.dependencies.userModel.getLikes(userId);
+
+    return myLikes;
+  };
+
   public findUserEmail = async (name: string, tel: string) => {
     const filter = { name, tel, deletedAt: null };
     const foundUser = await this.dependencies.userModel.findByFilter(filter);

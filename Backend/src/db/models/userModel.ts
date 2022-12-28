@@ -8,6 +8,7 @@ import { UserInfo } from '../../services/types';
 import { IUser } from '../types';
 import User from '../schemas/userSchema';
 import { userQueries } from '../queries/userQuery';
+import cocktailsSchema from '../schemas/cocktailsSchema';
 
 class UserMongoModel implements IUserMongoModel {
   public create = async (userInfo: UserInfo): Promise<IUser> => {
@@ -16,8 +17,23 @@ class UserMongoModel implements IUserMongoModel {
   };
 
   public getPosts = async (userId: number) => {
-    const users: IUser[] = await User.aggregate(userQueries.findById(userId));
-    return users;
+    const posts: IUser[] = await User.aggregate(userQueries.findById(userId));
+    return posts;
+  };
+
+  public getLikes = async (userId: number) => {
+    const user = (await User.findOne({ id: userId })) as IUser;
+    const projection =
+      '-_id -owner -official -flavor -degree -ratio -likes -createdAt -updatedAt -likesUser';
+    const likes = await cocktailsSchema.find(
+      { id: { $in: user.myLikes } },
+      projection,
+    );
+    likes.forEach(
+      (like) =>
+        (like.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${like.img}`),
+    );
+    return likes;
   };
 
   public findById = async (userId: number): Promise<IUser | null> => {
