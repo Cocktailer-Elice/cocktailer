@@ -63,7 +63,8 @@ class CocktailService {
     return data;
   }
 
-  public async findCocktailId(cocktailId: number, userId: number) {
+  public async findCocktailId(cocktailId: number, userId: number | null) {
+    console.log(userId);
     const data = await this.cocktailModel.findCocktailId(cocktailId, userId);
 
     if (!data) {

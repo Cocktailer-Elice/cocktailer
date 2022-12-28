@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
 import { cockgorithmController } from '../controllers/cockgorithmController';
-import { asyncHandler, isLoggedIn } from './middlewares';
+import { asyncHandler, isLoggedIn, exportUserId } from './middlewares';
 
 const cocktailsRouter: Router = Router();
 
@@ -37,6 +37,7 @@ cocktailsRouter.get(
 ////////// 칵테일id로 상세보기 //////////
 cocktailsRouter.get(
   '/:cocktailId',
+  exportUserId,
   asyncHandler(cocktailController.findCocktailId),
 );
 

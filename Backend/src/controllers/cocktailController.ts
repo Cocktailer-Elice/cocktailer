@@ -74,9 +74,12 @@ class CocktailController {
 
     const cocktailId = Number(req.params.cocktailId);
 
-    console.log(req);
+    console.log(req.user.userId);
 
-    const cocktail = await this.cocktailService.findCocktailId(cocktailId, 131);
+    const cocktail = await this.cocktailService.findCocktailId(
+      cocktailId,
+      req.user.userId,
+    );
 
     console.log(cocktail);
 

@@ -34,7 +34,10 @@ interface CocktailInterface {
 
   findByUserId(userId: number): Promise<CocktailModelType[]>;
 
-  findCocktailId(id: number, userId: number): Promise<FindCocktailId | null>;
+  findCocktailId(
+    id: number,
+    userId: number | null,
+  ): Promise<FindCocktailId | null>;
 
   findCocktailCategoryAndSearch(
     reqData: object,
@@ -137,7 +140,7 @@ export class CocktailModel implements CocktailInterface {
 
   public findCocktailId = async (
     cocktailId: number,
-    userId: number,
+    userId: number | null,
   ): Promise<FindCocktailId | null> => {
     const queries = findCocktailIdQuery(cocktailId);
 
@@ -149,6 +152,10 @@ export class CocktailModel implements CocktailInterface {
       ...findCocktail[0],
       img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${findCocktail[0].img}`,
     };
+
+    if (userId === null) {
+      return { cocktail: cocktail, liked: false };
+    }
 
     const liked = findCocktail[0].likesUser?.[userId]
       ? findCocktail[0].likesUser?.[userId] === true
