@@ -95,6 +95,22 @@ export const userQueries = {
         as: 'comments',
         pipeline: [
           {
+            $lookup: {
+              from: 'cockflows',
+              localField: 'cockflowId',
+              foreignField: 'id',
+              as: 'parentCockflow',
+              pipeline: [
+                {
+                  $project: {
+                    _id: 0,
+                    updatedAt: 0,
+                  },
+                },
+              ],
+            },
+          },
+          {
             $limit: 6,
           },
           {
