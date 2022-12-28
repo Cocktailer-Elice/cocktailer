@@ -27,7 +27,6 @@ interface Data {
   owner: Obj;
 }
 
-// TODO : 무한스크롤 전체 리스트 개수 반환해달라고 하기
 export const CategoryWrapper = () => {
   const url = window.location.pathname;
   const categoryId = url.split('/')[3];
@@ -108,7 +107,7 @@ export const CategoryWrapper = () => {
 
   return (
     <>
-      <CategoryHeader>{categoryId.toUpperCase()} Cocktail</CategoryHeader>
+      <CategoryHeader>{categoryId.toUpperCase()} COCKTAIL</CategoryHeader>
       <SearchCocktailInput
         official={official}
         setOfficial={setOfficial}
@@ -147,4 +146,6 @@ const CategoryHeader = styled.div`
   font-size: 30px;
   text-align: center;
   margin: 20px 0;
+  font-weight: 800;
+  color: #495057;
 `;

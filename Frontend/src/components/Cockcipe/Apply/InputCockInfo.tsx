@@ -32,6 +32,7 @@ export const InputCockInfo = ({
           sx={{
             width: '440px',
           }}
+          error={category === '' ? true : false}
         >
           <InputLabel>카테고리 선택</InputLabel>
           <Select
@@ -55,6 +56,8 @@ export const InputCockInfo = ({
           label="나만의 칵테일 이름"
           sx={{ marginRight: '20px;' }}
           value={value}
+          inputProps={{ maxLength: 20 }}
+          error={value === '' ? true : false}
           onChange={(e) => {
             setName(e.target.value);
           }}
@@ -63,6 +66,7 @@ export const InputCockInfo = ({
           label="칵테일 도수"
           type="number"
           value={degree}
+          error={degree < 0 || degree > 100 ? true : false}
           onChange={(e) => {
             setDegree(parseInt(e.target.value));
           }}
