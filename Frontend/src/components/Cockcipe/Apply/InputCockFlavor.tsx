@@ -25,7 +25,6 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
     }
   };
 
-  // TODO : key 값 변경하고 삭제 아이템 아이디로 삭제하기
   const deleteTagItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLElement;
     const textNode = target.parentElement as HTMLElement;

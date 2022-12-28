@@ -1,7 +1,11 @@
 import axios from 'axios';
 import React, { useReducer, useState } from 'react';
+import { useNavigate } from 'react-router';
+
 import styled from 'styled-components';
+import { CocktailApplyData } from '../../../../types';
 import { POST_COCKTAIL } from '../../constants/api';
+import { useAppSelector } from '../../store/store';
 import { ApplyButton } from './Apply/ApplyButton';
 import { InputCockContent } from './Apply/InputCockContent';
 import { InputCockFlavor } from './Apply/InputCockFlavor';
@@ -9,7 +13,14 @@ import { InputCockInfo } from './Apply/InputCockInfo';
 import { InputRecipe } from './Apply/InputRecipe';
 import { InputTitleImg } from './Apply/InputTitleImg';
 
-export const ApplyWrapper = () => {
+interface ApplyProps {
+  apply: (newData: CocktailApplyData) => void;
+}
+interface Obj {
+  [anykey: string]: [{ [anykey: string]: number }];
+}
+export const ApplyWrapper = ({ apply }: ApplyProps) => {
+  const navigate = useNavigate();
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
@@ -20,15 +31,15 @@ export const ApplyWrapper = () => {
 
   const [selectA, setSelectA] = useState<string[]>(['']);
   const [titleA, setTitleA] = useState<string[]>(['']);
-  const [valueA, setValueA] = useState<string[]>(['']);
+  const [valueA, setValueA] = useState<number[]>([]);
 
   const [selectI, setSelectI] = useState<string[]>(['']);
   const [titleI, setTitleI] = useState<string[]>(['']);
-  const [valueI, setValueI] = useState<string[]>(['']);
+  const [valueI, setValueI] = useState<number[]>([]);
 
   const handleApply = () => {
-    let alcohoObj: any = {};
-    let IngredObj: any = {};
+    let alcohoObj: Obj = {};
+    let IngredObj: Obj = {};
     for (let i = 0; i < selectA.length; i++) {
       if (alcohoObj[selectA[i]])
         alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
@@ -54,14 +65,20 @@ export const ApplyWrapper = () => {
       },
     };
 
-    axios
-      .post(POST_COCKTAIL, newData, {
-        headers: {},
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(newData);
-      });
+    apply(newData);
+
+    // axios
+    //   .post(POST_COCKTAIL, newData, {
+    //     headers: {},
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     console.log(newData);
+    //     navigate(`/cockcipe/detail/${res.data.data}`);
+    //   })
+    //   .catch((err) =>
+    //     alert('등록하는데 문제가 발생했습니다! 관리자에게 문의해보세요'),
+    //   );
   };
   return (
     <>
