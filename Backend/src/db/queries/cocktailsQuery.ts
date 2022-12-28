@@ -43,7 +43,7 @@ export const findCocktailIdQuery = (id: number) => {
           {
             $project: {
               _id: 0,
-              id: 0,
+
               myLikes: 0,
               isApplyingBartender: 0,
               isPasswordTemporary: 0,

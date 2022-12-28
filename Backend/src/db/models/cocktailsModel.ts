@@ -140,6 +140,7 @@ export class CocktailModel implements CocktailInterface {
     userId: number,
   ): Promise<FindCocktailId | null> => {
     const queries = findCocktailIdQuery(cocktailId);
+
     const findCocktail: CocktailModelType[] = await CocktailSchema.aggregate(
       Object(queries),
     );

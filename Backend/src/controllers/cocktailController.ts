@@ -72,11 +72,11 @@ class CocktailController {
   public findCocktailId = async (req: Req, res: Res) => {
     console.log('findCocktailId');
 
-    // const userId = req.user;
-
     const cocktailId = Number(req.params.cocktailId);
 
-    const cocktail = await this.cocktailService.findCocktailId(cocktailId, 108);
+    console.log(req);
+
+    const cocktail = await this.cocktailService.findCocktailId(cocktailId, 131);
 
     console.log(cocktail);
 
