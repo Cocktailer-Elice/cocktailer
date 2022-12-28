@@ -263,6 +263,7 @@ export class CocktailModel implements CocktailInterface {
     const session = await db.startSession();
 
     try {
+      session.startTransaction();
       await CocktailSchema.updateOne(
         { id: cocktailId },
         {
