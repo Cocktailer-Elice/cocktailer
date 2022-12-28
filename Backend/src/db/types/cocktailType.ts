@@ -1,22 +1,32 @@
 //model
 
 import { CocktailGetResData } from 'types';
-type Ratio = {
-  alcohol: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
+
+export interface CocktailObj {
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
   };
-  ingredient: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-};
+  content: string;
+}
 
 export interface CocktailModelType {
   id: number;
@@ -27,7 +37,22 @@ export interface CocktailModelType {
   flavor: string;
   degree: number;
   img: string;
-  ratio: Ratio;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
   content: string;
   likes: number;
   likesUser: {
@@ -46,7 +71,22 @@ export interface FindCocktailId {
     flavor: string;
     degree: number;
     img: string;
-    ratio: Ratio;
+    ratio: {
+      alcohol: {
+        [anykey: string]: [
+          {
+            [anykey: string]: number;
+          },
+        ];
+      };
+      ingredient: {
+        [anykey: string]: [
+          {
+            [anykey: string]: number;
+          },
+        ];
+      };
+    };
     content: string;
     likes: number;
     likesUser: {
@@ -77,11 +117,16 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
-export interface UpdateResult {
+export interface DBUpdateResult {
   acknowledged: boolean;
   modifiedCount: number;
   upsertedCount: number;
   matchedCount: number;
+}
+
+export interface UpdateResult {
+  update: boolean;
+  cocktailId: number;
 }
 
 export interface LikesUser {

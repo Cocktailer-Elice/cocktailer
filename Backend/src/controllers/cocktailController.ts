@@ -1,5 +1,10 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData, Rankings } from 'types';
+import {
+  CocktailCreateReqData,
+  Rankings,
+  CocktailObj,
+  UpdateResult,
+} from 'types';
 import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
 
@@ -33,30 +38,27 @@ class CocktailController {
   };
 
   public createCocktail = async (req: Req, res: Res) => {
-    console.log('createCocktail');
-
     const cocktailInfo: CocktailCreateReqData = req.body;
 
+    const createCocktailObj: CocktailObj = {
+      owner: req.user.userId,
+      ...cocktailInfo,
+    };
+
     const createCocktailData: number =
-      await this.cocktailService.createCocktail(cocktailInfo);
+      await this.cocktailService.createCocktail(createCocktailObj);
 
     res.status(200).json({ data: createCocktailData });
   };
 
   public getLists = async (req: Req, res: Res) => {
-    console.log('getLists');
-
     const lists = await this.cocktailService.getLists();
 
     res.status(200).json({ lists: lists });
   };
 
   public findByUserId = async (req: Req, res: Res) => {
-    console.log('findByUserId');
-
     const userId = req.user.userId;
-
-    console.log(userId);
 
     const lists = await this.cocktailService.findByUserId(userId);
 
@@ -64,22 +66,17 @@ class CocktailController {
   };
 
   public findCocktailId = async (req: Req, res: Res) => {
-    console.log('findCocktailId');
-
-    // const userId = req.user;
-
     const cocktailId = Number(req.params.cocktailId);
 
-    const cocktail = await this.cocktailService.findCocktailId(cocktailId, 108);
-
-    console.log(cocktail);
+    const cocktail = await this.cocktailService.findCocktailId(
+      cocktailId,
+      req.user.userId,
+    );
 
     res.status(200).json(cocktail);
   };
 
   public findCocktailCategoryAndSearch = async (req: Req, res: Res) => {
-    console.log('findCocktailCategoryAndSearch');
-
     interface ReqData {
       category: string;
       [optionKey: string]: string;
@@ -96,8 +93,6 @@ class CocktailController {
       reqData.keyword = String(req.query.keyword);
     }
 
-    console.log(reqData);
-
     const endpoint = Number(req.query.endpoint) || 0;
 
     const categoryLists =
@@ -112,20 +107,28 @@ class CocktailController {
   public updateCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
 
-    const updateCocktailInfo: CocktailCreateReqData = req.body;
+    const updateCocktailInfo: CocktailObj = req.body;
 
-    const result: any = await this.cocktailService.updateCocktail(
+    const userId = req.user.userId;
+
+    const result: UpdateResult = await this.cocktailService.updateCocktail(
       cocktailId,
+      userId,
       updateCocktailInfo,
     );
 
-    res.status(200).json({ updateCocktailInfo: updateCocktailInfo });
+    console.log(result);
+
+    res.status(200).json(result);
   };
 
   public deleteCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
 
+    const userId = req.user.userId;
+
     const result: string = await this.cocktailService.deleteCocktail(
+      userId,
       cocktailId,
     );
 

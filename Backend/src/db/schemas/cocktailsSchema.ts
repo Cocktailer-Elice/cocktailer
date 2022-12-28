@@ -92,7 +92,7 @@ CocktailSchema.virtual('cocktailInfo').get(function (this: CocktailModelType) {
     official: this.official,
     flavor: this.flavor,
     degree: this.degree,
-    img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${this.img}`, //cocktail-image
+    img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${this.img}`, //cocktail-image
     ratio: this.ratio,
     likes: this.likes,
     content: this.content,

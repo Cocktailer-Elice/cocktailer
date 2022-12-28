@@ -20,7 +20,38 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
+export interface Rankings {
+  cocktailRankings: CocktailRanking[];
+  userRankings: UserRanking[];
+}
+
 export interface CocktailCreateReqData {
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+}
+
+export interface CocktailObj {
   owner: number;
   category: string;
   name: string;
@@ -48,6 +79,11 @@ export interface CocktailCreateReqData {
 }
 
 export interface FindCocktailId {
+  cocktailId: number;
+}
+
+export interface UpdateResult {
+  update: boolean;
   cocktailId: number;
 }
 
@@ -82,9 +118,4 @@ export interface MyCockcipe {
   content: string;
   likes: number;
   createdAt: number;
-}
-
-export interface Rankings {
-  cocktailRankings: CocktailRanking[];
-  userRankings: UserRanking[];
 }
