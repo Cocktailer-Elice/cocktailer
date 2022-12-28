@@ -1,5 +1,6 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
 import { CocktailCreateReqData, Rankings } from 'types';
+import { redisCache } from '../redis';
 
 import CocktailService from '../services/cocktailService';
 
@@ -9,13 +10,25 @@ class CocktailController {
   public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
     console.log('getHomeCocktailAndUserList');
 
-    const data: Rankings =
-      await this.cocktailService.getHomeCocktailAndUserList();
+    // 인국님 테스트 해보세용
+    // await redisCache.del('ranking'); //얘는 캐시 지우는 애
+    const cachedValue = (await redisCache.get('ranking')) as string;
+    console.log(cachedValue);
+
+    const data: Rankings = cachedValue
+      ? JSON.parse(cachedValue)
+      : await this.cocktailService.getHomeCocktailAndUserList();
 
     res.status(200).json({
       cocktailRanking: data.cocktailRankings,
       userRanking: data.userRankings,
     });
+
+    // 나중에 캐싱 테스트용 콘솔로그는 지워주세용
+    if (!cachedValue) {
+      await redisCache.set('ranking', JSON.stringify(data));
+      console.log('레디스에 캐싱됨');
+    }
   };
 
   public createCocktail = async (req: Req, res: Res) => {
