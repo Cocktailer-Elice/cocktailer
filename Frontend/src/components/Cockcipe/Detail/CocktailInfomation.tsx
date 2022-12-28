@@ -78,7 +78,7 @@ export const CocktailInfomation = ({
       <Img src={cocktail.img} width="300" height="300" />
       <TitleContainer>
         <Name>{cocktail.name}</Name>
-        <Degree>&nbsp;&nbsp;({cocktail.degree}%)</Degree>
+        <Degree>&nbsp;&nbsp;({cocktail.degree}도)</Degree>
       </TitleContainer>
       <Nickname>
         작성자 : {cocktail.owner.nickname}
@@ -116,7 +116,7 @@ const TitleContainer = styled.div`
 const Name = styled.p`
   font-size: 25px;
 `;
-const NickContainer = styled.div``;
+
 const Nickname = styled.p`
   font-size: 15px;
 `;
@@ -145,10 +145,11 @@ const Content = styled.div`
   font-size: 20px;
   background-color: #edf2ff;
   border-radius: 10px;
-  height: 300px;
+  padding: 20px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 20px;
 `;
 const LikeContainer = styled.div`
   display: flex;

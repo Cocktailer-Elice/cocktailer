@@ -109,7 +109,7 @@ export const ListWrapper = () => {
 const Category = styled.p`
   font-size: 20px;
   font-weight: 600;
-  color: #212529;
+  color: #495057;
   margin-left: 20px;
 `;
 

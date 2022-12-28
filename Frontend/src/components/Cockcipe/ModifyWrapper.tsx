@@ -90,6 +90,7 @@ export const ModifyWrapper = () => {
       axios
         .patch(PATCH_COCKTAIL(cocktailId), newData)
         .then((res) => {
+          console.log(res);
           navigate(`/cockcipe/detail/${cocktailId}`);
         })
         .catch((err) =>
