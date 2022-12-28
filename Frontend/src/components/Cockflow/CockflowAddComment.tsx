@@ -4,10 +4,11 @@ import { Center } from './style';
 import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { POST_COCKFLOW_COMMENTS } from '../../constants/api';
 
 export const CockflowAddComment = ({ cockflowId }: any) => {
   const gets = async (data: any) => {
-    await axios.post(`/api/cockflow/${cockflowId}/comments`, data)
+    await axios.post(POST_COCKFLOW_COMMENTS(cockflowId), data)
       .then(function (response) {
         console.log(response);
       })

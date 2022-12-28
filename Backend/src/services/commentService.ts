@@ -6,7 +6,7 @@ import {
   IComment,
   ICommentMongoModel,
 } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 
 class CommentDependencies implements ICommentDependencies {
@@ -73,10 +73,6 @@ class CommentService {
     ) {
       throw new AppError(errorNames.inputError, 400, '비정상적인 요청');
     }
-    if (comment.owner === userId) {
-      throw new AppError(errorNames.businessError, 400, '자신이 작성한 답변');
-    }
-
     const result = await this.dependencies.commentModel.updateAdopted(
       commentId,
     );

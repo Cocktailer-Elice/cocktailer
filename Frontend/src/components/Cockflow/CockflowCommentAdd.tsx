@@ -8,34 +8,30 @@ import { Adopted, FlexLeft, FlexRight, IconWrap } from './style';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import EditIcon from '@mui/icons-material/Edit';
+import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../constants/api';
 
-export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
+export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: any) => {
   const { register, handleSubmit, reset } = useForm();
   const [readonly, setReadonly] = useState(true);
   const [commentValue, setCommentValue] = useState(' ');
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
 
-  const isLoggedIn = useAuthentication();
-
-  const commentsGets = async (data: any) => {
-    await axios.post(`/api/cockflow/${cockflowId}/comments/${commentId}`, data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const repliedCommentsGets = async (data: any) => {
+    await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data)
+      .then((res) => { })
+      .catch(function (err) { console.log(err) });
   };
 
-  const commentsPuts = async () => {
+  const isLoggedIn = useAuthentication();
+
+  const repliedCommentsPuts = async () => {
     const data = {
       "content": commentValue
-    }
+    };
 
-    await axios.put(`/api/cockflow/${cockflowId}/comments/${commentId}`, data)
+    await axios.put(COCKFLOW_TWOID(cockflowId, commentId), data)
       .then(function (response) {
-        console.log(response);
         alert('수정 되었습니다.');
         window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
@@ -45,7 +41,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   };
 
   const onSubmit = (data: any) => {
-    commentsGets(data);
+    repliedCommentsGets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
   };
@@ -53,14 +49,14 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
   const onCommentChange = (event: React.ChangeEventHandler<HTMLTextAreaElement> | any): void => {
     if (event) {
       setCommentValue(event.currentTarget.value);
-    }
+    };
   };
 
   const commAdopted = () => {
-    axios.patch(`/api/cockflow/${cockflowId}/comments/${commentId}`)
+    axios.patch(COCKFLOW_TWOID(cockflowId, commentId))
       .then(function (response) {
         alert('채택하였습니다.');
-        window.location.replace(`/cockflow/detail/${cockflowId}`);
+        window.location.replace(COCKFLOW_DETAIL(cockflowId));
       })
       .catch(function (error) {
         console.log(error);
@@ -70,7 +66,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
 
   const commDelete = async () => {
     if (confirm('댓글을 삭제하시겠습니까?')) {
-      await axios.delete(`http://localhost:5173/api/cockflow/${cockflowId}/comments/${commentId}`)
+      await axios.delete(COCKFLOW_TWOID(cockflowId, commentId))
         .then((response) => {
           alert('삭제 완료 되었습니다.');
           window.location.replace(`/cockflow/detail/${cockflowId}`);
@@ -83,7 +79,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
 
   const commEdit = () => {
     setReadonly(prev => !prev);
-  }
+  };
 
   useEffect(() => {
     if (item.subComments.length > 0) {
@@ -108,7 +104,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
         {item.owner.nickname}
       </FlexLeft>
       {
-        isLoggedIn && (
+        (isLoggedIn && isAuthor) && (
           readonly
             ? (
               <FlexRight>
@@ -131,11 +127,24 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
             )
             : (
               <FlexRight>
-                <Button variant="contained" onClick={() => commentsPuts()}>수정완료</Button>&nbsp;&nbsp;
+                <Button variant="contained" onClick={() => repliedCommentsPuts()}>수정완료</Button>&nbsp;&nbsp;
                 <Button variant="outlined" onClick={() => { setReadonly(prev => !prev) }}>취소하기</Button>
               </FlexRight>
             )
-
+        )
+      }
+      {
+        (isLoggedIn && !isAuthor) && (
+          <FlexRight>
+            <Button variant="outlined" onClick={() => {
+              if (subComment) {
+                setSubComment(false)
+                return;
+              };
+              setSubComment(true)
+              return;
+            }}>댓글달기</Button>&nbsp;&nbsp;
+          </FlexRight>
         )
       }
 
@@ -242,8 +251,8 @@ const Button2 = styled(Button)`
 
 const DeleteIc = styled(DeleteIcon)`
   font-size: 18px;
-`
+`;
 
 const EditIc = styled(EditIcon)`
   font-size: 18px;
-`
+`;

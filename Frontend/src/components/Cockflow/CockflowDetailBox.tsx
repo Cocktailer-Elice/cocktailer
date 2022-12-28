@@ -6,6 +6,7 @@ import { trimDate } from './CockflowUtils';
 import { CockflowEnrollBtns } from './CockflowEnrollBtns';
 import axios from 'axios';
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { COCKFLOW_ID } from '../../constants/api';
 
 interface dataType {
   detailData: {
@@ -15,11 +16,12 @@ interface dataType {
     isBartender: boolean,
     nickname: string,
     createdAt: Date,
-    content: string
+    content: string,
   };
+  isAuthor: boolean,
 };
 
-export const CockflowDetailBox = ({ detailData }: dataType) => {
+export const CockflowDetailBox = ({ detailData, isAuthor }: dataType) => {
   const [inputUnActived, setinputUnActived] = useState(true);
   const { title, isBartender, nickname, createdAt, content } = { ...detailData };
 
@@ -41,9 +43,9 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
     const copiedData = {
       title: newTitle,
       content: newContent
-    }
+    };
 
-    await axios.put(`/api/cockflow/${detailData._id}`, copiedData)
+    await axios.put(COCKFLOW_ID(detailData._id), copiedData)
       .then(() => {
         alert('수정되었습니다.');
         window.location.replace(`/cockflow/detail/${detailData._id}`);
@@ -56,7 +58,7 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
 
   const handleTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewContent(e.currentTarget.value);
-  }
+  };
 
   return (
     <ContWrap>
@@ -88,7 +90,7 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
           readOnly={inputUnActived}
         />
         {
-          isLoggedIn && (
+          (isLoggedIn && isAuthor) && (
             inputUnActived
               ? (<CockflowEnrollBtns
                 typeBtn="edit"
