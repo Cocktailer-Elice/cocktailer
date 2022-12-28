@@ -10,9 +10,6 @@ import { InputCockInfo } from './Apply/InputCockInfo';
 import { InputRecipe } from './Apply/InputRecipe';
 import { InputTitleImg } from './Apply/InputTitleImg';
 
-// TODO : 값 비어있으면 에러 처리 (validation)
-// TODO : 도수 0~100
-// TODO : 이미지 미리보기 띄우기
 export const ModifyWrapper = () => {
   const navigate = useNavigate();
   // state
@@ -87,11 +84,13 @@ export const ModifyWrapper = () => {
     ) {
       alert('비어있는 값이 있습니다!');
     } else {
+      console.log(newData);
       axios
         .patch(PATCH_COCKTAIL(cocktailId), newData)
         .then((res) => {
-          console.log(res);
-          navigate(`/cockcipe/detail/${cocktailId}`);
+          if (res.data.update)
+            navigate(`/cockcipe/detail/${res.data.cocktailId}`);
+          else throw new Error();
         })
         .catch((err) =>
           alert('수정하는데 문제가 발생했습니다! 관리자에게 문의해보세요'),
@@ -142,6 +141,7 @@ const Header = styled.div`
   color: #3b5bdb;
   text-align: center;
   margin-top: 20px;
+  font-weight: 800;
 `;
 
 const ApplyPlace = styled.div`

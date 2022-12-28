@@ -19,8 +19,7 @@ interface ApplyProps {
 interface Obj {
   [anykey: string]: [{ [anykey: string]: number }];
 }
-// TODO : 값 비어있으면 에러 처리 (validation)
-// TODO : 도수 0~100
+
 export const ApplyWrapper = ({ apply }: ApplyProps) => {
   const navigate = useNavigate();
   // state

@@ -34,12 +34,10 @@ export const CocktailListItem = ({ id, name, official, img }: Props) => {
   );
 };
 
-// TODO : 이미지 출력 시 사이즈 조정
 const ThumbnailBox = styled.div`
   box-sizing: border-box;
   border-radius: 10px;
   background-color: aliceblue;
-  width: auto;
   height: auto;
   margin: 10px;
   cursor: pointer;

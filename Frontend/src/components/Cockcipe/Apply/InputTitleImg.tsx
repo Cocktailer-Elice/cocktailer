@@ -25,8 +25,9 @@ export const InputTitleImg = ({ setImg, img }: any) => {
           folder: 'cocktails',
         })
         .then((res) => {
-          console.log(new URL(res.data).pathname.split('/')[2]);
-          setImg(new URL(res.data).pathname.split('/')[2]);
+          const key = new URL(res.data).pathname.split('/')[2];
+          console.log(key);
+          setImg(key);
           axios
             .put(`${res.data}`, file, {
               headers: {
@@ -34,7 +35,9 @@ export const InputTitleImg = ({ setImg, img }: any) => {
               },
               withCredentials: false,
             })
-            .then((res) => console.log(res.status));
+            .then((res) => {
+              console.log(res.status);
+            });
         });
     }
   };
@@ -55,9 +58,7 @@ export const InputTitleImg = ({ setImg, img }: any) => {
       </InsertWrapper>
       <PreviewImg>
         {!imgSrc ? (
-          img ? (
-            <img src={img} alt="preview" width="300" height="300" />
-          ) : null
+          <img src={img} alt="preview" width="300" height="300" />
         ) : (
           imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />
         )}

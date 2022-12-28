@@ -49,6 +49,7 @@ export const DetailWrapper = () => {
   const [isOwner, setIsOwner] = useState<boolean>(false);
   useEffect(() => {
     axios.get(GET_DETAIL_COCKTAIL(cocktailId)).then((res) => {
+      console.log(res.data.cocktail);
       setCocktail(res.data.cocktail);
       setLiked(res.data.liked);
       if (userId === res.data.cocktail.owner.id) setIsOwner(true);

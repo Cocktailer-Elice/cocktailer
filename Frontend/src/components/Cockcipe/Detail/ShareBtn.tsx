@@ -9,13 +9,13 @@ type CockProps = {
   img: string;
   content: string;
 };
-// TODO : 배포전 카카오 공유 링크 수정
+
 export const ShareBtn = ({ id, name, img, content }: CockProps) => {
   return (
     <KakaoBtn
       onClick={() =>
         shareKakao(
-          `http://localhost:5173/cockcipe/detail/${id}`,
+          `https://www.cocktailer.p-e.kr/cockcipe/detail/${id}`,
           img,
           name,
           content,

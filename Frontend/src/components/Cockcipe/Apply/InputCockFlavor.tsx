@@ -118,7 +118,7 @@ const Button = styled.button`
   margin-left: 5px;
   background-color: white;
   border-radius: 50%;
-  color: #ddd;
+  color: #868e96;
 `;
 const TagItem = styled.div`
   display: flex;
