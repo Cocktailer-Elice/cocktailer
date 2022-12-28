@@ -7,6 +7,7 @@ import {
   UpdateResult,
   LikesUser,
   CocktailObj,
+  CocktailLists,
 } from '../types';
 import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
@@ -59,6 +60,9 @@ interface ReqData {
 }
 
 const limitEachPage = 10;
+
+const cocktailImgUrl =
+  'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/';
 
 export class CocktailModel implements CocktailInterface {
   public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
@@ -127,14 +131,33 @@ export class CocktailModel implements CocktailInterface {
   public findByUserId = async (
     userId: number,
   ): Promise<CocktailModelType[]> => {
-    const result: CocktailModelType[] = await CocktailSchema.aggregate([
-      {
-        $match: { owner: userId },
-      },
-      { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
-    ]);
+    const findCocktailByUserId: CocktailModelType[] =
+      await CocktailSchema.aggregate([
+        { $match: { owner: userId } },
+        {
+          $set: {
+            img: {
+              $concat: [
+                'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+                '$img',
+              ],
+            },
+          },
+        },
+        { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+      ]);
 
-    return result;
+    // const result: CocktailModelType[] = [];
+
+    // findCocktailByUserId.map((e) => {
+    //   const obj = {
+    //     ...e,
+    //     img: cocktailImgUrl + e.img,
+    //   };
+    //   result.push(obj);
+    // });
+
+    return findCocktailByUserId;
   };
 
   public findCocktailId = async (
@@ -147,13 +170,8 @@ export class CocktailModel implements CocktailInterface {
       Object(queries),
     );
 
-    const cocktail = {
-      ...findCocktail[0],
-      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${findCocktail[0].img}`,
-    };
-
     if (userId === null) {
-      return { cocktail: cocktail, liked: false };
+      return { cocktail: findCocktail[0], liked: false };
     }
 
     const liked = findCocktail[0].likesUser?.[userId]
@@ -162,7 +180,7 @@ export class CocktailModel implements CocktailInterface {
         : false
       : false;
 
-    return { cocktail: cocktail, liked: liked };
+    return { cocktail: findCocktail[0], liked: liked };
   };
 
   public findCocktailCategoryAndSearch = async (
@@ -177,18 +195,7 @@ export class CocktailModel implements CocktailInterface {
       .limit(endpoint + limitEachPage)
       .skip(endpoint);
 
-    const cocktailList: CocktailModelType[] = [];
-
-    result.map((e) => {
-      const obj = {
-        ...e,
-        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${e.img}`,
-      };
-
-      cocktailList.push(obj);
-    });
-
-    return cocktailList;
+    return result;
   };
 
   public updateCocktail = async (
@@ -206,10 +213,10 @@ export class CocktailModel implements CocktailInterface {
         cocktailObj,
       ).session(session);
 
-      console.log(result);
       if (result.modifiedCount === 0 && result.matchedCount === 0) {
         throw new AppError(errorNames.databaseError);
       }
+
       await session.commitTransaction();
 
       await session.endSession();
@@ -274,6 +281,7 @@ export class CocktailModel implements CocktailInterface {
 
     try {
       session.startTransaction();
+
       await CocktailSchema.updateOne(
         { id: cocktailId },
         {

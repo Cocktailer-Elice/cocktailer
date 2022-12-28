@@ -4,6 +4,7 @@ import {
   Rankings,
   CocktailObj,
   UpdateResult,
+  CocktailLists,
 } from 'types';
 import { redisCache } from '../redis';
 
@@ -115,8 +116,6 @@ class CocktailController {
       userId,
       updateCocktailInfo,
     );
-
-    console.log(result);
 
     res.status(200).json(result);
   };

@@ -8,8 +8,18 @@ export const listsQuery = () => {
   Array.map((e) => {
     $facet[e] = [
       { $match: { category: e, official: true } },
-      { $limit: 6 },
+      { $limit: 10 },
       { $sort: { createdAt: -1 } },
+      {
+        $set: {
+          img: {
+            $concat: [
+              'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+              '$img',
+            ],
+          },
+        },
+      },
       { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
     ];
   });
@@ -63,6 +73,16 @@ export const findCocktailIdQuery = (id: number) => {
       },
     },
     {
+      $set: {
+        img: {
+          $concat: [
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+            '$img',
+          ],
+        },
+      },
+    },
+    {
       $unwind: {
         path: '$owner',
       },
@@ -100,6 +120,16 @@ export const getCocktailLikesUserQuery = (
         createdAt: 0,
         deletedAt: 0,
         updatedAt: 0,
+      },
+    },
+    {
+      $set: {
+        img: {
+          $concat: [
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+            '$img',
+          ],
+        },
       },
     },
   ];
@@ -166,6 +196,16 @@ export const findCategoryAndSearchQuery = (reqData: object) => {
       },
     },
     {
+      $set: {
+        img: {
+          $concat: [
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+            '$img',
+          ],
+        },
+      },
+    },
+    {
       $unwind: {
         path: '$owner',
       },
@@ -219,6 +259,16 @@ export const cocktailRankingsQuery = () => {
             },
           },
         ],
+      },
+    },
+    {
+      $set: {
+        img: {
+          $concat: [
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+            '$img',
+          ],
+        },
       },
     },
     {
