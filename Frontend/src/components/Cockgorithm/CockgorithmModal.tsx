@@ -3,30 +3,38 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import CloseButton from '@mui/icons-material/Close';
 
-import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
-import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
-import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
+import { CockgorithmGameLoading } from './CockgorithmGameLoading';
 import {
   CockgorithmCocktail,
+  CockgorithmReqData,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
 import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
-import { cockgorithmSlice } from '../../store/cockgorithmSlice';
-import { useAppSelector, useAppDispatch } from './../../store/store';
+import { IGame } from '../../store/cockgorithmSlice';
+import { CockgorithmGameContentContainer } from './../../containers/Cockgorithm/CockgorithmGameContentContainer';
+import { CockgorithmGameResultContainer } from './../../containers/Cockgorithm/CockgorithmGameResultContainer';
 
-export const CockgorithmModal = () => {
-  const { selectedGame, filters, isLoadingOpen, isGameResultOpen } =
-    useAppSelector((state) => state.cockgorithm);
+interface CockgorithmModalProps {
+  selectedGame: IGame;
+  filters: CockgorithmReqData;
+  isLoadingOpen: boolean;
+  isGameResultOpen: boolean;
+  setIsModalOpen: (boolean: boolean) => void;
+  setIsFoundCocktail: (boolean: boolean) => void;
+  setCocktailInfo: (cocktailInfo: CockgorithmCocktail) => void;
+  setIsGameResultOpen: (boolean: boolean) => void;
+}
 
-  const dispatch = useAppDispatch();
-
-  const {
-    setIsModalOpen,
-    setIsFoundCocktail,
-    setCocktailInfo,
-    setIsGameResultOpen,
-  } = cockgorithmSlice.actions;
-
+export const CockgorithmModal = ({
+  selectedGame,
+  filters,
+  isLoadingOpen,
+  isGameResultOpen,
+  setIsModalOpen,
+  setIsFoundCocktail,
+  setCocktailInfo,
+  setIsGameResultOpen,
+}: CockgorithmModalProps) => {
   useEffect(() => {
     if (isLoadingOpen) {
       console.log('유저 응답', filters);
@@ -42,15 +50,15 @@ export const CockgorithmModal = () => {
 
           if (response.isFound) {
             const fetchedCocktail = response.data as CockgorithmCocktail;
-            dispatch(setIsFoundCocktail(true));
-            dispatch(setCocktailInfo(fetchedCocktail));
+            setIsFoundCocktail(true);
+            setCocktailInfo(fetchedCocktail);
           } else {
-            dispatch(setIsFoundCocktail(false));
+            setIsFoundCocktail(false);
           }
         } catch (error) {
           alert(error);
         } finally {
-          dispatch(setIsGameResultOpen(true));
+          setIsGameResultOpen(true);
         }
       }, 2000);
     }
@@ -58,7 +66,7 @@ export const CockgorithmModal = () => {
 
   return (
     <>
-      <Dimmed onClick={() => dispatch(setIsModalOpen(false))} />
+      <Dimmed onClick={() => setIsModalOpen(false)} />
       <Modal>
         <MainSection>
           <GameTitle>
@@ -68,14 +76,14 @@ export const CockgorithmModal = () => {
             </span>
           </GameTitle>
           {!isLoadingOpen ? (
-            <CockgorithmGameContent />
+            <CockgorithmGameContentContainer />
           ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
           ) : (
-            <CockgorithmGameResult />
+            <CockgorithmGameResultContainer />
           )}
         </MainSection>
-        <CustomCloseButton onClick={() => dispatch(setIsModalOpen(false))} />
+        <CustomCloseButton onClick={() => setIsModalOpen(false)} />
       </Modal>
     </>
   );

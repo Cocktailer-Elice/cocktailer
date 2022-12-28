@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from './../../store/store';
+import { CockgorithmCocktail } from '../../../../types';
 
-export const CockgorithmGameResult = () => {
-  const { isFoundCocktail, cocktailInfo } = useAppSelector(
-    (state) => state.cockgorithm,
-  );
+interface CockgorithmGameResult {
+  isFoundCocktail: boolean;
+  cocktailInfo: CockgorithmCocktail;
+}
 
+export const CockgorithmGameResult = ({
+  isFoundCocktail,
+  cocktailInfo,
+}: CockgorithmGameResult) => {
   return (
     <GameResult>
       {isFoundCocktail && (

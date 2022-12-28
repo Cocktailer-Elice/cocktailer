@@ -1,23 +1,26 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useAppSelector } from '../../store/store';
-import { cockgorithmSlice } from '../../store/cockgorithmSlice';
-import { useAppDispatch } from './../../store/store';
+import { IGame } from '../../store/cockgorithmSlice';
 
-export const CockgorithmGameContent = () => {
-  const { selectedGame, questionCounter } = useAppSelector(
-    (state) => state.cockgorithm,
-  );
+interface CockgorithmGameContentProps {
+  selectedGame: IGame;
+  questionCounter: number;
+  increaseQuestionCounter: () => void;
+  setIsLoadingOpen: (boolean: boolean) => void;
+  setFilters: (filterName: string, filterValue: string) => void;
+}
 
-  const dispatch = useAppDispatch();
-
-  const { increaseQuestionCounter, setIsLoadingOpen, setFilters } =
-    cockgorithmSlice.actions;
-
+export const CockgorithmGameContent = ({
+  selectedGame,
+  questionCounter,
+  increaseQuestionCounter,
+  setIsLoadingOpen,
+  setFilters,
+}: CockgorithmGameContentProps) => {
   useEffect(() => {
     if (questionCounter === 5) {
-      dispatch(setIsLoadingOpen(true));
+      setIsLoadingOpen(true);
     }
   }, [questionCounter]);
 
@@ -26,9 +29,10 @@ export const CockgorithmGameContent = () => {
     filterValue: string;
   }) => {
     const { filterName } = selectedGame.questions[questionCounter];
+    const filterValue = option.filterValue;
 
-    dispatch(setFilters({ filterName, filterValue: option.filterValue }));
-    dispatch(increaseQuestionCounter({}));
+    setFilters(filterName, filterValue);
+    increaseQuestionCounter();
   };
 
   return questionCounter < 5 ? (

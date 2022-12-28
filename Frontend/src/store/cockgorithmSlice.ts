@@ -5,7 +5,7 @@ import {
   CockgorithmCocktail,
 } from '../../../types/cockgorithmType';
 
-interface IGame {
+export interface IGame {
   gameEmoji: string;
   gameTitle: string;
   message: string;
@@ -59,7 +59,7 @@ interface GamePayload {
   payload: IGame;
 }
 
-interface FilterPayload {
+export interface FilterPayload {
   payload: {
     filterName: string;
     filterValue: string;

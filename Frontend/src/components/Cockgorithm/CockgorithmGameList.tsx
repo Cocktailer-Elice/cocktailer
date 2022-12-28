@@ -1,16 +1,20 @@
 import styled from 'styled-components';
 
 import gameDatas from '../../constants/gameDatas.json';
-import { useAppDispatch } from '../../store/store';
-import { cockgorithmSlice } from '../../store/cockgorithmSlice';
 import { gameColors } from '../../constants/gameColors';
+import { IGame } from '../../store/cockgorithmSlice';
 
-export const CockgorithmGameList = () => {
-  const dispatch = useAppDispatch();
+interface CockgorithmGameListProps {
+  resetCockgorithmState: () => void;
+  setSelectedGame: (game: IGame) => void;
+  setIsModalOpen: (boolean: boolean) => void;
+}
 
-  const { resetCockgorithmState, setSelectedGame, setIsModalOpen } =
-    cockgorithmSlice.actions;
-
+export const CockgorithmGameList = ({
+  resetCockgorithmState,
+  setSelectedGame,
+  setIsModalOpen,
+}: CockgorithmGameListProps) => {
   return (
     <GameList>
       {gameDatas.map((game, index) => (
@@ -18,9 +22,9 @@ export const CockgorithmGameList = () => {
           key={index}
           nth={index}
           onClick={() => {
-            dispatch(resetCockgorithmState({}));
-            dispatch(setSelectedGame(game));
-            dispatch(setIsModalOpen(true));
+            resetCockgorithmState();
+            setSelectedGame(game);
+            setIsModalOpen(true);
           }}
         >
           <GameEmoji>{game.gameEmoji}</GameEmoji>
