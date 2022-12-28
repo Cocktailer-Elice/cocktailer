@@ -117,11 +117,16 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
-export interface UpdateResult {
+export interface DBUpdateResult {
   acknowledged: boolean;
   modifiedCount: number;
   upsertedCount: number;
   matchedCount: number;
+}
+
+export interface UpdateResult {
+  update: boolean;
+  cocktailId: number;
 }
 
 export interface LikesUser {

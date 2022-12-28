@@ -99,14 +99,10 @@ class CocktailService {
     );
 
     if (!data) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '이런! 칵테일 업데이트에 실패했습니다! 잠시후 재시도 해주시거나, 관리자에게 문의하세요!',
-      );
+      throw new AppError(errorNames.noDataError, 400);
     }
 
-    return cocktailId;
+    return data;
   }
 
   public async deleteCocktail(userId: number, cocktailId: number) {

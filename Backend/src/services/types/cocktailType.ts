@@ -54,10 +54,8 @@ export interface CocktailServiceType {
 }
 
 export interface UpdateResult {
-  acknowledged: boolean;
-  modifiedCount: number;
-  upsertedCount: number;
-  matchedCount: number;
+  update: boolean;
+  cocktailId: number;
 }
 
 export interface CocktailRankings {
@@ -78,11 +76,4 @@ export interface UserRanking {
   nickname: string;
   points: number;
   isBartender: boolean;
-}
-
-export interface UpdateResult {
-  acknowledged: boolean;
-  modifiedCount: number;
-  upsertedCount: number;
-  matchedCount: number;
 }

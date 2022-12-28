@@ -1,5 +1,10 @@
 import { Request as Req, Response as Res, NextFunction as Next } from 'express';
-import { CocktailCreateReqData, Rankings, CocktailObj } from 'types';
+import {
+  CocktailCreateReqData,
+  Rankings,
+  CocktailObj,
+  UpdateResult,
+} from 'types';
 import { redisCache } from '../redis';
 
 import CocktailService from '../services/cocktailService';
@@ -105,7 +110,7 @@ class CocktailController {
 
     const userId = req.user.userId;
 
-    const result: any = await this.cocktailService.updateCocktail(
+    const result: UpdateResult = await this.cocktailService.updateCocktail(
       cocktailId,
       userId,
       updateCocktailInfo,
@@ -113,7 +118,7 @@ class CocktailController {
 
     console.log(result);
 
-    res.status(200).json({ updateCocktailInfo: result });
+    res.status(200).json(result);
   };
 
   public deleteCocktail = async (req: Req, res: Res) => {

@@ -3,6 +3,7 @@ import {
   FindCocktailId,
   CocktailRankings,
   UserRanking,
+  DBUpdateResult,
   UpdateResult,
   LikesUser,
   CocktailObj,
@@ -200,22 +201,26 @@ export class CocktailModel implements CocktailInterface {
     try {
       session.startTransaction();
 
-      const result: UpdateResult = await CocktailSchema.updateOne(
+      const result: DBUpdateResult = await CocktailSchema.updateOne(
         { id: cocktailId, owner: userId },
         cocktailObj,
       ).session(session);
 
+      console.log(result);
+      if (result.modifiedCount === 0 && result.matchedCount === 0) {
+        throw new AppError(errorNames.databaseError);
+      }
       await session.commitTransaction();
 
       await session.endSession();
 
-      return result;
+      return { update: true, cocktailId: cocktailId };
     } catch (error) {
       await session.abortTransaction();
 
       await session.endSession();
 
-      throw new AppError(errorNames.databaseError);
+      return { update: false, cocktailId: cocktailId };
     }
   };
 

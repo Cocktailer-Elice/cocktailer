@@ -83,10 +83,8 @@ export interface FindCocktailId {
 }
 
 export interface UpdateResult {
-  acknowledged: boolean;
-  modifiedCount: number;
-  upsertedCount: number;
-  matchedCount: number;
+  update: boolean;
+  cocktailId: number;
 }
 
 export interface FindCocktailCategoryAndSearch {
