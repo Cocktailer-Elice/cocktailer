@@ -1,5 +1,5 @@
 import { userModel } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 import { IAdminDependencies } from './types/adminType';
 
@@ -30,13 +30,13 @@ class AdminService {
     if (user.isBartender === true) {
       throw new AppError(errorNames.inputError, 400, '이미 바텐더인 유저');
     }
-    // if (user.isBartender !== 'waiting') {
-    //   throw new AppError(
-    //     errorNames.businessError,
-    //     400,
-    //     '바텐더 신청 이력 없음',
-    //   );
-    // }
+    if (!user.isApplyingBartender) {
+      throw new AppError(
+        errorNames.businessError,
+        400,
+        '바텐더 신청 이력 없음',
+      );
+    }
     const update = { isBartender: true };
     await this.dependencies.userModel.update(filter, update);
     return;

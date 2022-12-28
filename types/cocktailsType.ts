@@ -68,6 +68,7 @@ export interface CocktailGetResData {
   img: string;
   ratio: object;
   content: string;
+  likes: number;
 }
 
 export interface MyCockcipe {

@@ -17,5 +17,6 @@ router.get('/mypage', asyncHandler(userController.getMyPosts));
 router.patch('/profile', asyncHandler(userController.updateUserProfile));
 router.patch('/apply', asyncHandler(userController.updateUserState));
 router.get('/my-comments', asyncHandler(commentController.getMyComments));
+router.get('/my-likes', asyncHandler(userController.getMyLikes));
 
 export default router;

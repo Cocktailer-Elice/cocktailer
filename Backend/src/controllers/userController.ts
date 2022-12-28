@@ -12,6 +12,12 @@ class UserController {
     res.status(200).json(myPosts);
   };
 
+  public getMyLikes = async (req: Req, res: Res) => {
+    const { userId } = req.user;
+    const myLikes = await this.userService.getMyLikes(userId);
+    res.status(200).json(myLikes);
+  };
+
   public findUserEmail = async (req: Req, res: Res) => {
     const { name, tel } = req.body;
     checkReqBody(name, tel);

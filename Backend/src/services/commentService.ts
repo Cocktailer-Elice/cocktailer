@@ -6,7 +6,7 @@ import {
   IComment,
   ICommentMongoModel,
 } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 
 class CommentDependencies implements ICommentDependencies {

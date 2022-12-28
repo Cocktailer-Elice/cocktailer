@@ -1,6 +1,6 @@
 import { CockgorithmServiceType, ProcessedMaterial, Material } from './types';
 import { cockgorithmModel } from '../db';
-import { AppError } from '../errorHandler';
+import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 
 class CockgorithmService {

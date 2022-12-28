@@ -1,4 +1,4 @@
-import { AppError } from '../../errorHandler';
+import { AppError } from '../../appError';
 import { errorNames } from '../../errorNames';
 
 export const checkReqBody = (...args: string[]) => {
