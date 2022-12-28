@@ -14,8 +14,9 @@ const UserSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      index: true,
-      unique: false,
+      index: {
+        unique: false,
+      },
     },
     password: {
       type: String,
@@ -23,8 +24,10 @@ const UserSchema: Schema = new Schema(
     },
     nickname: {
       type: String,
-      index: true,
-      unique: false,
+      require: true,
+      index: {
+        unique: false,
+      },
     },
     birthday: {
       type: String,
@@ -33,8 +36,9 @@ const UserSchema: Schema = new Schema(
     tel: {
       type: String,
       required: true,
-      index: true,
-      unique: false,
+      index: {
+        unique: false,
+      },
     },
     avatarUrl: {
       type: String,

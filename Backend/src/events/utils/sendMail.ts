@@ -12,7 +12,7 @@ const transport = nodemailer.createTransport({
   },
 });
 
-export const sendWelcomMail = async (email: string) => {
+export const sendWelcomeMail = async (email: string) => {
   const mailingOptions = {
     to: email,
     from: `Cocktailer <${process.env.GMAIL_ID}>`,
@@ -21,7 +21,7 @@ export const sendWelcomMail = async (email: string) => {
   };
   transport.sendMail(mailingOptions, (err) => {
     if (err) {
-      return;
+      return false;
     }
     return true;
   });

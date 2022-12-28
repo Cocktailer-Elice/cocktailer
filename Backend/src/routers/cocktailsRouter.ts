@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
 import { cockgorithmController } from '../controllers/cockgorithmController';
 import { asyncHandler, isLoggedIn } from './middlewares';
-import { cocktailRankings } from '../db/queries/cocktailsQuery';
 
 const cocktailsRouter: Router = Router();
 
@@ -26,6 +25,12 @@ cocktailsRouter.get('/lists', asyncHandler(cocktailController.getLists));
 cocktailsRouter.get(
   '/',
   asyncHandler(cocktailController.findCocktailCategoryAndSearch),
+);
+
+cocktailsRouter.get(
+  '/my-cocktails',
+  isLoggedIn,
+  asyncHandler(cocktailController.findByUserId),
 );
 
 cocktailsRouter.get(

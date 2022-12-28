@@ -1,5 +1,6 @@
 import {
   CocktailModelType,
+  FindCocktailId,
   CocktailRankings,
   UserRanking,
   UpdateResult,
@@ -11,13 +12,15 @@ import CocktailSchema from '../schemas/cocktailsSchema';
 import User from '../schemas/userSchema';
 ////////////
 import {
-  lists,
-  findCategoryAndSearch,
-  cocktailRankings,
+  listsQuery,
+  findCategoryAndSearchQuery,
+  cocktailRankingsQuery,
+  findCocktailIdQuery,
 } from '../queries/cocktailsQuery';
 
-import { AppError } from '../../errorHandler';
+import { AppError } from './../../appError';
 import { errorNames } from '../../errorNames';
+import { userQueries } from '../queries/userQuery';
 
 interface CocktailInterface {
   getHomeCocktailAndUserList(): Promise<Rankings>;
@@ -28,7 +31,7 @@ interface CocktailInterface {
 
   findByUserId(userId: number): Promise<CocktailModelType[]>;
 
-  findCocktailId(id: number): Promise<CocktailModelType | null>;
+  findCocktailId(id: number, userId: number): Promise<FindCocktailId | null>;
 
   findCocktailCategoryAndSearch(
     reqData: object,
@@ -40,31 +43,42 @@ interface CocktailInterface {
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<UpdateResult>;
 
-  cocktailLikes(userId: number, cocktailId: number): Promise<UpdateResult>;
+  cocktailLikes(userId: number, cocktailId: number): Promise<number>;
+}
+interface ReqData {
+  [optionKey: string]: string;
 }
 
 const limitEachPage = 10;
 
 export class CocktailModel implements CocktailInterface {
   public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
-    const queries = cocktailRankings();
-    const filter = { deletedAt: null, isAdmin: false };
-    const projection =
-      '-_id -email -name -password -birthday -tel -isAdmin -createdAt -updatedAt -deletedAt';
+    const queries = cocktailRankingsQuery();
+    const usersQueries = userQueries.findByRanking();
 
     const result: [CocktailRankings[], UserRanking[]] = await Promise.all([
       CocktailSchema.aggregate(Object(queries)),
-      User.find(filter, projection, {
-        sort: { points: -1 },
-      }).limit(10),
+      User.aggregate(Object(usersQueries)),
     ]);
 
-    return { cocktailRankings: result[0], userRankings: result[1] };
+    const cocktailRanking: CocktailRankings[] = [];
+
+    result[0].map((e) => {
+      const obj = {
+        ...e,
+        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${e.img}`,
+      };
+      cocktailRanking.push(obj);
+    });
+
+    return { cocktailRankings: cocktailRanking, userRankings: result[1] };
   };
 
   public createCocktail = async (
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> => {
+    //transection 적용!!!
+
     const newMyCocktail: CocktailModelType = await CocktailSchema.create(
       cocktailCreateDto,
     );
@@ -73,7 +87,7 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public getLists = async (): Promise<CocktailModelType[]> => {
-    const queries = lists();
+    const queries = listsQuery();
 
     const result: CocktailModelType[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -96,20 +110,33 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public findCocktailId = async (
-    id: number,
-  ): Promise<CocktailModelType | null> => {
-    const result = (await CocktailSchema.findOne({
-      id: id,
-    })) as CocktailModelType;
+    cocktailId: number,
+    userId: number,
+  ): Promise<FindCocktailId | null> => {
+    const queries = findCocktailIdQuery(cocktailId);
+    const findCocktail: CocktailModelType[] = await CocktailSchema.aggregate(
+      Object(queries),
+    );
 
-    return result;
+    const cocktail = {
+      ...findCocktail[0],
+      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${findCocktail[0].img}`,
+    };
+
+    const liked = findCocktail[0].likesUser?.[userId]
+      ? findCocktail[0].likesUser?.[userId] === true
+        ? true
+        : false
+      : false;
+
+    return { cocktail: cocktail, liked: liked };
   };
 
   public findCocktailCategoryAndSearch = async (
-    reqData: object,
+    reqData: ReqData,
     endpoint: number,
   ): Promise<CocktailModelType[]> => {
-    const queries = findCategoryAndSearch(reqData);
+    const queries = findCategoryAndSearchQuery(reqData);
 
     const result: CocktailModelType[] = await CocktailSchema.aggregate([
       Object(queries),
@@ -117,9 +144,18 @@ export class CocktailModel implements CocktailInterface {
       .limit(endpoint + limitEachPage)
       .skip(endpoint);
 
-    // .skip(endpoint);
+    const cocktailList: CocktailModelType[] = [];
 
-    return result;
+    result.map((e) => {
+      const obj = {
+        ...e,
+        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${e.img}`,
+      };
+
+      cocktailList.push(obj);
+    });
+
+    return cocktailList;
   };
 
   public updateCocktail = async (
@@ -133,8 +169,6 @@ export class CocktailModel implements CocktailInterface {
       cocktailCreateDto,
     );
 
-    console.log(result);
-
     return result;
   };
 
@@ -147,7 +181,7 @@ export class CocktailModel implements CocktailInterface {
   public cocktailLikes = async (
     userId: number,
     cocktailId: number,
-  ): Promise<UpdateResult> => {
+  ): Promise<number> => {
     const obj: LikesUser | null = await CocktailSchema.findOne(
       { id: cocktailId },
       { likes: 1, likesUser: 1, _id: 0 },
@@ -173,7 +207,15 @@ export class CocktailModel implements CocktailInterface {
       },
     );
 
-    return updateResult;
+    ///      user Array 반환      ///
+    if (likesUser[userId]) {
+      await User.update({ id: userId }, { $push: { myLikes: cocktailId } });
+    } else {
+      await User.update({ id: userId }, { $pull: { myLikes: cocktailId } });
+    }
+    ///      user Array 반환      ///
+
+    return likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1;
   };
 
   ////////////////////////////////
