@@ -48,7 +48,7 @@
         ]
       },
       {
-        "question": "당신의 레벨은?!",
+        "question": "당신의 주량 레벨은?!",
         "filterName": "degree",
         "options": [
           { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
@@ -118,7 +118,7 @@
         ]
       },
       {
-        "question": "당신의 레벨은?!",
+        "question": "당신의 주량 레벨은?!",
         "filterName": "degree",
         "options": [
           { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
@@ -186,7 +186,7 @@
         ]
       },
       {
-        "question": "당신의 레벨은?!",
+        "question": "당신의 주량 레벨은?!",
         "filterName": "degree",
         "options": [
           { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
@@ -254,7 +254,7 @@
         ]
       },
       {
-        "question": "당신의 레벨은?!",
+        "question": "당신의 주량 레벨은?!",
         "filterName": "degree",
         "options": [
           { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
@@ -322,7 +322,7 @@
         ]
       },
       {
-        "question": "당신의 레벨은?!",
+        "question": "당신의 주량 레벨은?!",
         "filterName": "degree",
         "options": [
           { "optionName": "Lv.0 알쓰! (0도)", "filterValue": "0~0" },
