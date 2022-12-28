@@ -10,7 +10,6 @@ export const adminValidator = (req: Req, res: Res, next: Next) => {
     abortEarly: true,
   });
   if (result?.error) {
-    console.log(result.error);
     return res.status(400).json({ message: '비정상적인 접근' });
   }
   next();
