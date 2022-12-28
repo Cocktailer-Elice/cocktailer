@@ -23,66 +23,7 @@ export const userQueries = {
         isPasswordTemporary: 0,
         isApplyingBartender: 0,
         points: 0,
-      },
-    },
-    {
-      $unwind: {
-        path: '$myLikes',
-      },
-    },
-    {
-      $lookup: {
-        from: 'cocktails',
-        localField: 'myLikes',
-        foreignField: 'id',
-        as: 'myList',
-        pipeline: [
-          {
-            $limit: 6,
-          },
-          {
-            $project: {
-              _id: 0,
-              owner: 0,
-              ratio: 0,
-              updatedAt: 0,
-              likesUser: 0,
-              createdAt: 0,
-              flavor: 0,
-              official: 0,
-              degree: 0,
-              category: 0,
-              likes: 0,
-              content: 0,
-            },
-          },
-        ],
-      },
-    },
-    {
-      $unwind: {
-        path: '$myList',
-      },
-    },
-    {
-      $set: {
-        'myList.img': {
-          $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/',
-            '$myList.img',
-          ],
-        },
-      },
-    },
-    {
-      $group: {
-        _id: '$id',
-        id: {
-          $first: '$id',
-        },
-        myList: {
-          $push: '$myList',
-        },
+        myLikes: 0,
       },
     },
     {
@@ -109,6 +50,16 @@ export const userQueries = {
               category: 0,
               likes: 0,
               content: 0,
+            },
+          },
+          {
+            $set: {
+              img: {
+                $concat: [
+                  'https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/',
+                  '$img',
+                ],
+              },
             },
           },
         ],
@@ -143,22 +94,6 @@ export const userQueries = {
         foreignField: 'owner',
         as: 'comments',
         pipeline: [
-          {
-            $lookup: {
-              from: 'cockflows',
-              localField: 'cockflowId',
-              foreignField: 'id',
-              as: 'parentCockflow',
-              pipeline: [
-                {
-                  $project: {
-                    _id: 0,
-                    updatedAt: 0,
-                  },
-                },
-              ],
-            },
-          },
           {
             $limit: 6,
           },
