@@ -8,14 +8,12 @@ interface CockgorithmInterface {
 }
 
 export class CockgorithmModel implements CockgorithmInterface {
-  public activateCockgorithm = async (
-    material: Material,
-  ): Promise<CocktailModelType[]> => {
+  public activateCockgorithm = async (material: Material) => {
     const { alcohol, category } = material;
-    const filterMinDegree = material.minDegree - 8;
-    const filterMaxDegree = material.maxDegree + 8;
+    const filterMinDegree = material.minDegree - 10;
+    const filterMaxDegree = material.maxDegree + 10;
 
-    const cocktails: CocktailModelType[] = await CocktailSchema.aggregate(
+    const cocktails = await CocktailSchema.aggregate(
       findByCockgorithm(category, filterMinDegree, filterMaxDegree, alcohol),
     );
     return cocktails;

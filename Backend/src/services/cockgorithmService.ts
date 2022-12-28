@@ -1,6 +1,5 @@
 import { ProcessedMaterial } from './types';
-import { cockgorithmModel } from '../db';
-import { CockgorithmResData } from 'types';
+import { cockgorithmModel, CocktailModelType } from '../db';
 
 class CockgorithmService {
   private readonly cockgorithmModel = cockgorithmModel;
@@ -15,7 +14,7 @@ class CockgorithmService {
   };
 
   private pickRandomCocktail = (
-    cocktails: CockgorithmResData[],
+    cocktails: CocktailModelType[],
     material: ProcessedMaterial,
   ) => {
     // 완벽히 일치하는 애들 추리기
