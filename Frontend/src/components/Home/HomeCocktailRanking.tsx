@@ -18,20 +18,22 @@ export const HomeCocktailRanking = ({
     <Container>
       <CustomLink to={`/cockcipe/detail/${cocktailRankingInfo.id}`}>
         <CocktailImage src={cocktailRankingInfo.img} />
-        <CocktailInfo>
-          <CocktailTitle>
-            <Ranking>{ranking}등</Ranking>
-            <CocktailName>{cocktailRankingInfo.name}</CocktailName>
-          </CocktailTitle>
-        </CocktailInfo>
-        <CocktailLikes>
-          <CustomThumbUpIcon />
-          {cocktailRankingInfo.likes}
-        </CocktailLikes>
-        <OwnerInfo>
-          <OwnerName>{cocktailRankingInfo.owner.nickname}</OwnerName>
-          {cocktailRankingInfo.owner.isBartender && <BartenderBadge />}
-        </OwnerInfo>
+        <CocktailInfos>
+          <CocktailInfo>
+            <CocktailTitle>
+              <Ranking>{ranking}등</Ranking>
+              <CocktailName>{cocktailRankingInfo.name}</CocktailName>
+            </CocktailTitle>
+          </CocktailInfo>
+          <CocktailLikes>
+            <CustomThumbUpIcon />
+            {cocktailRankingInfo.likes}
+          </CocktailLikes>
+          <OwnerInfo>
+            <OwnerName>{cocktailRankingInfo.owner.nickname}</OwnerName>
+            {cocktailRankingInfo.owner.isBartender && <BartenderBadge />}
+          </OwnerInfo>
+        </CocktailInfos>
       </CustomLink>
     </Container>
   );
@@ -47,9 +49,13 @@ const Container = styled.div`
 `;
 
 const CustomLink = styled(Link)`
-  display: block;
   width: 100%;
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const CocktailImage = styled.img`
@@ -58,13 +64,24 @@ const CocktailImage = styled.img`
   background-color: ${(props) => props.theme.colors.indigo1};
   border-radius: 5px;
   border: 2px solid red;
+
+  @media screen and (max-width: 500px) {
+    height: 50%;
+  }
+`;
+
+const CocktailInfos = styled.div`
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const CocktailInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
 `;
 
 const CocktailTitle = styled.div`
@@ -86,6 +103,7 @@ const CocktailName = styled.div`
 
 const Ranking = styled.div`
   font-size: 14px;
+  min-width: 25px;
   color: rgba(0, 0, 0, 0.8);
   font-weight: bold;
   margin-right: 5px;

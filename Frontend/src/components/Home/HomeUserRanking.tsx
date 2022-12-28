@@ -35,7 +35,7 @@ const Container = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 15px 5px;
 
