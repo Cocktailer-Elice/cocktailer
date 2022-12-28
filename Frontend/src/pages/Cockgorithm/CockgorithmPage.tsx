@@ -25,7 +25,7 @@ export const CockgorithmPage = () => {
     handleClose: handleModalClose,
   } = useToggle(false);
 
-  const [seletedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
+  const [selectedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
 
   const handleGameClick = (game: IGame) => {
     setSelectedGame(game);
@@ -42,7 +42,7 @@ export const CockgorithmPage = () => {
         {isModalOpen && (
           <CockgorithmModal
             handleModalClose={handleModalClose}
-            seletedGame={seletedGame}
+            selectedGame={selectedGame}
           />
         )}
       </Container>

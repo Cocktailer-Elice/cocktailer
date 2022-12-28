@@ -17,7 +17,7 @@ import { useToggle } from './../../hooks/useToggle';
 
 interface CockgorithmModalProps {
   handleModalClose: () => void;
-  seletedGame: IGame;
+  selectedGame: IGame;
 }
 
 const cocktailMockData = {
@@ -30,7 +30,7 @@ const cocktailMockData = {
 
 export const CockgorithmModal = ({
   handleModalClose,
-  seletedGame,
+  selectedGame,
 }: CockgorithmModalProps) => {
   const { isOpen: isLoadingOpen, handleOpen: handleLoadingOpen } =
     useToggle(false);
@@ -86,13 +86,13 @@ export const CockgorithmModal = ({
         <MainSection>
           <GameTitle>
             <span>
-              {seletedGame.gameEmoji}
-              {seletedGame.message}
+              {selectedGame.gameEmoji}
+              {selectedGame.message}
             </span>
           </GameTitle>
           {!isLoadingOpen ? (
             <CockgorithmGameContent
-              selectedGame={seletedGame}
+              selectedGame={selectedGame}
               handleLoadingOpen={handleLoadingOpen}
               setFilters={setFilters}
             />
