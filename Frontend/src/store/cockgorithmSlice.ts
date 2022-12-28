@@ -5,7 +5,7 @@ import {
   CockgorithmCocktail,
 } from '../../../types/cockgorithmType';
 
-export interface IGame {
+interface IGame {
   gameEmoji: string;
   gameTitle: string;
   message: string;
@@ -51,19 +51,17 @@ const cockgorithmInitialState: cockgorithmState = {
   questionCounter: 0,
 };
 
-interface GamePayload {
-  payload: IGame;
-}
-
 interface BooleanPayload {
   payload: boolean;
 }
 
-type filterType = 'ingredients' | 'degree' | 'alcohol' | 'category';
+interface GamePayload {
+  payload: IGame;
+}
 
 interface FilterPayload {
   payload: {
-    filterName: filterType;
+    filterName: string;
     filterValue: string;
   };
 }
@@ -101,8 +99,7 @@ export const cockgorithmSlice = createSlice({
       return { ...state, cocktailInfo: action.payload };
     },
     setFilters(state, action: FilterPayload) {
-      const filterName: filterType = action.payload.filterName;
-      const filterValue: string = action.payload.filterValue;
+      const { filterName, filterValue } = action.payload;
       let newFilters = {
         ...state.filters,
       };

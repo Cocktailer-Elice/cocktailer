@@ -15,7 +15,7 @@ import { cockgorithmSlice } from '../../store/cockgorithmSlice';
 import { useAppSelector, useAppDispatch } from './../../store/store';
 
 export const CockgorithmModal = () => {
-  const { selectedGame, isLoadingOpen, isGameResultOpen, filters } =
+  const { selectedGame, filters, isLoadingOpen, isGameResultOpen } =
     useAppSelector((state) => state.cockgorithm);
 
   const dispatch = useAppDispatch();

@@ -5,17 +5,6 @@ import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmG
 import { Helmet } from 'react-helmet';
 import { useAppSelector } from './../../store/store';
 
-export interface IGame {
-  gameEmoji: string;
-  gameTitle: string;
-  message: string;
-  questions: {
-    question: string;
-    filterName: string;
-    options: { optionName: string; filterValue: string }[];
-  }[];
-}
-
 export const CockgorithmPage = () => {
   const { isModalOpen } = useAppSelector((state) => state.cockgorithm);
 

@@ -22,7 +22,7 @@ const gameColors = [
 export const CockgorithmGameList = () => {
   const dispatch = useAppDispatch();
 
-  const { resetCockgorithmState, setIsModalOpen, setSelectedGame } =
+  const { resetCockgorithmState, setSelectedGame, setIsModalOpen } =
     cockgorithmSlice.actions;
 
   return (
