@@ -22,10 +22,11 @@ class CockgorithmController {
       ingredients: rowMaterial.ingredients,
     };
 
-    const data: CockgorithmResData =
-      await this.CockgorithmService.activateCockgorithm(processedMaterial);
+    const data = await this.CockgorithmService.activateCockgorithm(
+      processedMaterial,
+    );
 
-    res.status(200).json({ data: data });
+    res.status(200).json(data);
   };
 }
 const cockgorithmController = new CockgorithmController();

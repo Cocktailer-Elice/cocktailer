@@ -10,6 +10,7 @@ import { redisCache } from './redis';
 import globalRouter from './routers';
 import { notFoundErrorHandler } from './routers/middlewares';
 import { errorHandler } from './routers/middlewares/';
+import cachingEvents from './events/cachingEvents';
 
 class Server {
   private readonly app: express.Application;
@@ -51,7 +52,7 @@ class Server {
     this.setRouter();
     this.app.listen(port, () => {
       cron.schedule('* 5 * * * 1', () => {
-        redisCache.del('ranking');
+        cachingEvents.emit('newWeek');
       });
       logger.info(
         `💣 ${port}번 PORT에서 서버를 시작합니다. http://localhost:${port}`,

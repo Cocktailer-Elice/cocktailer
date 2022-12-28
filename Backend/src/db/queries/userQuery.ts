@@ -23,51 +23,7 @@ export const userQueries = {
         isPasswordTemporary: 0,
         isApplyingBartender: 0,
         points: 0,
-      },
-    },
-    {
-      $unwind: {
-        path: '$myLikes',
-      },
-    },
-    {
-      $lookup: {
-        from: 'cocktails',
-        localField: 'myLikes',
-        foreignField: 'id',
-        as: 'myList',
-        pipeline: [
-          {
-            $limit: 6,
-          },
-          {
-            $project: {
-              _id: 0,
-              owner: 0,
-              ratio: 0,
-              updatedAt: 0,
-              likesUser: 0,
-              createdAt: 0,
-              flavor: 0,
-            },
-          },
-        ],
-      },
-    },
-    {
-      $unwind: {
-        path: '$myList',
-      },
-    },
-    {
-      $group: {
-        _id: '$id',
-        id: {
-          $first: '$id',
-        },
-        myList: {
-          $push: '$myList',
-        },
+        myLikes: 0,
       },
     },
     {
@@ -86,6 +42,24 @@ export const userQueries = {
               owner: 0,
               ratio: 0,
               updatedAt: 0,
+              likesUser: 0,
+              createdAt: 0,
+              flavor: 0,
+              official: 0,
+              degree: 0,
+              category: 0,
+              likes: 0,
+              content: 0,
+            },
+          },
+          {
+            $set: {
+              img: {
+                $concat: [
+                  'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+                  '$img',
+                ],
+              },
             },
           },
         ],
@@ -106,6 +80,8 @@ export const userQueries = {
               _id: 0,
               owner: 0,
               updatedAt: 0,
+              isAdopted: 0,
+              createdAt: 0,
             },
           },
         ],
@@ -141,6 +117,7 @@ export const userQueries = {
             $project: {
               owner: 0,
               updatedAt: 0,
+              createdAt: 0,
             },
           },
         ],
@@ -148,7 +125,6 @@ export const userQueries = {
     },
     {
       $project: {
-        _id: 0,
         id: 0,
       },
     },

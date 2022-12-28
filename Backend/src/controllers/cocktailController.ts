@@ -6,6 +6,7 @@ import {
   UpdateResult,
   CocktailLists,
 } from 'types';
+import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
 
 import CocktailService from '../services/cocktailService';
@@ -33,7 +34,7 @@ class CocktailController {
     // 나중에 캐싱 테스트용 콘솔로그는 지워주세용
     if (!cachedValue) {
       await redisCache.set('ranking', JSON.stringify(data));
-      console.log('레디스에 캐싱됨');
+      cachingEvents.emit('rankingCachingUpdate');
     }
   };
 

@@ -6,7 +6,7 @@ import { LoginReqData } from 'types';
 import authService from '../services/authService';
 import { createToken, createCookie, checkReqBody } from './utils';
 import { redisCache } from '../redis';
-import { sendWelcomMail } from '../events/utils/sendMail';
+import mailingEvents from '../events/mailingEvent';
 
 class AuthController {
   private readonly authService = authService;
@@ -25,7 +25,7 @@ class AuthController {
     const cookie = createCookie(token, newUser._id, false);
     res.setHeader('Set-Cookie', [cookie]);
     res.status(201).json(newUser.userGetResData);
-    await sendWelcomMail(email);
+    mailingEvents.emit('newUser', newUser.email);
   };
 
   public checkEmailDuplicate = async (req: Req, res: Res) => {
