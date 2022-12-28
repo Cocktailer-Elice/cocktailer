@@ -18,6 +18,8 @@ import {
   findCocktailIdQuery,
 } from '../queries/cocktailsQuery';
 
+import { db } from '../../mongodb';
+
 import { AppError } from './../../appError';
 import { errorNames } from '../../errorNames';
 
@@ -44,6 +46,7 @@ interface CocktailInterface {
 
   cocktailLikes(userId: number, cocktailId: number): Promise<number>;
 }
+
 interface ReqData {
   [optionKey: string]: string;
 }
@@ -82,11 +85,27 @@ export class CocktailModel implements CocktailInterface {
   ): Promise<number> => {
     //transection 적용!!!
 
-    const newMyCocktail: CocktailModelType = await CocktailSchema.create(
-      cocktailCreateDto,
-    );
+    const session = await db.startSession();
 
-    return Number(newMyCocktail.id);
+    try {
+      session.startTransaction();
+
+      const newMyCocktail = await new CocktailSchema(cocktailCreateDto).save({
+        session,
+      });
+
+      await session.commitTransaction();
+
+      await session.endSession();
+
+      return Number(newMyCocktail.id);
+    } catch (error) {
+      await session.abortTransaction();
+
+      await session.endSession();
+
+      throw new AppError(errorNames.databaseError);
+    }
   };
 
   public getLists = async (): Promise<CocktailModelType[]> => {
