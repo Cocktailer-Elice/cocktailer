@@ -36,6 +36,10 @@ const KakaoBtn = styled.div`
   background-color: #fee000;
   display: flex;
   padding-left: 10px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #e9ecef;
+  }
 `;
 const Text = styled.p`
   font-size: 18px;

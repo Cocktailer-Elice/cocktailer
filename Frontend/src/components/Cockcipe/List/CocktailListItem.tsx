@@ -45,6 +45,7 @@ const ThumbnailBox = styled.div`
   width: auto;
   height: auto;
   margin: 10px;
+  cursor: pointer;
 `;
 const ImgBox = styled.div`
   width: 150px;

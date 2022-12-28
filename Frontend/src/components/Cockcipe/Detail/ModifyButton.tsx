@@ -18,5 +18,6 @@ const Modify = styled(Link)`
   &:hover {
     color: #3b5bdb;
     background-color: #dbe4ff;
+    cursor: pointer;
   }
 `;
