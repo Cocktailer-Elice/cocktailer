@@ -147,16 +147,6 @@ export class CocktailModel implements CocktailInterface {
         { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
       ]);
 
-    // const result: CocktailModelType[] = [];
-
-    // findCocktailByUserId.map((e) => {
-    //   const obj = {
-    //     ...e,
-    //     img: cocktailImgUrl + e.img,
-    //   };
-    //   result.push(obj);
-    // });
-
     return findCocktailByUserId;
   };
 

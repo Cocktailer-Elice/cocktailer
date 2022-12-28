@@ -9,7 +9,7 @@ export const listsQuery = () => {
     $facet[e] = [
       { $match: { category: e, official: true } },
       { $limit: 10 },
-      { $sort: { createdAt: -1 } },
+      { $sort: { likes: -1 } },
       {
         $set: {
           img: {
