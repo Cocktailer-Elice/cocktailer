@@ -1,6 +1,5 @@
 import { Header } from '../../components/Mypage/Header';
 import { useEffect, useState } from 'react';
-import { WithdrawlButton } from '../../components/Mypage/WithdrawlButton';
 import { Board } from '../../components/Mypage/Board';
 import { Carousel } from '../../components/Mypage/Carousel';
 import { Helmet } from 'react-helmet';
@@ -10,6 +9,7 @@ import { MyPostsResData } from '../../../../types';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { withLogin } from '../../common/withLogin';
 import { Container } from '@mui/material';
+import { WithDrawlContainer } from '../../containers/Mypage/WithDrawlContainer';
 
 const Mypage = () => {
   const user = useCurrentUser();
@@ -38,13 +38,21 @@ const Mypage = () => {
         />
         <Carousel
           title="내가 좋아한 Cockcipe"
-          cockcipes={userData?.cocktails}
+          likes={userData?.myList}
           type="likes"
         />
-        <Board title="나의 Cockflow" cockflow={userData?.cockflows} />
-        <Board title="나의 Cockflow Comments" comments={userData?.comments} />
+        <Board
+          title="나의 Cockflow"
+          type="cockflow"
+          cockflow={userData?.cockflows}
+        />
+        <Board
+          title="나의 Cockflow Comments"
+          type="comment"
+          comments={userData?.comments}
+        />
       </Container>
-      <WithdrawlButton />
+      <WithDrawlContainer />
     </>
   );
 };

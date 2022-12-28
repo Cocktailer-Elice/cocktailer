@@ -21,8 +21,8 @@ export const FindPasswordForm = () => {
     if (telVerificationEnd) {
       const response = await axios.post(VERIFY_USER, data);
       if (response.status === 204) {
-        alert('비밀번호 변경 페이지로 이동합니다.');
-        navigate('/edit-password');
+        alert('임시비밀번호가 메일로 전송됩니다. 로그인 페이지로 이동합니다.');
+        navigate('/login');
       }
     } else {
       alert('전화번호 인증을 해주세요');
@@ -40,7 +40,10 @@ export const FindPasswordForm = () => {
             name="tel"
             placeholder=" - 를 제외하고 입력해 주세요"
           />
-          <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
+          <TelVerifier
+            type="users"
+            setTelVerificationEnd={setTelVerificationEnd}
+          />
           <Button type="submit">비밀번호 찾기</Button>
         </UserForm>
       </FormWrapper>

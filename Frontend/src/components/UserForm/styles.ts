@@ -70,7 +70,7 @@ export const Alert = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${grey[800]};
+  color: ${grey[700]};
   background-color: ${red[100]};
   &.success {
     background-color: ${green[200]};

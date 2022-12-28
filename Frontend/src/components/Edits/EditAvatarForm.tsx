@@ -36,29 +36,25 @@ export const EditAvatarForm = () => {
 
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      if (avatar && avatar.length > 0) {
-        setIsSubmitting(true);
-        const response = await axios.post(GET_S3_URL, { folder: 'avatars' });
-        const url = response.data;
-        const file = avatar[0];
-        const compressedFile = await getCompressedImage(file);
-        await axios.put(url, compressedFile, {
-          withCredentials: false,
-          headers: {
-            'Content-Type': file.type,
-          },
-        });
-        const fileCode = getFileCode(url);
-        await axios.patch(UPDATE_AVATAR, { avatarUrl: fileCode });
-        alert('변경이 완료되었습니다');
-        dispatch(userRefresh());
-        navigate('/mypage');
-      } else {
-        alert('파일을 선택해주세요');
-      }
-    } catch (e: any) {
-      console.log(e);
+    if (avatar && avatar.length > 0) {
+      setIsSubmitting(true);
+      const response = await axios.post(GET_S3_URL, { folder: 'avatars' });
+      const url = response.data;
+      const file = avatar[0];
+      const compressedFile = await getCompressedImage(file);
+      await axios.put(url, compressedFile, {
+        withCredentials: false,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+      const fileCode = getFileCode(url);
+      await axios.patch(UPDATE_AVATAR, { avatarUrl: fileCode });
+      alert('변경이 완료되었습니다');
+      dispatch(userRefresh());
+      navigate('/mypage');
+    } else {
+      alert('파일을 선택해주세요');
     }
   };
 

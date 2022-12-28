@@ -5,7 +5,8 @@ export const SIGNUP = `${API_BASE}/auth/signup`;
 export const LOGIN = `${API_BASE}/auth/login`;
 export const LOGOUT = `${API_BASE}/auth/logout`;
 export const EMAIL_DUPLICATE_CHECK = `${API_BASE}/auth/email-check`;
-export const TEL_VERIFICATION_START = `${API_BASE}/auth/send-code`;
+export const TEL_VERIFICATION_START = (type: string) =>
+  `${API_BASE}/${type}/send-code`;
 export const TEL_VERIFICATION_END = `${API_BASE}/auth/validate-code`;
 export const VERIFY_LOGIN = `${API_BASE}/auth/verify`;
 
@@ -25,6 +26,7 @@ export const GET_S3_URL = `${API_BASE}/image-upload`;
 export const GET_MY_COMMENTS = `${API_BASE}/users/my-comments`;
 export const GET_MY_COCKTAILS = `${API_BASE}/cocktails/my-cocktails`;
 export const GET_MY_COCKFLOWS = `${API_BASE}/cockflow/my-cockflows`;
+export const GET_MY_LIKES = `${API_BASE}/users/my-likes`;
 
 // Home
 export const GET_RANKINGS_OF_COCKTAIL_AND_USER = `${API_BASE}/cocktails/home`;

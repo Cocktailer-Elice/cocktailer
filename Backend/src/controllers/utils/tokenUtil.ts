@@ -1,31 +1,42 @@
-import { Token, Cookie } from '../../routers/middlewares/types/authType';
 import { IUser } from '../../db';
 import { sign } from 'jsonwebtoken';
+import { Cookie, Token } from '../../routers/middlewares/types';
 
-const ACCESS_KEY = process.env.ACCESS_KEY;
-const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE;
+const ACCESS_KEY = process.env.ACCESS_KEY as string;
+const ACCESS_EXPIRE = process.env.ACCESS_EXPIRE as string;
+const ACCESS_EXPIRE_AUTO = process.env.ACCESS_EXPIRE_AUTO as string;
+const COOKIE_EXPIRE = process.env.COOKIE_EXPIRE as string;
 
-export const createToken = (user: IUser): Token => {
-  const tokenData: Cookie = {
-    userId: user.id,
-    name: user.name,
-    email: user.email,
-    nickname: user.nickname,
-    isAdmin: user.isAdmin,
-    isBartender: user.isBartender,
-    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${user.avatarUrl}`,
-  };
-  const secretKey: string = ACCESS_KEY as string;
-  const expiresIn: string = ACCESS_EXPIRE as string;
-
-  return {
-    expiresIn,
-    token: sign(tokenData, secretKey, { expiresIn }),
-  };
+export const createToken = (user: IUser, isAutoLogin: boolean) => {
+  const tokenData = user.tokenData;
+  const secretKey = ACCESS_KEY;
+  const expiresIn = isAutoLogin ? ACCESS_EXPIRE_AUTO : ACCESS_EXPIRE;
+  const token = sign(tokenData, secretKey, { expiresIn });
+  return token;
 };
 
-export const createCookie = (tokenData: Token): string => {
-  const { token, expiresIn } = tokenData;
+export const updateToken = (originalCookie: Cookie, avatarUrl: string) => {
+  const tokenData = { ...originalCookie };
+  (tokenData as Token).id = originalCookie.userId;
+  tokenData.avatarUrl = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${avatarUrl}`;
+  delete tokenData.userId;
+  const secretKey = ACCESS_KEY;
+  const { exp } = originalCookie;
+  const expiresIn = (exp as number) - Math.floor(Date.now() / 1000);
+  delete tokenData.exp;
+  const token = sign(tokenData, secretKey, { expiresIn });
+  return token;
+};
+
+export const createCookie = (
+  token: string,
+  userId: string,
+  isAutoLogin: boolean,
+) => {
+  const cookieExpire = COOKIE_EXPIRE;
   // HTTPS 적용 후 secure 옵션도 설정할 것! secure;
-  return `Authorization=${token}; HttpOnly; Max-Age=${expiresIn}; path=/`;
+  const cookie = isAutoLogin
+    ? `Authorization=${token}/${userId}; HttpOnly; Max-Age=${cookieExpire}; path=/;`
+    : `Authorization=${token}/${userId}; HttpOnly; path=/;`;
+  return cookie;
 };

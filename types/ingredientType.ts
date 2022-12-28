@@ -1,8 +1,4 @@
-export  interface IngredientCreateReqDto {
-    id: number;
-
-}
-export interface IngredientGetResDto {
-    id: number;
-
+export interface IngredientObject {
+  alcohol: [];
+  ingredient: [];
 }

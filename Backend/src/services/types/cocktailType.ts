@@ -27,3 +27,30 @@ export interface CocktailServiceType {
   ratio: Ratio;
   content: string;
 }
+
+export interface CocktailRankings {
+  id: number;
+  img: string;
+  name: string;
+  official: boolean;
+  owner: {
+    nickname: string;
+    isBartender: boolean;
+  };
+  likes: number;
+}
+
+export interface UserRanking {
+  id: number;
+  avatarUrl: string;
+  nickname: string;
+  points: number;
+  isBartender: boolean;
+}
+
+export interface UpdateResult {
+  acknowledged: boolean;
+  modifiedCount: number;
+  upsertedCount: number;
+  matchedCount: number;
+}

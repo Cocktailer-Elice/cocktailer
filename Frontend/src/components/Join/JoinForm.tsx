@@ -12,10 +12,11 @@ import { TelVerifier } from '../UserForm/TelVerification';
 import { nicknamePrefixes } from '../../constants/nickname';
 
 interface JoinFormProps {
+  isLoggedIn: boolean;
   register: (data: UserCreateData) => void;
 }
 
-export const JoinForm = ({ register }: JoinFormProps) => {
+export const JoinForm = ({ isLoggedIn, register }: JoinFormProps) => {
   const methods = useForm<UserCreateData>({
     resolver: yupResolver(JoinSchema),
     mode: 'onChange',
@@ -31,13 +32,23 @@ export const JoinForm = ({ register }: JoinFormProps) => {
   >(null);
   const [telVerificationEnd, setTelVerificationEnd] = useState(false);
 
-  const onSubmitHandler = (data: UserCreateData) => {
+  const onSubmitHandler = ({
+    name,
+    email,
+    password,
+    birthday,
+    tel,
+    alcohol,
+  }: UserCreateData) => {
     if (emailDuplicateCheck === false) {
       errors.email && (errors.email.message = '이메일 인증을 진행해주세요');
     } else if (telVerificationEnd === false) {
       errors.tel && (errors.tel.message = '전화번호 인증을 진행해주세요');
     } else {
-      register(data);
+      register({ name, email, password, birthday, tel, alcohol });
+      if (!isLoggedIn) {
+        alert('회원가입에 실패했습니다. 다시 시도해주세요');
+      }
       reset();
     }
   };
@@ -76,7 +87,10 @@ export const JoinForm = ({ register }: JoinFormProps) => {
             name="tel"
             placeholder=" - 를 제외하고 입력해주세요"
           />
-          <TelVerifier setTelVerificationEnd={setTelVerificationEnd} />
+          <TelVerifier
+            type="auth"
+            setTelVerificationEnd={setTelVerificationEnd}
+          />
           <Select
             id="alcohol"
             label="nickname prefix"

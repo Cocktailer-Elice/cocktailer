@@ -1,58 +1,92 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Autoplay, Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { MyCockcipe } from '../../../../types';
-import { SectionContainer, SectionWrapper } from './style';
+import { Autoplay, Pagination } from 'swiper';
+import { MyCockcipe, MyLike } from '../../../../types';
+import { Empty, SectionContainer, SectionWrapper } from './style';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import '../../swiper.css';
 
 interface SectionProps {
   title: string;
   type: 'mine' | 'likes';
   cockcipes?: MyCockcipe[];
+  likes?: MyLike[];
 }
 
-export const Carousel = ({ title, cockcipes, type }: SectionProps) => {
+export const Carousel = ({ title, cockcipes, likes, type }: SectionProps) => {
   const navigate = useNavigate();
   return (
     <SectionContainer>
       <SectionWrapper>
         <CarouselTitle>{title}</CarouselTitle>
-        {!cockcipes && <Empty>비어있음</Empty>}
         <Button
+          sx={{ fontSize: '0.7rem' }}
           onClick={() =>
             navigate(`/mypage/${type === 'likes' ? type : 'cockcipes'}`)
           }
         >
-          더 보기
+          전체 보기
         </Button>
         <Swiper
-          spaceBetween={50}
-          centeredSlides={true}
-          slidesPerView={5}
+          spaceBetween={30}
+          slidesPerView={3}
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,
           }}
-          modules={[Autoplay, Pagination, Navigation]}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Autoplay, Pagination]}
         >
-          {cockcipes?.map(({ id, name, img }) => (
-            <SwiperSlide
-              key={id}
-              onClick={() => navigate(`/cockcipe/detail/${id}`)}
-            >
-              <img
-                src={
-                  img === 'testedURL'
-                    ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                    : img
-                }
-                alt={name}
-                style={{ width: '100px', height: '100px' }}
-              />
-              {name}
-            </SwiperSlide>
-          ))}
+          {type === 'mine'
+            ? cockcipes?.map(({ id, name, img }) => (
+                <SwiperSlide
+                  key={id}
+                  onClick={() => navigate(`/cockcipe/detail/${id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img
+                    src={
+                      img === 'testedURL'
+                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
+                        : img
+                    }
+                    alt={name}
+                    style={{
+                      width: '100px',
+                      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </SwiperSlide>
+              ))
+            : likes?.map(({ id, name, img }) => (
+                <SwiperSlide
+                  key={id}
+                  onClick={() => navigate(`/cockcipe/detail/${id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img
+                    src={
+                      img === 'testedURL'
+                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
+                        : img
+                    }
+                    alt={name}
+                    style={{
+                      width: '100px',
+                      boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </SwiperSlide>
+              ))}
         </Swiper>
       </SectionWrapper>
     </SectionContainer>
@@ -61,13 +95,4 @@ export const Carousel = ({ title, cockcipes, type }: SectionProps) => {
 
 const CarouselTitle = styled.h4`
   padding: 0.2rem;
-`;
-
-const Empty = styled.div`
-  width: 100%;
-  height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.1rem;
 `;
