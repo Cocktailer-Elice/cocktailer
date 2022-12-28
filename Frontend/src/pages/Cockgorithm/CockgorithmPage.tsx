@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
-import { Helmet } from 'react-helmet';
 import { useAppSelector } from './../../store/store';
 
 export const CockgorithmPage = () => {

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 import { useAppSelector } from './../../store/store';
 
 export const CockgorithmGameResult = () => {
