@@ -45,6 +45,7 @@ export const AvatarImage = styled.img`
   height: 80px;
   border-radius: 50%;
   margin: 0.5rem;
+  object-fit: cover;
   border: ${({ theme }) => `${theme.colors.indigo6} 1px solid`};
 `;
 
@@ -55,7 +56,7 @@ export const AvatarText = styled.span`
 
 export const SectionContainer = styled.div`
   width: 100%;
-  min-height: 15vh;
+  min-height: 17vh;
   max-height: 25vh;
   margin-bottom: 0.25rem;
   padding: 0.5rem;
@@ -64,5 +65,14 @@ export const SectionContainer = styled.div`
 export const SectionWrapper = styled.section`
   width: 100%;
   height: 100%;
-  padding: 0.3rem;
+  padding: 0.5rem;
+`;
+
+export const Empty = styled.div`
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
 `;

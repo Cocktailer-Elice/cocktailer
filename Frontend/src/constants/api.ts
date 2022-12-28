@@ -5,7 +5,8 @@ export const SIGNUP = `${API_BASE}/auth/signup`;
 export const LOGIN = `${API_BASE}/auth/login`;
 export const LOGOUT = `${API_BASE}/auth/logout`;
 export const EMAIL_DUPLICATE_CHECK = `${API_BASE}/auth/email-check`;
-export const TEL_VERIFICATION_START = `${API_BASE}/auth/send-code`;
+export const TEL_VERIFICATION_START = (type: string) =>
+  `${API_BASE}/${type}/send-code`;
 export const TEL_VERIFICATION_END = `${API_BASE}/auth/validate-code`;
 export const VERIFY_LOGIN = `${API_BASE}/auth/verify`;
 
