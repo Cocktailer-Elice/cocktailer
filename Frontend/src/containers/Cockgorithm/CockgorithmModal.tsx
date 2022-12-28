@@ -1,54 +1,31 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import CloseButton from '@mui/icons-material/Close';
 
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
-import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
 import {
-  CockgorithmReqData,
   CockgorithmCocktail,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
 import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
-import { useToggle } from './../../hooks/useToggle';
+import { cockgorithmSlice } from '../../store/cockgorithmSlice';
+import { useAppSelector, useAppDispatch } from './../../store/store';
 
-interface CockgorithmModalProps {
-  handleModalClose: () => void;
-  selectedGame: IGame;
-}
+export const CockgorithmModal = () => {
+  const { selectedGame, isLoadingOpen, isGameResultOpen, filters } =
+    useAppSelector((state) => state.cockgorithm);
 
-const cocktailMockData = {
-  id: 1,
-  name: '마티니 블루',
-  img: '칵테일 이미지 URL',
-  degree: 1,
-  content: '마티니 블루는 주절주절',
-};
+  const dispatch = useAppDispatch();
 
-export const CockgorithmModal = ({
-  handleModalClose,
-  selectedGame,
-}: CockgorithmModalProps) => {
-  const { isOpen: isLoadingOpen, handleOpen: handleLoadingOpen } =
-    useToggle(false);
-
-  const { isOpen: isGameResultOpen, handleOpen: handleGameResultOpen } =
-    useToggle(false);
-
-  const [isFoundCocktail, setIsFoundCocktail] = useState<boolean>(false);
-
-  const [filters, setFilters] = useState<CockgorithmReqData>({
-    category: '',
-    alcohol: '',
-    degree: '',
-    ingredients: [],
-  });
-
-  const [cocktailInfo, setCocktailInfo] =
-    useState<CockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+  const {
+    setIsModalOpen,
+    setIsFoundCocktail,
+    setCocktailInfo,
+    setIsGameResultOpen,
+  } = cockgorithmSlice.actions;
 
   useEffect(() => {
     if (isLoadingOpen) {
@@ -65,15 +42,15 @@ export const CockgorithmModal = ({
 
           if (response.isFound) {
             const fetchedCocktail = response.data as CockgorithmCocktail;
-            setIsFoundCocktail(true);
-            setCocktailInfo(fetchedCocktail);
+            dispatch(setIsFoundCocktail(true));
+            dispatch(setCocktailInfo(fetchedCocktail));
           } else {
-            setIsFoundCocktail(false);
+            dispatch(setIsFoundCocktail(false));
           }
         } catch (error) {
           alert(error);
         } finally {
-          handleGameResultOpen();
+          dispatch(setIsGameResultOpen(true));
         }
       }, 2000);
     }
@@ -81,7 +58,7 @@ export const CockgorithmModal = ({
 
   return (
     <>
-      <Dimmed onClick={handleModalClose} />
+      <Dimmed onClick={() => dispatch(setIsModalOpen(false))} />
       <Modal>
         <MainSection>
           <GameTitle>
@@ -91,20 +68,14 @@ export const CockgorithmModal = ({
             </span>
           </GameTitle>
           {!isLoadingOpen ? (
-            <CockgorithmGameContent
-              selectedGame={selectedGame}
-              handleLoadingOpen={handleLoadingOpen}
-              setFilters={setFilters}
-            />
+            <CockgorithmGameContent />
           ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
-          ) : isFoundCocktail ? (
-            <CockgorithmGameResult cocktailInfo={cocktailInfo} />
           ) : (
             <CockgorithmGameResult />
           )}
         </MainSection>
-        <CustomCloseButton onClick={handleModalClose} />
+        <CustomCloseButton onClick={() => dispatch(setIsModalOpen(false))} />
       </Modal>
     </>
   );
@@ -189,6 +160,7 @@ const CustomCloseButton = styled(CloseButton)`
   right: 20px;
 
   color: white;
+  cursor: pointer;
 
   @media screen and (max-width: 500px) {
     width: 25px;

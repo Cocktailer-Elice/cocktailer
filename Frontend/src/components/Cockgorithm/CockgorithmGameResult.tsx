@@ -1,18 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from './../../store/store';
 
-import { CockgorithmCocktail } from '../../../../types/cockgorithmType';
+export const CockgorithmGameResult = () => {
+  const { isFoundCocktail, cocktailInfo } = useAppSelector(
+    (state) => state.cockgorithm,
+  );
 
-interface CockgorithmGameResultProps {
-  cocktailInfo?: CockgorithmCocktail;
-}
-
-export const CockgorithmGameResult = ({
-  cocktailInfo,
-}: CockgorithmGameResultProps) => {
   return (
     <GameResult>
-      {cocktailInfo && (
+      {isFoundCocktail && (
         <>
           <CocktailTitle>"{cocktailInfo.name}"를 추천드릴게요!</CocktailTitle>
           <CocktailImageWrapper>
@@ -27,7 +24,7 @@ export const CockgorithmGameResult = ({
           </CustomLink>
         </>
       )}
-      {!cocktailInfo && (
+      {!isFoundCocktail && (
         <CocktailNotFound>
           <span>원하시는 조건에 알맞는 칵테일을 찾지 못했어요. 😢</span>
           <span>더 다양한 칵테일 레시피를 제공해드릴 수 있도록</span>

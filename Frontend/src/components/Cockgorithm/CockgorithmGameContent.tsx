@@ -1,29 +1,23 @@
-import { SetStateAction, useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import { CockgorithmReqData } from '../../../../types/cockgorithmType';
+import { useAppSelector } from '../../store/store';
+import { cockgorithmSlice } from '../../store/cockgorithmSlice';
+import { useAppDispatch } from './../../store/store';
 
-interface CockgorithmGameContentProps {
-  selectedGame: IGame;
-  handleLoadingOpen: () => void;
-  setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
-}
+export const CockgorithmGameContent = () => {
+  const { selectedGame, questionCounter } = useAppSelector(
+    (state) => state.cockgorithm,
+  );
 
-export const CockgorithmGameContent = ({
-  selectedGame,
-  handleLoadingOpen,
-  setFilters,
-}: CockgorithmGameContentProps) => {
-  const [questionCounter, setQuestionCounter] = useState(0);
+  const dispatch = useAppDispatch();
 
-  const increaseQuestionCounter = () => {
-    setQuestionCounter((curr) => curr + 1);
-  };
+  const { increaseQuestionCounter, setIsLoadingOpen, setFilters } =
+    cockgorithmSlice.actions;
 
   useEffect(() => {
     if (questionCounter === 5) {
-      handleLoadingOpen();
+      dispatch(setIsLoadingOpen(true));
     }
   }, [questionCounter]);
 
@@ -32,19 +26,9 @@ export const CockgorithmGameContent = ({
     filterValue: string;
   }) => {
     const { filterName } = selectedGame.questions[questionCounter];
-    setFilters((curr: CockgorithmReqData) => {
-      if (filterName === 'ingredients') {
-        curr[filterName] = [...curr[filterName], option.filterValue];
-      } else if (
-        filterName === 'category' ||
-        filterName === 'alcohol' ||
-        filterName === 'degree'
-      ) {
-        curr[filterName] = option.filterValue;
-      }
-      return curr;
-    });
-    increaseQuestionCounter();
+
+    dispatch(setFilters({ filterName, filterValue: option.filterValue }));
+    dispatch(increaseQuestionCounter({}));
   };
 
   return questionCounter < 5 ? (

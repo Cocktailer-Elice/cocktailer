@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
-import gameDatas from '../../constants/gameDatas.json';
 import { Helmet } from 'react-helmet';
-import { useToggle } from './../../hooks/useToggle';
+import { useAppSelector } from './../../store/store';
 
 export interface IGame {
   gameEmoji: string;
@@ -19,18 +17,7 @@ export interface IGame {
 }
 
 export const CockgorithmPage = () => {
-  const {
-    isOpen: isModalOpen,
-    handleOpen: handleModalOpen,
-    handleClose: handleModalClose,
-  } = useToggle(false);
-
-  const [selectedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
-
-  const handleGameClick = (game: IGame) => {
-    setSelectedGame(game);
-    handleModalOpen();
-  };
+  const { isModalOpen } = useAppSelector((state) => state.cockgorithm);
 
   return (
     <>
@@ -38,13 +25,8 @@ export const CockgorithmPage = () => {
         <title>Cocktailer | 칵고리즘</title>
       </Helmet>
       <Container>
-        <CockgorithmGameList handleGameClick={handleGameClick} />
-        {isModalOpen && (
-          <CockgorithmModal
-            handleModalClose={handleModalClose}
-            selectedGame={selectedGame}
-          />
-        )}
+        <CockgorithmGameList />
+        {isModalOpen && <CockgorithmModal />}
       </Container>
     </>
   );
