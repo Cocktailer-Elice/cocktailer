@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
+import gameDatas from '../../constants/gameDatas.json';
 
 interface CockgorithmGameListProps {
-  gameDatas: IGame[];
   handleGameClick: (game: IGame) => void;
 }
 
@@ -23,7 +23,6 @@ const gameColors = [
 ];
 
 export const CockgorithmGameList = ({
-  gameDatas,
   handleGameClick,
 }: CockgorithmGameListProps) => {
   return (

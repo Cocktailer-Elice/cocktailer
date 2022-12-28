@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
 import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
-import gameDatas from './gameDatas.json';
+import gameDatas from '../../constants/gameDatas.json';
 import { Helmet } from 'react-helmet';
 import { useToggle } from './../../hooks/useToggle';
 
@@ -38,10 +38,7 @@ export const CockgorithmPage = () => {
         <title>Cocktailer | 칵고리즘</title>
       </Helmet>
       <Container>
-        <CockgorithmGameList
-          gameDatas={gameDatas}
-          handleGameClick={handleGameClick}
-        />
+        <CockgorithmGameList handleGameClick={handleGameClick} />
         {isModalOpen && (
           <CockgorithmModal
             handleModalClose={handleModalClose}
