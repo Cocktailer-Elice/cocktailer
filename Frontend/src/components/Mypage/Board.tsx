@@ -16,9 +16,15 @@ export const Board = ({ title, cockflow, comments }: BoardProps) => {
     <SectionContainer>
       <SectionWrapper>
         <BoardTitle>{title}</BoardTitle>
-        {title === '나의 Cockflow' && (
-          <Button onClick={() => navigate('/mypage/cockflows')}>더 보기</Button>
-        )}
+        <Button
+          onClick={() =>
+            navigate(
+              `/mypage/${title === '나의 Cockflow' ? 'cockflows' : 'comments'}`,
+            )
+          }
+        >
+          더 보기
+        </Button>
         <Grid
           container
           spacing={2}
@@ -68,11 +74,12 @@ const BoardTitle = styled.h4`
 
 const ContentWrapper = styled.div`
   display: flex;
-  border: 1px solid ${({ theme }) => theme.colors.indigo6};
   padding: 0.5rem;
   justify-content: center;
   align-items: center;
   font-size: 0.6rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 const Title = styled.span`
