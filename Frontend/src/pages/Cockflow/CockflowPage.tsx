@@ -10,6 +10,7 @@ import { useInView } from 'react-intersection-observer';
 import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { GET_COCKFLOW } from '../../constants/api';
 
 
 const imgArr = [
@@ -44,7 +45,7 @@ export const CockflowPage = () => {
 
   const getList = () => {
     setLoading(true);
-    axios.get(`/api/cockflow/?q=${page}`)
+    axios.get(GET_COCKFLOW(page))
       .then(res => {
         setMaxpage(res.data.maxRequest);
 

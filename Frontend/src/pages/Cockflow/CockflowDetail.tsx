@@ -12,6 +12,7 @@ import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { COCKFLOW_ID } from '../../constants/api';
 
 export const CockflowDetail = () => {
   const user = useCurrentUser();
@@ -52,7 +53,7 @@ export const CockflowDetail = () => {
   }, [user, data])
 
   useEffect(() => {
-    axios.get<CockflowGetResData | any>(`/api/cockflow/${_id}`)
+    axios.get<CockflowGetResData | any>(COCKFLOW_ID(_id))
       .then(res => {
         if (res.data) {
           setResData(res.data);
@@ -89,9 +90,7 @@ export const CockflowDetail = () => {
         <CockflowCommentBox
           cockflowId={_id}
           commentlist={comments}
-          commentId={'16'}
-          isAuthor={isAuthor}
-        />
+          isAuthor={isAuthor} />
       </P10P15>
     </Container>
   );

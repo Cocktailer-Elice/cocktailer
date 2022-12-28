@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { boolean } from 'yup';
+import { COCKFLOW_ID } from '../../constants/api';
 import { Center } from './style';
 
 interface btnType {
@@ -19,9 +20,8 @@ interface putType {
 
 export const CockflowEnrollBtns = ({ linkto = "/cockflow", typeBtn = "button", pageId, editFn, updateAxios }: btnType) => {
     const deleteFn = async () => {
-
-        if (confirm('삭제하시겠습니까?')) {
-            await axios.delete(`/api/cockflow/${pageId}`)
+        if (confirm('삭제하시겠습니까?') && pageId) {
+            await axios.delete(COCKFLOW_ID(pageId))
                 .then(() => {
                     alert('삭제되었습니다.');
                     window.location.replace(`/cockflow`);

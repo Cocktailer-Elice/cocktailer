@@ -56,3 +56,12 @@ export const PATCH_COCKTAIL = (cocktailId: number) =>
   `${API_BASE}/cocktails/updatecocktail/${cocktailId}`;
 export const GET_INDEGRIENT = `${API_BASE}/ingredients`;
 export const SHARE_KAKAO = (id: number) => `cockcipe/detail/${id}`;
+
+export const COCKFLOW = () => `${API_BASE}/cockflow`;
+export const COCKFLOW_DETAIL = (id: string) => `${API_BASE}/cockflow/detail/${id}`;
+export const GET_COCKFLOW = (page: number) => `${API_BASE}/cockflow/?q=${page}`;
+export const POST_COCKFLOW_COMMENTS = (cockflowId: string) => `${API_BASE}/cockflow/${cockflowId}/comments`;
+export const COCKFLOW_TWOID = (cockflowId: string, commentId: number) => {
+  return `${API_BASE}/cockflow/${cockflowId}/comments/${commentId}`;
+};
+export const COCKFLOW_ID = (pageId: number | string | undefined) => `${API_BASE}/cockflow/${pageId}`;

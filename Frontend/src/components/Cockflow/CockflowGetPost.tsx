@@ -2,20 +2,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
-import { useState } from 'react';
+import { COCKFLOW } from '../../constants/api';
 
 export const CockflowGetPost = () => {
-
-  const postCockflowList = async (data: any) => {
-    await axios.post('/api/cockflow', data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
     if (data.title && data.content) {
@@ -27,6 +16,15 @@ export const CockflowGetPost = () => {
         ? alert(`본문을 입력해주세요`)
         : alert(`제목을 입력해주세요`)
     }
+  };
+
+  const postCockflowList = async (data: any) => {
+    await axios.post(COCKFLOW(), data)
+      .then(function (response) {
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (

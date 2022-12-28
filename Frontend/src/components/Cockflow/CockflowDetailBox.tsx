@@ -6,6 +6,7 @@ import { trimDate } from './CockflowUtils';
 import { CockflowEnrollBtns } from './CockflowEnrollBtns';
 import axios from 'axios';
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { COCKFLOW_ID } from '../../constants/api';
 
 interface dataType {
   detailData: {
@@ -42,9 +43,9 @@ export const CockflowDetailBox = ({ detailData, isAuthor }: dataType) => {
     const copiedData = {
       title: newTitle,
       content: newContent
-    }
+    };
 
-    await axios.put(`/api/cockflow/${detailData._id}`, copiedData)
+    await axios.put(COCKFLOW_ID(detailData._id), copiedData)
       .then(() => {
         alert('수정되었습니다.');
         window.location.replace(`/cockflow/detail/${detailData._id}`);
@@ -57,7 +58,7 @@ export const CockflowDetailBox = ({ detailData, isAuthor }: dataType) => {
 
   const handleTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNewContent(e.currentTarget.value);
-  }
+  };
 
   return (
     <ContWrap>
