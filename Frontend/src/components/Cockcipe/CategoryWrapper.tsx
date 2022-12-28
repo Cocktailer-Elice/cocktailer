@@ -27,7 +27,7 @@ interface Data {
   owner: Obj;
 }
 
-// TODO : 무한스크롤
+// TODO : 무한스크롤 전체 리스트 개수 반환해달라고 하기
 export const CategoryWrapper = () => {
   const url = window.location.pathname;
   const categoryId = url.split('/')[3];
@@ -38,15 +38,17 @@ export const CategoryWrapper = () => {
   const page = useRef<number>(10);
   const [categoryList, setCategoryList] = useState<Data[]>([]);
   const [ref, inView] = useInView();
-  const [end, setEnd] = useState<number>(10);
+  const [error, setError] = useState<boolean>(false);
   const getList = () => {
-    if (end < 10) return;
-    axios.get(GET_COCKTAILS_SCROLL(categoryId, page.current)).then((res) => {
-      console.log(res.data);
-      setCategoryList(() => categoryList.concat(res.data.categoryLists));
-      page.current += 10;
-      setEnd(res.data.categoryLists.length);
-    });
+    if (error) return;
+    axios
+      .get(GET_COCKTAILS_SCROLL(categoryId, page.current))
+      .then((res) => {
+        console.log(res.data);
+        setCategoryList(() => categoryList.concat(res.data.categoryLists));
+        page.current += 10;
+      })
+      .catch((err) => setError(true));
   };
 
   useEffect(() => {
@@ -60,8 +62,6 @@ export const CategoryWrapper = () => {
   };
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log(official, nonOfficial, searchText);
-    console.log(event.key);
     if (event.key === 'Enter') {
       if (official && nonOfficial) {
         axios
