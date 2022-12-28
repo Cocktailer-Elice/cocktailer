@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import { ICocktail } from '../DetailWrapper';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import axios from 'axios';
 
 type CockProps = {
   cocktail: ICocktail;
+  isliked: boolean;
+  setLiked: any;
 };
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const CocktailInfomation = ({ cocktail }: CockProps) => {
+export const CocktailInfomation = ({
+  cocktail,
+  isliked,
+  setLiked,
+}: CockProps) => {
+  const url = window.location.pathname;
+  const cocktailId = parseInt(url.split('/')[3]);
   let totalCnt = 0;
   let totalIngred = [];
   for (let key in cocktail.ratio.alcohol) {
@@ -49,16 +58,20 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
   };
 
   const [like, setLike] = useState<number>(cocktail.likes);
-  const [isLike, setIsLike] = useState<boolean>(false);
-  const handleLike = () => {
-    setIsLike(!isLike);
 
-    if (!isLike) {
-      setLike(like + 1);
-    } else {
-      setLike(like - 1);
-    }
+  const handleLike = () => {
+    axios
+      .get(`http://localhost:8000/api/cocktails/likes/${cocktailId}`)
+      .then((res) => {
+        console.log(res.data);
+        setLiked(!isliked);
+        setLike(res.data.likes);
+      })
+      .catch((err) => alert('로그인 해주세요!'));
   };
+  useEffect(() => {
+    setLike(cocktail.likes);
+  }, [cocktail.likes]);
   return (
     <>
       <Img src={cocktail.img} width="300" height="300" />
@@ -81,7 +94,7 @@ export const CocktailInfomation = ({ cocktail }: CockProps) => {
       <LikeContainer>
         <LikeNumber>{like}</LikeNumber>
         <Like onClick={handleLike}>
-          {isLike ? (
+          {isliked ? (
             <ThumbUpIcon fontSize="large" />
           ) : (
             <ThumbUpOffAltIcon fontSize="large" />

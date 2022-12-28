@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useReducer, useState } from 'react';
+import { useNavigate } from 'react-router';
+
 import styled from 'styled-components';
 import { POST_COCKTAIL } from '../../constants/api';
 import { ApplyButton } from './Apply/ApplyButton';
@@ -10,6 +12,7 @@ import { InputRecipe } from './Apply/InputRecipe';
 import { InputTitleImg } from './Apply/InputTitleImg';
 
 export const ApplyWrapper = () => {
+  const navigate = useNavigate();
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
@@ -61,7 +64,11 @@ export const ApplyWrapper = () => {
       .then((res) => {
         console.log(res);
         console.log(newData);
-      });
+        navigate(`/cockcipe/detail/${res.data.data}`);
+      })
+      .catch((err) =>
+        alert('등록하는데 문제가 발생했습니다! 관리자에게 문의해보세요'),
+      );
   };
   return (
     <>
