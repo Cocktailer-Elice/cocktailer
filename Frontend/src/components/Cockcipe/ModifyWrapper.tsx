@@ -75,16 +75,22 @@ export const ModifyWrapper = () => {
 
     if (
       !Object.keys(alcohoObj).every((current) => current !== '') ||
-      !Object.keys(IngredObj).every((current) => current !== '')
+      !Object.keys(IngredObj).every((current) => current !== '') ||
+      !name ||
+      !img ||
+      !category ||
+      !content ||
+      !flavor
     ) {
       alert('비어있는 값이 있습니다!');
     } else {
+      console.log(newData);
       axios
         .patch(PATCH_COCKTAIL(cocktailId), newData)
         .then((res) => {
-          console.log(res);
-          console.log(newData);
-          navigate(`/cockcipe/detail/${cocktailId}`);
+          if (res.data.update)
+            navigate(`/cockcipe/detail/${res.data.cocktailId}`);
+          else throw new Error();
         })
         .catch((err) =>
           alert('수정하는데 문제가 발생했습니다! 관리자에게 문의해보세요'),
@@ -135,6 +141,7 @@ const Header = styled.div`
   color: #3b5bdb;
   text-align: center;
   margin-top: 20px;
+  font-weight: 800;
 `;
 
 const ApplyPlace = styled.div`

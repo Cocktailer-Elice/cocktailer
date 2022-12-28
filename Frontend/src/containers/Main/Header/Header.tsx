@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
 import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
 import { Drawer } from './../Drawer/Drawer';
-import { useToggle } from '../../../utils/customHooks';
+import { useToggle } from './../../../hooks/useToggle';
 
 export const Header = () => {
   const {

@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { GET_S3_URL } from '../../../constants/api';
+import { NoEncryptionGmailerrorred } from '@mui/icons-material';
 
 export const InputTitleImg = ({ setImg, img }: any) => {
-  const [imgSrc, setImgsrc] = useState<string>(img ? img : '');
+  const [imgSrc, setImgsrc] = useState<string>('');
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -21,11 +22,12 @@ export const InputTitleImg = ({ setImg, img }: any) => {
       formData.append('image', file);
       axios
         .post(GET_S3_URL, {
-          folder: 'seeun-test',
+          folder: 'cocktails',
         })
         .then((res) => {
-          console.log(new URL(res.data).pathname.split('/')[2]);
-          setImg(new URL(res.data).pathname.split('/')[2]);
+          const key = new URL(res.data).pathname.split('/')[2];
+          console.log(key);
+          setImg(key);
           axios
             .put(`${res.data}`, file, {
               headers: {
@@ -33,10 +35,13 @@ export const InputTitleImg = ({ setImg, img }: any) => {
               },
               withCredentials: false,
             })
-            .then((res) => console.log(res.status));
+            .then((res) => {
+              console.log(res.status);
+            });
         });
     }
   };
+
   return (
     <ImgContainer>
       <InsertWrapper>
@@ -52,7 +57,11 @@ export const InputTitleImg = ({ setImg, img }: any) => {
         />
       </InsertWrapper>
       <PreviewImg>
-        {imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />}
+        {!imgSrc ? (
+          <img src={img} alt="preview" width="300" height="300" />
+        ) : (
+          imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />
+        )}
       </PreviewImg>
     </ImgContainer>
   );

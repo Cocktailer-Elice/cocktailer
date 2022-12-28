@@ -38,11 +38,19 @@ const Mypage = () => {
         />
         <Carousel
           title="내가 좋아한 Cockcipe"
-          cockcipes={userData?.cocktails}
+          likes={userData?.myList}
           type="likes"
         />
-        <Board title="나의 Cockflow" cockflow={userData?.cockflows} />
-        <Board title="나의 Cockflow Comments" comments={userData?.comments} />
+        <Board
+          title="나의 Cockflow"
+          type="cockflow"
+          cockflow={userData?.cockflows}
+        />
+        <Board
+          title="나의 Cockflow Comments"
+          type="comment"
+          comments={userData?.comments}
+        />
       </Container>
       <WithDrawlContainer />
     </>

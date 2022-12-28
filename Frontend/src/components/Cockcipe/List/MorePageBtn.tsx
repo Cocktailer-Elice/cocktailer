@@ -10,12 +10,12 @@ export const MorePageBtn = ({ category }: Props) => {
 
 const MoveLink = styled(Link)`
   font-size: 15px;
-  color: #212529;
+  color: #495057;
   text-decoration: none;
   font-weight: 550;
   &:hover {
     cursor: pointer;
-    font-size: 17px;
+    font-size: 16px;
   }
   margin-right: 20px;
   &:focus,
