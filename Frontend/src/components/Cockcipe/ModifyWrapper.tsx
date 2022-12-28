@@ -84,7 +84,6 @@ export const ModifyWrapper = () => {
     ) {
       alert('비어있는 값이 있습니다!');
     } else {
-      console.log(newData);
       axios
         .patch(PATCH_COCKTAIL(cocktailId), newData)
         .then((res) => {
