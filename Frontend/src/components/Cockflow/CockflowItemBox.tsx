@@ -5,9 +5,9 @@ import { CockflowCreateReqDto } from '../../../../types/cockflowType';
 interface GetData extends CockflowCreateReqDto {
   key: string,
   id: string,
-}
+};
 
-export const CockflowItemBox = ({ id, title, content }:GetData) => {
+export const CockflowItemBox = ({ id, title, content }: GetData) => {
   return (
     <NavLink to={`/cockflow/detail/${id}`}>
       <Title>{title}</Title>
@@ -37,21 +37,28 @@ const NavLink = styled(Link)`
 
 const Title = styled.div`
   position: absolute;
+  width: 65%;
+  font-size: 12px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
   color: #fff;
-  font-weight: light;
-  word-break: keep-all;
   text-align: center;
   line-height: 1.5;
-  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  // word-break: break-word;
+  word-break: keep-all;
 `;
 
 const ImgWrap = styled.div`
-  width: 120px;
-  height: 125px;
+  width: 100%;
+  height: 140px;
+  transition: all 0.5s;
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 const Img = styled.img`

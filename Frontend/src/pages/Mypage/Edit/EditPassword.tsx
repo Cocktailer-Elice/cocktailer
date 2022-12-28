@@ -1,15 +1,18 @@
-import { EditPasswordContainer } from '../../../containers/Edits/EditPasswordContainer';
-import { loginChecker } from '../../../utils/loginChecker';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { withLogin } from '../../../common/withLogin';
+import { FormHeading } from '../../../components/UserForm/styles';
+import { EditPasswordForm } from '../../../components/Edits/EditPasswordForm';
 
-export const EditPassword = () => {
-  const isLoggedIn = loginChecker();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn]);
-  return <EditPasswordContainer />;
+const EditPassword = () => {
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 비밀번호 변경</title>
+      </Helmet>
+      <FormHeading>비밀번호 변경</FormHeading>
+      <EditPasswordForm />
+    </>
+  );
 };
+
+export const EditPasswordWithLogin = withLogin(EditPassword);

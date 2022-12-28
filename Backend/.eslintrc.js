@@ -21,7 +21,7 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'],
   rules: {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
-    'no-console': 'warn',
+    'no-console': 'error',
     '@typescript-eslint/no-namespace': [2, { allowDeclarations: true }],
   },
 };

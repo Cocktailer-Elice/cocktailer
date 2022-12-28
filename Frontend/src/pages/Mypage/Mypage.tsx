@@ -1,28 +1,60 @@
-import { Header } from '../../containers/Mypage/Header';
-import { Section } from '../../containers/Mypage/Section';
-import { loginChecker } from '../../utils/loginChecker';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/store';
-import { WithdrawlButton } from '../../components/Mypage/WithdrawlButton';
+import { Header } from '../../components/Mypage/Header';
+import { useEffect, useState } from 'react';
+import { Board } from '../../components/Mypage/Board';
+import { Carousel } from '../../components/Mypage/Carousel';
+import { Helmet } from 'react-helmet';
+import axios from 'axios';
+import { GET_USER } from '../../constants/api';
+import { MyPostsResData } from '../../../../types';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
+import { withLogin } from '../../common/withLogin';
+import { Container } from '@mui/material';
+import { WithDrawlContainer } from '../../containers/Mypage/WithDrawlContainer';
 
-export const Mypage = () => {
-  const isLoggedIn = loginChecker();
-  const { user } = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
-  console.log(useAppSelector((state) => state.auth));
+const Mypage = () => {
+  const user = useCurrentUser();
+  const [userData, setUserData] = useState<MyPostsResData>();
+
+  const getUserData = async () => {
+    const { data: userData } = await axios.get(GET_USER);
+    return userData;
+  };
+
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn]);
+    getUserData().then((res) => setUserData(res[0]));
+  }, []);
+
   return (
     <>
+      <Helmet>
+        <title>Cocktailer | 마이페이지</title>
+      </Helmet>
       <Header user={user} />
-      <Section type="carousel" data={[]} />
-      <Section type="carousel" data={[]} />
-      <Section type="board" data={[]} />
-      <WithdrawlButton />
+      <Container>
+        <Carousel
+          title="나의 Cockcipe"
+          cockcipes={userData?.cocktails}
+          type="mine"
+        />
+        <Carousel
+          title="내가 좋아한 Cockcipe"
+          likes={userData?.myList}
+          type="likes"
+        />
+        <Board
+          title="나의 Cockflow"
+          type="cockflow"
+          cockflow={userData?.cockflows}
+        />
+        <Board
+          title="나의 Cockflow Comments"
+          type="comment"
+          comments={userData?.comments}
+        />
+      </Container>
+      <WithDrawlContainer />
     </>
   );
 };
+
+export const MypageWithLogin = withLogin(Mypage);

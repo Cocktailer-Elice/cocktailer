@@ -1,15 +1,25 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import { ApplyContainer } from '../../containers/Cockcipe/List/ApplyContainer';
-import { ListContainer } from '../../containers/Cockcipe/List/ListContainer';
-import { ListHeaderContainer } from '../../containers/Cockcipe/List/ListHeaderContainer';
+import { CocktailApplyBtn } from '../../components/Cockcipe/List/CocktailApplyBtn';
+import { ListHeader } from '../../components/Cockcipe/List/ListHeader';
+import { ListWrapper } from '../../components/Cockcipe/ListWrapper';
 
 export const CockcipePage = () => {
   return (
     <>
-      <ListHeaderContainer />
-      <ListContainer />
-      <ApplyContainer />
+      <Helmet>
+        <title>cocktailer | 칵시피</title>
+      </Helmet>
+      <ListHeader />
+      <ListWrapper />
+      <ApplyWrapper>
+        <CocktailApplyBtn />
+      </ApplyWrapper>
     </>
   );
 };
+const ApplyWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

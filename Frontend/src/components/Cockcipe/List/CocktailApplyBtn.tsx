@@ -15,6 +15,7 @@ const ApplyBtn = styled(Link)`
   color: #edf2ff;
   border-radius: 10px;
   padding: 8px;
+  margin: 0 30px 30px 0;
 
   &:hover {
     background-color: #edf2ff;

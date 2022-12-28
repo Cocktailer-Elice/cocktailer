@@ -6,9 +6,11 @@ import {
 } from '../../constants/regex';
 
 export const JoinSchema = yup.object().shape({
-  name: yup.string().required('이름을 입력해주세요'),
+  name: yup.string().min(2).max(30).required('이름을 입력해주세요'),
   email: yup
     .string()
+    .min(10)
+    .max(40)
     .required('이메일을 입력해주세요')
     .matches(EmailValidation, '이메일 형식이 맞지 않습니다'),
   password: yup
@@ -32,4 +34,7 @@ export const JoinSchema = yup.object().shape({
     .required('전화번호를 입력해주세요')
     .matches(TelValidation, '전화번호 형식이 맞지 않습니다'),
   alcohol: yup.string(),
+  touse: yup
+    .boolean()
+    .test('touse', '이용에 동의해주세요', (value) => value === true),
 });

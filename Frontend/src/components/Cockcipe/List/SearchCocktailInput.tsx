@@ -1,16 +1,23 @@
 import {
   FormControlLabel,
-  FormGroup,
+  FormControl,
   TextField,
+  InputAdornment,
   Checkbox,
 } from '@mui/material';
+
+import SearchIcon from '@mui/icons-material/Search';
 import styled from 'styled-components';
+import React from 'react';
 
 interface Props {
   official: boolean;
   setOfficial: any;
   nonOfficial: boolean;
   setNonOfficial: any;
+  handleChange: any;
+  handleSearch: any;
+  search: string;
 }
 
 export const SearchCocktailInput = ({
@@ -18,6 +25,9 @@ export const SearchCocktailInput = ({
   setOfficial,
   nonOfficial,
   setNonOfficial,
+  handleChange,
+  handleSearch,
+  search,
 }: Props) => {
   return (
     <Search>
@@ -41,12 +51,22 @@ export const SearchCocktailInput = ({
         }
         label="not-official"
       />
-      <TextField
-        id="standard-basic"
-        placeholder="search..."
-        variant="standard"
-        style={{ width: '100px', marginRight: '10px' }}
-      />
+      <FormControl>
+        <TextField
+          size="small"
+          variant="outlined"
+          onChange={handleChange}
+          onKeyUp={handleSearch}
+          value={search}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </FormControl>
     </Search>
   );
 };
