@@ -25,6 +25,9 @@ class CockflowMongoModel implements ICockflowMongoModel {
       await User.updateOne(updateUserFilter, { $inc: { points: 50 } }).session(
         session,
       );
+      await User.updateOne(updateUserFilter, { $$inc: { points: 50 } }).session(
+        session,
+      );
       await session.commitTransaction();
       await session.endSession();
       return cockflow;

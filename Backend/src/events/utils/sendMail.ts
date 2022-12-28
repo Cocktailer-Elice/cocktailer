@@ -13,6 +13,7 @@ const transport = nodemailer.createTransport({
 });
 
 export const sendWelcomeMail = async (email: string) => {
+  let result = true;
   const mailingOptions = {
     to: email,
     from: `Cocktailer <${process.env.GMAIL_ID}>`,
@@ -21,16 +22,18 @@ export const sendWelcomeMail = async (email: string) => {
   };
   transport.sendMail(mailingOptions, (err) => {
     if (err) {
-      return false;
+      result = false;
+      return;
     }
-    return true;
   });
+  return result;
 };
 
 export const sendPasswordResetMail = async (
   email: string,
   newPassword: string,
 ) => {
+  let result = true;
   const mailingOptions = {
     to: email,
     from: `Cocktailer <${process.env.GMAIL_ID}>`,
@@ -39,8 +42,26 @@ export const sendPasswordResetMail = async (
   };
   transport.sendMail(mailingOptions, (err) => {
     if (err) {
+      result = false;
       return;
     }
-    return true;
   });
+  return result;
+};
+
+export const sendFarewellMail = async (name: string, email: string) => {
+  let result = true;
+  const mailingOptions = {
+    to: email,
+    from: `Cocktailer <${process.env.GMAIL_ID}>`,
+    subject: `저쪽 신사/숙녀분께서 보낸 작별인사입니다 🍹`,
+    text: `${name}님! 그 동안 칵테일러를 이용해주셔서 감사합니다.\n건강한 모습으로 다시 만나요!`,
+  };
+  transport.sendMail(mailingOptions, (err) => {
+    if (err) {
+      result = false;
+      return;
+    }
+  });
+  return result;
 };
