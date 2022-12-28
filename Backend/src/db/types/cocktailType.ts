@@ -2,6 +2,26 @@
 
 import { CocktailGetResData } from 'types';
 
+export interface CocktailRankings {
+  id: number;
+  img: string;
+  name: string;
+  official: boolean;
+  owner: {
+    nickname: string;
+    isBartender: boolean;
+  };
+  likes: number;
+}
+
+export interface UserRanking {
+  id: number;
+  avatarUrl: string;
+  nickname: string;
+  points: number;
+  isBartender: boolean;
+}
+
 export interface CocktailObj {
   category: string;
   name: string;
@@ -97,26 +117,6 @@ export interface FindCocktailId {
   liked: boolean;
 }
 
-export interface CocktailRankings {
-  id: number;
-  img: string;
-  name: string;
-  official: boolean;
-  owner: {
-    nickname: string;
-    isBartender: boolean;
-  };
-  likes: number;
-}
-
-export interface UserRanking {
-  id: number;
-  avatarUrl: string;
-  nickname: string;
-  points: number;
-  isBartender: boolean;
-}
-
 export interface DBUpdateResult {
   acknowledged: boolean;
   modifiedCount: number;
@@ -134,4 +134,13 @@ export interface LikesUser {
   likesUser: {
     [userId: number]: boolean;
   };
+}
+
+export interface CocktailLists {
+  sweet: [[object]];
+  dry: [[object]];
+  refreshing: [[object]];
+  fruit: [[object]];
+  smoothie: [[object]];
+  hot: [[object]];
 }

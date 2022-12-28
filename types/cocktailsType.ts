@@ -93,6 +93,29 @@ export interface FindCocktailCategoryAndSearch {
   keyword: string;
 }
 
+interface CocktailListEach {
+  id: number;
+  owner: number;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: [string];
+  degree: number;
+  img: string;
+  ratio: [object];
+  content: string;
+  likes: number;
+}
+
+export interface CocktailLists {
+  sweet: [CocktailListEach];
+  dry: [CocktailListEach];
+  refreshing: [CocktailListEach];
+  fruit: [CocktailListEach];
+  smoothie: [CocktailListEach];
+  hot: [CocktailListEach];
+}
+
 export interface CocktailGetResData {
   id: number;
   owner: string;

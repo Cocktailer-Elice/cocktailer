@@ -4,6 +4,7 @@ import {
   Rankings,
   CocktailObj,
   UpdateResult,
+  CocktailLists,
 } from 'types';
 import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
@@ -117,7 +118,9 @@ class CocktailController {
       updateCocktailInfo,
     );
 
-    console.log(result);
+    if (result.update === false) {
+      res.status(400).json(result);
+    }
 
     res.status(200).json(result);
   };

@@ -1,3 +1,13 @@
+const imgSet = {
+  img: {
+    $concat: [
+      'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+      '$img',
+    ],
+  },
+};
+const pipelineDefault = {};
+
 export const listsQuery = () => {
   /*   전체 6개씩   */
 
@@ -8,9 +18,15 @@ export const listsQuery = () => {
   Array.map((e) => {
     $facet[e] = [
       { $match: { category: e, official: true } },
-      { $limit: 6 },
-      { $sort: { createdAt: -1 } },
+
+      { $sort: { likes: -1 } },
+      {
+        $set: imgSet,
+      },
+
       { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+
+      { $limit: 10 },
     ];
   });
 
@@ -63,6 +79,9 @@ export const findCocktailIdQuery = (id: number) => {
       },
     },
     {
+      $set: imgSet,
+    },
+    {
       $unwind: {
         path: '$owner',
       },
@@ -101,6 +120,9 @@ export const getCocktailLikesUserQuery = (
         deletedAt: 0,
         updatedAt: 0,
       },
+    },
+    {
+      $set: imgSet,
     },
   ];
 };
@@ -166,6 +188,9 @@ export const findCategoryAndSearchQuery = (reqData: object) => {
       },
     },
     {
+      $set: imgSet,
+    },
+    {
       $unwind: {
         path: '$owner',
       },
@@ -188,7 +213,6 @@ export const cocktailRankingsQuery = () => {
         flavor: 0,
         degree: 0,
         ratio: 0,
-
         content: 0,
         createdAt: 0,
         updatedAt: 0,
@@ -220,6 +244,9 @@ export const cocktailRankingsQuery = () => {
           },
         ],
       },
+    },
+    {
+      $set: imgSet,
     },
     {
       $unwind: {
