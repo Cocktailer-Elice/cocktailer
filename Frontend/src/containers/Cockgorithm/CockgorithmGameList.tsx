@@ -3,21 +3,7 @@ import styled from 'styled-components';
 import gameDatas from '../../constants/gameDatas.json';
 import { useAppDispatch } from '../../store/store';
 import { cockgorithmSlice } from '../../store/cockgorithmSlice';
-
-const gameColors = [
-  '#ff6b6b',
-  '#f06595',
-  '#cc5de8',
-  '#845ef7',
-  '#5c7cfa',
-  '#339af0',
-  '#22b8cf',
-  '#20c997',
-  '#51cf66',
-  '#94d82d',
-  '#fcc419',
-  '#ff922b',
-];
+import { gameColors } from '../../constants/gameColors';
 
 export const CockgorithmGameList = () => {
   const dispatch = useAppDispatch();
