@@ -80,6 +80,10 @@ const DrawerContainer = styled.div`
   left: -1px;
   top: 0;
   z-index: 11;
+
+  @media screen and (max-width: 500px) {
+    width: 75%;
+  }
 `;
 
 const TopSection = styled.div`
