@@ -6,11 +6,13 @@ interface CommentType {
   comments: Comment[];
 };
 
-export const CockflowCommentBox = ({ commentlist, cockflowId, isAuthor }: {
+interface TypeComment {
   commentlist: CommentType,
   cockflowId: string | undefined,
   isAuthor: boolean
-}) => {
+}
+
+export const CockflowCommentBox = ({ commentlist, cockflowId, isAuthor }: TypeComment) => {
   return (
     <>
       <CockflowBoxTitle replied={commentlist.comments.length} />
