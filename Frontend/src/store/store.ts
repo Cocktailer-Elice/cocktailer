@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { authSlice } from './authSlice';
+import { cockcipeSlice } from './cockcipeSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
+    cockcipe: cockcipeSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

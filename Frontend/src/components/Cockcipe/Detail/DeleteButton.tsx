@@ -1,16 +1,25 @@
 import axios from 'axios';
+import { conforms } from 'lodash';
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 import styled from 'styled-components';
 interface Props {
   id: number;
 }
 export const DeleteButton = ({ id }: Props) => {
+  const navigate = useNavigate();
   const handleDelete = () => {
-    // axios
-    //   .delete(`/api/cocktails/deletecocktails/${id}`)
-    //   .then((res) => console.log(res));
-    console.log('삭제요청');
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      axios
+        .delete(`/api/cocktails/deletecocktail/${id}`)
+        .then((res) => {
+          navigate('/cockcipe');
+        })
+        .catch((err) => alert('삭제 에러가 발생!'));
+    } else {
+      alert('삭제 취소 합니다.');
+    }
   };
   return <Delete onClick={handleDelete}>삭제하기</Delete>;
 };

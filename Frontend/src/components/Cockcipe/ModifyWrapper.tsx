@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { GET_DETAIL_COCKTAIL, PATCH_COCKTAIL } from '../../constants/api';
 import { ApplyButton } from './Apply/ApplyButton';
@@ -10,6 +11,7 @@ import { InputRecipe } from './Apply/InputRecipe';
 import { InputTitleImg } from './Apply/InputTitleImg';
 
 export const ModifyWrapper = () => {
+  const navigate = useNavigate();
   // state
   const [name, setName] = useState<string>('');
   const [degree, setDegree] = useState<number>(0);
@@ -71,10 +73,23 @@ export const ModifyWrapper = () => {
       },
     };
 
-    axios.patch(PATCH_COCKTAIL(cocktailId), newData).then((res) => {
-      console.log(res);
-      console.log(newData);
-    });
+    if (
+      !Object.keys(alcohoObj).every((current) => current !== '') ||
+      !Object.keys(IngredObj).every((current) => current !== '')
+    ) {
+      alert('비어있는 값이 있습니다!');
+    } else {
+      axios
+        .patch(PATCH_COCKTAIL(cocktailId), newData)
+        .then((res) => {
+          console.log(res);
+          console.log(newData);
+          navigate(`/cockcipe/detail/${cocktailId}`);
+        })
+        .catch((err) =>
+          alert('수정하는데 문제가 발생했습니다! 관리자에게 문의해보세요'),
+        );
+    }
   };
 
   return (
@@ -110,7 +125,7 @@ export const ModifyWrapper = () => {
         setValue={setValueI}
       />
       <ApplyPlace>
-        <ApplyButton handleApply={handleApply} name="apply" />
+        <ApplyButton handleApply={handleApply} name="modify" />
       </ApplyPlace>
     </>
   );
