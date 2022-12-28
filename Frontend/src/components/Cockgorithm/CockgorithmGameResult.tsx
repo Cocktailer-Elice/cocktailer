@@ -6,11 +6,13 @@ import { CockgorithmCocktail } from '../../../../types';
 interface CockgorithmGameResult {
   isFoundCocktail: boolean;
   cocktailInfo: CockgorithmCocktail;
+  resetCockgorithmState: () => void;
 }
 
 export const CockgorithmGameResult = ({
   isFoundCocktail,
   cocktailInfo,
+  resetCockgorithmState,
 }: CockgorithmGameResult) => {
   return (
     <GameResult>
@@ -24,7 +26,10 @@ export const CockgorithmGameResult = ({
             <CocktailContent>{cocktailInfo.content}</CocktailContent>
             <CocktailDegree>도수 : {cocktailInfo.degree} 도</CocktailDegree>
           </CocktailInfo>
-          <CustomLink to={`/cockcipe/detail/${cocktailInfo.id}`}>
+          <CustomLink
+            to={`/cockcipe/detail/${cocktailInfo.id}`}
+            onClick={() => resetCockgorithmState()}
+          >
             상세 정보 보러 가기
           </CustomLink>
         </>

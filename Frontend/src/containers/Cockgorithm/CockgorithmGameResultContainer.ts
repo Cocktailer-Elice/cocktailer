@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
+import { cockgorithmSlice } from '../../store/cockgorithmSlice';
 
-import { RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import { CockgorithmGameResult } from './../../components/Cockgorithm/CockgorithmGameResult';
 
 const mapStateToProps = (state: RootState) => ({
@@ -8,7 +9,13 @@ const mapStateToProps = (state: RootState) => ({
   cocktailInfo: state.cockgorithm.cocktailInfo,
 });
 
+const { resetCockgorithmState } = cockgorithmSlice.actions;
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  resetCockgorithmState: () => dispatch(resetCockgorithmState({})),
+});
+
 export const CockgorithmGameResultContainer = connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(CockgorithmGameResult);
