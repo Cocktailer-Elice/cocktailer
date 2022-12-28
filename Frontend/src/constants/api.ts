@@ -26,6 +26,7 @@ export const GET_S3_URL = `${API_BASE}/image-upload`;
 export const GET_MY_COMMENTS = `${API_BASE}/users/my-comments`;
 export const GET_MY_COCKTAILS = `${API_BASE}/cocktails/my-cocktails`;
 export const GET_MY_COCKFLOWS = `${API_BASE}/cockflow/my-cockflows`;
+export const GET_MY_LIKES = `${API_BASE}/users/my-likes`;
 
 // Home
 export const GET_RANKINGS_OF_COCKTAIL_AND_USER = `${API_BASE}/cocktails/home`;

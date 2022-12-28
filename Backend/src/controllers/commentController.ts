@@ -1,9 +1,9 @@
 import { checkReqBody } from './utils/checkReqBody';
 import { Request as Req, Response as Res } from 'express';
-import CommentService from '../services/commentService';
+import commentService from '../services/commentService';
 
 class CommentController {
-  private readonly commentService = new CommentService();
+  private readonly commentService = commentService;
 
   public createComment = async (req: Req, res: Res) => {
     const { userId } = req.user;

@@ -9,12 +9,30 @@ import { CockflowInfo, GetCockflowServiceDto } from '../../services';
 import { ICockflow } from '../types';
 import Cockflow from '../schemas/cockflowSchema';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import User from '../schemas/userSchema';
+import { db } from '../../mongodb';
+import { AppError } from '../../errorHandler';
+import { errorNames } from '../../errorNames';
 
-class MongoModel implements ICockflowMongoModel {
+class CockflowMongoModel implements ICockflowMongoModel {
   public async create(cockflowInfo: CockflowInfo): Promise<ICockflow> {
-    const cockflow = await Cockflow.create(cockflowInfo);
-    return cockflow;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const cockflow = await new Cockflow(cockflowInfo).save({ session });
+
+      const updateUserFilter = { id: cockflowInfo.owner };
+      await User.updateOne(updateUserFilter, { $inc: { points: 50 } }).session(
+        session,
+      );
+      await session.commitTransaction();
+      await session.endSession();
+      return cockflow;
+    } catch (err) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw new AppError(errorNames.databaseError);
+    }
   }
 
   public async getByRequest(
@@ -22,7 +40,7 @@ class MongoModel implements ICockflowMongoModel {
     cockflowsPerRequest: number,
   ): Promise<ICockflow[]> {
     const filter = { deletedAt: null };
-    const projection = '-_id -owner -title -deletedAt -createdAt -updatedAt';
+    const projection = '-_id -owner -content -deletedAt -createdAt -updatedAt';
     const option = { sort: { createdAt: -1 } };
     const cockflows = await Cockflow.find(filter, projection, option)
       .skip((scroll - 1) * cockflowsPerRequest)
@@ -73,23 +91,30 @@ class MongoModel implements ICockflowMongoModel {
 
   public delete = async (cockflowId: number) => {
     const session = await db.startSession();
-    session.startTransaction();
+    try {
+      session.startTransaction();
+      const cockflowDeleteFilter = { id: cockflowId };
+      await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
 
-    const cockflowDeleteFilter = { id: cockflowId };
-    await Cockflow.deleteOne(cockflowDeleteFilter).session(session);
-
-    const commentDeleteFilter = { cockflowId };
-    await Comment.deleteMany(commentDeleteFilter).session(session);
-    await session.commitTransaction();
-    session.endSession();
-    return;
+      const commentDeleteFilter = { cockflowId };
+      await Comment.deleteMany(commentDeleteFilter).session(session);
+      await session.commitTransaction();
+      await session.endSession();
+      return;
+    } catch (err) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw new AppError(errorNames.databaseError);
+    }
   };
 }
 
-export class CockflowModel implements ICockflowModel {
-  Mongo = new MongoModel();
+const cockflowMongoModel = new CockflowMongoModel();
+
+class CockflowModel implements ICockflowModel {
+  constructor(public Mongo: CockflowMongoModel) {}
 }
 
-const cockflowModel = new CockflowModel();
+const cockflowModel = new CockflowModel(cockflowMongoModel);
 
-export { ICockflowModel, cockflowModel };
+export { CockflowModel, cockflowModel };

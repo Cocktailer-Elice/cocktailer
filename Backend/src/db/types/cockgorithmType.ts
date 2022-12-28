@@ -9,3 +9,11 @@ export interface CockgorithmModelType {
 
   readonly cocktailInfo: CocktailGetResData;
 }
+
+export interface Material {
+  minDegree: number;
+  maxDegree: number;
+  alcohol: string;
+  category: string;
+  ingredients: string[];
+}

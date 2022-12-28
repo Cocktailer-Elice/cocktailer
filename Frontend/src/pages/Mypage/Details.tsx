@@ -9,6 +9,7 @@ import {
   GET_MY_COCKFLOWS,
   GET_MY_COCKTAILS,
   GET_MY_COMMENTS,
+  GET_MY_LIKES,
 } from '../../constants/api';
 import axios from 'axios';
 import { Container } from '@mui/material';
@@ -28,9 +29,9 @@ const Details = ({ title }: DetailPageProps) => {
       case 'cockcipes':
         const { data: cockcipes } = await axios.get(GET_MY_COCKTAILS);
         return setData(cockcipes);
-      // case 'likes':
-      //   const { data: likes } = await axios.get();
-      //   return setData(likes);
+      case 'likes':
+        const { data: likes } = await axios.get(GET_MY_LIKES);
+        return setData(likes);
       case 'cockflows':
         const { data: cockflows } = await axios.get(GET_MY_COCKFLOWS);
         return setData(cockflows);
@@ -51,8 +52,8 @@ const Details = ({ title }: DetailPageProps) => {
       </Helmet>
       <Container sx={{ padding: '1rem' }}>
         <DetailHeading title={title} />
-        {detail === 'cockcipes' && <Scroll data={data} />}
-        {detail === 'likes' && <Scroll data={data} />}
+        {detail === 'cockcipes' && <Scroll type="cockcipes" data={data} />}
+        {detail === 'likes' && <Scroll type="likes" likes={data} />}
         {detail === 'cockflows' && <LongBoard data={data} />}
         {detail === 'comments' && <Comments data={data} />}
       </Container>

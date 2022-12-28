@@ -11,11 +11,11 @@ export const withLogin =
     const isLoggedIn = useAuthentication();
     const user = useCurrentUser();
     const navigate = useNavigate();
-    if (user?.isPasswordTemporary) {
-      alert('비밀번호 변경이 필요합니다.');
-      navigate('/mypage/change-password');
-    }
     if (isLoggedIn) {
+      if (user?.isPasswordTemporary === true) {
+        alert('비밀번호 변경이 필요합니다.');
+        navigate('/mypage/change-password');
+      }
       return <WrappedComponent {...props} />;
     } else {
       navigate('/login');
