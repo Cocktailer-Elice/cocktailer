@@ -6,10 +6,12 @@ export const CockgorithmGameLoading = () => {
 
 const Loading = styled.div`
   width: 100%;
-  height: 450px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 600;
+  font-size: 30px;
+  font-style: italic;
   color: whitesmoke;
-  background-color: midnightblue;
 `;

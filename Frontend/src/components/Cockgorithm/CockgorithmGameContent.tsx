@@ -127,4 +127,6 @@ const Option = styled.div`
   @media screen and (max-width: 500px) {
     font-size: 11px;
   }
+
+  cursor: pointer;
 `;
