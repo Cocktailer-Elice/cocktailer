@@ -15,7 +15,7 @@ export const CockflowGetPost = () => {
       data.title
         ? alert(`본문을 입력해주세요`)
         : alert(`제목을 입력해주세요`)
-    }
+    };
   };
 
   const postCockflowList = async (data: any) => {

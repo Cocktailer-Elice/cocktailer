@@ -11,12 +11,12 @@ interface btnType {
     editFn?(): void,
     pageId?: number
     updateAxios?(): void
-}
+};
 
 interface putType {
     "title": string,
     "content": string
-}
+};
 
 export const CockflowEnrollBtns = ({ linkto = "/cockflow", typeBtn = "button", pageId, editFn, updateAxios }: btnType) => {
     const deleteFn = async () => {
@@ -26,12 +26,12 @@ export const CockflowEnrollBtns = ({ linkto = "/cockflow", typeBtn = "button", p
                     alert('삭제되었습니다.');
                     window.location.replace(`/cockflow`);
                 }).catch(() => alert('권한이 없습니다.'))
-        }
+        };
     };
 
     const refresh = (): void => {
         window.location.replace(`/cockflow/detail/${pageId}`);
-    }
+    };
 
     return (
         <Center>

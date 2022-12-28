@@ -3,10 +3,9 @@ import { slice20 } from '../../components/Cockflow/CockflowUtils';
 import styled from "styled-components";
 
 const imgS3 = (index: number) => {
-    // const num = Math.round(Math.random() * 20);
     const num = (index % 20);
     return `https://cockflow.s3.ap-northeast-1.amazonaws.com/CockflowList/img${num}.jpg`;
-}
+};
 
 interface TypeItem {
     item: {
@@ -14,7 +13,7 @@ interface TypeItem {
         title: string
     },
     index: number
-}
+};
 
 export const CockflowImgWrap = ({ item, index }: TypeItem) => {
     return (
@@ -22,8 +21,8 @@ export const CockflowImgWrap = ({ item, index }: TypeItem) => {
             <CockflowItemBox key={item.id} id={item.id} title={slice20(item.title)}
                 content={imgS3(index)} />
         </Item>
-    )
-}
+    );
+};
 
 const Item = styled.li`
   display: flex;

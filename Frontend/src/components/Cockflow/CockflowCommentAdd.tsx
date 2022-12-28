@@ -28,7 +28,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
   const repliedCommentsPuts = async () => {
     const data = {
       "content": commentValue
-    }
+    };
 
     await axios.put(COCKFLOW_TWOID(cockflowId, commentId), data)
       .then(function (response) {
@@ -49,7 +49,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
   const onCommentChange = (event: React.ChangeEventHandler<HTMLTextAreaElement> | any): void => {
     if (event) {
       setCommentValue(event.currentTarget.value);
-    }
+    };
   };
 
   const commAdopted = () => {
@@ -79,7 +79,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
 
   const commEdit = () => {
     setReadonly(prev => !prev);
-  }
+  };
 
   useEffect(() => {
     if (item.subComments.length > 0) {
@@ -251,8 +251,8 @@ const Button2 = styled(Button)`
 
 const DeleteIc = styled(DeleteIcon)`
   font-size: 18px;
-`
+`;
 
 const EditIc = styled(EditIcon)`
   font-size: 18px;
-`
+`;

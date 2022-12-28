@@ -35,7 +35,7 @@ export const CockflowPage = () => {
         setListData(() => listData.concat(res.data.cockflows));
       });
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     if (inView && !loading) {

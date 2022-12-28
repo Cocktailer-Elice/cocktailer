@@ -50,7 +50,7 @@ export const CockflowDetail = () => {
     if (user && user.id === data.id) {
       setIsAuthor(true);
     }
-  }, [user, data])
+  }, [user, data]);
 
   useEffect(() => {
     axios.get<CockflowGetResData | any>(COCKFLOW_ID(_id))
