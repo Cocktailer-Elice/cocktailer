@@ -11,15 +11,17 @@ import { CockflowGetResData } from '../../../../types/cockflowType';
 import { Container } from '../../components/Cockflow/style';
 import { Helmet } from 'react-helmet';
 import { useAuthentication } from '../../hooks/useAuthentication';
+import { useCurrentUser } from '../../hooks/useCurrentUser';
 
 export const CockflowDetail = () => {
+  const user = useCurrentUser();
+
   let params = useParams();
   const _id = params.cockflowId;
 
   const isLoggedIn = useAuthentication();
-
   const [resData, setResData] = useState<CockflowGetResData | null>(null);
-
+  const [isAuthor, setIsAuthor] = useState(false);
   const [data, setData] = useState({
     _id: 0,
     id: 0,
@@ -42,10 +44,16 @@ export const CockflowDetail = () => {
     comments: []
   });
 
+
+  useEffect(() => {
+    if (user && user.id === data.id) {
+      setIsAuthor(true);
+    }
+  }, [user, data])
+
   useEffect(() => {
     axios.get<CockflowGetResData | any>(`/api/cockflow/${_id}`)
       .then(res => {
-        console.log(res)
         if (res.data) {
           setResData(res.data);
           const newData = {
@@ -64,7 +72,8 @@ export const CockflowDetail = () => {
           };
         };
       });
-  }, []);
+
+  }, [_id]);
 
   return (
     <Container>
@@ -74,10 +83,15 @@ export const CockflowDetail = () => {
       <CockflowHeader />
       <P10P15>
         <CockflowLinkBtn link='/cockflow' title='목록' />
-        <CockflowDetailBox detailData={data} />
+        <CockflowDetailBox detailData={data} isAuthor={isAuthor} />
         <br />
         {isLoggedIn && <CockflowAddComment cockflowId={_id} />}
-        <CockflowCommentBox cockflowId={_id} commentlist={comments} commentId={'16'} />
+        <CockflowCommentBox
+          cockflowId={_id}
+          commentlist={comments}
+          commentId={'16'}
+          isAuthor={isAuthor}
+        />
       </P10P15>
     </Container>
   );

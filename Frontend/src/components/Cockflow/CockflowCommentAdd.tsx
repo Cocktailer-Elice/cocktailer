@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import EditIcon from '@mui/icons-material/Edit';
 
-export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
+export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: any) => {
   const { register, handleSubmit, reset } = useForm();
   const [readonly, setReadonly] = useState(true);
   const [commentValue, setCommentValue] = useState(' ');
@@ -108,7 +108,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
         {item.owner.nickname}
       </FlexLeft>
       {
-        isLoggedIn && (
+        (isLoggedIn && isAuthor) && (
           readonly
             ? (
               <FlexRight>
@@ -135,8 +135,22 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId }: any) => {
                 <Button variant="outlined" onClick={() => { setReadonly(prev => !prev) }}>취소하기</Button>
               </FlexRight>
             )
-
         )
+      }
+      {
+        (isLoggedIn && !isAuthor) && (
+          <FlexRight>
+            <Button variant="outlined" onClick={() => {
+              if (subComment) {
+                setSubComment(false)
+                return;
+              };
+              setSubComment(true)
+              return;
+            }}>댓글달기</Button>&nbsp;&nbsp;
+          </FlexRight>
+        )
+
       }
 
       {

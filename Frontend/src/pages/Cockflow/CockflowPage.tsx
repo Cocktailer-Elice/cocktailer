@@ -23,6 +23,9 @@ const imgArr = [
   'https://cdn.pixabay.com/photo/2018/03/18/18/54/drink-3237895__340.jpg'
 ];
 
+console.log(`https://cockflow.s3.ap-northeast-1.amazonaws.com/CockflowList/`)
+// https://cockflow.s3.ap-northeast-1.amazonaws.com/CockflowList/img0.jpg
+
 export const CockflowPage = () => {
   const [listData, setListData] = useState([{
     id: '0',
@@ -44,6 +47,7 @@ export const CockflowPage = () => {
     axios.get(`/api/cockflow/?q=${page}`)
       .then(res => {
         setMaxpage(res.data.maxRequest);
+
         if (listData[0].id === '0') {
           listData.shift();
         }
@@ -60,6 +64,12 @@ export const CockflowPage = () => {
       }
     }
   }, [inView]);
+
+  useEffect(() => {
+    // const data = axios.get(`https://cockflow.s3.ap-northeast-1.amazonaws.com/CockflowList/`)
+    // console.log(data)
+
+  }, [])
 
   return (
     <Container>

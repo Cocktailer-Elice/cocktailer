@@ -15,11 +15,12 @@ interface dataType {
     isBartender: boolean,
     nickname: string,
     createdAt: Date,
-    content: string
+    content: string,
   };
+  isAuthor: boolean,
 };
 
-export const CockflowDetailBox = ({ detailData }: dataType) => {
+export const CockflowDetailBox = ({ detailData, isAuthor }: dataType) => {
   const [inputUnActived, setinputUnActived] = useState(true);
   const { title, isBartender, nickname, createdAt, content } = { ...detailData };
 
@@ -88,7 +89,7 @@ export const CockflowDetailBox = ({ detailData }: dataType) => {
           readOnly={inputUnActived}
         />
         {
-          isLoggedIn && (
+          (isLoggedIn && isAuthor) && (
             inputUnActived
               ? (<CockflowEnrollBtns
                 typeBtn="edit"
