@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { cocktailController } from '../controllers/cocktailController';
 import { cockgorithmController } from '../controllers/cockgorithmController';
-import { asyncHandler, isLoggedIn, exportUserId } from './middlewares';
+import {
+  asyncHandler,
+  isLoggedIn,
+  exportUserId,
+  cocktailValidator,
+} from './middlewares';
 
 const cocktailsRouter: Router = Router();
 
@@ -49,7 +54,7 @@ cocktailsRouter.post(
 
 //
 //////////////////////////////////////////////////////
-cocktailsRouter.use(isLoggedIn); ///에러시 삭제하시오//
+cocktailsRouter.use(cocktailValidator, isLoggedIn);
 /////////////////////////////////////////////////////
 //
 

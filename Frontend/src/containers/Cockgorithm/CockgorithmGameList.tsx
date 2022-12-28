@@ -7,6 +7,21 @@ interface CockgorithmGameListProps {
   handleGameClick: (game: IGame) => void;
 }
 
+const gameColors = [
+  '#ff6b6b',
+  '#f06595',
+  '#cc5de8',
+  '#845ef7',
+  '#5c7cfa',
+  '#339af0',
+  '#22b8cf',
+  '#20c997',
+  '#51cf66',
+  '#94d82d',
+  '#fcc419',
+  '#ff922b',
+];
+
 export const CockgorithmGameList = ({
   gameDatas,
   handleGameClick,
@@ -16,11 +31,13 @@ export const CockgorithmGameList = ({
       {gameDatas.map((game, index) => (
         <Game
           key={index}
+          nth={index}
           onClick={() => {
             handleGameClick(game);
           }}
         >
-          {game.gameTitle}
+          <GameEmoji>{game.gameEmoji}</GameEmoji>
+          <GameTitle>{game.gameTitle}</GameTitle>
         </Game>
       ))}
     </GameList>
@@ -29,17 +46,54 @@ export const CockgorithmGameList = ({
 
 const GameList = styled.div`
   width: 100%;
-  min-height: 100%;
-  background-color: orange;
-  padding: 20px;
-`;
-
-const Game = styled.div`
-  width: 100%;
-  height: 150px;
-  margin-bottom: 20px;
-  background-color: green;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 30px 0px;
+`;
+
+const Game = styled.div<{ nth: number }>`
+  width: 70%;
+  height: 120px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  padding: 20px;
+  margin-bottom: 40px;
+  background-color: ${(props) =>
+    props.nth ? gameColors[props.nth] : '#ff6b6b'};
+  border-radius: 30px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: 500px) {
+    height: 100px;
+  }
+`;
+
+const GameEmoji = styled.div`
+  font-size: 30px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 25px;
+  }
+`;
+
+const GameTitle = styled.div`
+  font-size: 18px;
+  color: white;
+  margin-top: 15px;
+
+  @media screen and (max-width: 500px) {
+    font-size: 14px;
+  }
 `;

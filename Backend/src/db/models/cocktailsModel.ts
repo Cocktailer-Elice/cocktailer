@@ -195,30 +195,16 @@ export class CocktailModel implements CocktailInterface {
   ): Promise<UpdateResult> => {
     const session = await db.startSession();
 
-    try {
-      session.startTransaction();
+    const result: DBUpdateResult = await CocktailSchema.updateOne(
+      { id: cocktailId, owner: userId },
+      cocktailObj,
+    );
 
-      const result: DBUpdateResult = await CocktailSchema.updateOne(
-        { id: cocktailId, owner: userId },
-        cocktailObj,
-      ).session(session);
-
-      if (result.modifiedCount === 0 && result.matchedCount === 0) {
-        throw new AppError(errorNames.databaseError);
-      }
-
-      await session.commitTransaction();
-
-      await session.endSession();
-
-      return { update: true, cocktailId: cocktailId };
-    } catch (error) {
-      await session.abortTransaction();
-
-      await session.endSession();
-
+    if (result.modifiedCount === 0 && result.matchedCount === 0) {
       return { update: false, cocktailId: cocktailId };
     }
+
+    return { update: true, cocktailId: cocktailId };
   };
 
   public deleteCocktail = async (userId: number, cocktailId: number) => {

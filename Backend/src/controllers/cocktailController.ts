@@ -38,6 +38,10 @@ class CocktailController {
     const createCocktailObj: CocktailObj = {
       owner: req.user.userId,
       ...cocktailInfo,
+      official:
+        req.user.isBartender === true || req.user.isAdmin === true
+          ? true
+          : false,
     };
 
     const createCocktailData: number =
@@ -84,6 +88,7 @@ class CocktailController {
     if (req.query.official) {
       reqData.official = String(req.query.official);
     }
+
     if (req.query.keyword) {
       reqData.keyword = String(req.query.keyword);
     }
@@ -114,9 +119,9 @@ class CocktailController {
 
     if (result.update === false) {
       res.status(400).json(result);
+    } else {
+      res.status(200).json(result);
     }
-
-    res.status(200).json(result);
   };
 
   public deleteCocktail = async (req: Req, res: Res) => {

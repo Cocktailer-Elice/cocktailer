@@ -9,7 +9,7 @@ import '../../swiper.css';
 
 export const HomeMainCarousel = () => {
   return (
-    <MainCarousel>
+    <Carousel>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -34,13 +34,12 @@ export const HomeMainCarousel = () => {
         <SwiperSlide>Slide 8</SwiperSlide>
         <SwiperSlide>Slide 9</SwiperSlide>
       </Swiper>
-    </MainCarousel>
+    </Carousel>
   );
 };
 
-const MainCarousel = styled.div`
+const Carousel = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid gray;
   padding: 10px;
 `;

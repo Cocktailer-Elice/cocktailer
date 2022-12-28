@@ -28,7 +28,7 @@ export interface Rankings {
 export interface CocktailCreateReqData {
   category: string;
   name: string;
-  official: boolean;
+
   flavor: string;
   degree: number;
   img: string;
@@ -57,6 +57,32 @@ export interface CocktailObj {
   name: string;
   official: boolean;
   flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+}
+
+export interface CocktailApplyData {
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string[];
   degree: number;
   img: string;
   ratio: {

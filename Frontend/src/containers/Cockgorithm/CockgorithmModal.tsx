@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import CloseButton from '@mui/icons-material/Close';
 
 import { CockgorithmGameContent } from './../../components/Cockgorithm/CockgorithmGameContent';
 import { CockgorithmGameResult } from '../../components/Cockgorithm/CockgorithmGameResult';
 import { CockgorithmGameLoading } from './../../components/Cockgorithm/CockgorithmGameLoading';
 import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import { useToggle } from './../../utils/customHooks';
 import {
   CockgorithmReqData,
+  CockgorithmCocktail,
   CockgorithmResData,
 } from '../../../../types/cockgorithmType';
+import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
+import { useToggle } from './../../hooks/useToggle';
 
 interface CockgorithmModalProps {
   handleModalClose: () => void;
@@ -35,6 +38,8 @@ export const CockgorithmModal = ({
   const { isOpen: isGameResultOpen, handleOpen: handleGameResultOpen } =
     useToggle(false);
 
+  const [isFoundCocktail, setIsFoundCocktail] = useState<boolean>(false);
+
   const [filters, setFilters] = useState<CockgorithmReqData>({
     category: '',
     alcohol: '',
@@ -43,7 +48,7 @@ export const CockgorithmModal = ({
   });
 
   const [cocktailInfo, setCocktailInfo] =
-    useState<CockgorithmResData>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
+    useState<CockgorithmCocktail>(cocktailMockData); // 서버로부터 받아온 cocktail이 저장되는 state
 
   useEffect(() => {
     if (isLoadingOpen) {
@@ -51,16 +56,20 @@ export const CockgorithmModal = ({
 
       setTimeout(async () => {
         try {
-          const response = await axios.post(
-            'http://localhost:8000/api/cocktails/cockgorithm',
-            filters,
-          );
+          const response: CockgorithmResData = (
+            await axios.post(GET_COCKGORITHM_COCKTAIL, filters)
+          ).data;
 
           console.log('response');
           console.log(response);
 
-          const fetchedCocktail = response.data.data;
-          setCocktailInfo(fetchedCocktail);
+          if (response.isFound) {
+            const fetchedCocktail = response.data as CockgorithmCocktail;
+            setIsFoundCocktail(true);
+            setCocktailInfo(fetchedCocktail);
+          } else {
+            setIsFoundCocktail(false);
+          }
         } catch (error) {
           alert(error);
         } finally {
@@ -75,7 +84,12 @@ export const CockgorithmModal = ({
       <Dimmed onClick={handleModalClose} />
       <Modal>
         <MainSection>
-          <GameTitle>게임 타이틀 : {seletedGame.gameTitle}</GameTitle>
+          <GameTitle>
+            <span>
+              {seletedGame.gameEmoji}
+              {seletedGame.message}
+            </span>
+          </GameTitle>
           {!isLoadingOpen ? (
             <CockgorithmGameContent
               selectedGame={seletedGame}
@@ -84,69 +98,100 @@ export const CockgorithmModal = ({
             />
           ) : !isGameResultOpen ? (
             <CockgorithmGameLoading />
-          ) : (
+          ) : isFoundCocktail ? (
             <CockgorithmGameResult cocktailInfo={cocktailInfo} />
+          ) : (
+            <CockgorithmGameResult />
           )}
         </MainSection>
-        <CloseButton onClick={handleModalClose} />
+        <CustomCloseButton onClick={handleModalClose} />
       </Modal>
     </>
   );
 };
 
-const Modal = styled.div`
-  width: 450px;
-  min-height: 60%;
-  position: fixed;
-  top: 20%;
-  padding: 30px;
-  z-index: 11;
-  background-color: yellow;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Dimmed = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
   left: 0;
   top: 0;
   z-index: 10;
 `;
 
-const MainSection = styled.div`
-  width: 100%;
-  height: 450px;
-  min-height: 450px;
-  background-color: skyblue;
+const Modal = styled.div`
+  width: 80%;
+  max-width: 600px;
+  height: 60%;
+
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+
+  position: fixed;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 30px;
+  margin: auto;
+  z-index: 12;
+
+  background-color: ${(props) => props.theme.colors.indigo7};
+  border: 10px solid ${(props) => props.theme.colors.indigo9};
+  border-radius: 50px;
+`;
+
+const MainSection = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
   overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const GameTitle = styled.div`
-  background-color: blue;
-  height: 20px;
+  width: 80%;
+  height: 15%;
   font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-size: 20px;
+  padding: 0px 20px;
+  color: white;
+  line-height: 1.5;
+
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
 `;
 
-const CloseButton = styled.div`
+const CustomCloseButton = styled(CloseButton)`
   width: 30px;
   height: 30px;
-  background-color: blue;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
+
+  color: white;
+
+  @media screen and (max-width: 500px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
