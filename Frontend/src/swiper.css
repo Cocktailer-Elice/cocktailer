@@ -40,3 +40,7 @@ body {
   -webkit-align-items: center;
   align-items: center;
 }
+
+.swiper-scrollbar-drag {
+  background-color: #91a7ff;
+}
