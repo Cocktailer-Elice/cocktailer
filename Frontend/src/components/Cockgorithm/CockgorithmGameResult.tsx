@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { CockgorithmCocktail } from '../../../../types/cockgorithmType';
+import { CockgorithmCocktail } from '../../../../types';
 
-interface CockgorithmGameResultProps {
-  cocktailInfo?: CockgorithmCocktail;
+interface CockgorithmGameResult {
+  isFoundCocktail: boolean;
+  cocktailInfo: CockgorithmCocktail;
+  resetCockgorithmState: () => void;
 }
 
 export const CockgorithmGameResult = ({
+  isFoundCocktail,
   cocktailInfo,
-}: CockgorithmGameResultProps) => {
+  resetCockgorithmState,
+}: CockgorithmGameResult) => {
   return (
     <GameResult>
-      {cocktailInfo && (
+      {isFoundCocktail && (
         <>
           <CocktailTitle>"{cocktailInfo.name}"를 추천드릴게요!</CocktailTitle>
           <CocktailImageWrapper>
@@ -22,12 +26,15 @@ export const CockgorithmGameResult = ({
             <CocktailContent>{cocktailInfo.content}</CocktailContent>
             <CocktailDegree>도수 : {cocktailInfo.degree} 도</CocktailDegree>
           </CocktailInfo>
-          <CustomLink to={`/cockcipe/detail/${cocktailInfo.id}`}>
+          <CustomLink
+            to={`/cockcipe/detail/${cocktailInfo.id}`}
+            onClick={() => resetCockgorithmState()}
+          >
             상세 정보 보러 가기
           </CustomLink>
         </>
       )}
-      {!cocktailInfo && (
+      {!isFoundCocktail && (
         <CocktailNotFound>
           <span>원하시는 조건에 알맞는 칵테일을 찾지 못했어요. 😢</span>
           <span>더 다양한 칵테일 레시피를 제공해드릴 수 있도록</span>
