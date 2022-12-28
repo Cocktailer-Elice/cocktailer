@@ -18,7 +18,6 @@ export const CockflowAddComment = ({ cockflowId }: any) => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
-    // alert(JSON.stringify(data));
     gets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
