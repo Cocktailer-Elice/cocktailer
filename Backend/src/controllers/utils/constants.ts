@@ -1,3 +1,3 @@
 export const cockflowContants = {
-  COCKFLOWS_PER_REQUEST: 12,
+  COCKFLOWS_PER_REQUEST: 15,
 };

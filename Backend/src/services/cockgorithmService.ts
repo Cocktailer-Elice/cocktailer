@@ -1,11 +1,12 @@
-import { CockgorithmServiceType } from './types';
+import { CockgorithmServiceType, ProcessedMaterial, Material } from './types';
 import { cockgorithmModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { AppError } from '../errorHandler';
+import { errorNames } from '../errorNames';
 
 class CockgorithmService {
   private readonly cockgorithmModel = cockgorithmModel;
 
-  public async activateCockgorithm(material: CockgorithmServiceType) {
+  public async activateCockgorithm(material: ProcessedMaterial) {
     const data = await this.cockgorithmModel.activateCockgorithm(material);
 
     if (!data) {

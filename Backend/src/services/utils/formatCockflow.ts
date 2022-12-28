@@ -1,7 +1,7 @@
 import {
   GetCockflowServiceDto,
   CockflowSubComment,
-} from './../types/cockflowType';
+} from '../types/cockflowType';
 export const formatCockflow = (cockflow: GetCockflowServiceDto) => {
   if (cockflow.commentsCount === null) {
     cockflow.comments = [];

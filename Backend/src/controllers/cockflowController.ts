@@ -1,11 +1,11 @@
 import { checkReqBody } from './utils/checkReqBody';
 import { CockflowInfo } from '../services';
 import { Request as Req, Response as Res } from 'express';
-import CockflowService from '../services/cockflowService';
+import cockflowService from '../services/cockflowService';
 import { cockflowContants } from './utils/constants';
 
 class CockflowController {
-  private readonly cockflowService = new CockflowService();
+  private readonly cockflowService = cockflowService;
 
   public createCockflow = async (req: Req, res: Res) => {
     const { title, content } = req.body;

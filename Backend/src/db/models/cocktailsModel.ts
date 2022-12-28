@@ -1,13 +1,27 @@
-import { CocktailModelType } from '../types';
-import { CocktailCreateReqData } from 'types';
+import {
+  CocktailModelType,
+  CocktailRankings,
+  UserRanking,
+  UpdateResult,
+  LikesUser,
+} from '../types';
+import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
+////추가됨///
+import User from '../schemas/userSchema';
+////////////
 import {
   lists,
-  findCocktailId,
   findCategoryAndSearch,
+  cocktailRankings,
 } from '../queries/cocktailsQuery';
 
+import { AppError } from '../../errorHandler';
+import { errorNames } from '../../errorNames';
+
 interface CocktailInterface {
+  getHomeCocktailAndUserList(): Promise<Rankings>;
+
   createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
 
   getLists(): Promise<CocktailModelType[]>;
@@ -20,11 +34,34 @@ interface CocktailInterface {
     reqData: object,
     lastId: number,
   ): Promise<CocktailModelType[]>;
+
+  updateCocktail(
+    cocktailId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<UpdateResult>;
+
+  cocktailLikes(userId: number, cocktailId: number): Promise<UpdateResult>;
 }
 
 const limitEachPage = 10;
 
 export class CocktailModel implements CocktailInterface {
+  public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
+    const queries = cocktailRankings();
+    const filter = { deletedAt: null, isAdmin: false };
+    const projection =
+      '-_id -email -name -password -birthday -tel -isAdmin -createdAt -updatedAt -deletedAt';
+
+    const result: [CocktailRankings[], UserRanking[]] = await Promise.all([
+      CocktailSchema.aggregate(Object(queries)),
+      User.find(filter, projection, {
+        sort: { points: -1 },
+      }).limit(10),
+    ]);
+
+    return { cocktailRankings: result[0], userRankings: result[1] };
+  };
+
   public createCocktail = async (
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<number> => {
@@ -61,12 +98,6 @@ export class CocktailModel implements CocktailInterface {
   public findCocktailId = async (
     id: number,
   ): Promise<CocktailModelType | null> => {
-    const queries = findCocktailId(id);
-
-    const test: CocktailModelType[] = await CocktailSchema.aggregate([
-      Object(queries),
-    ]);
-
     const result = (await CocktailSchema.findOne({
       id: id,
     })) as CocktailModelType;
@@ -83,10 +114,66 @@ export class CocktailModel implements CocktailInterface {
     const result: CocktailModelType[] = await CocktailSchema.aggregate([
       Object(queries),
     ])
-      .limit(limitEachPage)
+      .limit(endpoint + limitEachPage)
       .skip(endpoint);
 
+    // .skip(endpoint);
+
     return result;
+  };
+
+  public updateCocktail = async (
+    cocktailId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<UpdateResult> => {
+    const id = { id: cocktailId };
+
+    const result: UpdateResult = await CocktailSchema.updateOne(
+      id,
+      cocktailCreateDto,
+    );
+
+    console.log(result);
+
+    return result;
+  };
+
+  public deleteCocktail = async (cocktailId: number) => {
+    const result = await CocktailSchema.deleteOne({ id: cocktailId });
+
+    return result.deletedCount;
+  };
+
+  public cocktailLikes = async (
+    userId: number,
+    cocktailId: number,
+  ): Promise<UpdateResult> => {
+    const obj: LikesUser | null = await CocktailSchema.findOne(
+      { id: cocktailId },
+      { likes: 1, likesUser: 1, _id: 0 },
+    );
+
+    const likesUser = obj?.likesUser;
+
+    if (!likesUser) {
+      throw new AppError(
+        errorNames.databaseError,
+        500,
+        'DB 에러입니다. 관리자에게 문의해 주세요',
+      );
+    }
+
+    likesUser[userId] = likesUser[userId] === true ? false : true;
+
+    const updateResult: UpdateResult = await CocktailSchema.updateOne(
+      { id: cocktailId },
+      {
+        likes: likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1,
+        likesUser: likesUser,
+      },
+    );
+
+    return updateResult;
   };
 
   ////////////////////////////////
@@ -150,7 +237,7 @@ export class CocktailModel implements CocktailInterface {
       const mockData: any = {
         owner: userId[Number(Math.floor(Math.random() * 9))],
 
-        category: category[Number(Math.floor(Math.random() * 5))],
+        category: category[Number(Math.floor(Math.random() * 6))],
 
         name: `${title[Number(Math.floor(Math.random() * 6))]} 칵테일`,
 
@@ -189,6 +276,10 @@ export class CocktailModel implements CocktailInterface {
           },
         },
         content: '이곳에 전체적인 레시피와 가니쉬를 작성',
+
+        likes: Number(Math.floor(Math.random() * 101)),
+
+        likesUser: {},
       };
 
       await CocktailSchema.create(mockData);

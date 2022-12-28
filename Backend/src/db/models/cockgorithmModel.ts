@@ -1,45 +1,38 @@
-import { CockgorithmModelType } from '../types';
+import { CockgorithmModelType, Material } from '../types';
+
+import { firstSearch } from '../queries/cockgorithmQuery';
 
 import CocktailSchema from '../schemas/cocktailsSchema';
 
 interface CockgorithmInterface {
-  activateCockgorithm(material: any): Promise<CockgorithmModelType>;
+  activateCockgorithm(material: Material): Promise<CockgorithmModelType>;
 }
 
 export class CockgorithmModel implements CockgorithmInterface {
   public activateCockgorithm = async (
-    material: any,
+    material: Material,
   ): Promise<CockgorithmModelType> => {
     // material 을 사용할것!!
 
-    //////////////////////////////////////////
-    ///////////// 아래 임시 로직 //////////////
-    //////////////////////////////////////////
+    const alcohol = `ratio.alcohol.${material.alcohol}`;
+    const ingredient1 = `ratio.ingredient.${material.ingredients[0]}`;
+    const ingredient2 = `ratio.ingredient.${material.ingredients[1]}`;
 
-    const count: number = await CocktailSchema.find({}).count();
+    //아래 주입??
 
-    const rnd: number = Math.floor(Math.random() * count);
+    console.log(material);
 
-    const result: CockgorithmModelType[] = await CocktailSchema.aggregate([
-      { $match: { id: rnd } },
-      {
-        $project: {
-          _id: 0,
-          category: 0,
-          flavor: 0,
-          ratio: 0,
-          owner: 0,
-          official: 0,
-          likes: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      },
-    ]);
+    const result1: CockgorithmModelType[] = await CocktailSchema.aggregate(
+      firstSearch(material),
+    );
+
+    console.log('////////////////////////////');
+    console.log(result1);
+    console.log('////////////////////////////');
 
     const formatedCocktail = {
-      ...result[0],
-      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${result[0].img}`,
+      ...result1[0],
+      img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${result1[0].img}`,
     };
 
     return formatedCocktail;

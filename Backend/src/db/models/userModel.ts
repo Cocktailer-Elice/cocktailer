@@ -9,7 +9,7 @@ import { IUser } from '../types';
 import User from '../schemas/userSchema';
 import { userQueries } from '../queries/userQuery';
 
-export class UserMongoModel implements IUserMongoModel {
+class UserMongoModel implements IUserMongoModel {
   public create = async (userInfo: UserInfo): Promise<IUser> => {
     const newUser = await User.create(userInfo);
     return newUser;
@@ -30,8 +30,13 @@ export class UserMongoModel implements IUserMongoModel {
   public findByFilter = async (
     filter: FindOneFilter,
   ): Promise<IUser | null> => {
-    const foundUser = await User.findOne(filter);
-    return foundUser;
+    const user = await User.findOne(filter);
+    return user;
+  };
+
+  public findByApplying = async (filter: FindOneFilter, projection: string) => {
+    const users = await User.find(filter, projection);
+    return users;
   };
 
   public update = async (filter: FindOneFilter, update: UpdateOneFilter) => {
@@ -53,10 +58,12 @@ export class UserMongoModel implements IUserMongoModel {
   };
 }
 
-export class UserModel implements IUserModel {
-  Mongo = new UserMongoModel();
+const userMongoModel = new UserMongoModel();
+
+class UserModel implements IUserModel {
+  constructor(public Mongo: UserMongoModel) {}
 }
 
-const userModel = new UserModel();
+const userModel = new UserModel(userMongoModel);
 
-export { userModel };
+export { UserModel, userModel };

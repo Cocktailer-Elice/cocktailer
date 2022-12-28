@@ -1,9 +1,14 @@
 import { Request as Req, Response as Res } from 'express';
-import AdminService from '../services/adminService';
+import adminService from '../services/adminService';
 import { checkReqBody } from './utils';
 
 class AdminController {
-  private readonly adminService = new AdminService();
+  private readonly adminService = adminService;
+
+  public getUsersApplyingBartender = async (req: Req, res: Res) => {
+    const users = await this.adminService.getUsersApplyingBartender();
+    res.status(200).json(users);
+  };
 
   public verifyBartender = async (req: Req, res: Res) => {
     const { userId } = req.body;

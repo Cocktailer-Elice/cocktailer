@@ -1,9 +1,10 @@
 import { Request as Req, Response as Res } from 'express';
-import UserService from '../services/userService';
-import { checkReqBody } from './utils';
+import { redisCache } from '../redis';
+import userService from '../services/userService';
+import { checkReqBody, createCookie, updateToken } from './utils';
 
 class UserController {
-  private readonly userService = new UserService();
+  private readonly userService = userService;
 
   public getMyPosts = async (req: Req, res: Res) => {
     const { userId } = req.user;
@@ -25,6 +26,13 @@ class UserController {
     res.sendStatus(204);
   };
 
+  public sendCode = async (req: Req, res: Res) => {
+    const { tel } = req.body;
+    checkReqBody(tel);
+    await this.userService.sendCode(tel);
+    res.sendStatus(204);
+  };
+
   public changePassword = async (req: Req, res: Res) => {
     const { password, newPassword } = req.body;
     checkReqBody(password, newPassword);
@@ -38,6 +46,18 @@ class UserController {
     const { userId } = req.user;
     checkReqBody(avatarUrl);
     await this.userService.updateUserProfile(userId, avatarUrl);
+    const userIdString = req.cookies.Authorization.split('/')[1];
+    const originalCookie = req.user;
+    const token = updateToken(originalCookie, avatarUrl);
+    const isAutoLogin = (await redisCache.exists(userIdString)) ? true : false;
+    const cookie = createCookie(token, userIdString, isAutoLogin);
+    res.setHeader('Set-Cookie', [cookie]);
+    res.sendStatus(204);
+  };
+
+  public updateUserState = async (req: Req, res: Res) => {
+    const { userId } = req.user;
+    await this.userService.updateUserState(userId);
     res.sendStatus(204);
   };
 
