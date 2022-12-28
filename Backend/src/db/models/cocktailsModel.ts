@@ -5,6 +5,7 @@ import {
   UserRanking,
   UpdateResult,
   LikesUser,
+  CocktailCreateAndUpdate,
 } from '../types';
 import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
@@ -42,6 +43,7 @@ interface CocktailInterface {
 
   updateCocktail(
     cocktailId: number,
+    userId: number,
     cocktailCreateDto: CocktailCreateReqData,
   ): Promise<UpdateResult>;
 
@@ -78,18 +80,23 @@ export class CocktailModel implements CocktailInterface {
   };
 
   public createCocktail = async (
-    cocktailCreateDto: CocktailCreateReqData,
+    cocktailCreateDto: CocktailCreateAndUpdate,
   ): Promise<number> => {
-    //transection 적용!!!
-
     const session = await db.startSession();
 
     try {
       session.startTransaction();
 
-      const newMyCocktail = await new CocktailSchema(cocktailCreateDto).save({
+      const newMyCocktail: CocktailModelType = await new CocktailSchema(
+        cocktailCreateDto,
+      ).save({
         session,
       });
+
+      await User.updateOne(
+        { id: newMyCocktail.owner },
+        { $inc: { points: 50 } },
+      ).session(session);
 
       await session.commitTransaction();
 
@@ -179,22 +186,56 @@ export class CocktailModel implements CocktailInterface {
 
   public updateCocktail = async (
     cocktailId: number,
-    cocktailCreateDto: CocktailCreateReqData,
+    userId: number,
+    cocktailCreateDto: CocktailCreateAndUpdate,
   ): Promise<UpdateResult> => {
-    const id = { id: cocktailId };
+    const session = await db.startSession();
 
-    const result: UpdateResult = await CocktailSchema.updateOne(
-      id,
-      cocktailCreateDto,
-    );
+    try {
+      session.startTransaction();
 
-    return result;
+      const result: UpdateResult = await CocktailSchema.updateOne(
+        { id: cocktailId, owner: userId },
+        cocktailCreateDto,
+      ).session(session);
+
+      await session.commitTransaction();
+
+      await session.endSession();
+
+      return result;
+    } catch (error) {
+      await session.abortTransaction();
+
+      await session.endSession();
+
+      throw new AppError(errorNames.databaseError);
+    }
   };
 
-  public deleteCocktail = async (cocktailId: number) => {
-    const result = await CocktailSchema.deleteOne({ id: cocktailId });
+  public deleteCocktail = async (userId: number, cocktailId: number) => {
+    const session = await db.startSession();
 
-    return result.deletedCount;
+    try {
+      session.startTransaction();
+
+      const result = await CocktailSchema.deleteOne({
+        id: cocktailId,
+        owner: userId,
+      }).session(session);
+
+      await session.commitTransaction();
+
+      await session.endSession();
+
+      return result.deletedCount;
+    } catch (error) {
+      await session.abortTransaction();
+
+      await session.endSession();
+
+      throw new AppError(errorNames.databaseError);
+    }
   };
 
   public cocktailLikes = async (
@@ -218,23 +259,48 @@ export class CocktailModel implements CocktailInterface {
 
     likesUser[userId] = likesUser[userId] === true ? false : true;
 
-    const updateResult: UpdateResult = await CocktailSchema.updateOne(
-      { id: cocktailId },
-      {
-        likes: likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1,
-        likesUser: likesUser,
-      },
-    );
+    const session = await db.startSession();
 
-    ///      user Array 반환      ///
-    if (likesUser[userId]) {
-      await User.update({ id: userId }, { $push: { myLikes: cocktailId } });
-    } else {
-      await User.update({ id: userId }, { $pull: { myLikes: cocktailId } });
+    try {
+      await CocktailSchema.updateOne(
+        { id: cocktailId },
+        {
+          likes: likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1,
+          likesUser: likesUser,
+        },
+      ).session(session);
+
+      const option = likesUser[userId] ? '$push' : '$pull';
+
+      await User.update(
+        { id: userId },
+        { [option]: { myLikes: cocktailId } },
+      ).session(session);
+
+      // if (likesUser[userId]) {
+      //   await User.update(
+      //     { id: userId },
+      //     { $push: { myLikes: cocktailId } },
+      //   ).session(session);
+      // } else {
+      //   await User.update(
+      //     { id: userId },
+      //     { $pull: { myLikes: cocktailId } },
+      //   ).session(session);
+      // }
+
+      await session.commitTransaction();
+
+      await session.endSession();
+
+      return likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1;
+    } catch (error) {
+      await session.abortTransaction();
+
+      await session.endSession();
+
+      throw new AppError(errorNames.databaseError);
     }
-    ///      user Array 반환      ///
-
-    return likesUser[userId] === true ? obj?.likes + 1 : obj.likes - 1;
   };
 
   ////////////////////////////////

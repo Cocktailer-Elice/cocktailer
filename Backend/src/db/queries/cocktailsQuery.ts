@@ -21,7 +21,9 @@ export const findCocktailIdQuery = (id: number) => {
   /*   id   */
   return [
     {
-      $match: { id: id },
+      $match: {
+        id: id,
+      },
     },
     {
       $project: {
@@ -29,6 +31,41 @@ export const findCocktailIdQuery = (id: number) => {
         createdAt: 0,
         deletedAt: 0,
         updatedAt: 0,
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'owner',
+        foreignField: 'id',
+        as: 'owner',
+        pipeline: [
+          {
+            $project: {
+              _id: 0,
+              id: 0,
+              myLikes: 0,
+              isApplyingBartender: 0,
+              isPasswordTemporary: 0,
+              name: 0,
+              email: 0,
+              password: 0,
+              birthday: 0,
+              avatarUrl: 0,
+              isAdmin: 0,
+              points: 0,
+              createdAt: 0,
+              updatedAt: 0,
+              deletedAt: 0,
+              tel: 0,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $unwind: {
+        path: '$owner',
       },
     },
   ];

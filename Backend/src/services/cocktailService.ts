@@ -1,4 +1,8 @@
-import { CocktailServiceType, UpdateResult } from './types';
+import {
+  CocktailServiceType,
+  UpdateResult,
+  CocktailCreateAndUpdate,
+} from './types';
 import { Rankings } from 'types';
 
 import { cocktailModel } from '../db';
@@ -26,7 +30,7 @@ class CocktailService {
   }
 
   public async createCocktail(
-    cocktailCreateDto: CocktailServiceType,
+    cocktailCreateDto: CocktailCreateAndUpdate,
   ): Promise<number> {
     const data: number = await this.cocktailModel.createCocktail({
       ...cocktailCreateDto,
@@ -91,11 +95,13 @@ class CocktailService {
 
   public async updateCocktail(
     cocktailId: number,
+    userId: number,
     updateCocktail: CocktailServiceType,
   ) {
     // 트랜젝션 처리!! //
     const data: UpdateResult = await this.cocktailModel.updateCocktail(
       cocktailId,
+      userId,
       updateCocktail,
     );
 
@@ -110,9 +116,12 @@ class CocktailService {
     return data;
   }
 
-  public async deleteCocktail(cocktailId: number) {
+  public async deleteCocktail(userId: number, cocktailId: number) {
     // 트랜젝션 처리!! //
-    const data: number = await this.cocktailModel.deleteCocktail(cocktailId);
+    const data: number = await this.cocktailModel.deleteCocktail(
+      userId,
+      cocktailId,
+    );
 
     if (data === 0) {
       throw new AppError(
@@ -151,7 +160,6 @@ class CocktailService {
   ////////////////////////////////
 
   public async makeMockData() {
-    console.log('생성기 시작 _service');
     const result: any = await this.cocktailModel.makeMockData();
     return result;
   }

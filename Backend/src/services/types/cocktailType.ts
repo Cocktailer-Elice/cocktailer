@@ -16,8 +16,20 @@ type Ratio = {
     ];
   };
 };
-export interface CocktailServiceType {
+
+export interface CocktailCreateAndUpdate {
   owner: number;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: Ratio;
+  content: string;
+}
+
+export interface CocktailServiceType {
   category: string;
   name: string;
   official: boolean;

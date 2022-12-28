@@ -36,8 +36,15 @@ class CocktailController {
 
     const cocktailInfo: CocktailCreateReqData = req.body;
 
+    const allInfo = {
+      owner: req.user.userId,
+      ...cocktailInfo,
+    };
+
+    console.log(allInfo);
+
     const createCocktailData: number =
-      await this.cocktailService.createCocktail(cocktailInfo);
+      await this.cocktailService.createCocktail(allInfo);
 
     res.status(200).json({ data: createCocktailData });
   };
@@ -72,6 +79,12 @@ class CocktailController {
     const cocktail = await this.cocktailService.findCocktailId(cocktailId, 108);
 
     console.log(cocktail);
+
+    // const own: boolean = false;
+
+    // if (cocktail?.owner === req.user.userId) {
+    //   own = true;
+    // }
 
     res.status(200).json(cocktail);
   };
@@ -113,18 +126,24 @@ class CocktailController {
 
     const updateCocktailInfo: CocktailCreateReqData = req.body;
 
+    const userId = req.user.userId;
+
     const result: any = await this.cocktailService.updateCocktail(
       cocktailId,
+      userId,
       updateCocktailInfo,
     );
 
-    res.status(200).json({ updateCocktailInfo: updateCocktailInfo });
+    res.status(200).json({ updateCocktailInfo: result });
   };
 
   public deleteCocktail = async (req: Req, res: Res) => {
     const cocktailId = Number(req.params.cocktailId);
 
+    const userId = req.user.userId;
+
     const result: string = await this.cocktailService.deleteCocktail(
+      userId,
       cocktailId,
     );
 

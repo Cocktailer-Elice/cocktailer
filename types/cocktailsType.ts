@@ -21,7 +21,6 @@ export interface UserRanking {
 }
 
 export interface CocktailCreateReqData {
-  owner: number;
   category: string;
   name: string;
   official: boolean;
