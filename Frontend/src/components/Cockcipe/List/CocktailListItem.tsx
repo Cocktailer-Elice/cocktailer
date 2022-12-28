@@ -19,7 +19,12 @@ export const CocktailListItem = ({ id, name, official, img }: Props) => {
   return (
     <ThumbnailBox onClick={handleDetailPage}>
       <ImgBox>
-        <img src={img} alt="칵테일 이미지" />
+        <img
+          src="/assets/images/testimg.svg"
+          alt="칵테일 이미지"
+          width="150"
+          height="150"
+        />
       </ImgBox>
 
       <>

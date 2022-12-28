@@ -74,7 +74,7 @@ export const CocktailInfomation = ({
   }, [cocktail.likes]);
   return (
     <>
-      <Img src={cocktail.img} width="300" height="300" />
+      <Img src="/assets/images/testimg.svg" width="300" height="300" />
       <TitleContainer>
         <Name>{cocktail.name}</Name>
         <Degree>&nbsp;&nbsp;({cocktail.degree}%)</Degree>
