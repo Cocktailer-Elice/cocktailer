@@ -6,21 +6,7 @@ const imgSet = {
     ],
   },
 };
-const pipelineDefault = {
-  _id: 0,
-  id: 0,
-  name: 0,
-  email: 0,
-  password: 0,
-  birthday: 0,
-  avatarUrl: 0,
-  isAdmin: 0,
-  points: 0,
-  createdAt: 0,
-  updatedAt: 0,
-  deletedAt: 0,
-  tel: 0,
-};
+const pipelineDefault = {};
 
 export const listsQuery = () => {
   /*   전체 6개씩   */
