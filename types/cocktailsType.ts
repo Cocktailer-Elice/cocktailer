@@ -28,7 +28,7 @@ export interface Rankings {
 export interface CocktailCreateReqData {
   category: string;
   name: string;
-  official: boolean;
+
   flavor: string;
   degree: number;
   img: string;
