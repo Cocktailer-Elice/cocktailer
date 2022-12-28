@@ -117,6 +117,10 @@ class CocktailController {
       updateCocktailInfo,
     );
 
+    if (result.update === false) {
+      res.status(400).json(result);
+    }
+
     res.status(200).json(result);
   };
 

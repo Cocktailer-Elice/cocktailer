@@ -1,3 +1,27 @@
+const imgSet = {
+  img: {
+    $concat: [
+      'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+      '$img',
+    ],
+  },
+};
+const pipelineDefault = {
+  _id: 0,
+  id: 0,
+  name: 0,
+  email: 0,
+  password: 0,
+  birthday: 0,
+  avatarUrl: 0,
+  isAdmin: 0,
+  points: 0,
+  createdAt: 0,
+  updatedAt: 0,
+  deletedAt: 0,
+  tel: 0,
+};
+
 export const listsQuery = () => {
   /*   전체 6개씩   */
 
@@ -8,19 +32,15 @@ export const listsQuery = () => {
   Array.map((e) => {
     $facet[e] = [
       { $match: { category: e, official: true } },
-      { $limit: 10 },
+
       { $sort: { likes: -1 } },
       {
-        $set: {
-          img: {
-            $concat: [
-              'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
-              '$img',
-            ],
-          },
-        },
+        $set: imgSet,
       },
+
       { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+
+      { $limit: 10 },
     ];
   });
 
@@ -73,14 +93,7 @@ export const findCocktailIdQuery = (id: number) => {
       },
     },
     {
-      $set: {
-        img: {
-          $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
-            '$img',
-          ],
-        },
-      },
+      $set: imgSet,
     },
     {
       $unwind: {
@@ -123,14 +136,7 @@ export const getCocktailLikesUserQuery = (
       },
     },
     {
-      $set: {
-        img: {
-          $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
-            '$img',
-          ],
-        },
-      },
+      $set: imgSet,
     },
   ];
 };
@@ -196,14 +202,7 @@ export const findCategoryAndSearchQuery = (reqData: object) => {
       },
     },
     {
-      $set: {
-        img: {
-          $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
-            '$img',
-          ],
-        },
-      },
+      $set: imgSet,
     },
     {
       $unwind: {
@@ -228,7 +227,6 @@ export const cocktailRankingsQuery = () => {
         flavor: 0,
         degree: 0,
         ratio: 0,
-
         content: 0,
         createdAt: 0,
         updatedAt: 0,
@@ -262,14 +260,7 @@ export const cocktailRankingsQuery = () => {
       },
     },
     {
-      $set: {
-        img: {
-          $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
-            '$img',
-          ],
-        },
-      },
+      $set: imgSet,
     },
     {
       $unwind: {
