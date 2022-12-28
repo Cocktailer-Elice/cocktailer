@@ -105,7 +105,7 @@ export const IconWrap = styled.button`
     border: 1px solid #ddd;
     cursor: pointer;
     background: #fff;
-`
+`;
 
 export const Adopted = styled.div`
     height: 24px;
@@ -117,4 +117,4 @@ export const Adopted = styled.div`
     text-align: center;
     font-size: 10px;
     color: #fff;
-`
+`;
