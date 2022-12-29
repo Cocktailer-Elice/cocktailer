@@ -1,15 +1,18 @@
-import { EditForm } from '../../../containers/Edits/EditAvatarContainer';
-import { loginChecker } from '../../../utils/loginChecker';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { withLogin } from '../../../common/withLogin';
+import { FormHeading } from '../../../components/UserForm/styles';
+import { EditAvatarForm } from '../../../components/Edits/EditAvatarForm';
 
-export const EditAvatar = () => {
-  const isLoggedIn = loginChecker();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login');
-    }
-  }, [isLoggedIn]);
-  return <EditForm />;
+const EditAvatar = () => {
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 아바타 변경</title>
+      </Helmet>
+      <FormHeading>아바타 변경</FormHeading>
+      <EditAvatarForm />
+    </>
+  );
 };
+
+export const EditAvatarWithLogin = withLogin(EditAvatar);

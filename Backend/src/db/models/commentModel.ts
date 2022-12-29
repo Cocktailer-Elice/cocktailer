@@ -8,14 +8,34 @@ import {
 import { CommentInfo } from '../../services';
 import { IComment } from '../types';
 import Comment from '../schemas/commentSchema';
-import db from '../../mongodb';
+import User from '../schemas/userSchema';
+import { db } from '../../mongodb';
+import { AppError } from '../../appError';
+import { errorNames } from '../../errorNames';
 
-class MongoModel implements ICommentMongoModel {
+class CommentMongoModel implements ICommentMongoModel {
   public async create(
     commentInfo: CommentInfo | SubCommentInfo,
   ): Promise<IComment> {
-    const newComment = await Comment.create(commentInfo);
-    return newComment;
+    const session = await db.startSession();
+    try {
+      session.startTransaction();
+      const comment = await new Comment(commentInfo).save({
+        session,
+      });
+
+      const updateUserFilter = { id: commentInfo.owner };
+      await User.updateOne(updateUserFilter, { $inc: { points: 30 } }).session(
+        session,
+      );
+      await session.commitTransaction();
+      await session.endSession();
+      return comment;
+    } catch (err) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw new AppError(errorNames.databaseError);
+    }
   }
 
   public async findByUserId(userId: number): Promise<IComment[]> {
@@ -48,25 +68,33 @@ class MongoModel implements ICommentMongoModel {
     return result;
   };
 
-  public async delete(commentId: string) {
+  public async delete(commentId: string, isParentComment: boolean) {
     const session = await db.startSession();
-    session.startTransaction();
-
-    const commentDeleteFilter = { id: commentId };
-    await Comment.deleteOne(commentDeleteFilter).session(session);
-
-    const childCommentDeleteFilter = { parentCommentId: commentId };
-    await Comment.deleteMany(childCommentDeleteFilter).session(session);
-    await session.commitTransaction();
-    session.endSession();
-    return;
+    try {
+      session.startTransaction();
+      const commentDeleteFilter = { _id: commentId };
+      await Comment.deleteOne(commentDeleteFilter).session(session);
+      if (isParentComment) {
+        const childCommentDeleteFilter = { parentCommentId: commentId };
+        await Comment.deleteMany(childCommentDeleteFilter).session(session);
+      }
+      await session.commitTransaction();
+      await session.endSession();
+      return;
+    } catch (err) {
+      await session.abortTransaction();
+      await session.endSession();
+      throw new AppError(errorNames.databaseError);
+    }
   }
 }
 
-export class CommentModel implements ICommentModel {
-  Mongo = new MongoModel();
+const commentMongoModel = new CommentMongoModel();
+
+class CommentModel implements ICommentModel {
+  constructor(public Mongo: CommentMongoModel) {}
 }
 
-const commentModel = new CommentModel();
+const commentModel = new CommentModel(commentMongoModel);
 
-export { ICommentModel, commentModel };
+export { CommentModel, commentModel, CommentMongoModel };

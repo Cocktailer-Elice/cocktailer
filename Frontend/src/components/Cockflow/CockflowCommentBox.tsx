@@ -6,11 +6,13 @@ interface CommentType {
   comments: Comment[];
 };
 
-export const CockflowCommentBox = ({ commentlist, cockflowId, commentId }: {
+interface TypeComment {
   commentlist: CommentType,
   cockflowId: string | undefined,
-  commentId: string
-}) => {
+  isAuthor: boolean
+}
+
+export const CockflowCommentBox = ({ commentlist, cockflowId, isAuthor }: TypeComment) => {
   return (
     <>
       <CockflowBoxTitle replied={commentlist.comments.length} />
@@ -22,6 +24,7 @@ export const CockflowCommentBox = ({ commentlist, cockflowId, commentId }: {
               key={commentlist.comments[index]._id}
               cockflowId={cockflowId}
               commentId={commentlist.comments[index]._id}
+              isAuthor={isAuthor}
             />
           );
         })

@@ -10,13 +10,25 @@ export interface User {
   nickname: string;
   avatarUrl: string;
   isBartender: boolean;
+  isPasswordTemporary?: boolean;
+}
+
+export interface MyLike {
+  id: number;
+  img: string;
+  name: string;
 }
 
 // 마이페이지에서 내가 작성한 글들을 요청하면 받는 데이터
 export interface MyPostsResData {
+  myList: MyLike[];
   comments: MyComment[];
   cockflows: MyCockflow[];
   cocktails: MyCockcipe[];
+}
+
+export interface MyLikesReqData {
+  myLikes: MyLike[];
 }
 
 // 서버에 회원가입을 위해 전송할 데이터

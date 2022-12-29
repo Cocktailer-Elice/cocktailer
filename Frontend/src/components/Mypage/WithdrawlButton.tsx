@@ -1,26 +1,37 @@
 import { Button } from '@mui/material';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { WITHDRAWAL } from '../../constants/api';
+import styled from 'styled-components';
+import { User } from '../../../../types';
 
-export const WithdrawlButton = () => {
+interface WithdrawlButtonProps {
+  user: User | null;
+  userDelete: () => void;
+}
+
+export const WithdrawlButton = ({ user, userDelete }: WithdrawlButtonProps) => {
   const navigate = useNavigate();
   const withdrawl = async () => {
-    try {
-      if (confirm('정말 탈퇴하시겠습니까?') === true) {
-        const response = await axios.delete(WITHDRAWAL);
-        if (response) {
-          alert('탈퇴되었습니다');
-          navigate('/');
-        }
-      }
-    } catch (e: any) {
-      console.log(e);
+    if (confirm('정말 탈퇴하시겠습니까?')) {
+      userDelete();
+      alert('탈퇴되었습니다');
+      navigate('/');
     }
   };
   return (
-    <Button variant="outlined" type="button" onClick={withdrawl}>
-      탈퇴하기
-    </Button>
+    <ButtonWrapper>
+      <Button
+        type="button"
+        onClick={withdrawl}
+        sx={{ color: 'red', fontSize: '0.5rem' }}
+      >
+        탈퇴하기
+      </Button>
+    </ButtonWrapper>
   );
 };
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;

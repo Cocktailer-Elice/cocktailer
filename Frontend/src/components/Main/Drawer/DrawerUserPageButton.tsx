@@ -2,28 +2,42 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface DrawerUserPageButtonProps {
-  pageName: string;
+  title: string;
   link: string;
-  toggleDrawer: () => void;
+  handleDrawerClose: () => void;
 }
 
 export const DrawerUserPageButton = ({
-  pageName,
+  title,
   link,
-  toggleDrawer,
+  handleDrawerClose,
 }: DrawerUserPageButtonProps) => {
   return (
-    <Link to={link} onClick={toggleDrawer}>
-      <UserPageButton>{pageName}</UserPageButton>
-    </Link>
+    <CustomLink to={link} onClick={handleDrawerClose}>
+      <UserPageButton>{title}</UserPageButton>
+    </CustomLink>
   );
 };
 
-const UserPageButton = styled.div`
-  width: 80px;
-  height: 30px;
+const CustomLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  width: 100%;
+  min-width: 90px;
+  height: 100%;
+`;
+
+const UserPageButton = styled.div`
+  width: 80%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: whitesmoke;
+  background-color: #1098ad;
+
+  :hover {
+    opacity: 0.8;
+  }
 `;

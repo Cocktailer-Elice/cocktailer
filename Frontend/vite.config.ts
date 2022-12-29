@@ -13,4 +13,22 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          mui: [
+            '@mui/material',
+            '@mui/icons-material',
+            '@mui/styled-engine-sc',
+            '@mui/styled-engine',
+            '@emotion/react',
+          ],
+          swiper: ['swiper', 'swiper/react'],
+          chart: ['chart.js', 'react-chartjs-2'],
+        },
+      },
+    },
+  },
 });

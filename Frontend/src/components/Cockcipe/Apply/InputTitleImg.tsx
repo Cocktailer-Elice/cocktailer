@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { GET_S3_URL } from '../../../constants/api';
+import { NoEncryptionGmailerrorred } from '@mui/icons-material';
 
-// TODO aws 업로드 후 반환 이미지 url 받아오기
-export const InputTitleImg = ({ setImg }: any) => {
-  const [files, setFiles] = useState<File | null>(null);
-  const [imgSrc, setImgsrc] = useState<string>();
+export const InputTitleImg = ({ setImg, img }: any) => {
+  const [imgSrc, setImgsrc] = useState<string>('');
   const onChooseImg = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -20,12 +21,13 @@ export const InputTitleImg = ({ setImg }: any) => {
       const formData = new FormData();
       formData.append('image', file);
       axios
-        .post('http://localhost:8000/api/image-upload', {
-          folder: 'seeun-test',
+        .post(GET_S3_URL, {
+          folder: 'cocktails',
         })
         .then((res) => {
-          console.log(new URL(res.data).pathname.split('/')[2]);
-          setImg(new URL(res.data).pathname.split('/')[2]);
+          const key = new URL(res.data).pathname.split('/')[2];
+          console.log(key);
+          setImg(key);
           axios
             .put(`${res.data}`, file, {
               headers: {
@@ -33,49 +35,53 @@ export const InputTitleImg = ({ setImg }: any) => {
               },
               withCredentials: false,
             })
-            .then((res) => console.log(res.status));
+            .then((res) => {
+              console.log(res.status);
+            });
         });
     }
   };
+
   return (
     <ImgContainer>
-      <>
+      <InsertWrapper>
         <label htmlFor="input_img">
-          <InsertImg>대표 사진 등록</InsertImg>
+          <AddPhotoAlternateIcon fontSize="large" />
         </label>
         <input
           type="file"
           id="input_img"
+          name="img"
           style={{ display: 'none' }}
           onChange={onChooseImg}
         />
-      </>
+      </InsertWrapper>
       <PreviewImg>
-        {imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />}
+        {!imgSrc ? (
+          <img src={img} alt="preview" width="300" height="300" />
+        ) : (
+          imgSrc && <img src={imgSrc} alt="preview" width="300" height="300" />
+        )}
       </PreviewImg>
     </ImgContainer>
   );
 };
 
-const PreviewImg = styled.div``;
+const PreviewImg = styled.div`
+  border: 2px solid #dee2e6;
+  border-radius: 15px;
+  width: 300px;
+  height: 300px;
+  margin-left: 30px;
+`;
+const InsertWrapper = styled.div`
+  margin-right: 30px;
+`;
 
 const ImgContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-`;
-
-const InsertImg = styled.div`
-  border: #087f5b solid 5px;
-  border-radius: 10px;
-  font-size: 20px;
-  padding: 10px;
-
-  &:hover {
-    color: white;
-    border: #38d9a9 solid 5px;
-    background-color: #38d9a9;
-  }
 `;
