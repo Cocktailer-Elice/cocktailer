@@ -211,7 +211,7 @@ const Container = styled.div`
 
 const Section = styled.div`
   width: 100%;
-  height: 25%;
+  height: 30%;
   margin-bottom: 10px;
   background-color: white;
 `;
