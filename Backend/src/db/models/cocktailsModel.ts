@@ -98,7 +98,7 @@ export class CocktailModel implements CocktailInterface {
         session,
       });
 
-      await User.updateOne(
+      const test = await User.updateOne(
         { id: newMyCocktail.owner },
         { $inc: { points: 50 } },
       ).session(session);
