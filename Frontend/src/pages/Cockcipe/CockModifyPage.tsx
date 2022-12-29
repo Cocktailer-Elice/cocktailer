@@ -1,7 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
-import { ModifyContainer } from '../../containers/Cockcipe/Modify/ModifyContainer';
+import { ModifyWrapper } from '../../components/Cockcipe/ModifyWrapper';
 
 export const CockModifyPage = () => {
-  return <ModifyContainer />;
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 칵테일 수정</title>
+      </Helmet>
+      <ModifyWrapper />
+    </>
+  );
 };

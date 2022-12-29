@@ -8,12 +8,15 @@ const router: Router = Router();
 
 router.use(authAndUserValidator);
 router.post('/find-email', asyncHandler(userController.findUserEmail));
+router.post('/verify-user', asyncHandler(userController.verifyUser));
+router.post('/send-code', asyncHandler(userController.sendCode));
 router.use(isLoggedIn);
-router.get('/', asyncHandler(userController.getMyPosts));
 router.patch('/', asyncHandler(userController.changePassword));
 router.delete('/', asyncHandler(userController.softDeleteUser));
+router.get('/mypage', asyncHandler(userController.getMyPosts));
 router.patch('/profile', asyncHandler(userController.updateUserProfile));
-router.post('/verify-user', asyncHandler(userController.verifyUser));
+router.patch('/apply', asyncHandler(userController.updateUserState));
 router.get('/my-comments', asyncHandler(commentController.getMyComments));
+router.get('/my-likes', asyncHandler(userController.getMyLikes));
 
 export default router;

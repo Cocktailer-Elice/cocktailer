@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { SHARE_KAKAO } from '../../../constants/api';
 import { shareKakao } from './shareKaKao';
 
 type CockProps = {
@@ -14,23 +15,34 @@ export const ShareBtn = ({ id, name, img, content }: CockProps) => {
     <KakaoBtn
       onClick={() =>
         shareKakao(
-          `http://127.0.0.1:5173/cockcipe/detail/${id}`,
+          `https://www.cocktailer.p-e.kr/cockcipe/detail/${id}`,
           img,
           name,
           content,
         )
       }
     >
-      카카오톡으로 공유하기
+      <img src="/assets/images/kakao.png" alt="카카오톡 공유 보내기 버튼" />
+      <Text>카카오톡으로 공유하기</Text>
     </KakaoBtn>
   );
 };
 
 const KakaoBtn = styled.div`
-  background-color: #4263eb;
   height: auto;
-  color: #edf2ff;
-  padding: 0.2rem;
   box-sizing: border-box;
   margin: 15px 0;
+  border-radius: 12px;
+  background-color: #fee000;
+  display: flex;
+  padding-left: 10px;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px #e9ecef;
+  }
+`;
+const Text = styled.p`
+  font-size: 18px;
+  font-weight: 800;
+  padding: 10px;
 `;

@@ -1,19 +1,29 @@
-import { SubCommentInfo } from './types/commentType';
+import { ICommentDependencies, SubCommentInfo } from './types/commentType';
 import { CommentInfo } from '../services';
-import { cockflowModel, commentModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import {
+  cockflowModel,
+  commentModel,
+  IComment,
+  ICommentMongoModel,
+} from '../db';
+import { AppError } from '../appError';
+import { errorNames } from '../errorNames';
+
+class CommentDependencies implements ICommentDependencies {
+  public commentModel = commentModel.Mongo;
+
+  public cockflowModel = cockflowModel.Mongo;
+}
 
 class CommentService {
-  private readonly commentModel = commentModel.Mongo;
-
-  private readonly cockflowModel = cockflowModel.Mongo;
+  constructor(private readonly dependencies: CommentDependencies) {}
 
   public createComment = async (commentInfo: CommentInfo) => {
-    return this.commentModel.create(commentInfo);
+    return this.dependencies.commentModel.create(commentInfo);
   };
 
   public getMyComments = async (userId: number) => {
-    const comments = await this.commentModel.findByUserId(userId);
+    const comments = await this.dependencies.commentModel.findByUserId(userId);
     return comments;
   };
 
@@ -22,7 +32,7 @@ class CommentService {
     content: string,
     userId: number,
   ) => {
-    const comment = await this.commentModel.findById(commentId);
+    const comment = await this.dependencies.commentModel.findById(commentId);
     if (!comment) {
       throw new AppError(errorNames.inputError, 400, '존재하지 않는 답변');
     }
@@ -31,7 +41,7 @@ class CommentService {
     }
     const filter = { _id: commentId };
     const update = { content };
-    const result = await this.commentModel.update(filter, update);
+    const result = await this.dependencies.commentModel.update(filter, update);
     if (!result.acknowledged || !result.modifiedCount) {
       throw new AppError(errorNames.databaseError, 500, '서버 에러');
     }
@@ -43,7 +53,7 @@ class CommentService {
     commentId: string,
     userId: number,
   ) => {
-    const cockflow = await this.cockflowModel.findById(cockflowId);
+    const cockflow = await this.dependencies.cockflowModel.findById(cockflowId);
     if (!cockflow) {
       throw new AppError(errorNames.inputError, 400, '존재하지 않는 칵플로우');
     }
@@ -51,7 +61,7 @@ class CommentService {
       throw new AppError(errorNames.authorizationError, 403, '권한 없음');
     }
 
-    const comment = await this.commentModel.findById(commentId);
+    const comment = await this.dependencies.commentModel.findById(commentId);
 
     if (!comment) {
       throw new AppError(errorNames.inputError, 400, '존재하지 않는 답변');
@@ -63,11 +73,9 @@ class CommentService {
     ) {
       throw new AppError(errorNames.inputError, 400, '비정상적인 요청');
     }
-    if (comment.owner === userId) {
-      throw new AppError(errorNames.businessError, 400, '자신이 작성한 답변');
-    }
-
-    const result = await this.commentModel.updateAdopted(commentId);
+    const result = await this.dependencies.commentModel.updateAdopted(
+      commentId,
+    );
     if (!result.acknowledged || !result.modifiedCount) {
       throw new AppError(errorNames.databaseError, 500, '서버 에러');
     }
@@ -75,25 +83,32 @@ class CommentService {
   };
 
   public deleteComment = async (commentId: string, userId: number) => {
-    const comment = await this.commentModel.findById(commentId);
+    const comment = await this.dependencies.commentModel.findById(commentId);
     if (!comment)
       throw new AppError(errorNames.inputError, 400, '해당하는 댓글 없음');
     if (comment.owner !== userId)
       throw new AppError(errorNames.authorizationError, 403, '권한 없음');
 
-    await this.commentModel.delete(commentId);
+    await this.dependencies.commentModel.delete(
+      commentId,
+      !comment.isSubComment,
+    );
     return;
   };
 
   public addSubcomment = async (subcommentInfo: SubCommentInfo) => {
-    const comment = await this.commentModel.findById(
+    const comment = await this.dependencies.commentModel.findById(
       subcommentInfo.parentCommentId,
     );
     if (!comment)
       throw new AppError(errorNames.inputError, 400, '해당하는 댓글 없음');
-    await this.commentModel.create(subcommentInfo);
+    await this.dependencies.commentModel.create(subcommentInfo);
     return;
   };
 }
 
-export default CommentService;
+const commentDependencies = new CommentDependencies();
+
+const commentService = new CommentService(commentDependencies);
+
+export default commentService;
