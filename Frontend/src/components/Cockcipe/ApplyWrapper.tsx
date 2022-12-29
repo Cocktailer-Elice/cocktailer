@@ -42,10 +42,12 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
         alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
       else alcohoObj[selectA[i]] = [{ [titleA[i]]: valueA[i] }];
     }
-    for (let i = 0; i < selectI.length; i++) {
-      if (IngredObj[selectI[i]])
-        IngredObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
-      else IngredObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+    if (selectI[0] !== '') {
+      for (let i = 0; i < selectI.length; i++) {
+        if (IngredObj[selectI[i]])
+          IngredObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
+        else IngredObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+      }
     }
 
     const newData = {
@@ -55,7 +57,6 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
       category: category,
       flavor: flavor,
       content: content,
-      official: false,
       ratio: {
         alcohol: alcohoObj,
         ingredient: IngredObj,
@@ -64,7 +65,6 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
 
     if (
       !Object.keys(alcohoObj).every((current) => current !== '') ||
-      !Object.keys(IngredObj).every((current) => current !== '') ||
       !name ||
       !img ||
       !category ||
