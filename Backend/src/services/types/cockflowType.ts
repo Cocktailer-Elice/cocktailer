@@ -1,3 +1,9 @@
+import { ICockflowMongoModel } from 'Backend/src/db';
+
+export interface ICockflowDependencies {
+  model: ICockflowMongoModel;
+}
+
 export interface CockflowInfo {
   owner: string;
   title: string;

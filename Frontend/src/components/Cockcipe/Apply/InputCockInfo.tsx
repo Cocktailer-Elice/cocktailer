@@ -14,6 +14,7 @@ interface Props {
   setDegree: any;
   setCategory: any;
   category: string;
+  degree: number;
 }
 
 export const InputCockInfo = ({
@@ -22,40 +23,26 @@ export const InputCockInfo = ({
   setDegree,
   setCategory,
   category,
+  degree,
 }: Props) => {
   return (
     <>
-      <InfoContainer>
-        <TextField
-          label="나만의 칵테일 이름"
-          sx={{ marginRight: '20px;' }}
-          value={value}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <TextField
-          label="칵테일 도수"
-          type="number"
-          onChange={(e) => {
-            setDegree(parseInt(e.target.value));
-          }}
-        />
-      </InfoContainer>
       <CategoryContainer>
         <FormControl
           sx={{
-            width: '200px',
+            width: '440px',
           }}
+          error={category === '' ? true : false}
         >
           <InputLabel>카테고리 선택</InputLabel>
           <Select
             label="카테고리"
-            value={category}
+            key={category}
+            defaultValue={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <MenuItem value="dry">드라이 칵테일</MenuItem>
-            <MenuItem value="refresh">리프레싱 칵테일</MenuItem>
+            <MenuItem value="refreshing">리프레싱 칵테일</MenuItem>
             <MenuItem value="fruit">프루트 칵테일</MenuItem>
             <MenuItem value="sweet">스위트 칵테일</MenuItem>
             <MenuItem value="smoothie">스무디 칵테일</MenuItem>
@@ -63,6 +50,28 @@ export const InputCockInfo = ({
           </Select>
         </FormControl>
       </CategoryContainer>
+
+      <InfoContainer>
+        <TextField
+          label="나만의 칵테일 이름"
+          sx={{ marginRight: '20px;' }}
+          value={value}
+          inputProps={{ maxLength: 20 }}
+          error={value === '' ? true : false}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <TextField
+          label="칵테일 도수"
+          type="number"
+          value={degree}
+          error={degree < 0 || degree > 100 ? true : false}
+          onChange={(e) => {
+            setDegree(parseInt(e.target.value));
+          }}
+        />
+      </InfoContainer>
     </>
   );
 };
@@ -72,13 +81,11 @@ const InfoContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
 `;
 
 const CategoryContainer = styled.div`
   display: flex;
-
   justify-content: center;
   align-items: center;
+  margin: 20px 0;
 `;

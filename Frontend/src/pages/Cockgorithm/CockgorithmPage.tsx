@@ -1,54 +1,28 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 
-import { CockgorithmModal } from '../../containers/Cockgorithm/CockgorithmModal';
-import { CockgorithmGameList } from './../../containers/Cockgorithm/CockgorithmGameList';
-import gameDatas from './gameDatas.json';
-
-export interface IGame {
-  gameTitle: string;
-  message: string;
-  questions: {
-    question: string;
-    filterName: string;
-    options: { optionName: string; filterValue: string }[];
-  }[];
-}
+import { CockgorithmGameListContainer } from './../../containers/Cockgorithm/CockgorithmGameListContainer';
+import { useAppSelector } from './../../store/store';
+import { CockgorithmModalContainer } from '../../containers/Cockgorithm/CockgorithmModalContainer';
 
 export const CockgorithmPage = () => {
-  const [modal, setModal] = useState(false);
-  const [seletedGame, setSelectedGame] = useState<IGame>(gameDatas[0]);
-
-  const toggleModal = () => {
-    setModal((curr) => !curr);
-  };
-
-  const changeSelectedGame = (game: IGame) => {
-    setSelectedGame(game);
-  };
+  const { isModalOpen } = useAppSelector((state) => state.cockgorithm);
 
   return (
-    <Container>
-      <CockgorithmGameList
-        toggleModal={toggleModal}
-        gameDatas={gameDatas}
-        changeSelectedGame={changeSelectedGame}
-      />
-      {modal ? (
-        <CockgorithmModal toggleModal={toggleModal} seletedGame={seletedGame} />
-      ) : (
-        <></>
-      )}
-    </Container>
+    <>
+      <Helmet>
+        <title>Cocktailer | 칵고리즘</title>
+      </Helmet>
+      <Container>
+        <CockgorithmGameListContainer />
+        {isModalOpen && <CockgorithmModalContainer />}
+      </Container>
+    </>
   );
 };
 
 const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
-  background-color: red;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
+  min-height: 100%;
+  background-color: white;
 `;

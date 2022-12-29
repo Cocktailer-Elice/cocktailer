@@ -1,22 +1,36 @@
-import { CockgorithmServiceType } from './types';
-import { cockgorithmModel } from '../db';
-import { AppError, errorNames } from '../routers/middlewares';
+import { ProcessedMaterial } from './types';
+import { cockgorithmModel, CocktailModelType } from '../db';
 
 class CockgorithmService {
   private readonly cockgorithmModel = cockgorithmModel;
 
-  public async activateCockgorithm(material: CockgorithmServiceType) {
+  public activateCockgorithm = async (material: ProcessedMaterial) => {
     const data = await this.cockgorithmModel.activateCockgorithm(material);
-
-    if (!data) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '죄송합니다 다시 검색해 주시기 바립니다.',
-      );
+    if (!data.length) {
+      return { isFound: false };
     }
+    const pickedCocktail = this.pickRandomCocktail(data, material);
+    return pickedCocktail;
+  };
 
-    return data;
-  }
+  private pickRandomCocktail = (
+    cocktails: CocktailModelType[],
+    material: ProcessedMaterial,
+  ) => {
+    // 완벽히 일치하는 애들 추리기
+    const exactlyMatchCocktails = cocktails.filter(
+      (cocktail) =>
+        cocktail.degree <= material.maxDegree &&
+        cocktail.degree >= material.minDegree,
+    );
+    // 정확히 일치하는 데이터가 없다면 전체를 대상으로
+    const randomCocktails = exactlyMatchCocktails.length
+      ? exactlyMatchCocktails
+      : cocktails;
+
+    const randomIndex = Math.floor(Math.random() * randomCocktails.length);
+    const pickedCocktail = randomCocktails[randomIndex];
+    return { data: pickedCocktail, isFound: true };
+  };
 }
 export default CockgorithmService;

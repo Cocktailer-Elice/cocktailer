@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { UserForm } from '../UserForm/styles';
+import { FormWrapper, UserForm } from '../UserForm/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { EditPasswordFormSchema } from './EditPasswordFormSchema';
 import { UserInput } from '../UserForm/UserInput';
@@ -16,47 +16,46 @@ export const EditPasswordForm = () => {
   });
   const navigate = useNavigate();
   const { handleSubmit, getValues } = methods;
-  const sendPasswordChangeRequest = async () => {
+  const onSubmit = async () => {
     const response = await axios.patch(CHANGE_PASSWORD, {
       password: getValues('password'),
       newPassword: getValues('newPassword'),
     });
-    if (response.status === 400) {
+    if (response.status === 204) {
       alert('다시 로그인해주세요');
       navigate('/logout');
     } else {
-      alert('Server Error');
+      alert('비밀번호 변경 실패');
     }
-  };
-  const onSubmitHandler = () => {
-    sendPasswordChangeRequest();
   };
   return (
     <FormProvider {...methods}>
-      <UserForm onSubmit={handleSubmit(onSubmitHandler)}>
-        <UserInput
-          label="password"
-          id="password"
-          name="password"
-          type="password"
-          placeholder="현재 비밀번호"
-        />
-        <UserInput
-          label="new password"
-          id="newPassword"
-          name="newPassword"
-          type="password"
-          placeholder="새 비밀번호"
-        />
-        <UserInput
-          label="new password check"
-          id="newPasswordCheck"
-          name="newPasswordCheck"
-          type="password"
-          placeholder="새 비밀번호 확인"
-        />
-        <Button type="submit">비밀번호 변경하기</Button>
-      </UserForm>
+      <FormWrapper>
+        <UserForm onSubmit={handleSubmit(onSubmit)}>
+          <UserInput
+            label="password"
+            id="password"
+            name="password"
+            type="password"
+            placeholder="현재 비밀번호"
+          />
+          <UserInput
+            label="new password"
+            id="newPassword"
+            name="newPassword"
+            type="password"
+            placeholder="새 비밀번호"
+          />
+          <UserInput
+            label="new password check"
+            id="newPasswordCheck"
+            name="newPasswordCheck"
+            type="password"
+            placeholder="새 비밀번호 확인"
+          />
+          <Button type="submit">비밀번호 변경하기</Button>
+        </UserForm>
+      </FormWrapper>
     </FormProvider>
   );
 };

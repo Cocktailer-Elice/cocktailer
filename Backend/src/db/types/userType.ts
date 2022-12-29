@@ -1,6 +1,7 @@
 import { UserInfo } from '../../services';
 import { AnyExpression, Document, UpdateWriteOpResult } from 'mongoose';
 import { User } from 'types';
+import { Cookie } from 'Backend/src/routers/middlewares/types';
 
 export interface IUserMongoModel {
   create(userInfo: UserInfo): Promise<IUser>;
@@ -23,19 +24,24 @@ export interface IUserModel {
 }
 
 export interface FindOneFilter {
+  _id?: string;
   id?: number;
   name?: string;
   email?: string;
   tel?: string;
   nickname?: string;
+  isApplyingBartender?: boolean;
+  isBartender?: string;
 }
 
 export interface UpdateOneFilter {
   password?: string;
   avatarUrl?: string;
   deletedAt?: number;
-  isBartender?: boolean;
+  isBartender?: boolean | string;
   isAdmin?: boolean;
+  isPasswordTemporary?: boolean;
+  isApplyingBartender?: boolean;
 }
 
 export interface IUser extends Document {
@@ -50,5 +56,10 @@ export interface IUser extends Document {
   isAdmin: boolean;
   isBartender: boolean;
   deletedAt: null | number;
-  readonly userGetResDto: User;
+  points: number;
+  isPasswordTemporary: boolean;
+  isApplyingBartender: boolean;
+  myLikes: number[];
+  readonly userGetResData: User;
+  readonly tokenData: Cookie;
 }
