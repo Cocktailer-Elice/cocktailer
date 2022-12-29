@@ -106,7 +106,7 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
       />
 
       <InputRecipe
-        kind="drink"
+        kind="plus"
         select={selectI}
         title={titleI}
         value={valueI}
