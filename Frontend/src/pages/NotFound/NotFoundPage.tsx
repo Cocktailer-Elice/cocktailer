@@ -17,7 +17,7 @@ export const NotFoundPage = () => {
 
 const Container = styled.div`
   width: 100%;
-  height: 500px;
+  height: 600px;
 
   display: flex;
   flex-direction: column;
