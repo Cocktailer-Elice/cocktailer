@@ -12,9 +12,9 @@ export const CockcipePage = () => {
         <title>cocktailer | 칵시피</title>
       </Helmet>
       <ListHeader />
+      <CocktailApplyBtn />
       <ListWrapper />
       <ApplyWrapper>
-        <CocktailApplyBtn />
       </ApplyWrapper>
     </>
   );

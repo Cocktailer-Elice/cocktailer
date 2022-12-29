@@ -19,7 +19,7 @@ export const CocktailListItem = ({ id, name, official, img }: Props) => {
     <ThumbnailBox onClick={handleDetailPage}>
       <ImgBox>
         <Badge>{official ? <OfficialBadge /> : null}</Badge>
-        <img src={img} alt="칵테일 이미지" width="150" height="150" />
+        <ImgTag src={img} alt="칵테일 이미지" />
       </ImgBox>
       <>
         <CocktailName>{name}</CocktailName>
@@ -33,19 +33,22 @@ const ThumbnailBox = styled.div`
   border-radius: 10px;
   background-color: aliceblue;
   height: auto;
-  margin: 10px;
+  margin: 40px 0px;
+  padding: 20px 20px;
+  // height: 175px;
   cursor: pointer;
-  @media screen and (max-width: 450px) {
-    width: 100px;
+  @media screen and (max-width: 600px) {
+    // width: 100px;
   }
 `;
 const Badge = styled.div`
-  display: flex;
-  justify-content: end;
+  text-align: right;
   margin: 5px 5px 0 0;
 `;
 const ImgBox = styled.div`
-  width: 150px;
+  position: relative;
+  width: 140px;
+  height: 140px;
   @media screen and (max-width: 450px) {
     width: 100px;
     & > img {
@@ -59,5 +62,14 @@ const CocktailName = styled.p`
   font-size: 15px;
   font-weight: 700;
   color: #495057;
+  margin-top: 5px;
   margin-bottom: 10px;
 `;
+
+const ImgTag = styled.img`
+  display: inline-block;
+  margin: 10px 0;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+`

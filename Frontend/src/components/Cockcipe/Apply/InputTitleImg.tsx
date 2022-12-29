@@ -45,9 +45,9 @@ export const InputTitleImg = ({ setImg, img }: any) => {
   return (
     <ImgContainer>
       <InsertWrapper>
-        <label htmlFor="input_img">
+        <Label htmlFor="input_img">
           <AddPhotoAlternateIcon fontSize="large" />
-        </label>
+        </Label>
         <input
           type="file"
           id="input_img"
@@ -72,16 +72,30 @@ const PreviewImg = styled.div`
   border-radius: 15px;
   width: 300px;
   height: 300px;
-  margin-left: 30px;
 `;
 const InsertWrapper = styled.div`
-  margin-right: 30px;
+  position: absolute;
+  box-shadow: 0px 0px 10px #ddd;
+  border-radius: 50%;
+  z-index: 1;
+  background: #fff;
+  top: 6%;
+  right: 29%;
 `;
 
 const ImgContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+`;
+
+const Label = styled.label`
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  padding: 25px;
+  cursor: pointer;
 `;

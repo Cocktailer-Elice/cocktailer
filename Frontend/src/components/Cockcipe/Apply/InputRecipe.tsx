@@ -131,15 +131,15 @@ export const InputRecipe = ({
             >
               {kind === 'alcohol'
                 ? alcohol?.map((item, idx) => (
-                    <MenuItem value={item} key={idx}>
-                      {item}
-                    </MenuItem>
-                  ))
+                  <MenuItem value={item} key={idx}>
+                    {item}
+                  </MenuItem>
+                ))
                 : ingredient?.map((item, idx) => (
-                    <MenuItem value={item} key={idx}>
-                      {item}
-                    </MenuItem>
-                  ))}
+                  <MenuItem value={item} key={idx}>
+                    {item}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
           <TextField
@@ -193,7 +193,7 @@ const RecipeHeader = styled.div`
   font-size: 20px;
   color: #495057;
   font-weight: 700;
-  margin-left: 40px;
+  // margin-left: 40px;
 `;
 
 const RecipeAddWrapper = styled.div`
