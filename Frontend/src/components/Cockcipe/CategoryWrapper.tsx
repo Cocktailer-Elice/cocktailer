@@ -43,7 +43,6 @@ export const CategoryWrapper = () => {
     axios
       .get(GET_COCKTAILS_SCROLL(categoryId, page.current))
       .then((res) => {
-        console.log(res.data);
         setCategoryList(() => categoryList.concat(res.data.categoryLists));
         page.current += 10;
       })
