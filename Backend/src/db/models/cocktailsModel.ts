@@ -171,6 +171,10 @@ export class CocktailModel implements CocktailInterface {
       return { cocktail: findCocktail[0], liked: false };
     }
 
+    if (findCocktail.length === 0) {
+      throw new AppError(errorNames.noDataError, 400, '데이터 없음');
+    }
+
     const liked = findCocktail[0].likesUser?.[userId]
       ? findCocktail[0].likesUser?.[userId] === true
         ? true

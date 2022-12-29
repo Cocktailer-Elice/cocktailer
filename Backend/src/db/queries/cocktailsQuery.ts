@@ -6,7 +6,6 @@ const imgSet = {
     ],
   },
 };
-const pipelineDefault = {};
 
 export const listsQuery = () => {
   /*   전체 6개씩   */
