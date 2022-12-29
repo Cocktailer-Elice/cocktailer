@@ -1,4 +1,4 @@
-import { CockgorithmModelType, CocktailModelType, Material } from '../types';
+import { CockgorithmModelType, Material } from '../types';
 import { findByCockgorithm } from '../queries/cockgorithmQuery';
 
 import CocktailSchema from '../schemas/cocktailsSchema';

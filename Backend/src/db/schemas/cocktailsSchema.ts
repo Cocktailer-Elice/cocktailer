@@ -1,4 +1,3 @@
-import { number, object } from 'joi';
 import { Schema, model, connection } from 'mongoose';
 import { CocktailModelType } from '../types';
 

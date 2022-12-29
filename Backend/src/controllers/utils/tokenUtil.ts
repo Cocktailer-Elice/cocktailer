@@ -35,8 +35,15 @@ export const createCookie = (
 ) => {
   const cookieExpire = COOKIE_EXPIRE;
   // HTTPS 적용 후 secure 옵션도 설정할 것! secure;
-  const cookie = isAutoLogin
-    ? `Authorization=${token}/${userId}; HttpOnly; Max-Age=${cookieExpire}; path=/;`
-    : `Authorization=${token}/${userId}; HttpOnly; path=/;`;
-  return cookie;
+  if (process.env.NODE_ENV === 'dev') {
+    const cookie = isAutoLogin
+      ? `Authorization=${token}/${userId}; HttpOnly; Max-Age=${cookieExpire}; path=/;`
+      : `Authorization=${token}/${userId}; HttpOnly; path=/;`;
+    return cookie;
+  } else {
+    const cookie = isAutoLogin
+      ? `Authorization=${token}/${userId}; HttpOnly; Max-Age=${cookieExpire}; path=/; secure;`
+      : `Authorization=${token}/${userId}; HttpOnly; path=/; secure;`;
+    return cookie;
+  }
 };

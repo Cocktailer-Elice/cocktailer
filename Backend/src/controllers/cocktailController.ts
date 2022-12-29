@@ -1,10 +1,9 @@
-import { Request as Req, Response as Res, NextFunction as Next } from 'express';
+import { Request as Req, Response as Res } from 'express';
 import {
   CocktailCreateReqData,
   Rankings,
   CocktailObj,
   UpdateResult,
-  CocktailLists,
 } from 'types';
 import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
@@ -15,12 +14,7 @@ class CocktailController {
   private readonly cocktailService = new CocktailService();
 
   public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
-    console.log('getHomeCocktailAndUserList');
-
-    // 인국님 테스트 해보세용
-    // await redisCache.del('ranking'); //얘는 캐시 지우는 애
     const cachedValue = (await redisCache.get('ranking')) as string;
-    console.log(cachedValue);
 
     const data: Rankings = cachedValue
       ? JSON.parse(cachedValue)
@@ -31,7 +25,6 @@ class CocktailController {
       userRanking: data.userRankings,
     });
 
-    // 나중에 캐싱 테스트용 콘솔로그는 지워주세용
     if (!cachedValue) {
       await redisCache.set('ranking', JSON.stringify(data));
       cachingEvents.emit('rankingCachingUpdate');
@@ -161,8 +154,6 @@ class CocktailController {
   ////////////////////////////////
 
   public makeMockData = async (req: Req, res: Res) => {
-    console.log('생성기 시작 _controller');
-
     const result: any = await this.cocktailService.makeMockData();
 
     res.status(200).json({ result: result });

@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import cron from 'node-cron';
 
 import logger from './winston';
-import { redisCache } from './redis';
 
 import globalRouter from './routers';
 import { notFoundErrorHandler } from './routers/middlewares';
