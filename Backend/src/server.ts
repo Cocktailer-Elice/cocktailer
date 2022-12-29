@@ -2,16 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
+import cron from 'node-cron';
 
 import logger from './winston';
 
 import globalRouter from './routers';
-import {
-  appErrorHandler,
-  errorHandler,
-  errorLogger,
-  notFoundErrorHandler,
-} from './routers/middlewares';
+import { notFoundErrorHandler } from './routers/middlewares';
+import { errorHandler } from './routers/middlewares/';
+import cachingEvents from './events/cachingEvents';
 
 class Server {
   private readonly app: express.Application;
@@ -26,7 +24,7 @@ class Server {
       cors({
         origin: true,
         credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'HEAD'],
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
       }),
     );
 
@@ -43,10 +41,8 @@ class Server {
 
   private setRouter() {
     this.app.use('/api', globalRouter);
-    this.app.use(errorLogger);
-    this.app.use(errorHandler);
     this.app.use(notFoundErrorHandler);
-    this.app.use(appErrorHandler);
+    this.app.use(errorHandler);
   }
 
   public listen(port: string) {
@@ -54,6 +50,9 @@ class Server {
 
     this.setRouter();
     this.app.listen(port, () => {
+      cron.schedule('* 5 * * * 1', () => {
+        cachingEvents.emit('newWeek');
+      });
       logger.info(
         `💣 ${port}번 PORT에서 서버를 시작합니다. http://localhost:${port}`,
       );

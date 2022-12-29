@@ -1,6 +1,5 @@
 import { Schema, model, connection } from 'mongoose';
 import { IUser } from '../types';
-import { User } from 'types';
 
 const UserSchema: Schema = new Schema(
   {
@@ -15,8 +14,9 @@ const UserSchema: Schema = new Schema(
     email: {
       type: String,
       required: true,
-      index: true,
-      unique: false,
+      index: {
+        unique: false,
+      },
     },
     password: {
       type: String,
@@ -24,27 +24,27 @@ const UserSchema: Schema = new Schema(
     },
     nickname: {
       type: String,
-      unique: true,
+      require: true,
+      index: {
+        unique: false,
+      },
     },
     birthday: {
-      type: Date,
+      type: String,
       required: true,
     },
     tel: {
       type: String,
       required: true,
-      index: true,
-      unique: false,
+      index: {
+        unique: false,
+      },
     },
     avatarUrl: {
       type: String,
       default: '1671798714000',
     },
     points: {
-      type: Number,
-      default: 0,
-    },
-    currentPoints: {
       type: Number,
       default: 0,
     },
@@ -56,6 +56,19 @@ const UserSchema: Schema = new Schema(
       type: Boolean,
       default: false,
     },
+    myLikes: [
+      {
+        type: Number,
+      },
+    ],
+    isPasswordTemporary: {
+      type: Boolean,
+      default: false,
+    },
+    isApplyingBartender: {
+      type: Boolean,
+      default: false,
+    },
     deletedAt: {
       type: Date,
     },
@@ -63,14 +76,27 @@ const UserSchema: Schema = new Schema(
   { collection: 'users', timestamps: true, versionKey: false },
 );
 
-UserSchema.virtual('userGetResDto').get(function (this: User) {
+UserSchema.virtual('userGetResData').get(function (this: IUser) {
   return {
     id: this.id,
     name: this.name,
     email: this.email,
     nickname: this.nickname,
     avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
-    isBartender: this.isBartender,
+    isBartender: this.isBartender === true ? true : false,
+    isPasswordTemporary: this.isPasswordTemporary ? true : false,
+  };
+});
+
+UserSchema.virtual('tokenData').get(function (this: IUser) {
+  return {
+    id: this.id,
+    name: this.name,
+    email: this.email,
+    nickname: this.nickname,
+    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
+    isAdmin: this.isAdmin,
+    isBartender: this.isBartender === true ? true : false,
   };
 });
 

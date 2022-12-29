@@ -1,12 +1,12 @@
-import { Ingredient } from './types';
-import { IngredientCreateReqDto } from 'types';
 import { ingredientModel } from '../db';
+import { IngredientObject } from './types';
 class IngredientService {
   /* test */
   private readonly ingredientModel = ingredientModel;
 
-  public async getIngredient(): Promise<object> {
-    const data: object = await this.ingredientModel.getIngredient();
+  public async getIngredient(): Promise<IngredientObject> {
+    const data: IngredientObject = await this.ingredientModel.getIngredient();
+
 
     return data;
   }

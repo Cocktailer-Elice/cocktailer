@@ -7,7 +7,8 @@ export const Heading = styled.h3`
 `;
 
 export const HeadingGrid = styled.div`
-  border: 1px solid #ddd;
+  border: none;
+  margin-bottom: 1rem;
 `;
 
 export const HeadingLeft = styled(HeadingGrid)`
@@ -16,6 +17,9 @@ export const HeadingLeft = styled(HeadingGrid)`
   justify-content: flex-end;
   align-items: center;
   padding-bottom: 0.3rem;
+  svg {
+    transform: scale(1.2);
+  }
 `;
 
 export const HeadingRight = styled(HeadingGrid)`
@@ -41,22 +45,34 @@ export const AvatarImage = styled.img`
   height: 80px;
   border-radius: 50%;
   margin: 0.5rem;
+  object-fit: cover;
+  border: ${({ theme }) => `${theme.colors.indigo6} 1px solid`};
 `;
 
 export const AvatarText = styled.span`
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-weight: bold;
 `;
 
 export const SectionContainer = styled.div`
   width: 100%;
-  height: 25vh;
+  min-height: 17vh;
+  max-height: 25vh;
   margin-bottom: 0.25rem;
   padding: 0.5rem;
 `;
 
 export const SectionWrapper = styled.section`
-  border: 1px solid #ddd;
   width: 100%;
   height: 100%;
+  padding: 0.5rem;
+`;
+
+export const Empty = styled.div`
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
 `;

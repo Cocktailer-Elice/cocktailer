@@ -10,7 +10,10 @@ const authAndUserSchema = Joi.object({
     ),
   ),
   tel: Joi.string().pattern(/^(010)\d{3,4}\d{4}$/),
-  birthday: Joi.string(),
+  birthday: Joi.string()
+    .min(10)
+    .max(10)
+    .pattern(new RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/)),
   alcohol: Joi.string().valid(
     '랜덤',
     '진',
@@ -27,6 +30,7 @@ const authAndUserSchema = Joi.object({
     ),
   ),
   avatarUrl: Joi.string().min(13).max(13),
+  isAutoLogin: Joi.boolean(),
 });
 
 export const authAndUserValidator = (req: Req, res: Res, next: Next) => {
@@ -34,7 +38,6 @@ export const authAndUserValidator = (req: Req, res: Res, next: Next) => {
     abortEarly: true,
   });
   if (result?.error) {
-    console.log(result.error);
     return res.status(400).json({ message: '비정상적인 접근' });
   }
   next();

@@ -2,18 +2,14 @@ import styled from 'styled-components';
 import HamburgerIcon from '@mui/icons-material/Menu';
 
 interface HeaderHamburgerButtonProps {
-  toggleDrawer: () => void;
+  handleDrawerOpen: () => void;
 }
 
 export const HeaderHamburgerButton = ({
-  toggleDrawer,
+  handleDrawerOpen,
 }: HeaderHamburgerButtonProps) => {
-  const handleHamburgerButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    toggleDrawer();
-  };
-
   return (
-    <HamburgerButton onClick={handleHamburgerButtonClick}>
+    <HamburgerButton onClick={handleDrawerOpen}>
       <CustomHamburgerIcon />
     </HamburgerButton>
   );
@@ -25,10 +21,17 @@ const HamburgerButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  background-color: ${(props) => props.theme.colors.indigo5};
+  padding: 20px;
 `;
 
 const CustomHamburgerIcon = styled(HamburgerIcon)`
   width: 35px;
   height: 35px;
+  color: white;
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.5;
+  }
 `;

@@ -1,15 +1,29 @@
 import { LoginContainer } from '../../containers/Login/LoginContainer';
-import { loginChecker } from '../../utils/loginChecker';
+import { Helmet } from 'react-helmet';
+import { FormHeading } from '../../components/UserForm/styles';
+import { useAuthentication } from '../../hooks/useAuthentication';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Finds from '../../components/Login/Finds';
 
 export const Login = () => {
-  const isLoggedIn = loginChecker();
+  const isLoggedIn = useAuthentication();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isLoggedIn) {
       navigate('/');
     }
   }, [isLoggedIn]);
-  return <LoginContainer></LoginContainer>;
+
+  return (
+    <>
+      <Helmet>
+        <title>Cocktailer | 로그인</title>
+      </Helmet>
+      <FormHeading>로그인</FormHeading>
+      <LoginContainer />
+      <Finds />
+    </>
+  );
 };
