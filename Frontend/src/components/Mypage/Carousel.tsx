@@ -52,11 +52,7 @@ export const Carousel = ({ title, cockcipes, likes, type }: SectionProps) => {
                   style={{ cursor: 'pointer' }}
                 >
                   <img
-                    src={
-                      img === 'testedURL'
-                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                        : img
-                    }
+                    src={img}
                     alt={name}
                     style={{
                       width: '100px',
@@ -73,11 +69,7 @@ export const Carousel = ({ title, cockcipes, likes, type }: SectionProps) => {
                   style={{ cursor: 'pointer' }}
                 >
                   <img
-                    src={
-                      img === 'testedURL'
-                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                        : img
-                    }
+                    src={img}
                     alt={name}
                     style={{
                       width: '100px',
