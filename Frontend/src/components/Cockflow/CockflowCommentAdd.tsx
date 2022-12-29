@@ -10,7 +10,7 @@ import { useAuthentication } from '../../hooks/useAuthentication';
 import EditIcon from '@mui/icons-material/Edit';
 import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../constants/api';
 
-export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: any) => {
+export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor, adopt }: any) => {
   const { register, handleSubmit, reset } = useForm();
   const [readonly, setReadonly] = useState(true);
   const [commentValue, setCommentValue] = useState(' ');
@@ -56,7 +56,7 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
     axios.patch(COCKFLOW_TWOID(cockflowId, commentId))
       .then(function (response) {
         alert('채택하였습니다.');
-        window.location.replace(COCKFLOW_DETAIL(cockflowId));
+        window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -103,36 +103,38 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
         }
         {item.owner.nickname}
       </FlexLeft>
-      {
-        (isLoggedIn && isAuthor) && (
-          readonly
-            ? (
-              <FlexRight>
-                <IconWrap type='button' onClick={commDelete}>
-                  <DeleteIc />
-                </IconWrap>
-                <IconWrap type='button' onClick={commEdit}>
-                  <EditIc />
-                </IconWrap>
-                <Button variant="outlined" onClick={() => {
-                  if (subComment) {
-                    setSubComment(false)
+      <FlexRight>
+        {
+          (isLoggedIn && isAuthor) && (
+            readonly
+              ? (
+                <>
+                  <IconWrap type='button' onClick={commDelete}>
+                    <DeleteIc />
+                  </IconWrap>
+                  <IconWrap type='button' onClick={commEdit}>
+                    <EditIc />
+                  </IconWrap>
+                  <Button variant="outlined" onClick={() => {
+                    if (subComment) {
+                      setSubComment(false)
+                      return;
+                    };
+                    setSubComment(true)
                     return;
-                  };
-                  setSubComment(true)
-                  return;
-                }}>댓글달기</Button>&nbsp;&nbsp;
-                <Button variant="contained" onClick={commAdopted}>채택하기</Button>
-              </FlexRight>
-            )
-            : (
-              <FlexRight>
-                <Button variant="contained" onClick={() => repliedCommentsPuts()}>수정완료</Button>&nbsp;&nbsp;
-                <Button variant="outlined" onClick={() => { setReadonly(prev => !prev) }}>취소하기</Button>
-              </FlexRight>
-            )
-        )
-      }
+                  }}>댓글달기</Button>&nbsp;&nbsp;
+                  <Button variant="contained" onClick={commAdopted}>채택하기</Button>
+                </>
+              )
+              : (
+                <>
+                  <Button variant="contained" onClick={() => repliedCommentsPuts()}>수정완료</Button>&nbsp;&nbsp;
+                  <Button variant="outlined" onClick={() => { setReadonly(prev => !prev) }}>취소하기</Button>
+                </>
+              )
+          )
+        }
+      </FlexRight>
       {
         (isLoggedIn && !isAuthor) && (
           <FlexRight>

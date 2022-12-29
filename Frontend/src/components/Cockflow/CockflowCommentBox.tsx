@@ -1,6 +1,7 @@
 import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
 import { Comment } from '../../../../types/commentType';
 import { CockflowCommentAdd } from './CockflowCommentAdd';
+import { useEffect } from 'react';
 
 interface CommentType {
   comments: Comment[];
@@ -13,6 +14,12 @@ interface TypeComment {
 }
 
 export const CockflowCommentBox = ({ commentlist, cockflowId, isAuthor }: TypeComment) => {
+  const [adopt, setAdopt] = useSTATE(false);
+  useEffect(() => {
+    (commentlist.comments).forEach(element => {
+      element.isAdopted && setAdopt(true);
+    });
+  }, [commentlist])
   return (
     <>
       <CockflowBoxTitle replied={commentlist.comments.length} />
@@ -25,6 +32,7 @@ export const CockflowCommentBox = ({ commentlist, cockflowId, isAuthor }: TypeCo
               cockflowId={cockflowId}
               commentId={commentlist.comments[index]._id}
               isAuthor={isAuthor}
+              adopt={adopt}
             />
           );
         })
@@ -32,4 +40,8 @@ export const CockflowCommentBox = ({ commentlist, cockflowId, isAuthor }: TypeCo
     </>
   );
 };
+
+function useSTATE(arg0: boolean): [any, any] {
+  throw new Error('Function not implemented.');
+}
 
