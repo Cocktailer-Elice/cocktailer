@@ -4,10 +4,10 @@ import { authController } from '../controllers';
 
 const router: Router = Router();
 
+router.post('/login', asyncHandler(authController.login));
 router.use(authAndUserValidator);
 router.post('/signup', asyncHandler(authController.signup));
 router.post('/email-check', asyncHandler(authController.checkEmailDuplicate));
-router.post('/login', asyncHandler(authController.login));
 router.post('/send-code', asyncHandler(authController.generateAuthCode));
 router.post('/validate-code', asyncHandler(authController.validateAuthCode));
 

@@ -1,10 +1,11 @@
-import { isLoggedIn } from './middlewares';
+import { cockflowValidator, isLoggedIn } from './middlewares';
 import { Router } from 'express';
 import { cockflowController } from '../controllers';
 import { asyncHandler } from './middlewares';
 
 const router: Router = Router();
 
+router.use(cockflowValidator);
 router.get('/', asyncHandler(cockflowController.getCockflowsByRequest));
 router.get(
   '/my-cockflows',

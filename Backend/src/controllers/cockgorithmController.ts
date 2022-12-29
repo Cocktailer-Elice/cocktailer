@@ -1,9 +1,5 @@
 import { Request as Req, Response as Res } from 'express';
-import {
-  CockgorithmReqData,
-  ProcessedMaterail,
-  CockgorithmResData,
-} from 'types';
+import { CockgorithmReqData, ProcessedMaterail } from 'types';
 import CockgorithmService from '../services/cockgorithmService';
 
 class CockgorithmController {
@@ -26,7 +22,7 @@ class CockgorithmController {
       processedMaterial,
     );
 
-    res.status(200).json({ data });
+    res.status(200).json(data);
   };
 }
 const cockgorithmController = new CockgorithmController();

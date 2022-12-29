@@ -1,4 +1,4 @@
-import { CocktailServiceType, UpdateResult } from './types';
+import { CocktailServiceType, UpdateResult, CocktailObj } from './types';
 import { Rankings } from 'types';
 
 import { cocktailModel } from '../db';
@@ -25,11 +25,9 @@ class CocktailService {
     return data;
   }
 
-  public async createCocktail(
-    cocktailCreateDto: CocktailServiceType,
-  ): Promise<number> {
+  public async createCocktail(cocktailObj: CocktailObj): Promise<number> {
     const data: number = await this.cocktailModel.createCocktail({
-      ...cocktailCreateDto,
+      ...cocktailObj,
     });
 
     if (!data) {
@@ -59,7 +57,7 @@ class CocktailService {
     return data;
   }
 
-  public async findCocktailId(cocktailId: number, userId: number) {
+  public async findCocktailId(cocktailId: number, userId: number | null) {
     const data = await this.cocktailModel.findCocktailId(cocktailId, userId);
 
     if (!data) {
@@ -91,28 +89,28 @@ class CocktailService {
 
   public async updateCocktail(
     cocktailId: number,
-    updateCocktail: CocktailServiceType,
+    userId: number,
+    cocktailObj: CocktailObj,
   ) {
-    // 트랜젝션 처리!! //
     const data: UpdateResult = await this.cocktailModel.updateCocktail(
       cocktailId,
-      updateCocktail,
+      userId,
+      cocktailObj,
     );
 
     if (!data) {
-      throw new AppError(
-        errorNames.noDataError,
-        400,
-        '이런! 칵테일 업데이트에 실패했습니다! 잠시후 재시도 해주시거나, 관리자에게 문의하세요!',
-      );
+      throw new AppError(errorNames.noDataError, 400);
     }
 
     return data;
   }
 
-  public async deleteCocktail(cocktailId: number) {
+  public async deleteCocktail(userId: number, cocktailId: number) {
     // 트랜젝션 처리!! //
-    const data: number = await this.cocktailModel.deleteCocktail(cocktailId);
+    const data: number = await this.cocktailModel.deleteCocktail(
+      userId,
+      cocktailId,
+    );
 
     if (data === 0) {
       throw new AppError(
@@ -151,7 +149,6 @@ class CocktailService {
   ////////////////////////////////
 
   public async makeMockData() {
-    console.log('생성기 시작 _service');
     const result: any = await this.cocktailModel.makeMockData();
     return result;
   }

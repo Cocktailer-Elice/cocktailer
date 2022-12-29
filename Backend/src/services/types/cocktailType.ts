@@ -1,33 +1,5 @@
 //service
 
-type Ratio = {
-  alcohol: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-  ingredient: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-};
-export interface CocktailServiceType {
-  owner: number;
-  category: string;
-  name: string;
-  official: boolean;
-  flavor: string;
-  degree: number;
-  img: string;
-  ratio: Ratio;
-  content: string;
-}
-
 export interface CocktailRankings {
   id: number;
   img: string;
@@ -48,9 +20,60 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
+export interface CocktailObj {
+  owner: number;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+}
+
+export interface CocktailServiceType {
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+}
+
 export interface UpdateResult {
-  acknowledged: boolean;
-  modifiedCount: number;
-  upsertedCount: number;
-  matchedCount: number;
+  update: boolean;
+  cocktailId: number;
 }
