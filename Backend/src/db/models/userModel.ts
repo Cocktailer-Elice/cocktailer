@@ -24,6 +24,10 @@ class UserMongoModel implements IUserMongoModel {
     const myLikes = await cocktailsSchema
       .find({ id: { $in: user?.myLikes } }, projection)
       .limit(6);
+    myLikes.forEach(
+      (myLike) =>
+        (myLike.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${myLike.img}`),
+    );
     const formattedResult = [{ ...posts[0], myList: myLikes }];
     return formattedResult;
   };

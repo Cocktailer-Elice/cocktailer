@@ -14,7 +14,7 @@ interface Props {
   setValue: any;
   select: any;
   title: any;
-  value: any;
+  value: number[];
 }
 
 export const InputRecipe = ({
@@ -51,7 +51,7 @@ export const InputRecipe = ({
   const handleValueChange = (event: any, index: number) => {
     setValue((prev: any) => [
       ...prev.slice(0, index),
-      event.target.value,
+      parseInt(event.target.value),
       ...prev.slice(index + 1),
     ]);
   };
@@ -95,7 +95,9 @@ export const InputRecipe = ({
   return (
     <>
       <RecipeAddWrapper>
-        <RecipeHeader>{kind === 'alcohol' ? '알코올' : '음료수'}</RecipeHeader>
+        <RecipeHeader>
+          {kind === 'alcohol' ? '알코올' : '추가재료'}
+        </RecipeHeader>
         {count.length > 3 ? (
           <AddIcon
             fontSize="large"
@@ -160,21 +162,24 @@ export const InputRecipe = ({
             onChange={(e) => handleValueChange(e, idx)}
           />
           {count.length === 1 ? (
-            <ClearIcon
-              id={idx.toString()}
-              sx={{
-                marginRight: '40px',
-                color: '#f03e3e',
-                cursor: 'not-allowed',
-              }}
-            />
+            kind === 'alcohol' ? (
+              <ClearIcon
+                id={idx.toString()}
+                sx={{
+                  color: '#f03e3e',
+                  cursor: 'not-allowed',
+                }}
+              />
+            ) : (
+              <ClearIcon id={idx.toString()} onClick={handleDelete} />
+            )
           ) : (
-            <ClearIcon id={idx.toString()} onClick={handleDelete} />
+            ''
           )}
         </RecipeContainer>
       ))}
       {count.length > 3 || count.length === 1 ? (
-        <AlertError>재료는 1개 이상 4개 미만 넣어주세요</AlertError>
+        <AlertError>재료는 최대 4개 이하으로 넣어주세요</AlertError>
       ) : (
         ''
       )}

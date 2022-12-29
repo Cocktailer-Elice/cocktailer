@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { CocktailApplyData } from '../../../../types';
 import { GET_DETAIL_COCKTAIL, PATCH_COCKTAIL } from '../../constants/api';
 import { ApplyButton } from './Apply/ApplyButton';
 import { InputCockContent } from './Apply/InputCockContent';
@@ -10,6 +11,12 @@ import { InputCockInfo } from './Apply/InputCockInfo';
 import { InputRecipe } from './Apply/InputRecipe';
 import { InputTitleImg } from './Apply/InputTitleImg';
 
+interface ApplyProps {
+  apply: (newData: CocktailApplyData) => void;
+}
+interface Obj {
+  [anykey: string]: [{ [anykey: string]: number }];
+}
 export const ModifyWrapper = () => {
   const navigate = useNavigate();
   // state
@@ -22,11 +29,11 @@ export const ModifyWrapper = () => {
 
   const [selectA, setSelectA] = useState<string[]>(['']);
   const [titleA, setTitleA] = useState<string[]>(['']);
-  const [valueA, setValueA] = useState<string[]>(['']);
+  const [valueA, setValueA] = useState<number[]>([]);
 
   const [selectI, setSelectI] = useState<string[]>(['']);
   const [titleI, setTitleI] = useState<string[]>(['']);
-  const [valueI, setValueI] = useState<string[]>(['']);
+  const [valueI, setValueI] = useState<number[]>([]);
 
   const url = window.location.pathname;
   const cocktailId = parseInt(url.split('/')[3]);
@@ -46,8 +53,8 @@ export const ModifyWrapper = () => {
   }, []);
 
   const handleApply = () => {
-    let alcohoObj: any = {};
-    let IngredObj: any = {};
+    let alcohoObj: Obj = {};
+    let IngredObj: Obj = {};
     for (let i = 0; i < selectA.length; i++) {
       if (alcohoObj[selectA[i]])
         alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
@@ -66,7 +73,6 @@ export const ModifyWrapper = () => {
       category: category,
       flavor: flavor,
       content: content,
-      official: false,
       ratio: {
         alcohol: Object.keys(alcohoObj).length && alcohoObj,
         ingredient: Object.keys(IngredObj).length && IngredObj,
@@ -75,12 +81,16 @@ export const ModifyWrapper = () => {
 
     if (
       !Object.keys(alcohoObj).every((current) => current !== '') ||
-      !Object.keys(IngredObj).every((current) => current !== '') ||
       !name ||
       !img ||
       !category ||
       !content ||
-      !flavor
+      !flavor ||
+      name.length > 20 ||
+      degree < 0 ||
+      degree > 100 ||
+      flavor.length > 10 ||
+      content.length > 200
     ) {
       alert('비어있는 값이 있습니다!');
     } else {
