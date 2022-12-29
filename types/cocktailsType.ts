@@ -81,7 +81,6 @@ export interface CocktailObj {
 export interface CocktailApplyData {
   category: string;
   name: string;
-  official: boolean;
   flavor: string[];
   degree: number;
   img: string;
