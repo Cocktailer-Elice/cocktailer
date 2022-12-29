@@ -14,7 +14,7 @@ interface Props {
   setValue: any;
   select: any;
   title: any;
-  value: any;
+  value: number[];
 }
 
 export const InputRecipe = ({
@@ -51,7 +51,7 @@ export const InputRecipe = ({
   const handleValueChange = (event: any, index: number) => {
     setValue((prev: any) => [
       ...prev.slice(0, index),
-      event.target.value,
+      parseInt(event.target.value),
       ...prev.slice(index + 1),
     ]);
   };
