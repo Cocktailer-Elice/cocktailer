@@ -33,6 +33,7 @@ const AppTitle = styled.div`
   font-size: 32px;
   letter-spacing: 2px;
   margin-left: 10px;
+  font-weight: 600;
   font-style: italic;
   color: white;
 

@@ -85,7 +85,6 @@ const CocktailImage = styled.img`
   width: 50%;
   min-width: 200px;
   height: 100%;
-  border: 2px solid red;
 `;
 
 const CocktailInfo = styled.div`

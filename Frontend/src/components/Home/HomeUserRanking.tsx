@@ -56,7 +56,6 @@ const UserAvatar = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  border: 2px solid red;
 
   @media screen and (max-width: 500px) {
     width: 75px;
