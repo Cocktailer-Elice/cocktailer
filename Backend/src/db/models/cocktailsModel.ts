@@ -73,17 +73,9 @@ export class CocktailModel implements CocktailInterface {
       User.aggregate(Object(usersQueries)),
     ]);
 
-    const cocktailRanking: CocktailRankings[] = [];
+    console.log(result);
 
-    result[0].map((e) => {
-      const obj = {
-        ...e,
-        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${e.img}`,
-      };
-      cocktailRanking.push(obj);
-    });
-
-    return { cocktailRankings: cocktailRanking, userRankings: result[1] };
+    return { cocktailRankings: result[0], userRankings: result[1] };
   };
 
   public createCocktail = async (cocktailObj: CocktailObj): Promise<number> => {
