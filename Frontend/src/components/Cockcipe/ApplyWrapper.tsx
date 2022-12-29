@@ -69,9 +69,14 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
       !img ||
       !category ||
       !content ||
-      !flavor
+      !flavor ||
+      name.length > 20 ||
+      degree < 0 ||
+      degree > 100 ||
+      flavor.length > 10 ||
+      content.length > 200
     ) {
-      alert('비어있는 값이 있습니다!');
+      alert('비어있는 값 혹은 잘못된 입력이 있습니다');
     } else {
       apply(newData);
     }
