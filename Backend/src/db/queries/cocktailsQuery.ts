@@ -58,7 +58,6 @@ export const findCocktailIdQuery = (id: number) => {
         createdAt: 0,
         deletedAt: 0,
         updatedAt: 0,
-        likesUser: 0,
       },
     },
     {
