@@ -1,6 +1,7 @@
 #app {
   height: 100%;
 }
+
 html,
 body {
   position: relative;
@@ -25,6 +26,7 @@ body {
   text-align: center;
   font-size: 18px;
   background: #fff;
+  margin: 0px 20px;
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -44,7 +46,6 @@ body {
 .swiper-scrollbar-drag {
   background-color: #91a7ff;
 }
-
 .swiper-button-next::after,
 .swiper-button-prev::after {
   color: #eee;

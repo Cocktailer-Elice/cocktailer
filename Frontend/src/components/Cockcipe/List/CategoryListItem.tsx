@@ -25,7 +25,7 @@ export const CategoryListItem = ({ id, name, official, img, owner }: Props) => {
     <ThumbnailBox onClick={handleDetailPage}>
       <Badge>{official ? <OfficialBadge /> : null}</Badge>
       <ImgBox>
-        <img src={img} alt="칵테일 이미지" width="150" height="150" />
+        <ImgTag src={img} alt="칵테일 이미지" />
       </ImgBox>
       <>
         <Title>{name}</Title>
@@ -36,11 +36,14 @@ export const CategoryListItem = ({ id, name, official, img, owner }: Props) => {
 };
 
 const ThumbnailBox = styled.div`
-  box-sizing: border-box;
+  box-sizing: border-box; 140px;
   border-radius: 10px;
   background-color: aliceblue;
   margin: 10px;
   cursor: pointer;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0px 0px 10px #ddd;
   @media screen and (max-width: 450px) {
     width: 150px;
   }
@@ -48,12 +51,15 @@ const ThumbnailBox = styled.div`
 `;
 const Badge = styled.div`
   position: absolute;
-  top: 3%;
-  left: 85%;
+  top: 5px;
+  right: 5px;
+  padding: 10px;
 `;
 const ImgBox = styled.div`
-  width: 150px;
-  margin: 0 auto;
+  width: 165px;
+  height: 150px;
+  text-align: center;
+  margin-top: 45px;
   @media screen and (max-width: 450px) {
     width: 120px;
     & > img {
@@ -74,3 +80,9 @@ const NickName = styled.div`
   font-size: 14px;
   margin-bottom: 10px;
 `;
+const ImgTag = styled.img`
+  display: inline-block;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+`
