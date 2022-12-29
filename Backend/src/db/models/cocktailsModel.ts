@@ -60,9 +60,6 @@ interface ReqData {
 
 const limitEachPage = 10;
 
-const cocktailImgUrl =
-  'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/';
-
 export class CocktailModel implements CocktailInterface {
   public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
     const queries = cocktailRankingsQuery();
@@ -73,17 +70,7 @@ export class CocktailModel implements CocktailInterface {
       User.aggregate(Object(usersQueries)),
     ]);
 
-    const cocktailRanking: CocktailRankings[] = [];
-
-    result[0].map((e) => {
-      const obj = {
-        ...e,
-        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${e.img}`,
-      };
-      cocktailRanking.push(obj);
-    });
-
-    return { cocktailRankings: cocktailRanking, userRankings: result[1] };
+    return { cocktailRankings: result[0], userRankings: result[1] };
   };
 
   public createCocktail = async (cocktailObj: CocktailObj): Promise<number> => {
@@ -98,7 +85,7 @@ export class CocktailModel implements CocktailInterface {
         session,
       });
 
-      const test = await User.updateOne(
+      await User.updateOne(
         { id: newMyCocktail.owner },
         { $inc: { points: 50 } },
       ).session(session);
