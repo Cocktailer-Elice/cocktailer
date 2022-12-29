@@ -12,11 +12,10 @@ import { TelVerifier } from '../UserForm/TelVerification';
 import { nicknamePrefixes } from '../../constants/nickname';
 
 interface JoinFormProps {
-  isLoggedIn: boolean;
   register: (data: UserCreateData) => void;
 }
 
-export const JoinForm = ({ isLoggedIn, register }: JoinFormProps) => {
+export const JoinForm = ({ register }: JoinFormProps) => {
   const methods = useForm<UserCreateData>({
     resolver: yupResolver(JoinSchema),
     mode: 'onChange',
