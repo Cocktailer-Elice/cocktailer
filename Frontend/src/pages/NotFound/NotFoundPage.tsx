@@ -44,4 +44,9 @@ const NotFoundSpan = styled.span`
 
 const CustomLink = styled(Link)`
   margin-top: 50px;
+  color: ${(props) => props.theme.colors.indigo8};
+
+  :hover {
+    color: ${(props) => props.theme.colors.indigo4};
+  }
 `;
