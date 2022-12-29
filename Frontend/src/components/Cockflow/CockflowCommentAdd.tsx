@@ -26,9 +26,7 @@ export const CockflowCommentAdd = ({
     await axios
       .post(COCKFLOW_TWOID(cockflowId, commentId), data)
       .then((res) => {})
-      .catch(function (err) {
-        console.log(err);
-      });
+      .catch(function (err) {});
   };
 
   const isLoggedIn = useAuthentication();
@@ -44,9 +42,7 @@ export const CockflowCommentAdd = ({
         alert('수정 되었습니다.');
         window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(function (error) {});
   };
 
   const onSubmit = (data: any) => {
@@ -71,7 +67,6 @@ export const CockflowCommentAdd = ({
         window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
       .catch(function (error) {
-        console.log(error);
         alert('본인 댓글은 채택이 불가능합니다.');
       });
   };
@@ -84,9 +79,7 @@ export const CockflowCommentAdd = ({
           alert('삭제 완료 되었습니다.');
           window.location.replace(`/cockflow/detail/${cockflowId}`);
         })
-        .catch((response) => {
-          console.log(response);
-        });
+        .catch((response) => {});
     }
   };
 

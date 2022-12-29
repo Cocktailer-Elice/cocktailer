@@ -37,16 +37,11 @@ export const CockgorithmModal = ({
 }: CockgorithmModalProps) => {
   useEffect(() => {
     if (isLoadingOpen) {
-      console.log('유저 응답', filters);
-
       setTimeout(async () => {
         try {
           const response: CockgorithmResData = (
             await axios.post(GET_COCKGORITHM_COCKTAIL, filters)
           ).data;
-
-          console.log('response');
-          console.log(response);
 
           if (response.isFound) {
             const fetchedCocktail = response.data as CockgorithmCocktail;

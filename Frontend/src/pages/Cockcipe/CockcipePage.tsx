@@ -15,12 +15,12 @@ export const CockcipePage = () => {
         <title>cocktailer | 칵시피</title>
       </Helmet>
       <ListHeader />
-      <ListWrapper />
       {isLoggedIn && (
         <ApplyWrapper>
           <CocktailApplyBtn />
         </ApplyWrapper>
       )}
+      <ListWrapper />
     </>
   );
 };
