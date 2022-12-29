@@ -98,7 +98,7 @@ export class CocktailModel implements CocktailInterface {
         session,
       });
 
-      await User.updateOne(
+      const test = await User.updateOne(
         { id: newMyCocktail.owner },
         { $inc: { points: 50 } },
       ).session(session);
@@ -143,7 +143,15 @@ export class CocktailModel implements CocktailInterface {
             },
           },
         },
-        { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+        {
+          $project: {
+            _id: 0,
+            ratio: 0,
+            createdAt: 0,
+            deletedAt: 0,
+            updatedAt: 0,
+          },
+        },
       ]);
 
     return findCocktailByUserId;
@@ -161,6 +169,10 @@ export class CocktailModel implements CocktailInterface {
 
     if (userId === null) {
       return { cocktail: findCocktail[0], liked: false };
+    }
+
+    if (findCocktail.length === 0) {
+      throw new AppError(errorNames.noDataError, 400, '데이터 없음');
     }
 
     const liked = findCocktail[0].likesUser?.[userId]
