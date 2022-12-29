@@ -5,7 +5,7 @@ export const HeaderHomeLogo = () => {
   return (
     <HomeLogo>
       <CustomLink to="/">
-        <HomeLogoImage src="../../../../assets/images/app_logo.png" />
+        <HomeLogoImage src="assets/images/app_logo.png" />
         <AppTitle>Cocktailer</AppTitle>
       </CustomLink>
     </HomeLogo>
