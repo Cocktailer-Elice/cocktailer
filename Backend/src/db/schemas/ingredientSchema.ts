@@ -1,8 +1,6 @@
 import { Schema, model, connection } from 'mongoose';
 import { IngredientDbResult } from '../types';
 
-//참조 https://www.notion.so/90143a86ded04b23b0094946940de37d
-
 const IngredientSchema: Schema = new Schema(
   {
     id: {
@@ -10,8 +8,6 @@ const IngredientSchema: Schema = new Schema(
       required: false,
       unique: true,
     },
-
-    /* 추가 */
   },
   { collection: 'ingredients', timestamps: true },
 );
@@ -19,9 +15,7 @@ const IngredientSchema: Schema = new Schema(
 IngredientSchema.virtual('IngredientInfo').get(function (
   this: IngredientDbResult,
 ) {
-  return {
-    /*추가 */
-  };
+  return {};
 });
 
 IngredientSchema.pre('save', async function () {
