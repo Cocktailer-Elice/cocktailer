@@ -1,29 +1,26 @@
-import { SetStateAction, useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import { CockgorithmReqData } from '../../../../types/cockgorithmType';
+import { IGame } from '../../store/cockgorithmSlice';
 
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
-  handleLoadingOpen: () => void;
-  setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
+  questionCounter: number;
+  increaseQuestionCounter: () => void;
+  setIsLoadingOpen: (boolean: boolean) => void;
+  setFilters: (filterName: string, filterValue: string) => void;
 }
 
 export const CockgorithmGameContent = ({
   selectedGame,
-  handleLoadingOpen,
+  questionCounter,
+  increaseQuestionCounter,
+  setIsLoadingOpen,
   setFilters,
 }: CockgorithmGameContentProps) => {
-  const [questionCounter, setQuestionCounter] = useState(0);
-
-  const increaseQuestionCounter = () => {
-    setQuestionCounter((curr) => curr + 1);
-  };
-
   useEffect(() => {
     if (questionCounter === 5) {
-      handleLoadingOpen();
+      setIsLoadingOpen(true);
     }
   }, [questionCounter]);
 
@@ -32,18 +29,9 @@ export const CockgorithmGameContent = ({
     filterValue: string;
   }) => {
     const { filterName } = selectedGame.questions[questionCounter];
-    setFilters((curr: CockgorithmReqData) => {
-      if (filterName === 'ingredients') {
-        curr[filterName] = [...curr[filterName], option.filterValue];
-      } else if (
-        filterName === 'category' ||
-        filterName === 'alcohol' ||
-        filterName === 'degree'
-      ) {
-        curr[filterName] = option.filterValue;
-      }
-      return curr;
-    });
+    const filterValue = option.filterValue;
+
+    setFilters(filterName, filterValue);
     increaseQuestionCounter();
   };
 
