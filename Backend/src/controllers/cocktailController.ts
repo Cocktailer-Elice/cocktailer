@@ -20,8 +20,6 @@ class CocktailController {
       ? JSON.parse(cachedValue)
       : await this.cocktailService.getHomeCocktailAndUserList();
 
-
-
     res.status(200).json({
       cocktailRanking: data.cocktailRankings,
       userRanking: data.userRankings,
@@ -147,6 +145,8 @@ class CocktailController {
       userId,
       cocktailId,
     );
+
+    console.log(result);
 
     res.status(200).json({ likes: result });
   };
