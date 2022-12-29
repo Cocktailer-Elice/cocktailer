@@ -173,7 +173,7 @@ export const InputRecipe = ({
               <ClearIcon id={idx.toString()} onClick={handleDelete} />
             )
           ) : (
-            ''
+            <ClearIcon id={idx.toString()} onClick={handleDelete} />
           )}
         </RecipeContainer>
       ))}
