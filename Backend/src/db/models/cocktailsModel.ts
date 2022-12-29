@@ -7,7 +7,6 @@ import {
   UpdateResult,
   LikesUser,
   CocktailObj,
-  CocktailLists,
 } from '../types';
 import { CocktailCreateReqData, Rankings } from 'types';
 import CocktailSchema from '../schemas/cocktailsSchema';
@@ -144,7 +143,15 @@ export class CocktailModel implements CocktailInterface {
             },
           },
         },
-        { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+        {
+          $project: {
+            _id: 0,
+            ratio: 0,
+            createdAt: 0,
+            deletedAt: 0,
+            updatedAt: 0,
+          },
+        },
       ]);
 
     return findCocktailByUserId;
