@@ -53,6 +53,7 @@ const UserSchema: Schema = new Schema(
       default: false,
     },
     isBartender: {
+      type: Boolean,
       default: false,
     },
     myLikes: [

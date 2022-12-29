@@ -1,61 +1,6 @@
 //model
 
 import { CocktailGetResData } from 'types';
-type Ratio = {
-  alcohol: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-  ingredient: {
-    [anykey: string]: [
-      {
-        [anykey: string]: number;
-      },
-    ];
-  };
-};
-
-export interface CocktailModelType {
-  id: number;
-  owner: number;
-  category: string;
-  name: string;
-  official: boolean;
-  flavor: string;
-  degree: number;
-  img: string;
-  ratio: Ratio;
-  content: string;
-  likes: number;
-  likesUser: {
-    [uid: string]: boolean;
-  };
-  readonly cocktailInfo: CocktailGetResData;
-}
-
-export interface FindCocktailId {
-  cocktail: {
-    id: number;
-    owner: number;
-    category: string;
-    name: string;
-    official: boolean;
-    flavor: string;
-    degree: number;
-    img: string;
-    ratio: Ratio;
-    content: string;
-    likes: number;
-    likesUser: {
-      [uid: string]: boolean;
-    };
-    readonly cocktailInfo: CocktailGetResData;
-  };
-  liked: boolean;
-}
 
 export interface CocktailRankings {
   id: number;
@@ -77,11 +22,111 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
-export interface UpdateResult {
+export interface CocktailObj {
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+}
+
+export interface CocktailModelType {
+  id: number;
+  owner: number;
+  category: string;
+  name: string;
+  official: boolean;
+  flavor: string;
+  degree: number;
+  img: string;
+  ratio: {
+    alcohol: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+    ingredient: {
+      [anykey: string]: [
+        {
+          [anykey: string]: number;
+        },
+      ];
+    };
+  };
+  content: string;
+  likes: number;
+  likesUser: {
+    [uid: string]: boolean;
+  };
+  readonly cocktailInfo: CocktailGetResData;
+}
+
+export interface FindCocktailId {
+  cocktail: {
+    id: number;
+    owner: number;
+    category: string;
+    name: string;
+    official: boolean;
+    flavor: string;
+    degree: number;
+    img: string;
+    ratio: {
+      alcohol: {
+        [anykey: string]: [
+          {
+            [anykey: string]: number;
+          },
+        ];
+      };
+      ingredient: {
+        [anykey: string]: [
+          {
+            [anykey: string]: number;
+          },
+        ];
+      };
+    };
+    content: string;
+    likes: number;
+    likesUser: {
+      [uid: string]: boolean;
+    };
+    readonly cocktailInfo: CocktailGetResData;
+  };
+  liked: boolean;
+}
+
+export interface DBUpdateResult {
   acknowledged: boolean;
   modifiedCount: number;
   upsertedCount: number;
   matchedCount: number;
+}
+
+export interface UpdateResult {
+  update: boolean;
+  cocktailId: number;
 }
 
 export interface LikesUser {
@@ -89,4 +134,13 @@ export interface LikesUser {
   likesUser: {
     [userId: number]: boolean;
   };
+}
+
+export interface CocktailLists {
+  sweet: [[object]];
+  dry: [[object]];
+  refreshing: [[object]];
+  fruit: [[object]];
+  smoothie: [[object]];
+  hot: [[object]];
 }

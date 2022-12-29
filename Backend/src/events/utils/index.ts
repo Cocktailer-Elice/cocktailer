@@ -1,3 +1,2 @@
-export * from './loggers';
+export * from './logError';
 export * from './sendMail';
-export * from './winston';

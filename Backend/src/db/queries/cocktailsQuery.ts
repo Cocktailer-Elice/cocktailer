@@ -1,3 +1,13 @@
+const imgSet = {
+  img: {
+    $concat: [
+      'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+      '$img',
+    ],
+  },
+};
+const pipelineDefault = {};
+
 export const listsQuery = () => {
   /*   전체 6개씩   */
 
@@ -8,9 +18,15 @@ export const listsQuery = () => {
   Array.map((e) => {
     $facet[e] = [
       { $match: { category: e, official: true } },
-      { $limit: 6 },
-      { $sort: { createdAt: -1 } },
+
+      { $sort: { likes: -1 } },
+      {
+        $set: imgSet,
+      },
+
       { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+
+      { $limit: 10 },
     ];
   });
 
@@ -21,7 +37,9 @@ export const findCocktailIdQuery = (id: number) => {
   /*   id   */
   return [
     {
-      $match: { id: id },
+      $match: {
+        id: id,
+      },
     },
     {
       $project: {
@@ -29,6 +47,43 @@ export const findCocktailIdQuery = (id: number) => {
         createdAt: 0,
         deletedAt: 0,
         updatedAt: 0,
+      },
+    },
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'owner',
+        foreignField: 'id',
+        as: 'owner',
+        pipeline: [
+          {
+            $project: {
+              _id: 0,
+              myLikes: 0,
+              isApplyingBartender: 0,
+              isPasswordTemporary: 0,
+              name: 0,
+              email: 0,
+              password: 0,
+              birthday: 0,
+              avatarUrl: 0,
+              isAdmin: 0,
+              points: 0,
+              createdAt: 0,
+              updatedAt: 0,
+              deletedAt: 0,
+              tel: 0,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $set: imgSet,
+    },
+    {
+      $unwind: {
+        path: '$owner',
       },
     },
   ];
@@ -65,6 +120,9 @@ export const getCocktailLikesUserQuery = (
         deletedAt: 0,
         updatedAt: 0,
       },
+    },
+    {
+      $set: imgSet,
     },
   ];
 };
@@ -130,6 +188,9 @@ export const findCategoryAndSearchQuery = (reqData: object) => {
       },
     },
     {
+      $set: imgSet,
+    },
+    {
       $unwind: {
         path: '$owner',
       },
@@ -152,7 +213,6 @@ export const cocktailRankingsQuery = () => {
         flavor: 0,
         degree: 0,
         ratio: 0,
-
         content: 0,
         createdAt: 0,
         updatedAt: 0,
@@ -184,6 +244,9 @@ export const cocktailRankingsQuery = () => {
           },
         ],
       },
+    },
+    {
+      $set: imgSet,
     },
     {
       $unwind: {

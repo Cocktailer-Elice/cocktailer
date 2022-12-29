@@ -17,8 +17,15 @@ class UserMongoModel implements IUserMongoModel {
   };
 
   public getPosts = async (userId: number) => {
-    const posts: IUser[] = await User.aggregate(userQueries.findById(userId));
-    return posts;
+    const posts = await User.aggregate(userQueries.findById(userId));
+    const user = await User.findOne({ id: userId });
+    const projection =
+      '-_id -owner -category -official -flavor -ratio -degree -likes -createdAt -updatedAt -likesUser -content';
+    const myLikes = await cocktailsSchema
+      .find({ id: { $in: user?.myLikes } }, projection)
+      .limit(6);
+    const formattedResult = [{ ...posts[0], myList: myLikes }];
+    return formattedResult;
   };
 
   public getLikes = async (userId: number) => {
@@ -31,7 +38,7 @@ class UserMongoModel implements IUserMongoModel {
     );
     likes.forEach(
       (like) =>
-        (like.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/${like.img}`),
+        (like.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${like.img}`),
     );
     return likes;
   };

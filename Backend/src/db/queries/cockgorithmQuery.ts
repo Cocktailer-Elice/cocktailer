@@ -41,7 +41,7 @@ export const findByCockgorithm = (
       $set: {
         img: {
           $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/seeun-test/',
+            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
             '$img',
           ],
         },

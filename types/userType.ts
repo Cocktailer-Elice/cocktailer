@@ -27,10 +27,6 @@ export interface MyPostsResData {
   cocktails: MyCockcipe[];
 }
 
-export interface MyLikesReqData {
-  myLikes: MyLike[];
-}
-
 // 서버에 회원가입을 위해 전송할 데이터
 export interface UserCreateData {
   name: string;

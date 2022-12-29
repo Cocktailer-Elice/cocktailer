@@ -1,4 +1,5 @@
 import { Request as Req, Response as Res } from 'express';
+import mailingEvents from '../events/mailingEvent';
 import { redisCache } from '../redis';
 import userService from '../services/userService';
 import { checkReqBody, createCookie, updateToken } from './utils';
@@ -28,8 +29,13 @@ class UserController {
   public verifyUser = async (req: Req, res: Res) => {
     const { name, email, tel } = req.body;
     checkReqBody(name, email, tel);
-    await this.userService.verifyUser(name, email, tel);
+    const temporaryPassword = await this.userService.verifyUser(
+      name,
+      email,
+      tel,
+    );
     res.sendStatus(204);
+    mailingEvents.emit('temporaryPasswordIssued', email, temporaryPassword);
   };
 
   public sendCode = async (req: Req, res: Res) => {
@@ -68,10 +74,11 @@ class UserController {
   };
 
   public softDeleteUser = async (req: Req, res: Res) => {
-    const { userId } = req.user;
+    const { userId, name, email } = req.user;
     await this.userService.softDeleteUser(userId);
     res.setHeader('Set-Cookie', 'Authorization=; Max-age=0; path=/');
     res.sendStatus(204);
+    mailingEvents.emit('userSeceded', name, email);
   };
 }
 
