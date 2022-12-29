@@ -7,7 +7,7 @@ class IngredientService {
   public async getIngredient(): Promise<IngredientObject> {
     const data: IngredientObject = await this.ingredientModel.getIngredient();
 
-    console.log(data);
+
     return data;
   }
 }

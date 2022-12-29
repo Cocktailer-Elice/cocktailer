@@ -26,7 +26,6 @@ export const InputRecipe = ({
   setTitle,
   setValue,
 }: Props) => {
-  console.log();
   const [count, setCount] = useState<number[]>([0]);
   const [ingredient, setIngredient] = useState<string[]>();
   const [alcohol, setAlcohol] = useState<string[]>();
@@ -133,15 +132,15 @@ export const InputRecipe = ({
             >
               {kind === 'alcohol'
                 ? alcohol?.map((item, idx) => (
-                  <MenuItem value={item} key={idx}>
-                    {item}
-                  </MenuItem>
-                ))
+                    <MenuItem value={item} key={idx}>
+                      {item}
+                    </MenuItem>
+                  ))
                 : ingredient?.map((item, idx) => (
-                  <MenuItem value={item} key={idx}>
-                    {item}
-                  </MenuItem>
-                ))}
+                    <MenuItem value={item} key={idx}>
+                      {item}
+                    </MenuItem>
+                  ))}
             </Select>
           </FormControl>
           <TextField

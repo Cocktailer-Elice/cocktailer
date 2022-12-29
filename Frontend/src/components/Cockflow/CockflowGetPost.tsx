@@ -12,35 +12,33 @@ export const CockflowGetPost = () => {
       postCockflowList(data);
       window.location.replace(`/cockflow`);
     } else {
-      data.title
-        ? alert(`본문을 입력해주세요`)
-        : alert(`제목을 입력해주세요`)
-    };
+      data.title ? alert(`본문을 입력해주세요`) : alert(`제목을 입력해주세요`);
+    }
   };
 
   const postCockflowList = async (data: any) => {
-    await axios.post(COCKFLOW(), data)
-      .then(function (response) {
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    await axios
+      .post(COCKFLOW(), data)
+      .then(function (response) {})
+      .catch(function (error) {});
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <CockflowPostBox>
         <InputBox
-          {...register("title")}
+          {...register('title')}
           readOnly={false}
           maxLength={50}
-          placeholder="질문 제목을 입력해주세요" />
+          placeholder="질문 제목을 입력해주세요"
+        />
         <TextBox
           defaultValue=""
-          {...register("content")}
+          {...register('content')}
           readOnly={false}
           maxLength={250}
-          placeholder='질문 내용을 입력해주세요' />
+          placeholder="질문 내용을 입력해주세요"
+        />
       </CockflowPostBox>
       <CockflowEnrollBtns linkto="/cockflow" typeBtn="submit" />
     </form>

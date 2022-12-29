@@ -26,7 +26,7 @@ export const InputTitleImg = ({ setImg, img }: any) => {
         })
         .then((res) => {
           const key = new URL(res.data).pathname.split('/')[2];
-          console.log(key);
+
           setImg(key);
           axios
             .put(`${res.data}`, file, {
@@ -35,9 +35,7 @@ export const InputTitleImg = ({ setImg, img }: any) => {
               },
               withCredentials: false,
             })
-            .then((res) => {
-              console.log(res.status);
-            });
+            .then((res) => {});
         });
     }
   };

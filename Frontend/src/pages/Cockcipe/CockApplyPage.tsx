@@ -14,12 +14,10 @@ export const CockApplyPage = () => {
 
   useEffect(() => {
     if (dataId && dataId !== currentId) {
-      console.log(dataId, currentId);
       setCurrentId(dataId);
       axios
         .get(GET_DETAIL_COCKTAIL(dataId))
         .then((res) => {
-          console.log(res.data);
           navigate(`/cockcipe/detail/${dataId}`);
         })
         .catch((err) => navigate(`/cockcipe`));
