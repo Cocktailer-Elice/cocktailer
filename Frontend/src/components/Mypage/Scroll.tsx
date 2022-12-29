@@ -25,15 +25,7 @@ export const Scroll = ({ type, likes, data }: ScrollProps) => {
                 onClick={() => navigate(`/cockcipe/detail/${id}`)}
               >
                 <GridContent>
-                  <img
-                    src={
-                      img === 'testedURL'
-                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                        : img
-                    }
-                    alt={name}
-                    style={{ maxWidth: '100px' }}
-                  />
+                  <img src={img} alt={name} style={{ maxWidth: '100px' }} />
                   <span>{name}</span>
                 </GridContent>
               </GridContentWrapper>
@@ -53,15 +45,7 @@ export const Scroll = ({ type, likes, data }: ScrollProps) => {
                 onClick={() => navigate(`/cockcipe/detail/${id}`)}
               >
                 <GridContent>
-                  <img
-                    src={
-                      img === 'testedURL'
-                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                        : img
-                    }
-                    alt={name}
-                    style={{ width: '100px' }}
-                  />
+                  <img src={img} alt={name} style={{ maxWidth: '100px' }} />
                   <span>{name}</span>
                 </GridContent>
               </GridContentWrapper>
