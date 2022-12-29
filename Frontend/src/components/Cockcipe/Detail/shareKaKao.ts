@@ -7,7 +7,10 @@ export const shareKakao = (
   const kakao = window.Kakao;
 
   if (window.Kakao) {
-    window.Kakao.init(import.meta.env.VITE_APP_KAKAO);
+    if (!kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_APP_KAKAO);
+    }
+
     kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
