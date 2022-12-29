@@ -1,7 +1,7 @@
 # <strong>Elice Team04 Project - Cocktailer</strong>
 
 <div align="center">
-<img src="https://i.postimg.cc/XYkG4Nxz/cocktail-title.png" width="1000" height="400" alt="cocktail-title">
+<img src="https://i.postimg.cc/XYkG4Nxz/cocktail-title.png" width="800" height="400" alt="cocktail-title">
 </div>
 
 # <strong>서비스 소개</strong>
@@ -23,8 +23,8 @@
 
 # <strong>결과물</strong>
 
-[사이트 클릭!](https://www.cocktailer.p-e.kr/)
-<br/>
+<img src="https://media.discordapp.net/attachments/1051429000888713260/1058040844965396591/image.png" width="800"/>
+
 [데모 동영상!](www.youtube.com)
 
 # <strong>Description</strong>
@@ -80,24 +80,23 @@
 
 | 이름   | 담당 역할   | 담당 업무                                     |
 | ------ | ----------- | --------------------------------------------- |
-| 김건우 | 팀장/백엔드 | 유저, 메인                                    |
-| 오인국 | 백엔드      | 칵고리즘, 칵시피                              |
 | 손종훈 | 프론트엔드  | 메인 페이지, 칵고리즘 페이지                  |
 | 서아름 | 프론트엔드  | 칵플로우 게시물, 댓글 crud                    |
 | 오현석 | 프론트엔드  | 로그인, 회원가입, 마이페이지                  |
 | 한세은 | 프론트엔드  | 칵테일 레시피 crud, 좋아요, 카카오톡 공유하기 |
-
+| 김건우 | 백엔드 | 유저, 메인                                    |
+| 오인국 | 백엔드      | 칵고리즘, 칵시피                              |
 <br/>
 
 # <strong>Architecture</strong>
 
 ### <strong>infra</strong>
 
-<img src="https://i.postimg.cc/j2zzVyFW/inf.jpg" width="1000" />
+<img src="https://i.postimg.cc/j2zzVyFW/inf.jpg" width="800" />
 
 ### <strong>stack</strong>
 
-<img src="https://i.postimg.cc/DyJ9G0bS/agsd.jpg" width="1000" />
+<img src="https://i.postimg.cc/DyJ9G0bS/agsd.jpg" width="800" />
 
 # <strong>주요 화면</strong>
 
