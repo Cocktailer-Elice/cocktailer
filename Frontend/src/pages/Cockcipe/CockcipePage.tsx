@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import { CocktailApplyBtn } from '../../components/Cockcipe/List/CocktailApplyBtn';
 import { ListHeader } from '../../components/Cockcipe/List/ListHeader';
 import { ListWrapper } from '../../components/Cockcipe/ListWrapper';
+import { useAuthentication } from '../../hooks/useAuthentication';
 
 export const CockcipePage = () => {
+  const isLoggedIn = useAuthentication();
+
   return (
     <>
       <Helmet>
@@ -14,8 +17,11 @@ export const CockcipePage = () => {
       <ListHeader />
       <CocktailApplyBtn />
       <ListWrapper />
-      <ApplyWrapper>
-      </ApplyWrapper>
+      {isLoggedIn && (
+        <ApplyWrapper>
+          <CocktailApplyBtn />
+        </ApplyWrapper>
+      )}
     </>
   );
 };

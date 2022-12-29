@@ -34,10 +34,12 @@ export const CategoryWrapper = () => {
   const [official, setOfficial] = useState<boolean>(true);
   const [nonOfficial, setNonOfficial] = useState<boolean>(true);
   const [searchText, setSearchText] = useState<string>('');
-  const page = useRef<number>(10);
+  const page = useRef<number>(0);
   const [categoryList, setCategoryList] = useState<Data[]>([]);
   const [ref, inView] = useInView();
   const [error, setError] = useState<boolean>(false);
+  const [isData, setIsData] = useState<boolean>(false);
+
   const getList = () => {
     if (error) return;
     axios
@@ -50,7 +52,7 @@ export const CategoryWrapper = () => {
   };
 
   useEffect(() => {
-    if (inView && categoryList.length !== 0) {
+    if (inView && categoryList.length !== 0 && page.current > 9) {
       getList();
     }
   }, [inView, getList]);
@@ -65,22 +67,34 @@ export const CategoryWrapper = () => {
         axios
           .get(FIND_CATEGORY_COCKTAILS(categoryId, searchText))
           .then((res) => {
-            console.log(res.data.categoryLists);
             setCategoryList(res.data.categoryLists);
+            setIsData(false);
+          })
+          .catch((err) => {
+            setCategoryList([]);
+            setIsData(true);
           });
       } else if (official && !nonOfficial) {
         axios
           .get(FIND_CATEGORY_COCKTAILS_OFFI(categoryId, searchText, true))
           .then((res) => {
-            console.log(res.data.categoryLists);
             setCategoryList(res.data.categoryLists);
+            setIsData(false);
+          })
+          .catch((err) => {
+            setCategoryList([]);
+            setIsData(true);
           });
       } else if (!official && nonOfficial) {
         axios
           .get(FIND_CATEGORY_COCKTAILS_OFFI(categoryId, searchText, false))
           .then((res) => {
-            console.log(res.data.categoryLists);
             setCategoryList(res.data.categoryLists);
+            setIsData(false);
+          })
+          .catch((err) => {
+            setCategoryList([]);
+            setIsData(true);
           });
       }
     }
@@ -88,19 +102,42 @@ export const CategoryWrapper = () => {
 
   useEffect(() => {
     if (official && nonOfficial) {
-      axios.get(GET_CATEGORY_COCKTAILS(categoryId)).then((res) => {
-        setCategoryList(res.data.categoryLists);
-      });
+      axios
+        .get(GET_CATEGORY_COCKTAILS(categoryId))
+        .then((res) => {
+          page.current += 10;
+          setCategoryList(res.data.categoryLists);
+          setIsData(false);
+        })
+        .catch((err) => {
+          setCategoryList([]);
+          setIsData(true);
+        });
     } else if (official && !nonOfficial) {
-      axios.get(GET_CATEGORY_COCKTAILS_OFFI(categoryId, true)).then((res) => {
-        setCategoryList(res.data.categoryLists);
-      });
+      axios
+        .get(GET_CATEGORY_COCKTAILS_OFFI(categoryId, true))
+        .then((res) => {
+          setCategoryList(res.data.categoryLists);
+          setIsData(false);
+        })
+        .catch((err) => {
+          setCategoryList([]);
+          setIsData(true);
+        });
     } else if (!official && nonOfficial) {
-      axios.get(GET_CATEGORY_COCKTAILS_OFFI(categoryId, false)).then((res) => {
-        setCategoryList(res.data.categoryLists);
-      });
+      axios
+        .get(GET_CATEGORY_COCKTAILS_OFFI(categoryId, false))
+        .then((res) => {
+          setCategoryList(res.data.categoryLists);
+          setIsData(false);
+        })
+        .catch((err) => {
+          setCategoryList([]);
+          setIsData(true);
+        });
     } else {
       setCategoryList([]);
+      setIsData(true);
     }
   }, [official, nonOfficial]);
 
@@ -137,6 +174,7 @@ export const CategoryWrapper = () => {
         </Grid>
         <div ref={ref}></div>
       </Box>
+      {isData ? <ErrorBox>데이터가 없습니다.</ErrorBox> : ''}
     </>
   );
 };
@@ -147,4 +185,11 @@ const CategoryHeader = styled.div`
   margin: 20px 0;
   font-weight: 800;
   color: #495057;
+`;
+
+const ErrorBox = styled.div`
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
+  color: red;
 `;

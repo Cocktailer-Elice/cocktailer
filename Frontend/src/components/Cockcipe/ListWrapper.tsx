@@ -54,11 +54,10 @@ export const ListWrapper = () => {
 
   useEffect(() => {
     axios.get(GET_COCKTAILS).then((res) => {
-      console.log(res.data.lists[0]);
       setDryList(res.data.lists[0]['dry']);
       setRefreshList(res.data.lists[0]['refreshing']);
       setFruitList(res.data.lists[0]['fruit']);
-      setSweetList(res.data.lists[0]['refreshing']);
+      setSweetList(res.data.lists[0]['sweet']);
       setSmoothList(res.data.lists[0]['smoothie']);
       setHotList(res.data.lists[0]['hot']);
     });
