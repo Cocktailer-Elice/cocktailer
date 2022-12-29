@@ -26,7 +26,6 @@ export const InputRecipe = ({
   setTitle,
   setValue,
 }: Props) => {
-  console.log();
   const [count, setCount] = useState<number[]>([0]);
   const [ingredient, setIngredient] = useState<string[]>();
   const [alcohol, setAlcohol] = useState<string[]>();
@@ -174,7 +173,7 @@ export const InputRecipe = ({
               <ClearIcon id={idx.toString()} onClick={handleDelete} />
             )
           ) : (
-            ''
+            <ClearIcon id={idx.toString()} onClick={handleDelete} />
           )}
         </RecipeContainer>
       ))}
@@ -198,7 +197,7 @@ const RecipeHeader = styled.div`
   font-size: 20px;
   color: #495057;
   font-weight: 700;
-  margin-left: 40px;
+  // margin-left: 40px;
 `;
 
 const RecipeAddWrapper = styled.div`

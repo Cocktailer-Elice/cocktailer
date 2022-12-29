@@ -83,40 +83,42 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
   };
   return (
     <>
-      <Header>칵테일 레시피 등록하기</Header>
-      <InputTitleImg setImg={setImg} />
-      <InputCockInfo
-        value={name}
-        degree={degree}
-        setName={setName}
-        setDegree={setDegree}
-        setCategory={setCategory}
-        category={category}
-      />
-      <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
-      <InputCockContent setContent={setContent} content={content} />
-      <InputRecipe
-        kind="alcohol"
-        select={selectA}
-        title={titleA}
-        value={valueA}
-        setSelect={setSelectA}
-        setTitle={setTitleA}
-        setValue={setValueA}
-      />
+      <Wrapper>
+        <Header>칵테일 레시피 등록하기</Header>
+        <InputTitleImg setImg={setImg} />
+        <InputCockInfo
+          value={name}
+          degree={degree}
+          setName={setName}
+          setDegree={setDegree}
+          setCategory={setCategory}
+          category={category}
+        />
+        <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
+        <InputCockContent setContent={setContent} content={content} />
+        <InputRecipe
+          kind="alcohol"
+          select={selectA}
+          title={titleA}
+          value={valueA}
+          setSelect={setSelectA}
+          setTitle={setTitleA}
+          setValue={setValueA}
+        />
 
-      <InputRecipe
-        kind="plus"
-        select={selectI}
-        title={titleI}
-        value={valueI}
-        setSelect={setSelectI}
-        setTitle={setTitleI}
-        setValue={setValueI}
-      />
-      <ApplyPlace>
-        <ApplyButton handleApply={handleApply} name="apply" />
-      </ApplyPlace>
+        <InputRecipe
+          kind="plus"
+          select={selectI}
+          title={titleI}
+          value={valueI}
+          setSelect={setSelectI}
+          setTitle={setTitleI}
+          setValue={setValueI}
+        />
+        <ApplyPlace>
+          <ApplyButton handleApply={handleApply} name="apply" />
+        </ApplyPlace>
+      </Wrapper>
     </>
   );
 };
@@ -132,5 +134,9 @@ const Header = styled.div`
 const ApplyPlace = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 20px 40px;
+  margin: 20px 0px;
 `;
+
+const Wrapper = styled.div`
+  padding: 40px;
+`

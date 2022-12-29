@@ -8,13 +8,10 @@ import { POST_COCKFLOW_COMMENTS } from '../../constants/api';
 
 export const CockflowAddComment = ({ cockflowId }: any) => {
   const gets = async (data: any) => {
-    await axios.post(POST_COCKFLOW_COMMENTS(cockflowId), data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    await axios
+      .post(POST_COCKFLOW_COMMENTS(cockflowId), data)
+      .then(function (response) {})
+      .catch(function (error) {});
   };
 
   const { register, handleSubmit, reset } = useForm();
@@ -28,12 +25,15 @@ export const CockflowAddComment = ({ cockflowId }: any) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <CockflowBoxTitle smallTitle="답글 달기" />
       <TextBox
-        placeholder='답글 입력'
+        placeholder="답글 입력"
         maxLength={250}
-        defaultValue="" {...register("content")}
+        defaultValue=""
+        {...register('content')}
       />
       <Center>
-        <Button type="submit" variant="contained">등록하기</Button>
+        <Button type="submit" variant="contained">
+          등록하기
+        </Button>
       </Center>
     </form>
   );
