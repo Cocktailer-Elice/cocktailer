@@ -16,8 +16,8 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
     setTag(e.target.value);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const newTag = inputRef.current?.value;
-    if (tagList.length > 10) {
+    const newTag = inputRef.current?.value.trim();
+    if (tagList.length > 9) {
       alert('태그 그만.. 살려주세요');
       return;
     }

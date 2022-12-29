@@ -13,6 +13,8 @@ export class IngredientModel implements IngredientInterface {
       },
     ]);
 
+    console.log(result);
+
     return {
       alcohol: result[0].alcohol,
       ingredient: result[1].ingredient,

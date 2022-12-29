@@ -130,16 +130,9 @@ class CocktailService {
       cocktailId,
     );
 
-    if (
-      typeof data !== 'number'
-      // data.acknowledged !== true &&
-      // data.modifiedCount !== 1 &&
-      // data.matchedCount !== 1
-    ) {
+    if (typeof data !== 'number') {
       throw new AppError(errorNames.noDataError, 400, '좋아요 요청 실패!!');
     }
-
-    //아래 user 콜렉션에 likes 누른 id 추가로직
 
     return data;
   }

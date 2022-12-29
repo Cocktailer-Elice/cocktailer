@@ -34,7 +34,7 @@ export const CategoryWrapper = () => {
   const [official, setOfficial] = useState<boolean>(true);
   const [nonOfficial, setNonOfficial] = useState<boolean>(true);
   const [searchText, setSearchText] = useState<string>('');
-  const page = useRef<number>(10);
+  const page = useRef<number>(0);
   const [categoryList, setCategoryList] = useState<Data[]>([]);
   const [ref, inView] = useInView();
   const [error, setError] = useState<boolean>(false);
