@@ -106,18 +106,19 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
           setValue={setValueA}
         />
 
-      <InputRecipe
-        kind="plus"
-        select={selectI}
-        title={titleI}
-        value={valueI}
-        setSelect={setSelectI}
-        setTitle={setTitleI}
-        setValue={setValueI}
-      />
-      <ApplyPlace>
-        <ApplyButton handleApply={handleApply} name="apply" />
-      </ApplyPlace>
+        <InputRecipe
+          kind="plus"
+          select={selectI}
+          title={titleI}
+          value={valueI}
+          setSelect={setSelectI}
+          setTitle={setTitleI}
+          setValue={setValueI}
+        />
+        <ApplyPlace>
+          <ApplyButton handleApply={handleApply} name="apply" />
+        </ApplyPlace>
+      </Wrapper>
     </>
   );
 };
