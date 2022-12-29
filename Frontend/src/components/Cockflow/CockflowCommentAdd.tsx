@@ -10,7 +10,12 @@ import { useAuthentication } from '../../hooks/useAuthentication';
 import EditIcon from '@mui/icons-material/Edit';
 import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../constants/api';
 
-export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: any) => {
+export const CockflowCommentAdd = ({
+  item,
+  cockflowId,
+  commentId,
+  isAuthor,
+}: any) => {
   const { register, handleSubmit, reset } = useForm();
   const [readonly, setReadonly] = useState(true);
   const [commentValue, setCommentValue] = useState(' ');
@@ -18,19 +23,23 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
   const [moreComments, setMoreComments] = useState([]);
 
   const repliedCommentsGets = async (data: any) => {
-    await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data)
-      .then((res) => { })
-      .catch(function (err) { console.log(err) });
+    await axios
+      .post(COCKFLOW_TWOID(cockflowId, commentId), data)
+      .then((res) => {})
+      .catch(function (err) {
+        console.log(err);
+      });
   };
 
   const isLoggedIn = useAuthentication();
 
   const repliedCommentsPuts = async () => {
     const data = {
-      "content": commentValue
+      content: commentValue,
     };
 
-    await axios.put(COCKFLOW_TWOID(cockflowId, commentId), data)
+    await axios
+      .put(COCKFLOW_TWOID(cockflowId, commentId), data)
       .then(function (response) {
         alert('수정 되었습니다.');
         window.location.replace(`/cockflow/detail/${cockflowId}`);
@@ -46,17 +55,20 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
     window.location.replace(`/cockflow/detail/${cockflowId}`);
   };
 
-  const onCommentChange = (event: React.ChangeEventHandler<HTMLTextAreaElement> | any): void => {
+  const onCommentChange = (
+    event: React.ChangeEventHandler<HTMLTextAreaElement> | any,
+  ): void => {
     if (event) {
       setCommentValue(event.currentTarget.value);
-    };
+    }
   };
 
   const commAdopted = () => {
-    axios.patch(COCKFLOW_TWOID(cockflowId, commentId))
+    axios
+      .patch(COCKFLOW_TWOID(cockflowId, commentId))
       .then(function (response) {
         alert('채택하였습니다.');
-        window.location.replace(COCKFLOW_DETAIL(cockflowId));
+        window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -66,7 +78,8 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
 
   const commDelete = async () => {
     if (confirm('댓글을 삭제하시겠습니까?')) {
-      await axios.delete(COCKFLOW_TWOID(cockflowId, commentId))
+      await axios
+        .delete(COCKFLOW_TWOID(cockflowId, commentId))
         .then((response) => {
           alert('삭제 완료 되었습니다.');
           window.location.replace(`/cockflow/detail/${cockflowId}`);
@@ -74,18 +87,18 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
         .catch((response) => {
           console.log(response);
         });
-    };
+    }
   };
 
   const commEdit = () => {
-    setReadonly(prev => !prev);
+    setReadonly((prev) => !prev);
   };
 
   useEffect(() => {
     if (item.subComments.length > 0) {
-      const contArr = item.subComments.map((items: any) => items.content)
-      setMoreComments(contArr)
-    };
+      const contArr = item.subComments.map((items: any) => items.content);
+      setMoreComments(contArr);
+    }
     setCommentValue(item.content);
   }, [item]);
 
@@ -98,77 +111,87 @@ export const CockflowCommentAdd = ({ item, cockflowId, commentId, isAuthor }: an
         readOnly={readonly}
       />
       <FlexLeft>
-        {
-          item.isAdopted && <Adopted>✨ 채택된 답변  </Adopted>
-        }
+        {item.isAdopted && <Adopted>✨ 채택된 답변 </Adopted>}
         {item.owner.nickname}
       </FlexLeft>
-      {
-        (isLoggedIn && isAuthor) && (
-          readonly
-            ? (
-              <FlexRight>
-                <IconWrap type='button' onClick={commDelete}>
-                  <DeleteIc />
-                </IconWrap>
-                <IconWrap type='button' onClick={commEdit}>
-                  <EditIc />
-                </IconWrap>
-                <Button variant="outlined" onClick={() => {
-                  if (subComment) {
-                    setSubComment(false)
-                    return;
-                  };
-                  setSubComment(true)
-                  return;
-                }}>댓글달기</Button>&nbsp;&nbsp;
-                <Button variant="contained" onClick={commAdopted}>채택하기</Button>
-              </FlexRight>
-            )
-            : (
-              <FlexRight>
-                <Button variant="contained" onClick={() => repliedCommentsPuts()}>수정완료</Button>&nbsp;&nbsp;
-                <Button variant="outlined" onClick={() => { setReadonly(prev => !prev) }}>취소하기</Button>
-              </FlexRight>
-            )
-        )
-      }
-      {
-        (isLoggedIn && !isAuthor) && (
+      {isLoggedIn &&
+        isAuthor &&
+        (readonly ? (
           <FlexRight>
-            <Button variant="outlined" onClick={() => {
-              if (subComment) {
-                setSubComment(false)
+            <IconWrap type="button" onClick={commDelete}>
+              <DeleteIc />
+            </IconWrap>
+            <IconWrap type="button" onClick={commEdit}>
+              <EditIc />
+            </IconWrap>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                if (subComment) {
+                  setSubComment(false);
+                  return;
+                }
+                setSubComment(true);
                 return;
-              };
-              setSubComment(true)
-              return;
-            }}>댓글달기</Button>&nbsp;&nbsp;
+              }}
+            >
+              댓글달기
+            </Button>
+            &nbsp;&nbsp;
+            <Button variant="contained" onClick={commAdopted}>
+              채택하기
+            </Button>
           </FlexRight>
-        )
-      }
+        ) : (
+          <FlexRight>
+            <Button variant="contained" onClick={() => repliedCommentsPuts()}>
+              수정완료
+            </Button>
+            &nbsp;&nbsp;
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setReadonly((prev) => !prev);
+              }}
+            >
+              취소하기
+            </Button>
+          </FlexRight>
+        ))}
+      {isLoggedIn && !isAuthor && (
+        <FlexRight>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              if (subComment) {
+                setSubComment(false);
+                return;
+              }
+              setSubComment(true);
+              return;
+            }}
+          >
+            댓글달기
+          </Button>
+          &nbsp;&nbsp;
+        </FlexRight>
+      )}
 
-      {
-        (subComment && readonly)
-          ?
-          <SubComments
-            onSubmit={handleSubmit(onSubmit)}>
-            <SubTextarea
-              {...register("content")}
-              maxLength={250}
-              placeholder="대댓글을 입력해주세요"
-            />
-            <Button2
-              type="submit"
-              variant="contained">
-              등록하기
-            </Button2>
-          </SubComments>
-          : null
-      }
-      {
-        moreComments.map((co, index) => <CockflowMoreComment content={co} key={index} />)
-      }
+      {subComment && readonly ? (
+        <SubComments onSubmit={handleSubmit(onSubmit)}>
+          <SubTextarea
+            {...register('content')}
+            maxLength={250}
+            placeholder="대댓글을 입력해주세요"
+          />
+          <Button2 type="submit" variant="contained">
+            등록하기
+          </Button2>
+        </SubComments>
+      ) : null}
+      {moreComments.map((co, index) => (
+        <CockflowMoreComment content={co} key={index} />
+      ))}
     </div>
   );
 };
@@ -201,7 +224,7 @@ const SubComments = styled.form`
   &::before {
     display: block;
     content: '';
-    top: -11PX;
+    top: -11px;
     right: 98px;
     position: absolute;
     width: 0px;
