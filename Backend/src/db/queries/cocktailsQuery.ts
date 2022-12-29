@@ -6,7 +6,6 @@ const imgSet = {
     ],
   },
 };
-const pipelineDefault = {};
 
 export const listsQuery = () => {
   /*   전체 6개씩   */
@@ -24,7 +23,19 @@ export const listsQuery = () => {
         $set: imgSet,
       },
 
-      { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+      {
+        $project: {
+          _id: 0,
+          category: 0,
+          flavor: 0,
+          degree: 0,
+          ratio: 0,
+          content: 0,
+          createdAt: 0,
+          deletedAt: 0,
+          updatedAt: 0,
+        },
+      },
 
       { $limit: 10 },
     ];
@@ -47,6 +58,7 @@ export const findCocktailIdQuery = (id: number) => {
         createdAt: 0,
         deletedAt: 0,
         updatedAt: 0,
+        likesUser: 0,
       },
     },
     {
@@ -153,6 +165,7 @@ export const findCategoryAndSearchQuery = (reqData: object) => {
         flavor: 0,
         degree: 0,
         ratio: 0,
+        likesUser: 0,
         likes: 0,
         content: 0,
         createdAt: 0,
@@ -240,6 +253,10 @@ export const cocktailRankingsQuery = () => {
               deletedAt: 0,
               tel: 0,
               points: 0,
+              myLikes: 0,
+              isPasswordTemporary: 0,
+              isApplyingBartender: 0,
+              isBartender: 0,
             },
           },
         ],

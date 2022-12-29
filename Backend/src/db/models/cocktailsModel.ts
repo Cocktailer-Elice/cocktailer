@@ -60,9 +60,6 @@ interface ReqData {
 
 const limitEachPage = 10;
 
-const cocktailImgUrl =
-  'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/';
-
 export class CocktailModel implements CocktailInterface {
   public getHomeCocktailAndUserList = async (): Promise<Rankings> => {
     const queries = cocktailRankingsQuery();
@@ -73,17 +70,7 @@ export class CocktailModel implements CocktailInterface {
       User.aggregate(Object(usersQueries)),
     ]);
 
-    const cocktailRanking: CocktailRankings[] = [];
-
-    result[0].map((e) => {
-      const obj = {
-        ...e,
-        img: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${e.img}`,
-      };
-      cocktailRanking.push(obj);
-    });
-
-    return { cocktailRankings: cocktailRanking, userRankings: result[1] };
+    return { cocktailRankings: result[0], userRankings: result[1] };
   };
 
   public createCocktail = async (cocktailObj: CocktailObj): Promise<number> => {
@@ -143,7 +130,15 @@ export class CocktailModel implements CocktailInterface {
             },
           },
         },
-        { $project: { _id: 0, createdAt: 0, deletedAt: 0, updatedAt: 0 } },
+        {
+          $project: {
+            _id: 0,
+            ratio: 0,
+            createdAt: 0,
+            deletedAt: 0,
+            updatedAt: 0,
+          },
+        },
       ]);
 
     return findCocktailByUserId;
@@ -161,6 +156,10 @@ export class CocktailModel implements CocktailInterface {
 
     if (userId === null) {
       return { cocktail: findCocktail[0], liked: false };
+    }
+
+    if (findCocktail.length === 0) {
+      throw new AppError(errorNames.noDataError, 400, '데이터 없음');
     }
 
     const liked = findCocktail[0].likesUser?.[userId]
