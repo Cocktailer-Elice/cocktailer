@@ -24,7 +24,7 @@ cachingEvents.on('rankingCachingUpdate', async () => {
   )} ${now.toLocaleTimeString('ko-KR')}`;
   fs.appendFile(
     'logs/ranking.log',
-    `${timestamp}에 금주 랭킹 캐싱 완료됨`,
+    `${timestamp}에 금주 랭킹 캐싱 완료됨\n\n`,
     (error) => {
       if (error) {
         logger.info(error.message);
