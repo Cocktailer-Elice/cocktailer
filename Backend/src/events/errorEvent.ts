@@ -10,7 +10,6 @@ errorEvents.on('AppErrorOccured', async (req, err) => {
   while (!result && retry--) {
     result = logError(req, err, true);
   }
-  errorAlarm(req, err);
 });
 
 errorEvents.on('uncaughtErrorOccured', async (req, err) => {
@@ -19,6 +18,7 @@ errorEvents.on('uncaughtErrorOccured', async (req, err) => {
   while (!result && retry--) {
     result = logError(req, err, false);
   }
+  errorAlarm(req, err);
 });
 
 errorEvents.on('eventErrorOccured', async (event: string) => {

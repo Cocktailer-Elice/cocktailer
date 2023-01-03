@@ -20,7 +20,7 @@ export const errorAlarm = async (req: Req, err: Error) => {
     'ko-KR',
   )} ${now.toLocaleTimeString('ko-KR')}`;
   errorHookClient.send({
-    content: `[${timestamp}] 인간 시대의 끝이 도래했다,,,\n 🚑 무능한 인간, ${req.method} ${req.url}에서 예상치 못한 ${err.name}가 발생했다. 즉시 처리 바람.`,
+    content: `[${timestamp}]\n 인간 시대의 끝이 도래했다,,,\n 🚑 무능한 인간, ${req.method} ${req.url}에서 예상치 못한 ${err.name}가 발생했다. 즉시 처리 바람.`,
     embeds: [errorHookEmbed],
   });
 };
