@@ -64,7 +64,10 @@ export const CockgorithmModal = ({
   return (
     <>
       <Dimmed handleDimmedClick={() => setIsModalOpen(false)} />
-      <Modal layoutId={selectedGame.gameEmoji}>
+      <Modal
+        layoutId={selectedGame.gameEmoji}
+        gameColor={selectedGame.gameColor}
+      >
         <MainSection>
           <GameTitle>
             <span>
@@ -86,7 +89,7 @@ export const CockgorithmModal = ({
   );
 };
 
-const Modal = styled(motion.div)`
+const Modal = styled(motion.div)<{ gameColor: string }>`
   width: 80%;
   max-width: 600px;
   height: 60%;
@@ -106,8 +109,9 @@ const Modal = styled(motion.div)`
   margin: auto;
   z-index: 12;
 
-  background-color: ${(props) => props.theme.colors.indigo7};
-  border: 10px solid ${(props) => props.theme.colors.indigo9};
+  background-color: ${(props) =>
+    props.gameColor ? props.gameColor : props.theme.colors.indigo7};
+  border: 10px solid rgba(0, 0, 0, 0.1);
   border-radius: 50px;
 `;
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import gameDatas from '../../constants/gameDatas.json';
+import { gameDatas } from '../../constants/gameDatas';
 import { gameColors } from '../../constants/gameColors';
 import { IGame } from '../../store/cockgorithmSlice';
 import { motion } from 'framer-motion';
@@ -24,9 +24,9 @@ export const CockgorithmGameList = ({
         (game, index) =>
           seletedGame?.gameEmoji !== game.gameEmoji && (
             <Game
-              layoutId={game.gameEmoji}
               key={index}
-              nth={index}
+              layoutId={game.gameEmoji}
+              gameColor={game.gameColor}
               onClick={() => {
                 resetCockgorithmState();
                 setSelectedGame(game);
@@ -51,7 +51,7 @@ const GameList = styled.div`
   padding: 30px 0px;
 `;
 
-const Game = styled(motion.div)<{ nth: number }>`
+const Game = styled(motion.div)<{ gameColor: string }>`
   width: 70%;
   height: 120px;
 
@@ -63,7 +63,7 @@ const Game = styled(motion.div)<{ nth: number }>`
   padding: 20px;
   margin-bottom: 40px;
   background-color: ${(props) =>
-    props.nth ? gameColors[props.nth] : '#ff6b6b'};
+    props.gameColor ? props.gameColor : '#ff6b6b'};
   border-radius: 30px;
   border: 5px solid rgba(0, 0, 0, 0.1);
 
