@@ -1,43 +1,39 @@
 import styled from 'styled-components';
-
-import { gameDatas } from '../../constants/gameDatas';
-import { gameColors } from '../../constants/gameColors';
-import { IGame } from '../../store/cockgorithmSlice';
 import { motion } from 'framer-motion';
 
+import { gameDatas } from '../../constants/gameDatas';
+import { IGame } from '../../store/cockgorithmSlice';
+
 interface CockgorithmGameListProps {
-  seletedGame: IGame;
+  selectedGame: IGame;
   resetCockgorithmState: () => void;
   setSelectedGame: (game: IGame) => void;
   setIsModalOpen: (boolean: boolean) => void;
 }
 
 export const CockgorithmGameList = ({
-  seletedGame,
+  selectedGame,
   resetCockgorithmState,
   setSelectedGame,
   setIsModalOpen,
 }: CockgorithmGameListProps) => {
   return (
     <GameList>
-      {gameDatas.map(
-        (game, index) =>
-          seletedGame?.gameEmoji !== game.gameEmoji && (
-            <Game
-              key={index}
-              layoutId={game.gameEmoji}
-              gameColor={game.gameColor}
-              onClick={() => {
-                resetCockgorithmState();
-                setSelectedGame(game);
-                setIsModalOpen(true);
-              }}
-            >
-              <GameEmoji>{game.gameEmoji}</GameEmoji>
-              <GameTitle>{game.gameTitle}</GameTitle>
-            </Game>
-          ),
-      )}
+      {gameDatas.map((game, index) => (
+        <Game
+          key={index}
+          layoutId={game.gameEmoji}
+          gameColor={game.gameColor}
+          onClick={() => {
+            resetCockgorithmState();
+            setSelectedGame(game);
+            setIsModalOpen(true);
+          }}
+        >
+          <GameEmoji>{game.gameEmoji}</GameEmoji>
+          <GameTitle>{game.gameTitle}</GameTitle>
+        </Game>
+      ))}
     </GameList>
   );
 };
