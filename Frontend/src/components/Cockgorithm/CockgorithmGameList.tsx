@@ -3,34 +3,41 @@ import styled from 'styled-components';
 import gameDatas from '../../constants/gameDatas.json';
 import { gameColors } from '../../constants/gameColors';
 import { IGame } from '../../store/cockgorithmSlice';
+import { motion } from 'framer-motion';
 
 interface CockgorithmGameListProps {
+  seletedGame: IGame;
   resetCockgorithmState: () => void;
   setSelectedGame: (game: IGame) => void;
   setIsModalOpen: (boolean: boolean) => void;
 }
 
 export const CockgorithmGameList = ({
+  seletedGame,
   resetCockgorithmState,
   setSelectedGame,
   setIsModalOpen,
 }: CockgorithmGameListProps) => {
   return (
     <GameList>
-      {gameDatas.map((game, index) => (
-        <Game
-          key={index}
-          nth={index}
-          onClick={() => {
-            resetCockgorithmState();
-            setSelectedGame(game);
-            setIsModalOpen(true);
-          }}
-        >
-          <GameEmoji>{game.gameEmoji}</GameEmoji>
-          <GameTitle>{game.gameTitle}</GameTitle>
-        </Game>
-      ))}
+      {gameDatas.map(
+        (game, index) =>
+          seletedGame?.gameEmoji !== game.gameEmoji && (
+            <Game
+              layoutId={game.gameEmoji}
+              key={index}
+              nth={index}
+              onClick={() => {
+                resetCockgorithmState();
+                setSelectedGame(game);
+                setIsModalOpen(true);
+              }}
+            >
+              <GameEmoji>{game.gameEmoji}</GameEmoji>
+              <GameTitle>{game.gameTitle}</GameTitle>
+            </Game>
+          ),
+      )}
     </GameList>
   );
 };
@@ -44,7 +51,7 @@ const GameList = styled.div`
   padding: 30px 0px;
 `;
 
-const Game = styled.div<{ nth: number }>`
+const Game = styled(motion.div)<{ nth: number }>`
   width: 70%;
   height: 120px;
 

@@ -64,7 +64,7 @@ export const CockgorithmModal = ({
   return (
     <>
       <Dimmed handleDimmedClick={() => setIsModalOpen(false)} />
-      <Modal>
+      <Modal layoutId={selectedGame.gameEmoji}>
         <MainSection>
           <GameTitle>
             <span>
