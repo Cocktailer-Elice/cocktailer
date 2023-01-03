@@ -3,7 +3,7 @@ import { scrumAlarm } from './utils/discordWebHook';
 
 const devEvents = new EventEmitter();
 
-devEvents.on('scrumStart', async () => {
+devEvents.on('scrumTimeArrive', async () => {
   scrumAlarm();
 });
 
