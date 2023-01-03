@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import axios from 'axios';
 import CloseButton from '@mui/icons-material/Close';
+import { motion } from 'framer-motion';
 
 import { CockgorithmGameLoading } from './CockgorithmGameLoading';
 import {
@@ -13,6 +14,7 @@ import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
 import { IGame } from '../../store/cockgorithmSlice';
 import { CockgorithmGameContentContainer } from './../../containers/Cockgorithm/CockgorithmGameContentContainer';
 import { CockgorithmGameResultContainer } from './../../containers/Cockgorithm/CockgorithmGameResultContainer';
+import { Dimmed } from './../../common/Dimmed';
 
 interface CockgorithmModalProps {
   selectedGame: IGame;
@@ -61,7 +63,7 @@ export const CockgorithmModal = ({
 
   return (
     <>
-      <Dimmed onClick={() => setIsModalOpen(false)} />
+      <Dimmed handleDimmedClick={() => setIsModalOpen(false)} />
       <Modal>
         <MainSection>
           <GameTitle>
@@ -84,17 +86,7 @@ export const CockgorithmModal = ({
   );
 };
 
-const Dimmed = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10;
-`;
-
-const Modal = styled.div`
+const Modal = styled(motion.div)`
   width: 80%;
   max-width: 600px;
   height: 60%;

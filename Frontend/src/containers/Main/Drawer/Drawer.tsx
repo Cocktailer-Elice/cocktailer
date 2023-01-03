@@ -6,6 +6,7 @@ import { DrawerContentPageButton } from './../../../components/Main/Drawer/Drawe
 import { contentMenus } from './../../../constants/pages';
 import { useAuthentication } from './../../../hooks/useAuthentication';
 import { useCurrentUser } from './../../../hooks/useCurrentUser';
+import { Dimmed } from './../../../common/Dimmed';
 
 interface DrawerProps {
   handleDrawerClose: () => void;
@@ -24,7 +25,7 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
 
   return (
     <>
-      <Dimmed onClick={handleDrawerClose} />
+      <Dimmed handleDimmedClick={handleDrawerClose} />
       <DrawerContainer>
         <TopSection>
           <TopLeftSection>
@@ -66,16 +67,6 @@ export const Drawer = ({ handleDrawerClose }: DrawerProps) => {
     </>
   );
 };
-
-const Dimmed = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10;
-`;
 
 const DrawerContainer = styled.div`
   width: 60%;

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+
 import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
 import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
 import { Drawer } from './../Drawer/Drawer';
 import { useToggle } from './../../../hooks/useToggle';
+import { AnimatePresence } from 'framer-motion';
 
 export const Header = () => {
   const {
@@ -19,7 +21,9 @@ export const Header = () => {
       <RightSection>
         <HeaderHomeLogo />
       </RightSection>
-      {isDrawerOpen && <Drawer handleDrawerClose={handleDrawerClose} />}
+      <AnimatePresence>
+        {isDrawerOpen && <Drawer handleDrawerClose={handleDrawerClose} />}
+      </AnimatePresence>
     </Container>
   );
 };
