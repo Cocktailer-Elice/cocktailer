@@ -161,6 +161,10 @@ const CustomCloseButton = styled(CloseButton)`
   color: white;
   cursor: pointer;
 
+  :hover {
+    scale: 1.2;
+  }
+
   @media screen and (max-width: 500px) {
     width: 25px;
     height: 25px;

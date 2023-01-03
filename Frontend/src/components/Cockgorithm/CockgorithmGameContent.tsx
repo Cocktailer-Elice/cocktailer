@@ -112,7 +112,7 @@ const Option = styled.div`
 
   border: 5px solid rgba(255, 255, 255, 0.5);
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.2);
 
   @media screen and (max-width: 500px) {
     font-size: 11px;
@@ -121,6 +121,10 @@ const Option = styled.div`
   cursor: pointer;
 
   :hover {
-    opacity: 0.7;
+    scale: 1.02;
+  }
+
+  :active {
+    scale: 0.97;
   }
 `;
