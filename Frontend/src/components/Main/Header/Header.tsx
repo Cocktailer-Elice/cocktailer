@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-
-import { HeaderHomeLogo } from '../../../components/Main/Header/HeaderHomeLogo';
-import { HeaderHamburgerButton } from '../../../components/Main/Header/HeaderHamburgerButton';
-import { Drawer } from './../Drawer/Drawer';
-import { useToggle } from './../../../hooks/useToggle';
 import { AnimatePresence } from 'framer-motion';
+
+import { HeaderHomeLogo } from './HeaderHomeLogo';
+import { HeaderHamburgerButton } from './HeaderHamburgerButton';
+import { Drawer } from '../Drawer/Drawer';
+import { useToggle } from '../../../hooks/useToggle';
 
 export const Header = () => {
   const {

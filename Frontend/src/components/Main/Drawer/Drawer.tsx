@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import CloseButton from '@mui/icons-material/Close';
 
-import { DrawerUserPageButton } from '../../../components/Main/Drawer/DrawerUserPageButton';
-import { DrawerContentPageButton } from './../../../components/Main/Drawer/DrawerContentPageButton';
-import { contentMenus } from './../../../constants/pages';
-import { useAuthentication } from './../../../hooks/useAuthentication';
-import { useCurrentUser } from './../../../hooks/useCurrentUser';
-import { Dimmed } from './../../../common/Dimmed';
+import { DrawerUserPageButton } from './DrawerUserPageButton';
+import { DrawerContentPageButton } from './DrawerContentPageButton';
+import { contentMenus } from '../../../constants/pages';
+import { useAuthentication } from '../../../hooks/useAuthentication';
+import { useCurrentUser } from '../../../hooks/useCurrentUser';
+import { Dimmed } from '../../../common/Dimmed';
 
 interface DrawerProps {
   handleDrawerClose: () => void;

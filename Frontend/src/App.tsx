@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
 
 import { GlobalStyles } from './styles/GlobalStyles';
-import { Header } from './containers/Main/Header/Header';
+import { Header } from './components/Main/Header/Header';
 import { Router } from './Router';
 import { useEffect } from 'react';
 import { useAppDispatch } from './store/store';
