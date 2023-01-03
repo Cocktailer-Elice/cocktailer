@@ -9,8 +9,7 @@ export const errorAlarm = async (req: Req, err: Error) => {
   const errorHookEmbed = new EmbedBuilder()
     .setAuthor({
       name: '에러 알람 봇',
-      iconURL:
-        'https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/alarmbot',
+      iconURL: 'https://d3jq6qvyumldop.cloudfront.net/avatars/alarmbot',
     })
     .setTitle('🚨 에러 발생!')
     .setDescription('AppError로 잡아내지 못하는 에러 발생.')
@@ -30,8 +29,7 @@ export const scrumAlarm = async () => {
   const scrumAlarmHookEmbed = new EmbedBuilder()
     .setAuthor({
       name: '스크럼 알람 봇',
-      iconURL:
-        'https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/alarmbot',
+      iconURL: 'https://d3jq6qvyumldop.cloudfront.net/avatars/alarmbot',
     })
     .setTitle('⏰ 스크럼 시작!')
     .setDescription(
