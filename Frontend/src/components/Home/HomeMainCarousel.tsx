@@ -19,6 +19,7 @@ export const HomeMainCarousel = () => {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mainSwiper"
+        loop={true}
       >
         <CustomSwiperSlide>
           <Link to="/cockcipe">
