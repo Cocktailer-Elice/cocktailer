@@ -5,9 +5,10 @@ import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import 'swiper/css/bundle';
+import './styles/swiper.css';
 
 import { App } from './App';
-import { muiTheme, theme } from './theme';
+import { muiTheme, theme } from './styles/theme';
 import { store } from './store/store';
 
 axios.defaults.withCredentials = true;

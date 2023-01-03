@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Scrollbar, Pagination } from 'swiper';
 
-import '../../swiper.css';
 import { HomeCocktailRanking } from './../../components/Home/HomeCocktailRanking';
 import { CocktailRanking } from '../../../../types';
 

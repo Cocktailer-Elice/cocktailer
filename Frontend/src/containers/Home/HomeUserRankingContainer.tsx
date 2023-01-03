@@ -4,7 +4,6 @@ import { FreeMode, Scrollbar, Pagination } from 'swiper';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import '../../swiper.css';
 import { HomeUserRanking } from './../../components/Home/HomeUserRanking';
 import { UserRanking } from '../../../../types';
 

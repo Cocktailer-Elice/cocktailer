@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
 
-import { GlobalStyles } from './GlobalStyles';
+import { GlobalStyles } from './styles/GlobalStyles';
 import { Header } from './containers/Main/Header/Header';
 import { Router } from './Router';
 import { useEffect } from 'react';
