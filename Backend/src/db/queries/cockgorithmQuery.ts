@@ -3,11 +3,26 @@ export const findByCockgorithm = (
   minDegree: number,
   maxDegree: number,
   alcohol: string,
+  beverage: string,
+  ingredient: string,
 ) => {
   return [
     {
       $match: {
         category: category,
+        degree: {
+          $gte: minDegree,
+          $lte: maxDegree,
+        },
+        [`ratio.alcohol.${alcohol}`]: {
+          $ne: null,
+        },
+        [`ratio.ingredient.${beverage}`]: {
+          $ne: null,
+        },
+        [`ratio.ingredient.${ingredient}`]: {
+          $ne: null,
+        },
       },
     },
     {
@@ -20,21 +35,6 @@ export const findByCockgorithm = (
         likes: 0,
         createdAt: 0,
         updatedAt: 0,
-      },
-    },
-    {
-      $match: {
-        degree: {
-          $gte: minDegree,
-          $lte: maxDegree,
-        },
-      },
-    },
-    {
-      $match: {
-        [`ratio.alcohol.${alcohol}`]: {
-          $ne: null,
-        },
       },
     },
     {
@@ -54,5 +54,3 @@ export const findByCockgorithm = (
     },
   ];
 };
-
-export const secondSearch = () => {};
