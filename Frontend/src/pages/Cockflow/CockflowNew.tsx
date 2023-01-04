@@ -1,8 +1,8 @@
-import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
-import { CockflowGetPost } from '../../components/Cockflow/CockflowGetPost'
-import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
-import { P5 } from '../../components/Cockflow/style';
-import { Container } from '../../components/Cockflow/style';
+import { CockflowHeader } from '../../components/Cockflow/Common/CockflowHeader';
+import { CockflowGetPost } from '../../components/Cockflow/Add/CockflowAdd'
+import { CockflowLinkBtn } from '../../components/Cockflow/Buttons/CockflowLinkBtn';
+import { P5 } from '../../components/Cockflow/Style/style';
+import { Container } from '../../components/Cockflow/Style/style';
 import { Helmet } from 'react-helmet';
 
 export const CockflowNew = () => {

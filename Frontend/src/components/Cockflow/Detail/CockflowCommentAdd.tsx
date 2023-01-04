@@ -4,11 +4,12 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { CockflowMoreComment } from './CockflowMoreComment';
-import { Adopted, FlexLeft, FlexRight, IconWrap } from './style';
+import { Adopted, FlexLeft, FlexRight, IconWrap } from '../Style/style';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAuthentication } from '../../hooks/useAuthentication';
+
 import EditIcon from '@mui/icons-material/Edit';
-import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../constants/api';
+import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../../constants/api';
+import { useAuthentication } from '../../../hooks/useAuthentication';
 
 export const CockflowCommentAdd = ({
   item,

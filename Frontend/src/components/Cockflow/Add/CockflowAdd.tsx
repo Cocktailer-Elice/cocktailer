@@ -1,8 +1,8 @@
 import axios from 'axios';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
-import { COCKFLOW } from '../../constants/api';
+import { CockflowEnrollBtns } from '../Buttons/CockflowEnrollBtns';
+import { COCKFLOW } from '../../../constants/api';
 
 export const CockflowGetPost = () => {
   const { register, handleSubmit, reset } = useForm();

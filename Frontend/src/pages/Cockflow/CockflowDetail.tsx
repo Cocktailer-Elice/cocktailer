@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
-import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
-import { CockflowDetailBox } from '../../components/Cockflow/CockflowDetailBox';
-import { CockflowAddComment } from '../../components/Cockflow/CockflowAddComment';
-import { CockflowCommentBox } from '../../components/Cockflow/CockflowCommentBox';
-import { P10P15 } from '../../components/Cockflow/style';
+import { CockflowHeader } from '../../components/Cockflow/Common/CockflowHeader';
+import { CockflowLinkBtn } from '../../components/Cockflow/Buttons/CockflowLinkBtn';
+import { CockflowDetailBox } from '../../components/Cockflow/Detail/CockflowDetailBox';
+import { CockflowAddComment } from '../../components/Cockflow/Detail/CockflowAddComment';
+import { CockflowCommentBox } from '../../components/Cockflow/Detail/CockflowCommentBox';
+import { P10P15 } from '../../components/Cockflow/Style/style';
 import { CockflowGetResData } from '../../../../types/cockflowType';
-import { Container } from '../../components/Cockflow/style';
+import { Container } from '../../components/Cockflow/Style/style';
 import { Helmet } from 'react-helmet';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import { useCurrentUser } from '../../hooks/useCurrentUser';

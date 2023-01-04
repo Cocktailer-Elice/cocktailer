@@ -1,7 +1,8 @@
-import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
-import { Comment } from '../../../../types/commentType';
+
+import { Comment } from '../../../../../types/commentType';
 import { CockflowCommentAdd } from './CockflowCommentAdd';
 import { useEffect, useState } from 'react';
+import { CockflowBoxTitle } from '../Common/CockflowBoxTitle';
 
 interface CommentType {
   comments: Comment[];

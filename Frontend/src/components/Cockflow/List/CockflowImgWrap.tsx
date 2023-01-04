@@ -1,5 +1,5 @@
 import { CockflowItemBox } from "./CockflowItemBox";
-import { slice20 } from '../../components/Cockflow/CockflowUtils';
+import { slice20 } from '../../../utils/TrimTime';
 import styled from "styled-components";
 
 const imgS3 = (index: number) => {
@@ -29,5 +29,3 @@ const Item = styled.li`
   flex-wrap: wrap;
   margin-bottom: 28.9px;
 `;
-
-// imgArr[Math.round(Math.random() * (imgArr.length - 1))]
