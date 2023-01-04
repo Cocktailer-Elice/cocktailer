@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import gameDatas from '../constants/gameDatas.json';
+import { gameDatas } from '../constants/gameDatas';
 import {
   CockgorithmReqData,
   CockgorithmCocktail,
@@ -8,6 +8,7 @@ import {
 export interface IGame {
   gameEmoji: string;
   gameTitle: string;
+  gameColor: string;
   message: string;
   questions: {
     question: string;
