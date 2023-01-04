@@ -4,17 +4,16 @@ import { FreeMode, Scrollbar, Pagination } from 'swiper';
 import { faCrown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import '../../swiper.css';
-import { HomeUserRanking } from './../../components/Home/HomeUserRanking';
+import { HomeUserRanking } from './HomeUserRanking';
 import { UserRanking } from '../../../../types';
 
-interface HomeUserRankingContainerProps {
+interface HomeUserRankingSectionProps {
   userRankingList: UserRanking[];
 }
 
-export const HomeUserRankingContainer = ({
+export const HomeUserRankingSection = ({
   userRankingList,
-}: HomeUserRankingContainerProps) => {
+}: HomeUserRankingSectionProps) => {
   return (
     <Carousel>
       <Swiper

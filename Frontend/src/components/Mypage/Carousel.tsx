@@ -4,12 +4,7 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper';
 import { MyCockcipe, MyLike } from '../../../../types';
-import { Empty, SectionContainer, SectionWrapper } from './style';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-
-import '../../swiper.css';
+import { SectionContainer, SectionWrapper } from './style';
 
 interface SectionProps {
   title: string;

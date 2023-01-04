@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { cockgorithmSlice } from '../../store/cockgorithmSlice';
 
+import { cockgorithmSlice } from '../../store/cockgorithmSlice';
 import { AppDispatch, RootState } from '../../store/store';
 import { CockgorithmGameResult } from './../../components/Cockgorithm/CockgorithmGameResult';
 
