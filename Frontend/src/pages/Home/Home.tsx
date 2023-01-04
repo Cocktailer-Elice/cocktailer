@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { HomeMainCarousel } from '../../components/Home/HomeMainCarousel';
 import { CocktailRanking, UserRanking } from '../../../../types';
@@ -9,6 +10,7 @@ import { GET_RANKINGS_OF_COCKTAIL_AND_USER } from '../../constants/api';
 import { HomeWidgetsSection } from './../../components/Home/HomeWidgetsSection';
 import { HomeCocktailRankingSection } from './../../components/Home/HomeCocktailRankingSection';
 import { HomeUserRankingSection } from './../../components/Home/HomeUserRankingSection';
+import { Rankings } from './../../../../types/cocktailsType';
 
 const cocktailRankingList_mock: CocktailRanking[] = [
   {
@@ -34,20 +36,29 @@ const userRankingList_mock: UserRanking[] = [
   },
 ];
 
+const getRankings = (): Promise<Rankings> => {
+  return axios.get(GET_RANKINGS_OF_COCKTAIL_AND_USER).then((res) => res.data);
+};
+
 export const Home = () => {
-  const [cocktailRankingList, setCocktailRankingList] = useState<
-    CocktailRanking[]
-  >(cocktailRankingList_mock);
+  // const [cocktailRankingList, setCocktailRankingList] = useState<
+  //   CocktailRanking[]
+  // >(cocktailRankingList_mock);
 
-  const [userRankingList, setUserRankingList] =
-    useState<UserRanking[]>(userRankingList_mock);
+  // const [userRankingList, setUserRankingList] =
+  //   useState<UserRanking[]>(userRankingList_mock);
 
-  useEffect(() => {
-    axios.get(GET_RANKINGS_OF_COCKTAIL_AND_USER).then((res) => {
-      setCocktailRankingList(res.data.cocktailRanking);
-      setUserRankingList(res.data.userRanking);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(GET_RANKINGS_OF_COCKTAIL_AND_USER).then((res) => {
+  //     setCocktailRankingList(res.data.cocktailRanking);
+  //     setUserRankingList(res.data.userRanking);
+  //   });
+  // }, []);
+
+  const { data: rankings } = useQuery(['rankings'], getRankings, {
+    staleTime: 1000 * 10,
+    refetchInterval: 1000 * 10,
+  });
 
   return (
     <>
@@ -64,12 +75,20 @@ export const Home = () => {
         <BigSection>
           <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
           <HomeCocktailRankingSection
-            cocktailRankingList={cocktailRankingList}
+            cocktailRankingList={
+              rankings ? rankings.cocktailRankings : cocktailRankingList_mock
+              // cocktailRankingList_mock
+            }
           />
         </BigSection>
         <BigSection>
           <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
-          <HomeUserRankingSection userRankingList={userRankingList} />
+          <HomeUserRankingSection
+            userRankingList={
+              rankings ? rankings.userRankings : userRankingList_mock
+              // userRankingList_mock
+            }
+          />
         </BigSection>
       </Container>
     </>
