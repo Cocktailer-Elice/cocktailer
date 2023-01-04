@@ -3,11 +3,26 @@ export const findByCockgorithm = (
   minDegree: number,
   maxDegree: number,
   alcohol: string,
+  beverage: string,
+  ingredient: string,
 ) => {
   return [
     {
       $match: {
         category: category,
+        degree: {
+          $gte: minDegree,
+          $lte: maxDegree,
+        },
+        [`ratio.alcohol.${alcohol}`]: {
+          $ne: null,
+        },
+        [`ratio.ingredient.${beverage}`]: {
+          $ne: null,
+        },
+        [`ratio.ingredient.${ingredient}`]: {
+          $ne: null,
+        },
       },
     },
     {
@@ -23,27 +38,9 @@ export const findByCockgorithm = (
       },
     },
     {
-      $match: {
-        degree: {
-          $gte: minDegree,
-          $lte: maxDegree,
-        },
-      },
-    },
-    {
-      $match: {
-        [`ratio.alcohol.${alcohol}`]: {
-          $ne: null,
-        },
-      },
-    },
-    {
       $set: {
         img: {
-          $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
-            '$img',
-          ],
+          $concat: ['https://d3jq6qvyumldop.cloudfront.net/cocktails/', '$img'],
         },
       },
     },
@@ -54,5 +51,3 @@ export const findByCockgorithm = (
     },
   ];
 };
-
-export const secondSearch = () => {};
