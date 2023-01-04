@@ -2,17 +2,16 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Scrollbar, Pagination } from 'swiper';
 
-import '../../swiper.css';
-import { HomeCocktailRanking } from './../../components/Home/HomeCocktailRanking';
+import { HomeCocktailRanking } from './HomeCocktailRanking';
 import { CocktailRanking } from '../../../../types';
 
-interface HomeCocktailRankingContainerProps {
+interface HomeCocktailRankingSectionProps {
   cocktailRankingList: CocktailRanking[];
 }
 
-export const HomeCocktailRankingContainer = ({
+export const HomeCocktailRankingSection = ({
   cocktailRankingList,
-}: HomeCocktailRankingContainerProps) => {
+}: HomeCocktailRankingSectionProps) => {
   return (
     <Carousel>
       <Swiper

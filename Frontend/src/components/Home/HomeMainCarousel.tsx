@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-
-import '../../swiper.css';
 import { Link } from 'react-router-dom';
 
 export const HomeMainCarousel = () => {
@@ -24,6 +19,7 @@ export const HomeMainCarousel = () => {
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
         className="mainSwiper"
+        loop={true}
       >
         <CustomSwiperSlide>
           <Link to="/cockcipe">
