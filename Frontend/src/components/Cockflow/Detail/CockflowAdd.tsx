@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { POST_COCKFLOW_COMMENTS } from '../../../constants/api';
 
-export const CockflowAddComment = ({ cockflowId }: any) => {
+export const CockflowAdd = ({ cockflowId }: any) => {
   const gets = async (data: any) => {
     await axios
       .post(POST_COCKFLOW_COMMENTS(cockflowId), data)

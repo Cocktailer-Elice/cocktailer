@@ -1,29 +1,41 @@
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { CockflowMoreComment } from './CockflowMoreComment';
+import { CockflowCommentDepth } from './CockflowCommentDepth';
 import { Adopted, FlexLeft, FlexRight, IconWrap } from '../Style/style';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../../constants/api';
 import { useAuthentication } from '../../../hooks/useAuthentication';
+import { Comment } from '../../../../../types/commentType';
 
-export const CockflowCommentAdd = ({
+interface FormValue {
+  content: string
+}
+
+interface Type { 
+  item: any,
+  cockflowId: string,
+  commentId: number,
+  isAuthor: boolean,
+}
+
+export const CockflowCommentPost = ({
   item,
   cockflowId,
   commentId,
   isAuthor,
-}: any) => {
-  const { register, handleSubmit, reset } = useForm();
+}: Type) => {
+  const { register, handleSubmit, reset } = useForm<FormValue>();
   const [readonly, setReadonly] = useState(true);
   const [commentValue, setCommentValue] = useState(' ');
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
 
-  const repliedCommentsGets = async (data: any) => {
+  const repliedCommentsGets = async (data: FormValue) => {
     await axios
       .post(COCKFLOW_TWOID(cockflowId, commentId), data)
       .then((res) => {})
@@ -46,7 +58,7 @@ export const CockflowCommentAdd = ({
       .catch(function (error) {});
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit : SubmitHandler<FormValue>= (data) => {
     repliedCommentsGets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
@@ -90,7 +102,8 @@ export const CockflowCommentAdd = ({
 
   useEffect(() => {
     if (item.subComments.length > 0) {
-      const contArr = item.subComments.map((items: any) => items.content);
+      console.log(item);
+      const contArr = item.subComments.map((items: Comment) => items.content);
       setMoreComments(contArr);
     }
     setCommentValue(item.content);
@@ -184,7 +197,7 @@ export const CockflowCommentAdd = ({
         </SubComments>
       ) : null}
       {moreComments.map((co, index) => (
-        <CockflowMoreComment content={co} key={index} />
+        <CockflowCommentDepth content={co} key={index} />
       ))}
     </div>
   );

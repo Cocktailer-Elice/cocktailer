@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import { CockflowHeader } from '../../components/Cockflow/Common/CockflowHeader';
 import { CockflowLinkBtn } from '../../components/Cockflow/Buttons/CockflowLinkBtn';
 import { CockflowDetailBox } from '../../components/Cockflow/Detail/CockflowDetailBox';
-import { CockflowAddComment } from '../../components/Cockflow/Detail/CockflowAddComment';
-import { CockflowCommentBox } from '../../components/Cockflow/Detail/CockflowCommentBox';
+import { CockflowAdd } from '../../components/Cockflow/Detail/CockflowAdd';
+import { CockflowCommentWrap } from '../../components/Cockflow/Detail/CockflowCommentWrap';
 import { P10P15 } from '../../components/Cockflow/Style/style';
 import { CockflowGetResData } from '../../../../types/cockflowType';
 import { Container } from '../../components/Cockflow/Style/style';
@@ -86,8 +86,8 @@ export const CockflowDetail = () => {
         <CockflowLinkBtn link='/cockflow' title='목록' />
         <CockflowDetailBox detailData={data} isAuthor={isAuthor} />
         <br />
-        {isLoggedIn && <CockflowAddComment cockflowId={_id} />}
-        <CockflowCommentBox
+        {isLoggedIn && <CockflowAdd cockflowId={_id} />}
+        <CockflowCommentWrap
           cockflowId={_id}
           commentlist={comments}
           isAuthor={isAuthor} />
