@@ -61,7 +61,7 @@ const CocktailTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #69db7c;
+  color: whitesmoke;
   font-size: 24px;
   font-weight: bold;
   font-style: italic;
@@ -89,10 +89,10 @@ const CocktailImage = styled.img`
 
 const CocktailInfo = styled.div`
   width: 100%;
-  height: 45%;
-  border: 5px solid ${(props) => props.theme.colors.indigo9};
+  height: 40%;
+  border: 5px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  background-color: ${(props) => props.theme.colors.indigo5};
+  background-color: rgba(255, 255, 255, 0.2);
 `;
 
 const CocktailContent = styled.div`
@@ -103,9 +103,9 @@ const CocktailContent = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 
-  padding: 15px;
+  padding: 20px 30px;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 const CocktailDegree = styled.div`
@@ -117,22 +117,27 @@ const CocktailDegree = styled.div`
   align-items: center;
 
   padding: 10px;
-  color: #212529;
+  color: red;
   font-size: 13px;
   font-weight: 600;
 `;
 
 const CustomLink = styled(Link)`
   width: 100%;
-  height: 5%;
+  height: 2%;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
+  margin-top: 5px;
   font-size: 14px;
   padding: 10px;
-  color: ${(props) => props.theme.colors.indigo1};
+  color: rgba(0, 0, 0, 0.9);
+
+  :hover {
+    font-weight: bold;
+  }
 `;
 
 const CocktailNotFound = styled.div`

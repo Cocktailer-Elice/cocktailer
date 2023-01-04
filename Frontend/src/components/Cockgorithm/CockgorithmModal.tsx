@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 import axios from 'axios';
 import CloseButton from '@mui/icons-material/Close';
+import { motion } from 'framer-motion';
 
 import { CockgorithmGameLoading } from './CockgorithmGameLoading';
 import {
@@ -13,6 +14,7 @@ import { GET_COCKGORITHM_COCKTAIL } from '../../constants/api';
 import { IGame } from '../../store/cockgorithmSlice';
 import { CockgorithmGameContentContainer } from './../../containers/Cockgorithm/CockgorithmGameContentContainer';
 import { CockgorithmGameResultContainer } from './../../containers/Cockgorithm/CockgorithmGameResultContainer';
+import { Dimmed } from './../../common/Dimmed';
 
 interface CockgorithmModalProps {
   selectedGame: IGame;
@@ -61,8 +63,11 @@ export const CockgorithmModal = ({
 
   return (
     <>
-      <Dimmed onClick={() => setIsModalOpen(false)} />
-      <Modal>
+      <Dimmed handleDimmedClick={() => setIsModalOpen(false)} />
+      <Modal
+        layoutId={selectedGame.gameEmoji}
+        gameColor={selectedGame.gameColor}
+      >
         <MainSection>
           <GameTitle>
             <span>
@@ -84,17 +89,7 @@ export const CockgorithmModal = ({
   );
 };
 
-const Dimmed = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 10;
-`;
-
-const Modal = styled.div`
+const Modal = styled(motion.div)<{ gameColor: string }>`
   width: 80%;
   max-width: 600px;
   height: 60%;
@@ -114,8 +109,9 @@ const Modal = styled.div`
   margin: auto;
   z-index: 12;
 
-  background-color: ${(props) => props.theme.colors.indigo7};
-  border: 10px solid ${(props) => props.theme.colors.indigo9};
+  background-color: ${(props) =>
+    props.gameColor ? props.gameColor : props.theme.colors.indigo7};
+  border: 10px solid rgba(0, 0, 0, 0.1);
   border-radius: 50px;
 `;
 
@@ -164,6 +160,10 @@ const CustomCloseButton = styled(CloseButton)`
 
   color: white;
   cursor: pointer;
+
+  :hover {
+    scale: 1.2;
+  }
 
   @media screen and (max-width: 500px) {
     width: 25px;

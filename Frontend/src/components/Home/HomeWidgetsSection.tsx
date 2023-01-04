@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { HomeWidget } from '../../components/Home/HomeWidget';
-import { contentMenus } from './../../constants/pages';
+import { HomeWidget } from './HomeWidget';
+import { contentMenus } from '../../constants/pages';
 
-export const HomeWidgetsContainer = () => {
+export const HomeWidgetsSection = () => {
   return (
     <Container>
       {contentMenus.map((contentMenu, index) => (
