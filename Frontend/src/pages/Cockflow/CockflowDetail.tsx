@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CockflowHeader } from '../../components/Cockflow/Common/CockflowHeader';
@@ -18,7 +18,7 @@ export const CockflowDetail = () => {
   const user = useCurrentUser();
 
   let params = useParams();
-  const _id = params.cockflowId;
+  const ids = params.cockflowId;
 
   const isLoggedIn = useAuthentication();
   const [resData, setResData] = useState<CockflowGetResData | null>(null);
@@ -30,21 +30,20 @@ export const CockflowDetail = () => {
     isBartender: false,
     nickname: '',
     createdAt: new Date(),
-    content: ''
+    content: '',
   });
 
   const [comments, setComments] = useState({
-    "_id": "",
-    "owner": {
-      "id": 0,
-      "nickname": "",
-      "isBartender": false
+    _id: '_',
+    owner: {
+      id: 0,
+      nickname: '',
+      isBartender: false,
     },
-    "content": "",
-    "subComments": [],
-    comments: []
+    content: '',
+    subComments: [],
+    comments: [],
   });
-
 
   useEffect(() => {
     if (user && user.id === data.id) {
@@ -53,28 +52,26 @@ export const CockflowDetail = () => {
   }, [user, data]);
 
   useEffect(() => {
-    axios.get<CockflowGetResData | any>(COCKFLOW_ID(_id))
-      .then(res => {
-        if (res.data) {
-          setResData(res.data);
-          const newData = {
-            _id: res.data.id,
-            id: res.data.owner.id,
-            title: res.data.title,
-            isBartender: res.data.owner.isBartender,
-            nickname: res.data.owner.nickname,
-            createdAt: res.data.createdAt,
-            content: res.data.content,
-          }
-          setData(newData);
-
-          if (res.data.comments) {
-            setComments(res.data)
-          };
+    axios.get<CockflowGetResData | any>(COCKFLOW_ID(ids)).then((res) => {
+      if (res.data) {
+        setResData(res.data);
+        const newData = {
+          _id: res.data.id,
+          id: res.data.owner.id,
+          title: res.data.title,
+          isBartender: res.data.owner.isBartender,
+          nickname: res.data.owner.nickname,
+          createdAt: res.data.createdAt,
+          content: res.data.content,
         };
-      });
+        setData(newData);
 
-  }, [_id]);
+        if (res.data.comments) {
+          setComments(res.data);
+        }
+      }
+    });
+  }, [ids]);
 
   return (
     <Container>
@@ -83,14 +80,15 @@ export const CockflowDetail = () => {
       </Helmet>
       <CockflowHeader />
       <P10P15>
-        <CockflowLinkBtn link='/cockflow' title='목록' />
+        <CockflowLinkBtn link="/cockflow" title="목록" />
         <CockflowDetailBox detailData={data} isAuthor={isAuthor} />
         <br />
-        {isLoggedIn && <CockflowAdd cockflowId={_id} />}
+        {isLoggedIn && ids && <CockflowAdd cockflowId={ids} />}
         <CockflowCommentWrap
-          cockflowId={_id}
+          cockflowId={ids}
           commentlist={comments}
-          isAuthor={isAuthor} />
+          isAuthor={isAuthor}
+        />
       </P10P15>
     </Container>
   );

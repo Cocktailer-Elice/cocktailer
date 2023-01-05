@@ -6,7 +6,15 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { POST_COCKFLOW_COMMENTS } from '../../../constants/api';
 
-export const CockflowAdd = ({ cockflowId }: any) => {
+interface Type {
+  cockflowId: string;
+}
+
+interface TypeContent {
+  content: string;
+}
+
+export const CockflowAdd = ({ cockflowId }: Type) => {
   const gets = async (data: any) => {
     await axios
       .post(POST_COCKFLOW_COMMENTS(cockflowId), data)
@@ -16,7 +24,7 @@ export const CockflowAdd = ({ cockflowId }: any) => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
-    gets(data);
+    if (cockflowId) gets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
   };
