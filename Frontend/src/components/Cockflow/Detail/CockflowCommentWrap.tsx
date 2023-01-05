@@ -1,4 +1,3 @@
-
 import { Comment } from '../../../../../types/commentType';
 import { CockflowCommentPost } from './CockflowCommentPost';
 import { useEffect, useState } from 'react';
