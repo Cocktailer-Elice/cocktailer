@@ -34,7 +34,7 @@ export const CockflowDetail = () => {
   });
 
   const [comments, setComments] = useState({
-    _id: '_',
+    _id: '',
     owner: {
       id: 0,
       nickname: '',
