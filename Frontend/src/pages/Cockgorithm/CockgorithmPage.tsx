@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
+import { AnimatePresence } from 'framer-motion';
 
 import { CockgorithmGameListContainer } from './../../containers/Cockgorithm/CockgorithmGameListContainer';
 import { useAppSelector } from './../../store/store';
@@ -15,7 +16,9 @@ export const CockgorithmPage = () => {
       </Helmet>
       <Container>
         <CockgorithmGameListContainer />
-        {isModalOpen && <CockgorithmModalContainer />}
+        <AnimatePresence>
+          {isModalOpen && <CockgorithmModalContainer />}
+        </AnimatePresence>
       </Container>
     </>
   );

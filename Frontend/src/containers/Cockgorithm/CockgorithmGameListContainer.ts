@@ -1,9 +1,13 @@
 import { connect } from 'react-redux';
 
 import { cockgorithmSlice } from '../../store/cockgorithmSlice';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import { IGame } from './../../store/cockgorithmSlice';
 import { CockgorithmGameList } from '../../components/Cockgorithm/CockgorithmGameList';
+
+const mapStateToProps = (state: RootState) => ({
+  selectedGame: state.cockgorithm.selectedGame,
+});
 
 const { resetCockgorithmState, setSelectedGame, setIsModalOpen } =
   cockgorithmSlice.actions;
@@ -15,6 +19,6 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
 });
 
 export const CockgorithmGameListContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(CockgorithmGameList);

@@ -105,18 +105,26 @@ const Option = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.colors.indigo9};
+  color: white;
   font-weight: 600;
 
   padding: 10px;
 
-  border: 5px solid ${(props) => props.theme.colors.indigo4};
+  border: 5px solid rgba(255, 255, 255, 0.5);
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.indigo3};
+  background-color: rgba(255, 255, 255, 0.2);
 
   @media screen and (max-width: 500px) {
     font-size: 11px;
   }
 
   cursor: pointer;
+
+  :hover {
+    scale: 1.02;
+  }
+
+  :active {
+    scale: 0.97;
+  }
 `;
