@@ -123,7 +123,7 @@ export class CocktailMongoModel implements CocktailInterface {
           $set: {
             img: {
               $concat: [
-                'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+                'https://d3jq6qvyumldop.cloudfront.net/cocktails/',
                 '$img',
               ],
             },

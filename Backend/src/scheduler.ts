@@ -5,13 +5,22 @@ import logger from './winston';
 
 class Scheduler {
   private setDeleteCachingScheduler = () => {
+    // 1시간 마다 캐싱하는 로직
     cron.schedule(
-      '0 0 6 * * MON',
+      '0 0 * * * *',
       () => {
-        cachingEvents.emit('newWeek');
+        cachingEvents.emit('rankingCachingRefresh');
       },
       { timezone: 'Asia/Seoul' },
     );
+    // 30초 마다 캐싱하는 로직
+    // cron.schedule(
+    //   '0,30 * * * * *',
+    //   () => {
+    //     cachingEvents.emit('rankingCachingRefresh');
+    //   },
+    //   { timezone: 'Asia/Seoul' },
+    // );
   };
 
   private setScrumAlarmScheduler = () => {
