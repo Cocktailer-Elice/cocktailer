@@ -18,7 +18,7 @@ export const createToken = (user: IUser, isAutoLogin: boolean) => {
 export const updateToken = (originalCookie: Cookie, avatarUrl: string) => {
   const tokenData = { ...originalCookie };
   (tokenData as Token).id = originalCookie.userId;
-  tokenData.avatarUrl = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${avatarUrl}`;
+  tokenData.avatarUrl = `https://d3jq6qvyumldop.cloudfront.net/avatars/${avatarUrl}`;
   delete tokenData.userId;
   const secretKey = ACCESS_KEY;
   const { exp } = originalCookie;

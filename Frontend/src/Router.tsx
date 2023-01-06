@@ -6,7 +6,7 @@ import { CockcipePage } from './pages/Cockcipe/CockcipePage';
 import { CockDetailPage } from './pages/Cockcipe/CockDetailPage';
 import { CockModifyPage } from './pages/Cockcipe/CockModifyPage';
 import { CockflowDetail } from './pages/Cockflow/CockflowDetail';
-import { CockflowNew } from './pages/Cockflow/CockflowNew';
+import { CockflowNewWithLogin } from './pages/Cockflow/CockflowNew';
 import { CockflowPage } from './pages/Cockflow/CockflowPage';
 import { CockgorithmPage } from './pages/Cockgorithm/CockgorithmPage';
 import { FindEmail } from './pages/Finds/FindEmail';
@@ -64,7 +64,7 @@ export const Router = () => {
       />
       //칵플로우
       <Route path="/cockflow" element={<CockflowPage />} />
-      <Route path="/cockflow/new" element={<CockflowNew />} />
+      <Route path="/cockflow/new" element={<CockflowNewWithLogin />} />
       <Route path="/cockflow/detail/:cockflowId" element={<CockflowDetail />} />
       //칵고리즘
       <Route path="/cockgorithm" element={<CockgorithmPage />}></Route>

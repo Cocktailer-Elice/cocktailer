@@ -7,7 +7,6 @@ class CockgorithmController {
 
   public activateCockgorithm = async (req: Req, res: Res) => {
     const rowMaterial: CockgorithmReqData = req.body;
-
     const degreeRange = rowMaterial.degree.split('~');
 
     const processedMaterial: ProcessedMaterail = {

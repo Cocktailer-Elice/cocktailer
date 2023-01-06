@@ -12,9 +12,17 @@ export class CockgorithmModel implements CockgorithmInterface {
     const { alcohol, category } = material;
     const filterMinDegree = material.minDegree - 10;
     const filterMaxDegree = material.maxDegree + 10;
+    const [beverage, ingredient] = material.ingredients;
 
     const cocktails = await CocktailSchema.aggregate(
-      findByCockgorithm(category, filterMinDegree, filterMaxDegree, alcohol),
+      findByCockgorithm(
+        category,
+        filterMinDegree,
+        filterMaxDegree,
+        alcohol,
+        beverage,
+        ingredient,
+      ),
     );
     return cocktails;
   };

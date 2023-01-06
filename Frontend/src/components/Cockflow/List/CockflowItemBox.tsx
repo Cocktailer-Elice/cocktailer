@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { CockflowCreateReqDto } from '../../../../types/cockflowType';
+import { CockflowCreateReqDto } from '../../../../../types/cockflowType';
 
 interface GetData extends CockflowCreateReqDto {
   key: string,
@@ -19,6 +19,9 @@ export const CockflowItemBox = ({ id, title, content }: GetData) => {
 };
 
 const NavLink = styled(Link)`
+  display: inline-block;
+  width: 100%;
+  height: 100%;
   position: relative;
   border-radius: 5px;
   overflow: hidden;

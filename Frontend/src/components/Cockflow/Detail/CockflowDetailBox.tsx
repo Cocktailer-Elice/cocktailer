@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { CockflowBadge } from '../../components/Cockflow/CockflowBadge';
-import { Middle, FlexRight } from '../../components/Cockflow/style';
-import { trimDate } from './CockflowUtils';
-import { CockflowEnrollBtns } from './CockflowEnrollBtns';
+import { CockflowBadge } from '../Common/CockflowBadge';
+import { Middle, FlexRight } from '../Style/style';
+import { trimDate } from '../../../utils/TrimTime';
+import { CockflowEnrollBtns } from '../Buttons/CockflowEnrollBtns';
 import axios from 'axios';
-import { useAuthentication } from '../../hooks/useAuthentication';
-import { COCKFLOW_ID } from '../../constants/api';
+import { useAuthentication } from '../../../hooks/useAuthentication';
+import { COCKFLOW_ID } from '../../../constants/api';
 
 interface dataType {
   detailData: {
