@@ -1,35 +1,42 @@
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import styled from 'styled-components';
-import { CockflowMoreComment } from './CockflowMoreComment';
-import { Adopted, FlexLeft, FlexRight, IconWrap } from './style';
+import { CockflowCommentDepth } from './CockflowCommentDepth';
+import { Adopted, FlexLeft, FlexRight, IconWrap } from '../Style/style';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAuthentication } from '../../hooks/useAuthentication';
-import EditIcon from '@mui/icons-material/Edit';
-import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../constants/api';
 
-export const CockflowCommentAdd = ({
+import EditIcon from '@mui/icons-material/Edit';
+import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../../constants/api';
+import { useAuthentication } from '../../../hooks/useAuthentication';
+import { Comment } from '../../../../../types/commentType';
+import { useCurrentUser } from '../../../hooks/useCurrentUser';
+import { ownerDocument } from '@mui/material';
+
+interface FormValue {
+  content: string;
+}
+
+export const CockflowCommentPost = ({
   item,
   cockflowId,
   commentId,
   isAuthor,
 }: any) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm<FormValue>();
   const [readonly, setReadonly] = useState(true);
+  const [myComment, setMyComment] = useState(false);
   const [commentValue, setCommentValue] = useState(' ');
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
 
-  const repliedCommentsGets = async (data: any) => {
-    await axios
-      .post(COCKFLOW_TWOID(cockflowId, commentId), data)
-      .then((res) => {})
-      .catch(function (err) {});
+  const repliedCommentsGets = async (data: FormValue) => {
+    await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data);
   };
 
   const isLoggedIn = useAuthentication();
+  const user = useCurrentUser();
 
   const repliedCommentsPuts = async () => {
     const data = {
@@ -45,7 +52,7 @@ export const CockflowCommentAdd = ({
       .catch(function (error) {});
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<FormValue> = (data) => {
     repliedCommentsGets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
@@ -66,9 +73,7 @@ export const CockflowCommentAdd = ({
         alert('채택하였습니다.');
         window.location.replace(`/cockflow/detail/${cockflowId}`);
       })
-      .catch(function (error) {
-        alert('본인 댓글은 채택이 불가능합니다.');
-      });
+      .catch(function (error) {});
   };
 
   const commDelete = async () => {
@@ -89,10 +94,19 @@ export const CockflowCommentAdd = ({
 
   useEffect(() => {
     if (item.subComments.length > 0) {
-      const contArr = item.subComments.map((items: any) => items.content);
+      console.log(item);
+      const contArr = item.subComments.map((items: Comment) => items.content);
       setMoreComments(contArr);
     }
     setCommentValue(item.content);
+    const owner = {
+      id: 15,
+    };
+
+    if (user && user.id === owner.id) {
+      console.log(user.id);
+      setMyComment(true);
+    }
   }, [item]);
 
   return (
@@ -107,16 +121,36 @@ export const CockflowCommentAdd = ({
         {item.isAdopted && <Adopted>✨ 채택된 답변 </Adopted>}
         {item.owner.nickname}
       </FlexLeft>
-      {isLoggedIn &&
-        isAuthor &&
-        (readonly ? (
-          <FlexRight>
-            <IconWrap type="button" onClick={commDelete}>
-              <DeleteIc />
-            </IconWrap>
-            <IconWrap type="button" onClick={commEdit}>
-              <EditIc />
-            </IconWrap>
+
+      {!readonly ? (
+        <FlexRight>
+          <Button variant="contained" onClick={() => repliedCommentsPuts()}>
+            수정완료
+          </Button>
+          &nbsp;&nbsp;
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setReadonly((prev) => !prev);
+            }}
+          >
+            취소하기
+          </Button>
+        </FlexRight>
+      ) : (
+        <FlexRight>
+          &nbsp;&nbsp;
+          {myComment && (
+            <>
+              <IconWrap type="button" onClick={commDelete}>
+                <DeleteIc />
+              </IconWrap>
+              <IconWrap type="button" onClick={commEdit}>
+                <EditIc />
+              </IconWrap>
+            </>
+          )}
+          {isLoggedIn && (
             <Button
               variant="outlined"
               onClick={() => {
@@ -130,43 +164,15 @@ export const CockflowCommentAdd = ({
             >
               댓글달기
             </Button>
-            &nbsp;&nbsp;
-            <Button variant="contained" onClick={commAdopted}>
-              채택하기
-            </Button>
-          </FlexRight>
-        ) : (
-          <FlexRight>
-            <Button variant="contained" onClick={() => repliedCommentsPuts()}>
-              수정완료
-            </Button>
-            &nbsp;&nbsp;
-            <Button
-              variant="outlined"
-              onClick={() => {
-                setReadonly((prev) => !prev);
-              }}
-            >
-              취소하기
-            </Button>
-          </FlexRight>
-        ))}
-      {isLoggedIn && !isAuthor && (
-        <FlexRight>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              if (subComment) {
-                setSubComment(false);
-                return;
-              }
-              setSubComment(true);
-              return;
-            }}
-          >
-            댓글달기
-          </Button>
-          &nbsp;&nbsp;
+          )}
+          {isAuthor && !item.isAdopted && (
+            <>
+              &nbsp;&nbsp;
+              <Button variant="contained" onClick={commAdopted}>
+                채택하기
+              </Button>
+            </>
+          )}
         </FlexRight>
       )}
 
@@ -183,7 +189,7 @@ export const CockflowCommentAdd = ({
         </SubComments>
       ) : null}
       {moreComments.map((co, index) => (
-        <CockflowMoreComment content={co} key={index} />
+        <CockflowCommentDepth content={co} key={index} />
       ))}
     </div>
   );
