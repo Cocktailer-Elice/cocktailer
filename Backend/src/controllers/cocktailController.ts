@@ -5,13 +5,12 @@ import {
   CocktailObj,
   UpdateResult,
 } from 'types';
+import cocktailService from '../services/cocktailService';
 import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
 
-import CocktailService from '../services/cocktailService';
-
 class CocktailController {
-  private readonly cocktailService = new CocktailService();
+  private readonly cocktailService = cocktailService;
 
   public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
     const cachedValue = (await redisCache.get('ranking')) as string;

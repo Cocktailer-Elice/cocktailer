@@ -26,7 +26,7 @@ class UserMongoModel implements IUserMongoModel {
       .limit(6);
     myLikes.forEach(
       (myLike) =>
-        (myLike.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${myLike.img}`),
+        (myLike.img = `https://d3jq6qvyumldop.cloudfront.net/cocktails/${myLike.img}`),
     );
     const formattedResult = [{ ...posts[0], myList: myLikes }];
     return formattedResult;
@@ -42,7 +42,7 @@ class UserMongoModel implements IUserMongoModel {
     );
     likes.forEach(
       (like) =>
-        (like.img = `https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/${like.img}`),
+        (like.img = `https://d3jq6qvyumldop.cloudfront.net/cocktails/${like.img}`),
     );
     return likes;
   };

@@ -1,6 +1,40 @@
+import { CocktailCreateReqData } from 'types';
+
 //model
 
 import { CocktailGetResData } from 'types';
+
+export interface ICocktailModel {
+  Mongo: CocktailInterface;
+}
+
+export interface CocktailInterface {
+  getHomeCocktailAndUserList(): Promise<Rankings>;
+
+  createCocktail(cocktailCreateDto: CocktailCreateReqData): Promise<number>;
+
+  getLists(): Promise<CocktailModelType[]>;
+
+  findByUserId(userId: number): Promise<CocktailModelType[]>;
+
+  findCocktailId(
+    id: number,
+    userId: number | null,
+  ): Promise<FindCocktailId | null>;
+
+  findCocktailCategoryAndSearch(
+    reqData: object,
+    lastId: number,
+  ): Promise<CocktailModelType[]>;
+
+  updateCocktail(
+    cocktailId: number,
+    userId: number,
+    cocktailCreateDto: CocktailCreateReqData,
+  ): Promise<UpdateResult>;
+
+  cocktailLikes(userId: number, cocktailId: number): Promise<number>;
+}
 
 export interface CocktailRankings {
   id: number;
@@ -20,6 +54,11 @@ export interface UserRanking {
   nickname: string;
   points: number;
   isBartender: boolean;
+}
+
+export interface Rankings {
+  cocktailRankings: CocktailRankings[];
+  userRankings: UserRanking[];
 }
 
 export interface CocktailObj {
@@ -143,4 +182,8 @@ export interface CocktailLists {
   fruit: [[object]];
   smoothie: [[object]];
   hot: [[object]];
+}
+
+export interface ReqData {
+  [optionKey: string]: string;
 }
