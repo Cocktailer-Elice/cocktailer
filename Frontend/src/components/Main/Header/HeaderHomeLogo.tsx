@@ -5,7 +5,7 @@ export const HeaderHomeLogo = () => {
   return (
     <HomeLogo>
       <CustomLink to="/">
-        <HomeLogoImage src="../../../../assets/images/app_logo.png" />
+        <HomeLogoImage src="/assets/images/app_logo.png" />
         <AppTitle>Cocktailer</AppTitle>
       </CustomLink>
     </HomeLogo>
@@ -33,6 +33,7 @@ const AppTitle = styled.div`
   font-size: 32px;
   letter-spacing: 2px;
   margin-left: 10px;
+  font-weight: 600;
   font-style: italic;
   color: white;
 

@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ApplyContainer } from '../../containers/Cockcipe/ApplyContainer';
 import { useCockcipeApply } from '../../hooks/useCockcipeApply';
+import axios from 'axios';
+import { GET_DETAIL_COCKTAIL } from '../../constants/api';
 
 export const CockApplyPage = () => {
   const dataId = useCockcipeApply();
@@ -12,9 +14,13 @@ export const CockApplyPage = () => {
 
   useEffect(() => {
     if (dataId && dataId !== currentId) {
-      console.log(dataId, currentId);
       setCurrentId(dataId);
-      navigate(`/cockcipe/detail/${dataId}`);
+      axios
+        .get(GET_DETAIL_COCKTAIL(dataId))
+        .then((res) => {
+          navigate(`/cockcipe/detail/${dataId}`);
+        })
+        .catch((err) => navigate(`/cockcipe`));
     }
   }, [dataId]);
   return (

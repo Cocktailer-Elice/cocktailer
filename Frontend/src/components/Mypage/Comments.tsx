@@ -1,20 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { MyComment } from '../../../../types';
 
 interface CommentsProps {
-  data?: MyComment[];
+  data?: {
+    cockflowId: string;
+    content: string;
+    parentCommentId: string;
+  }[];
 }
 
 export const Comments = ({ data }: CommentsProps) => {
   const navigate = useNavigate();
   return (
     <Wrapper>
-      {data?.map(({ _id, content, parentCockflow }) => {
+      {data?.map(({ cockflowId, content, parentCommentId }) => {
         return (
           <ItemWrapper
-            key={_id}
-            onClick={() => navigate(`/cockflow/detail/${parentCockflow[0].id}`)}
+            key={parentCommentId}
+            onClick={() => navigate(`/cockflow/detail/${cockflowId}`)}
           >
             <Content>{content}</Content>
           </ItemWrapper>

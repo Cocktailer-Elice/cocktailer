@@ -3,10 +3,7 @@ import { CocktailListItem } from './List/CocktailListItem';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Scrollbar } from 'swiper';
-import 'swiper/css'; //basic
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { Autoplay, Pagination } from 'swiper';
 import { MorePageBtn } from './List/MorePageBtn';
 import { GET_COCKTAILS } from '../../constants/api';
 
@@ -21,14 +18,15 @@ interface Data {
 const ListCarousel = (itemList: Data[]) => (
   <Swiper
     slidesPerView={3}
-    loop={true}
     style={{ marginBottom: '20px' }}
     autoplay={{
       delay: 2000,
       disableOnInteraction: false,
     }}
-    scrollbar={true}
-    modules={[Autoplay, Scrollbar]}
+    pagination={{
+      clickable: true,
+    }}
+    modules={[Autoplay, Pagination]}
   >
     {itemList?.map((item, idx) => (
       <SwiperSlide key={item.id}>
@@ -54,11 +52,10 @@ export const ListWrapper = () => {
 
   useEffect(() => {
     axios.get(GET_COCKTAILS).then((res) => {
-      console.log(res.data.lists[0]);
       setDryList(res.data.lists[0]['dry']);
       setRefreshList(res.data.lists[0]['refreshing']);
       setFruitList(res.data.lists[0]['fruit']);
-      setSweetList(res.data.lists[0]['refreshing']);
+      setSweetList(res.data.lists[0]['sweet']);
       setSmoothList(res.data.lists[0]['smoothie']);
       setHotList(res.data.lists[0]['hot']);
     });

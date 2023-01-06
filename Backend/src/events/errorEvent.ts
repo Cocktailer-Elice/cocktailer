@@ -1,5 +1,6 @@
 import EventEmitter from 'events';
 import { logError, logEventError } from './utils';
+import { errorAlarm } from './utils/discordWebHook';
 
 const errorEvents = new EventEmitter();
 
@@ -17,6 +18,7 @@ errorEvents.on('uncaughtErrorOccured', async (req, err) => {
   while (!result && retry--) {
     result = logError(req, err, false);
   }
+  errorAlarm(req, err);
 });
 
 errorEvents.on('eventErrorOccured', async (event: string) => {

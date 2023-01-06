@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { CockgorithmCocktail } from '../../../../types/cockgorithmType';
+import { CockgorithmCocktail } from '../../../../types';
 
-interface CockgorithmGameResultProps {
-  cocktailInfo?: CockgorithmCocktail;
+interface CockgorithmGameResult {
+  isFoundCocktail: boolean;
+  cocktailInfo: CockgorithmCocktail;
+  resetCockgorithmState: () => void;
 }
 
 export const CockgorithmGameResult = ({
+  isFoundCocktail,
   cocktailInfo,
-}: CockgorithmGameResultProps) => {
+  resetCockgorithmState,
+}: CockgorithmGameResult) => {
   return (
     <GameResult>
-      {cocktailInfo && (
+      {isFoundCocktail && (
         <>
           <CocktailTitle>"{cocktailInfo.name}"를 추천드릴게요!</CocktailTitle>
           <CocktailImageWrapper>
@@ -22,12 +26,15 @@ export const CockgorithmGameResult = ({
             <CocktailContent>{cocktailInfo.content}</CocktailContent>
             <CocktailDegree>도수 : {cocktailInfo.degree} 도</CocktailDegree>
           </CocktailInfo>
-          <CustomLink to={`/cockcipe/detail/${cocktailInfo.id}`}>
+          <CustomLink
+            to={`/cockcipe/detail/${cocktailInfo.id}`}
+            onClick={() => resetCockgorithmState()}
+          >
             상세 정보 보러 가기
           </CustomLink>
         </>
       )}
-      {!cocktailInfo && (
+      {!isFoundCocktail && (
         <CocktailNotFound>
           <span>원하시는 조건에 알맞는 칵테일을 찾지 못했어요. 😢</span>
           <span>더 다양한 칵테일 레시피를 제공해드릴 수 있도록</span>
@@ -54,7 +61,7 @@ const CocktailTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #69db7c;
+  color: whitesmoke;
   font-size: 24px;
   font-weight: bold;
   font-style: italic;
@@ -78,15 +85,14 @@ const CocktailImage = styled.img`
   width: 50%;
   min-width: 200px;
   height: 100%;
-  border: 2px solid red;
 `;
 
 const CocktailInfo = styled.div`
   width: 100%;
-  height: 45%;
-  border: 5px solid ${(props) => props.theme.colors.indigo9};
+  height: 40%;
+  border: 5px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  background-color: ${(props) => props.theme.colors.indigo5};
+  background-color: rgba(255, 255, 255, 0.2);
 `;
 
 const CocktailContent = styled.div`
@@ -97,9 +103,9 @@ const CocktailContent = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
 
-  padding: 15px;
+  padding: 20px 30px;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 const CocktailDegree = styled.div`
@@ -111,22 +117,27 @@ const CocktailDegree = styled.div`
   align-items: center;
 
   padding: 10px;
-  color: #212529;
+  color: red;
   font-size: 13px;
   font-weight: 600;
 `;
 
 const CustomLink = styled(Link)`
   width: 100%;
-  height: 5%;
+  height: 2%;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
+  margin-top: 5px;
   font-size: 14px;
   padding: 10px;
-  color: ${(props) => props.theme.colors.indigo1};
+  color: rgba(0, 0, 0, 0.9);
+
+  :hover {
+    font-weight: bold;
+  }
 `;
 
 const CocktailNotFound = styled.div`

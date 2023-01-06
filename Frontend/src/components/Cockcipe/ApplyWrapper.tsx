@@ -42,10 +42,12 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
         alcohoObj[selectA[i]].push({ [titleA[i]]: valueA[i] });
       else alcohoObj[selectA[i]] = [{ [titleA[i]]: valueA[i] }];
     }
-    for (let i = 0; i < selectI.length; i++) {
-      if (IngredObj[selectI[i]])
-        IngredObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
-      else IngredObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+    if (selectI[0] !== '') {
+      for (let i = 0; i < selectI.length; i++) {
+        if (IngredObj[selectI[i]])
+          IngredObj[selectI[i]].push({ [titleI[i]]: valueI[i] });
+        else IngredObj[selectI[i]] = [{ [titleI[i]]: valueI[i] }];
+      }
     }
 
     const newData = {
@@ -55,7 +57,6 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
       category: category,
       flavor: flavor,
       content: content,
-      official: false,
       ratio: {
         alcohol: alcohoObj,
         ingredient: IngredObj,
@@ -64,54 +65,60 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
 
     if (
       !Object.keys(alcohoObj).every((current) => current !== '') ||
-      !Object.keys(IngredObj).every((current) => current !== '') ||
       !name ||
       !img ||
       !category ||
       !content ||
-      !flavor
+      !flavor ||
+      name.length > 20 ||
+      degree < 0 ||
+      degree > 100 ||
+      flavor.length > 10 ||
+      content.length > 200
     ) {
-      alert('비어있는 값이 있습니다!');
+      alert('비어있는 값 혹은 잘못된 입력이 있습니다');
     } else {
       apply(newData);
     }
   };
   return (
     <>
-      <Header>칵테일 레시피 등록하기</Header>
-      <InputTitleImg setImg={setImg} />
-      <InputCockInfo
-        value={name}
-        degree={degree}
-        setName={setName}
-        setDegree={setDegree}
-        setCategory={setCategory}
-        category={category}
-      />
-      <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
-      <InputCockContent setContent={setContent} content={content} />
-      <InputRecipe
-        kind="alcohol"
-        select={selectA}
-        title={titleA}
-        value={valueA}
-        setSelect={setSelectA}
-        setTitle={setTitleA}
-        setValue={setValueA}
-      />
+      <Wrapper>
+        <Header>칵테일 레시피 등록하기</Header>
+        <InputTitleImg setImg={setImg} />
+        <InputCockInfo
+          value={name}
+          degree={degree}
+          setName={setName}
+          setDegree={setDegree}
+          setCategory={setCategory}
+          category={category}
+        />
+        <InputCockFlavor setFlavor={setFlavor} flavor={flavor} />
+        <InputCockContent setContent={setContent} content={content} />
+        <InputRecipe
+          kind="alcohol"
+          select={selectA}
+          title={titleA}
+          value={valueA}
+          setSelect={setSelectA}
+          setTitle={setTitleA}
+          setValue={setValueA}
+        />
 
-      <InputRecipe
-        kind="drink"
-        select={selectI}
-        title={titleI}
-        value={valueI}
-        setSelect={setSelectI}
-        setTitle={setTitleI}
-        setValue={setValueI}
-      />
-      <ApplyPlace>
-        <ApplyButton handleApply={handleApply} name="apply" />
-      </ApplyPlace>
+        <InputRecipe
+          kind="plus"
+          select={selectI}
+          title={titleI}
+          value={valueI}
+          setSelect={setSelectI}
+          setTitle={setTitleI}
+          setValue={setValueI}
+        />
+        <ApplyPlace>
+          <ApplyButton handleApply={handleApply} name="apply" />
+        </ApplyPlace>
+      </Wrapper>
     </>
   );
 };
@@ -127,5 +134,9 @@ const Header = styled.div`
 const ApplyPlace = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin: 20px 40px;
+  margin: 20px 0px;
 `;
+
+const Wrapper = styled.div`
+  padding: 40px;
+`

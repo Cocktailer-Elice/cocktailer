@@ -1,29 +1,26 @@
-import { SetStateAction, useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { IGame } from '../../pages/Cockgorithm/CockgorithmPage';
-import { CockgorithmReqData } from '../../../../types/cockgorithmType';
+import { IGame } from '../../store/cockgorithmSlice';
 
 interface CockgorithmGameContentProps {
   selectedGame: IGame;
-  handleLoadingOpen: () => void;
-  setFilters: React.Dispatch<SetStateAction<CockgorithmReqData>>;
+  questionCounter: number;
+  increaseQuestionCounter: () => void;
+  setIsLoadingOpen: (boolean: boolean) => void;
+  setFilters: (filterName: string, filterValue: string) => void;
 }
 
 export const CockgorithmGameContent = ({
   selectedGame,
-  handleLoadingOpen,
+  questionCounter,
+  increaseQuestionCounter,
+  setIsLoadingOpen,
   setFilters,
 }: CockgorithmGameContentProps) => {
-  const [questionCounter, setQuestionCounter] = useState(0);
-
-  const increaseQuestionCounter = () => {
-    setQuestionCounter((curr) => curr + 1);
-  };
-
   useEffect(() => {
     if (questionCounter === 5) {
-      handleLoadingOpen();
+      setIsLoadingOpen(true);
     }
   }, [questionCounter]);
 
@@ -32,18 +29,9 @@ export const CockgorithmGameContent = ({
     filterValue: string;
   }) => {
     const { filterName } = selectedGame.questions[questionCounter];
-    setFilters((curr: CockgorithmReqData) => {
-      if (filterName === 'ingredients') {
-        curr[filterName] = [...curr[filterName], option.filterValue];
-      } else if (
-        filterName === 'category' ||
-        filterName === 'alcohol' ||
-        filterName === 'degree'
-      ) {
-        curr[filterName] = option.filterValue;
-      }
-      return curr;
-    });
+    const filterValue = option.filterValue;
+
+    setFilters(filterName, filterValue);
     increaseQuestionCounter();
   };
 
@@ -96,6 +84,7 @@ const Question = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #fff;
 
   @media screen and (max-width: 500px) {
     font-size: 13px;
@@ -116,18 +105,26 @@ const Option = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.colors.indigo9};
+  color: white;
   font-weight: 600;
 
   padding: 10px;
 
-  border: 5px solid ${(props) => props.theme.colors.indigo4};
+  border: 5px solid rgba(255, 255, 255, 0.5);
   border-radius: 10px;
-  background-color: ${(props) => props.theme.colors.indigo3};
+  background-color: rgba(255, 255, 255, 0.2);
 
   @media screen and (max-width: 500px) {
     font-size: 11px;
   }
 
   cursor: pointer;
+
+  :hover {
+    scale: 1.02;
+  }
+
+  :active {
+    scale: 0.97;
+  }
 `;

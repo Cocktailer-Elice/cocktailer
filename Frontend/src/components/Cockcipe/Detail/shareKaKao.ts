@@ -5,10 +5,11 @@ export const shareKakao = (
   content: string,
 ) => {
   const kakao = window.Kakao;
-  console.log(route, img, name, content);
+
   if (window.Kakao) {
-    window.Kakao.init(import.meta.env.VITE_APP_KAKAO);
-    console.log(kakao.isInitialized());
+    if (!kakao.isInitialized()) {
+      window.Kakao.init(import.meta.env.VITE_APP_KAKAO);
+    }
 
     kakao.Share.sendDefault({
       objectType: 'feed',

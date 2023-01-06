@@ -4,12 +4,7 @@ import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper';
 import { MyCockcipe, MyLike } from '../../../../types';
-import { Empty, SectionContainer, SectionWrapper } from './style';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-
-import '../../swiper.css';
+import { SectionContainer, SectionWrapper } from './style';
 
 interface SectionProps {
   title: string;
@@ -52,11 +47,7 @@ export const Carousel = ({ title, cockcipes, likes, type }: SectionProps) => {
                   style={{ cursor: 'pointer' }}
                 >
                   <img
-                    src={
-                      img === 'testedURL'
-                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                        : img
-                    }
+                    src={img}
                     alt={name}
                     style={{
                       width: '100px',
@@ -73,11 +64,7 @@ export const Carousel = ({ title, cockcipes, likes, type }: SectionProps) => {
                   style={{ cursor: 'pointer' }}
                 >
                   <img
-                    src={
-                      img === 'testedURL'
-                        ? 'https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg'
-                        : img
-                    }
+                    src={img}
                     alt={name}
                     style={{
                       width: '100px',

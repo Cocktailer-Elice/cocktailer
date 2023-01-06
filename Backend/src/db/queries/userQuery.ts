@@ -56,7 +56,7 @@ export const userQueries = {
             $set: {
               img: {
                 $concat: [
-                  'https://cocktailer.s3.ap-northeast-2.amazonaws.com/cocktails/',
+                  'https://d3jq6qvyumldop.cloudfront.net/cocktails/',
                   '$img',
                 ],
               },
@@ -165,7 +165,7 @@ export const userQueries = {
       $set: {
         avatarUrl: {
           $concat: [
-            'https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/',
+            'https://d3jq6qvyumldop.cloudfront.net/avatars/',
             '$avatarUrl',
           ],
         },

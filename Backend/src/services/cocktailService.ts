@@ -1,20 +1,25 @@
-import { CocktailServiceType, UpdateResult, CocktailObj } from './types';
-import { Rankings } from 'types';
+import {
+  CocktailServiceType,
+  UpdateResult,
+  CocktailObj,
+  ReqData,
+  Rankings,
+} from './types';
 
 import { cocktailModel } from '../db';
 import { AppError } from '../appError';
 import { errorNames } from '../errorNames';
 
-interface ReqData {
-  [optionKey: string]: string;
+class CocktailDependencies implements CocktailDependencies {
+  public cocktailModel = cocktailModel.Mongo;
 }
 
 class CocktailService {
-  private readonly cocktailModel = cocktailModel;
+  constructor(private readonly dependencies: CocktailDependencies) {}
 
   public async getHomeCocktailAndUserList(): Promise<Rankings> {
     const data: Rankings =
-      await this.cocktailModel.getHomeCocktailAndUserList();
+      await this.dependencies.cocktailModel.getHomeCocktailAndUserList();
     if (!data) {
       throw new AppError(
         errorNames.noDataError,
@@ -26,7 +31,7 @@ class CocktailService {
   }
 
   public async createCocktail(cocktailObj: CocktailObj): Promise<number> {
-    const data: number = await this.cocktailModel.createCocktail({
+    const data: number = await this.dependencies.cocktailModel.createCocktail({
       ...cocktailObj,
     });
 
@@ -38,7 +43,8 @@ class CocktailService {
   }
 
   public async getLists() {
-    const data: CocktailServiceType[] = await this.cocktailModel.getLists();
+    const data: CocktailServiceType[] =
+      await this.dependencies.cocktailModel.getLists();
 
     if (!data) {
       throw new AppError(
@@ -52,13 +58,16 @@ class CocktailService {
   }
 
   public async findByUserId(userId: number) {
-    const data = await this.cocktailModel.findByUserId(userId);
+    const data = await this.dependencies.cocktailModel.findByUserId(userId);
 
     return data;
   }
 
   public async findCocktailId(cocktailId: number, userId: number | null) {
-    const data = await this.cocktailModel.findCocktailId(cocktailId, userId);
+    const data = await this.dependencies.cocktailModel.findCocktailId(
+      cocktailId,
+      userId,
+    );
 
     if (!data) {
       throw new AppError(
@@ -75,10 +84,11 @@ class CocktailService {
     reqData: ReqData,
     endpoint: number,
   ) {
-    const data = await this.cocktailModel.findCocktailCategoryAndSearch(
-      reqData,
-      endpoint,
-    );
+    const data =
+      await this.dependencies.cocktailModel.findCocktailCategoryAndSearch(
+        reqData,
+        endpoint,
+      );
 
     if (data.length === 0) {
       throw new AppError(errorNames.noDataError, 400, 'noDataError');
@@ -92,11 +102,12 @@ class CocktailService {
     userId: number,
     cocktailObj: CocktailObj,
   ) {
-    const data: UpdateResult = await this.cocktailModel.updateCocktail(
-      cocktailId,
-      userId,
-      cocktailObj,
-    );
+    const data: UpdateResult =
+      await this.dependencies.cocktailModel.updateCocktail(
+        cocktailId,
+        userId,
+        cocktailObj,
+      );
 
     if (!data) {
       throw new AppError(errorNames.noDataError, 400);
@@ -107,7 +118,7 @@ class CocktailService {
 
   public async deleteCocktail(userId: number, cocktailId: number) {
     // 트랜젝션 처리!! //
-    const data: number = await this.cocktailModel.deleteCocktail(
+    const data: number = await this.dependencies.cocktailModel.deleteCocktail(
       userId,
       cocktailId,
     );
@@ -125,21 +136,14 @@ class CocktailService {
 
   public async cocktailLikes(userId: number, cocktailId: number) {
     // 트랜젝션 처리!! //
-    const data: number = await this.cocktailModel.cocktailLikes(
+    const data: number = await this.dependencies.cocktailModel.cocktailLikes(
       userId,
       cocktailId,
     );
 
-    if (
-      typeof data !== 'number'
-      // data.acknowledged !== true &&
-      // data.modifiedCount !== 1 &&
-      // data.matchedCount !== 1
-    ) {
+    if (typeof data !== 'number') {
       throw new AppError(errorNames.noDataError, 400, '좋아요 요청 실패!!');
     }
-
-    //아래 user 콜렉션에 likes 누른 id 추가로직
 
     return data;
   }
@@ -149,9 +153,12 @@ class CocktailService {
   ////////////////////////////////
 
   public async makeMockData() {
-    const result: any = await this.cocktailModel.makeMockData();
+    const result: any = await this.dependencies.cocktailModel.makeMockData();
     return result;
   }
 }
+const cocktailDependencies = new CocktailDependencies();
 
-export default CocktailService;
+const cocktailService = new CocktailService(cocktailDependencies);
+
+export default cocktailService;

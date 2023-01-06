@@ -16,8 +16,8 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
     setTag(e.target.value);
   };
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const newTag = inputRef.current?.value;
-    if (tagList.length > 10) {
+    const newTag = inputRef.current?.value.trim();
+    if (tagList.length > 9) {
       alert('태그 그만.. 살려주세요');
       return;
     }
@@ -45,21 +45,21 @@ export const InputCockFlavor = ({ setFlavor, flavor }: Props) => {
       <TagBox>
         {flavor
           ? flavor.map((tagItem, index) => {
-              return (
-                <TagItem key={index}>
-                  <Text>{tagItem}</Text>
-                  <Button onClick={deleteTagItem}>X</Button>
-                </TagItem>
-              );
-            })
+            return (
+              <TagItem key={index}>
+                <Text>{tagItem}</Text>
+                <Button onClick={deleteTagItem}>X</Button>
+              </TagItem>
+            );
+          })
           : tagList.map((tagItem, index) => {
-              return (
-                <TagItem key={index}>
-                  <Text>{tagItem}</Text>
-                  <Button onClick={deleteTagItem}>X</Button>
-                </TagItem>
-              );
-            })}
+            return (
+              <TagItem key={index}>
+                <Text>{tagItem}</Text>
+                <Button onClick={deleteTagItem}>X</Button>
+              </TagItem>
+            );
+          })}
         <TagInput
           type="text"
           placeholder="칵테일 맛을 적어주세요"
@@ -94,7 +94,7 @@ const Error = styled.div`
 `;
 const TagBox = styled.div`
   display: flex;
-  width: 440px;
+  // width: 440px;
   align-items: center;
   flex-wrap: wrap;
   min-height: 50px;
