@@ -1,7 +1,7 @@
-import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
-import { Comment } from '../../../../types/commentType';
-import { CockflowCommentAdd } from './CockflowCommentAdd';
+import { Comment } from '../../../../../types/commentType';
+import { CockflowCommentPost } from './CockflowCommentPost';
 import { useEffect, useState } from 'react';
+import { CockflowBoxTitle } from '../Common/CockflowBoxTitle';
 
 interface CommentType {
   comments: Comment[];
@@ -13,7 +13,7 @@ interface TypeComment {
   isAuthor: boolean;
 }
 
-export const CockflowCommentBox = ({
+export const CockflowCommentWrap = ({
   commentlist,
   cockflowId,
   isAuthor,
@@ -29,7 +29,7 @@ export const CockflowCommentBox = ({
       <CockflowBoxTitle replied={commentlist.comments.length} />
       {commentlist.comments.map((item, index) => {
         return (
-          <CockflowCommentAdd
+          <CockflowCommentPost
             item={item}
             key={commentlist.comments[index]._id}
             cockflowId={cockflowId}

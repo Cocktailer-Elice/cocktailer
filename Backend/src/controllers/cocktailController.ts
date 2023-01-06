@@ -20,8 +20,9 @@ class CocktailController {
       : await this.cocktailService.getHomeCocktailAndUserList();
 
     res.status(200).json({
-      cocktailRanking: data.cocktailRankings,
-      userRanking: data.userRankings,
+      cocktailRankings: data.cocktailRankings,
+      userRankings: data.userRankings,
+      lastUpdated: data.lastUpdated,
     });
 
     if (!cachedValue) {

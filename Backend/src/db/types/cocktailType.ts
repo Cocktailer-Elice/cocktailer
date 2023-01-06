@@ -59,6 +59,7 @@ export interface UserRanking {
 export interface Rankings {
   cocktailRankings: CocktailRankings[];
   userRankings: UserRanking[];
+  lastUpdated: Date;
 }
 
 export interface CocktailObj {

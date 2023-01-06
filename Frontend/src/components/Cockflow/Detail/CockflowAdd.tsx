@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
-import { Center } from './style';
-import { CockflowBoxTitle } from '../../components/Cockflow/CockflowBoxTitle';
+import { Center } from '../Style/style';
+import { CockflowBoxTitle } from '../Common/CockflowBoxTitle';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { POST_COCKFLOW_COMMENTS } from '../../constants/api';
+import { POST_COCKFLOW_COMMENTS } from '../../../constants/api';
 
-export const CockflowAddComment = ({ cockflowId }: any) => {
+interface Type {
+  cockflowId: string;
+}
+
+interface TypeContent {
+  content: string;
+}
+
+export const CockflowAdd = ({ cockflowId }: Type) => {
   const gets = async (data: any) => {
     await axios
       .post(POST_COCKFLOW_COMMENTS(cockflowId), data)
@@ -16,7 +24,7 @@ export const CockflowAddComment = ({ cockflowId }: any) => {
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
-    gets(data);
+    if (cockflowId) gets(data);
     reset();
     window.location.replace(`/cockflow/detail/${cockflowId}`);
   };

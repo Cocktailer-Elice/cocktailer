@@ -1,12 +1,17 @@
 import axios from 'axios';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import { CockflowEnrollBtns } from '../../components/Cockflow/CockflowEnrollBtns';
-import { COCKFLOW } from '../../constants/api';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { CockflowEnrollBtns } from '../Buttons/CockflowEnrollBtns';
+import { COCKFLOW } from '../../../constants/api';
+
+interface FormValue {
+  title: string;
+  content: string;
+}
 
 export const CockflowGetPost = () => {
-  const { register, handleSubmit, reset } = useForm();
-  const onSubmit = (data: any) => {
+  const { register, handleSubmit, reset } = useForm<FormValue>();
+  const onSubmit: SubmitHandler<FormValue> = (data): void => {
     if (data.title && data.content) {
       alert('등록되었습니다');
       postCockflowList(data);
@@ -16,7 +21,7 @@ export const CockflowGetPost = () => {
     }
   };
 
-  const postCockflowList = async (data: any) => {
+  const postCockflowList = async (data: FormValue) => {
     await axios
       .post(COCKFLOW(), data)
       .then(function (response) {})
