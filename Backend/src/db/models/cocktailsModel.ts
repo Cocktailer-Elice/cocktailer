@@ -71,7 +71,11 @@ export class CocktailMongoModel implements CocktailInterface {
       User.aggregate(Object(usersQueries)),
     ]);
 
-    return { cocktailRankings: result[0], userRankings: result[1] };
+    return {
+      cocktailRankings: result[0],
+      userRankings: result[1],
+      lastUpdated: new Date(),
+    };
   }
 
   public async createCocktail(cocktailObj: CocktailObj): Promise<number> {

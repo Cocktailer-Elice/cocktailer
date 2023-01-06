@@ -22,6 +22,7 @@ class CocktailController {
     res.status(200).json({
       cocktailRankings: data.cocktailRankings,
       userRankings: data.userRankings,
+      lastUpdated: data.lastUpdated,
     });
 
     if (!cachedValue) {

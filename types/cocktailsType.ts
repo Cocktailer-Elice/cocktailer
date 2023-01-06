@@ -23,6 +23,7 @@ export interface UserRanking {
 export interface Rankings {
   cocktailRankings: CocktailRanking[];
   userRankings: UserRanking[];
+  lastUpdated: Date;
 }
 
 export interface CocktailCreateReqData {
