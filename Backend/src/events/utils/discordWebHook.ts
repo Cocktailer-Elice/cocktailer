@@ -33,7 +33,7 @@ export const scrumAlarm = async () => {
     })
     .setTitle('⏰ 스크럼 시작!')
     .setDescription(
-      '정기 스크럼(월/수/금 13:30) 시작. 참석 대상: 김건우/서아름/손종훈/오인국/오현석/한세은',
+      '정기 스크럼(월/수/금 13:30) 시작.\n 참석 대상: 김건우/서아름/손종훈/오인국/오현석/한세은',
     )
     .setColor(0x00ff00);
   scrumAlarmHookClient.send({

@@ -3,18 +3,19 @@ import EventEmitter from 'events';
 import { redisCache } from '../redis';
 import errorEvents from './errorEvent';
 import logger from '../winston';
+import cocktailService from '../services/cocktailService';
 
 const cachingEvents = new EventEmitter();
 
-cachingEvents.on('newWeek', async () => {
-  let retry = 2;
-  let result = await redisCache.del('ranking');
-  while (!result && retry--) {
-    result = await redisCache.del('ranking');
-  }
+cachingEvents.on('rankingCachingRefresh', async () => {
+  await redisCache.del('ranking');
+  const cachingData = await cocktailService.getHomeCocktailAndUserList();
+  const result = redisCache.set('ranking', JSON.stringify(cachingData));
   if (!result) {
     errorEvents.emit('eventErrorOccured', '랭킹 업데이트');
+    return;
   }
+  cachingEvents.emit('rankingCachingUpdate');
 });
 
 cachingEvents.on('rankingCachingUpdate', async () => {

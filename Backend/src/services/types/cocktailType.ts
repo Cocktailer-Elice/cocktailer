@@ -20,6 +20,16 @@ export interface UserRanking {
   isBartender: boolean;
 }
 
+export interface Rankings {
+  cocktailRankings: CocktailRankings[];
+  userRankings: UserRanking[];
+  lastUpdated: Date;
+}
+
+export interface ReqData {
+  [optionKey: string]: string;
+}
+
 export interface CocktailObj {
   owner: number;
   category: string;
