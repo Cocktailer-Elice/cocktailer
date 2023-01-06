@@ -1,6 +1,5 @@
 # Folder
-dist
-../Frontend
+dist/
 
 # Modules
 node_modules
@@ -10,4 +9,4 @@ node_modules
 
 # Log
 *.log
-logs/
+logs/*
