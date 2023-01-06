@@ -5,14 +5,13 @@ import { CockflowEnrollBtns } from '../Buttons/CockflowEnrollBtns';
 import { COCKFLOW } from '../../../constants/api';
 
 interface FormValue {
-  title: string,
-  content: string
+  title: string;
+  content: string;
 }
 
 export const CockflowGetPost = () => {
-  const { register, handleSubmit, reset } =  useForm<FormValue>();
+  const { register, handleSubmit, reset } = useForm<FormValue>();
   const onSubmit: SubmitHandler<FormValue> = (data): void => {
-    console.log(data);
     if (data.title && data.content) {
       alert('등록되었습니다');
       postCockflowList(data);

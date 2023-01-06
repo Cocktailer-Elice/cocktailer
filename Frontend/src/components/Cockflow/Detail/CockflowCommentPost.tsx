@@ -32,10 +32,7 @@ export const CockflowCommentPost = ({
   const [moreComments, setMoreComments] = useState([]);
 
   const repliedCommentsGets = async (data: FormValue) => {
-    await axios
-      .post(COCKFLOW_TWOID(cockflowId, commentId), data)
-      .then((res) => {})
-      .catch(function (err) {});
+    await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data);
   };
 
   const isLoggedIn = useAuthentication();
