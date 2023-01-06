@@ -43,7 +43,7 @@ const getRankings = (): Promise<Rankings> => {
 };
 
 export const Home = () => {
-  const { data: rankings } = useQuery(['rankings'], getRankings, {
+  const { data: rankings, refetch } = useQuery(['rankings'], getRankings, {
     refetchOnWindowFocus: true,
     refetchOnMount: true,
     refetchOnReconnect: true,
@@ -75,7 +75,7 @@ export const Home = () => {
             <LastUpdated>
               {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
             </LastUpdated>
-            <RefreshIcon />
+            <CustomRefreshIcon onClick={() => refetch()} />
           </SectionHeader>
           <HomeCocktailRankingSection
             cocktailRankingList={
@@ -89,7 +89,7 @@ export const Home = () => {
             <LastUpdated>
               {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
             </LastUpdated>
-            <RefreshIcon />
+            <CustomRefreshIcon onClick={() => refetch()} />
           </SectionHeader>
 
           <HomeUserRankingSection
@@ -140,7 +140,7 @@ const SectionHeader = styled.div`
   height: 20px;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
   margin-left: 10px;
   margin-bottom: 5px;
 
@@ -169,5 +169,16 @@ const LastUpdated = styled.div`
 
   @media screen and (max-width: 450px) {
     font-size: 10px;
+  }
+`;
+
+const CustomRefreshIcon = styled(RefreshIcon)`
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.3);
+  margin-left: 5px;
+  cursor: pointer;
+
+  @media screen and (max-width: 450px) {
+    font-size: 12px;
   }
 `;
