@@ -75,11 +75,11 @@ export const Home = () => {
             <LastUpdated>
               {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
             </LastUpdated>
+            <RefreshIcon />
           </SectionHeader>
           <HomeCocktailRankingSection
             cocktailRankingList={
               rankings ? rankings.cocktailRankings : cocktailRankingList_mock
-              // cocktailRankingList_mock
             }
           />
         </BigSection>
@@ -89,12 +89,12 @@ export const Home = () => {
             <LastUpdated>
               {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
             </LastUpdated>
+            <RefreshIcon />
           </SectionHeader>
 
           <HomeUserRankingSection
             userRankingList={
               rankings ? rankings.userRankings : userRankingList_mock
-              // userRankingList_mock
             }
           />
         </BigSection>
