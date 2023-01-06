@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 import { HomeMainCarousel } from '../../components/Home/HomeMainCarousel';
 import { CocktailRanking, UserRanking } from '../../../../types';
@@ -11,6 +12,7 @@ import { HomeWidgetsSection } from './../../components/Home/HomeWidgetsSection';
 import { HomeCocktailRankingSection } from './../../components/Home/HomeCocktailRankingSection';
 import { HomeUserRankingSection } from './../../components/Home/HomeUserRankingSection';
 import { Rankings } from './../../../../types/cocktailsType';
+import { transDate } from '../../utils/timeFormat';
 
 const cocktailRankingList_mock: CocktailRanking[] = [
   {
@@ -41,24 +43,19 @@ const getRankings = (): Promise<Rankings> => {
 };
 
 export const Home = () => {
-  // const [cocktailRankingList, setCocktailRankingList] = useState<
-  //   CocktailRanking[]
-  // >(cocktailRankingList_mock);
-
-  // const [userRankingList, setUserRankingList] =
-  //   useState<UserRanking[]>(userRankingList_mock);
-
-  // useEffect(() => {
-  //   axios.get(GET_RANKINGS_OF_COCKTAIL_AND_USER).then((res) => {
-  //     setCocktailRankingList(res.data.cocktailRanking);
-  //     setUserRankingList(res.data.userRanking);
-  //   });
-  // }, []);
-
   const { data: rankings } = useQuery(['rankings'], getRankings, {
-    staleTime: 1000 * 10,
-    refetchInterval: 1000 * 10,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    retry: false,
+    staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 60 * 5,
   });
+
+  const lastUpdatedTime = useMemo(
+    () => transDate(rankings?.lastUpdated as string),
+    [rankings],
+  );
 
   return (
     <>
@@ -73,7 +70,12 @@ export const Home = () => {
           <HomeWidgetsSection />
         </SmallSection>
         <BigSection>
-          <SectionHeader>칵테일 레시피 랭킹 TOP 10</SectionHeader>
+          <SectionHeader>
+            <RankingTitle>칵테일 레시피 랭킹 TOP 10</RankingTitle>
+            <LastUpdated>
+              {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
+            </LastUpdated>
+          </SectionHeader>
           <HomeCocktailRankingSection
             cocktailRankingList={
               rankings ? rankings.cocktailRankings : cocktailRankingList_mock
@@ -82,7 +84,13 @@ export const Home = () => {
           />
         </BigSection>
         <BigSection>
-          <SectionHeader>유저 랭킹 TOP 10</SectionHeader>
+          <SectionHeader>
+            <RankingTitle>유저 랭킹 TOP 10</RankingTitle>
+            <LastUpdated>
+              {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
+            </LastUpdated>
+          </SectionHeader>
+
           <HomeUserRankingSection
             userRankingList={
               rankings ? rankings.userRankings : userRankingList_mock
@@ -122,8 +130,8 @@ const BigSection = styled.div`
   padding: 20px 10px;
   margin-top: 10px;
 
-  @media screen and (max-width: 500px) {
-    height: 30%;
+  @media screen and (max-width: 400px) {
+    height: 45%;
   }
 `;
 
@@ -132,10 +140,34 @@ const SectionHeader = styled.div`
   height: 20px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   margin-left: 10px;
   margin-bottom: 5px;
-  font-size: 14px;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const RankingTitle = styled.div`
+  font-size: 16px;
   color: rgba(0, 0, 0, 0.7);
   font-weight: 600;
+  margin-right: 15px;
+
+  @media screen and (max-width: 450px) {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+`;
+
+const LastUpdated = styled.div`
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+
+  @media screen and (max-width: 450px) {
+    font-size: 10px;
+  }
 `;
