@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { CockflowLinkBtn } from '../../components/Cockflow/CockflowLinkBtn';
-import { CockflowHeader } from '../../components/Cockflow/CockflowHeader';
-import { P5 } from '../../components/Cockflow/style';
+import { CockflowLinkBtn } from '../../components/Cockflow/Buttons/CockflowLinkBtn';
+import { CockflowHeader } from '../../components/Cockflow/Common/CockflowHeader';
+import { P5 } from '../../components/Cockflow/Style/style';
 import { useInView } from 'react-intersection-observer';
-import { Container } from '../../components/Cockflow/style';
+import { Container } from '../../components/Cockflow/Style/style';
 import { Helmet } from 'react-helmet';
 import { useAuthentication } from '../../hooks/useAuthentication';
 import { GET_COCKFLOW } from '../../constants/api';
-import { CockflowImgWrap } from '../../components/Cockflow/CockflowImgWrap';
+import { CockflowImgWrap } from '../../components/Cockflow/List/CockflowImgWrap';
 
 export const CockflowPage = () => {
   const [listData, setListData] = useState([{

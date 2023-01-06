@@ -5,13 +5,12 @@ import {
   CocktailObj,
   UpdateResult,
 } from 'types';
+import cocktailService from '../services/cocktailService';
 import cachingEvents from '../events/cachingEvents';
 import { redisCache } from '../redis';
 
-import CocktailService from '../services/cocktailService';
-
 class CocktailController {
-  private readonly cocktailService = new CocktailService();
+  private readonly cocktailService = cocktailService;
 
   public getHomeCocktailAndUserList = async (req: Req, res: Res) => {
     const cachedValue = (await redisCache.get('ranking')) as string;
@@ -21,8 +20,9 @@ class CocktailController {
       : await this.cocktailService.getHomeCocktailAndUserList();
 
     res.status(200).json({
-      cocktailRanking: data.cocktailRankings,
-      userRanking: data.userRankings,
+      cocktailRankings: data.cocktailRankings,
+      userRankings: data.userRankings,
+      lastUpdated: data.lastUpdated,
     });
 
     if (!cachedValue) {
@@ -145,8 +145,6 @@ class CocktailController {
       userId,
       cocktailId,
     );
-
-    console.log(result);
 
     res.status(200).json({ likes: result });
   };

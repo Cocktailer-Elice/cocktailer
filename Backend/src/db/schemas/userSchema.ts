@@ -82,7 +82,7 @@ UserSchema.virtual('userGetResData').get(function (this: IUser) {
     name: this.name,
     email: this.email,
     nickname: this.nickname,
-    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
+    avatarUrl: `https://d3jq6qvyumldop.cloudfront.net/avatars/${this.avatarUrl}`,
     isBartender: this.isBartender === true ? true : false,
     isPasswordTemporary: this.isPasswordTemporary ? true : false,
   };
@@ -94,7 +94,7 @@ UserSchema.virtual('tokenData').get(function (this: IUser) {
     name: this.name,
     email: this.email,
     nickname: this.nickname,
-    avatarUrl: `https://cocktailer.s3.ap-northeast-2.amazonaws.com/avatars/${this.avatarUrl}`,
+    avatarUrl: `https://d3jq6qvyumldop.cloudfront.net/avatars/${this.avatarUrl}`,
     isAdmin: this.isAdmin,
     isBartender: this.isBartender === true ? true : false,
   };

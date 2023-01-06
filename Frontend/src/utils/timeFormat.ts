@@ -5,3 +5,9 @@ export const timeFormat = (time: number) => {
     seconds < 10 ? `0${seconds}` : seconds
   }`;
 };
+
+export const transDate = (stringDate: string) => {
+  return new Date(stringDate).toLocaleString('ko-KR', {
+    timeZone: 'Asia/Seoul',
+  });
+};

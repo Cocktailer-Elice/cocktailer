@@ -2,8 +2,8 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { boolean } from 'yup';
-import { COCKFLOW_ID } from '../../constants/api';
-import { Center } from './style';
+import { COCKFLOW_ID } from '../../../constants/api';
+import { Center } from '../Style/style';
 
 interface btnType {
     linkto: string | boolean,
