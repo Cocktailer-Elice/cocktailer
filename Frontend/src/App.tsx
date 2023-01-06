@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './store/store';
 import { userRefresh } from './store/authActions';
 import { useAuthentication } from './hooks/useAuthentication';
+import { ScrollToTop } from './common/ScrollToTop';
 
 export const App = () => {
   const isLoggedIn = useAuthentication();
@@ -27,6 +28,7 @@ export const App = () => {
         <Header />
         <Router />
       </BrowserRouter>
+      <ScrollToTop />
     </AppLayout>
   );
 };
