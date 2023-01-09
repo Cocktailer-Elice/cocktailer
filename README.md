@@ -102,21 +102,21 @@
 
 <table>
   <tr>
+    <td><strong>메인 페이지</strong></td>
     <td><strong>로그인 페이지</strong></td>
-    <td><strong>회원가입 페이지</strong></td>
   </tr>
   <tr>
-    <td><img src="https://i.postimg.cc/63VZZ2PX/image.jpg" height="400"/></td>
-    <td><img src="https://i.postimg.cc/43nknqWv/image.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292054-b00bbaa5-8b37-4b42-86ab-f08a01289115.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292061-ba7ae60e-6f07-475f-82e8-97418aaad318.jpg" height="400"/></td>
   </tr>
 
  <tr>
+    <td><strong>회원가입 페이지</strong></td>
     <td><strong>마이 페이지</strong></td>
-    <td><strong>메인 페이지</strong></td>
   </tr>
   <tr>
-    <td><img src="https://i.postimg.cc/5NYHTBDn/sgd.jpg" height="400"/></td>
-    <td><img src="https://i.postimg.cc/m216pnjk/gggg.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292062-eaac2a39-228c-4e11-98d6-65d41f959522.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292065-c785d820-be01-468c-b238-aa6daa389792.jpg" height="400"/></td>
   </tr>
  
   <tr>
@@ -124,8 +124,8 @@
     <td><strong>칵시피 상세 페이지</strong></td>
   </tr>
   <tr>
-    <td><img src="https://i.postimg.cc/rsRSf1qR/asdf.jpg" height="400"/></td>
-    <td><img src="https://i.postimg.cc/PrbZ3rmx/image.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211293968-97eae3f8-5e87-4e22-84fa-02d03a81b5cb.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292076-3ffa8930-2244-459d-9f3e-aa2c1ec4c3cf.jpg" height="400"/></td>
   </tr>
  
  <tr>
@@ -133,8 +133,8 @@
     <td><strong>칵플로우 상세 페이지</strong></td>
   </tr>
   <tr>
-    <td><img src="https://i.postimg.cc/cCSb7bBb/image.jpg" height="400"/></td>
-    <td><img src="https://i.postimg.cc/JngnYj2J/image.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292079-65cf7a32-f538-4666-b9c4-cba1e012c147.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292085-fb228463-7ddc-4e73-a31e-750eb1cdfdca.jpg" height="400"/></td>
   </tr>
   
   <tr>
@@ -142,8 +142,8 @@
     <td><strong>칵고리즘 결과 페이지</strong></td>
   </tr>
   <tr>
-    <td><img src="https://i.postimg.cc/x8pLjk83/image.jpg" height="400"/></td>
-    <td><img src="https://i.postimg.cc/y8H4mBKs/asgsd.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211292084-b9efda66-1319-46ab-9dc7-ac0206392f99.jpg" height="400"/></td>
+    <td><img src="https://user-images.githubusercontent.com/100356649/211293993-dbf84ecf-6568-4991-8112-8f8cbadfb557.jpg" height="400"/></td>
   </tr>
   
 </table>
