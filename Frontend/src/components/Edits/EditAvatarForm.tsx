@@ -38,8 +38,9 @@ export const EditAvatarForm = () => {
     e.preventDefault();
     if (avatar && avatar.length > 0) {
       setIsSubmitting(true);
-      const response = await axios.post(GET_S3_URL, { folder: 'avatars' });
-      const url = response.data;
+      const { data: url } = await axios.get<string>(GET_S3_URL('avatars'), {
+        withCredentials: false,
+      });
       const file = avatar[0];
       const compressedFile = await getCompressedImage(file);
       await axios.put(url, compressedFile, {
