@@ -10,7 +10,7 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   body {
-    
+    font-family: "GmarketSans", Arial, Helvetica, sans-serif
   }
   
   a {
