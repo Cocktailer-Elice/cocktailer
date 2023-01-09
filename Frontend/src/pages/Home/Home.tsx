@@ -73,18 +73,20 @@ export const Home = () => {
         <BigSection>
           <SectionHeader>
             <RankingTitle>칵테일 레시피 랭킹 TOP 10</RankingTitle>
-            <LastUpdated>
-              {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
-            </LastUpdated>
-            <CustomRefreshIcon
-              onClick={() => {
-                refetch();
-                Toast({
-                  message: '랭킹 업데이트 완료',
-                  isSuccess: true,
-                });
-              }}
-            />
+            <LastUpdatedContainer>
+              <LastUpdated>
+                {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
+              </LastUpdated>
+              <CustomRefreshIcon
+                onClick={() => {
+                  refetch();
+                  Toast({
+                    message: '랭킹 업데이트 완료',
+                    isSuccess: true,
+                  });
+                }}
+              />
+            </LastUpdatedContainer>
           </SectionHeader>
           <HomeCocktailRankingSection
             cocktailRankingList={
@@ -95,18 +97,20 @@ export const Home = () => {
         <BigSection>
           <SectionHeader>
             <RankingTitle>유저 랭킹 TOP 10</RankingTitle>
-            <LastUpdated>
-              {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
-            </LastUpdated>
-            <CustomRefreshIcon
-              onClick={() => {
-                refetch();
-                Toast({
-                  message: '랭킹 업데이트 완료',
-                  isSuccess: true,
-                });
-              }}
-            />
+            <LastUpdatedContainer>
+              <LastUpdated>
+                {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
+              </LastUpdated>
+              <CustomRefreshIcon
+                onClick={() => {
+                  refetch();
+                  Toast({
+                    message: '랭킹 업데이트 완료',
+                    isSuccess: true,
+                  });
+                }}
+              />
+            </LastUpdatedContainer>
           </SectionHeader>
 
           <HomeUserRankingSection
@@ -177,6 +181,12 @@ const RankingTitle = styled.div`
     font-size: 14px;
     margin-bottom: 3px;
   }
+`;
+
+const LastUpdatedContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LastUpdated = styled.div`
