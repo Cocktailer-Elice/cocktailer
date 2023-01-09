@@ -21,8 +21,8 @@ export const InputTitleImg = ({ setImg, img }: any) => {
       const formData = new FormData();
       formData.append('image', file);
       axios
-        .post(GET_S3_URL, {
-          folder: 'cocktails',
+        .get(GET_S3_URL('cocktails'), {
+          withCredentials: false,
         })
         .then((res) => {
           const key = new URL(res.data).pathname.split('/')[2];

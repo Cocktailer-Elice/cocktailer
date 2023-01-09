@@ -21,7 +21,6 @@ export default defineConfig({
           mui: [
             '@mui/material',
             '@mui/icons-material',
-            '@mui/styled-engine-sc',
             '@mui/styled-engine',
             '@emotion/react',
           ],

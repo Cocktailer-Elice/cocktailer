@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { GlobalStyles } from './styles/GlobalStyles';
 import { Header } from './components/Main/Header/Header';
@@ -9,6 +10,8 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './store/store';
 import { userRefresh } from './store/authActions';
 import { useAuthentication } from './hooks/useAuthentication';
+import { ScrollToTop } from './common/ScrollToTop';
+import './styles/toast.css';
 
 export const App = () => {
   const isLoggedIn = useAuthentication();
@@ -27,6 +30,8 @@ export const App = () => {
         <Header />
         <Router />
       </BrowserRouter>
+      <ToastContainer limit={1} />
+      <ScrollToTop />
     </AppLayout>
   );
 };

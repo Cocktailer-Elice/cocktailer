@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import { CocktailApplyData } from '../../../../types';
+import { Toast } from '../../common/Toast';
 
 import { ApplyButton } from './Apply/ApplyButton';
 import { InputCockContent } from './Apply/InputCockContent';
@@ -79,6 +80,11 @@ export const ApplyWrapper = ({ apply }: ApplyProps) => {
       alert('비어있는 값 혹은 잘못된 입력이 있습니다');
     } else {
       apply(newData);
+      Toast({
+        message: '칵테일 레시피를 작성하여 +50점을 획득하였습니다!',
+        isSuccess: true,
+        duration: 2000,
+      });
     }
   };
   return (
@@ -139,4 +145,4 @@ const ApplyPlace = styled.div`
 
 const Wrapper = styled.div`
   padding: 40px;
-`
+`;
