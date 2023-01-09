@@ -15,7 +15,6 @@ import { IGame } from '../../store/cockgorithmSlice';
 import { CockgorithmGameContentContainer } from './../../containers/Cockgorithm/CockgorithmGameContentContainer';
 import { CockgorithmGameResultContainer } from './../../containers/Cockgorithm/CockgorithmGameResultContainer';
 import { Dimmed } from './../../common/Dimmed';
-import { Toast } from '../../common/Toast';
 
 interface CockgorithmModalProps {
   selectedGame: IGame;
@@ -57,11 +56,6 @@ export const CockgorithmModal = ({
           alert(error);
         } finally {
           setIsGameResultOpen(true);
-          Toast({
-            message: '칵고리즘을 완료하여 +10점을 획득하였습니다!',
-            isSuccess: true,
-            duration: 2000,
-          });
         }
       }, 2000);
     }
