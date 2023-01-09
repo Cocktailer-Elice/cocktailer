@@ -32,7 +32,11 @@ export const userRegister = createAsyncThunk(
 
 export const userRefresh = createAsyncThunk('user/refresh', async () => {
   const response = await axios.get(VERIFY_LOGIN);
-  return response.data;
+  if (response.status === 200) {
+    return response.data;
+  } else {
+    return Promise.reject(new Error('Refresh failed'));
+  }
 });
 
 export const userDelete = createAsyncThunk('user/delete', async () => {
