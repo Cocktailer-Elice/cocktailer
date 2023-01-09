@@ -6,13 +6,13 @@ import styled from 'styled-components';
 import { CockflowCommentDepth } from './CockflowCommentDepth';
 import { Adopted, FlexLeft, FlexRight, IconWrap } from '../Style/style';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import EditIcon from '@mui/icons-material/Edit';
 import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../../constants/api';
 import { useAuthentication } from '../../../hooks/useAuthentication';
 import { Comment } from '../../../../../types/commentType';
 import { useCurrentUser } from '../../../hooks/useCurrentUser';
 import { ownerDocument } from '@mui/material';
+import { Toast } from '../../../common/Toast';
 
 interface FormValue {
   content: string;
@@ -31,12 +31,17 @@ export const CockflowCommentPost = ({
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
 
-  const repliedCommentsGets = async (data: FormValue) => {
-    await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data);
-  };
-
   const isLoggedIn = useAuthentication();
   const user = useCurrentUser();
+
+  const repliedCommentsGets = (data: FormValue) => {
+    axios.post(COCKFLOW_TWOID(cockflowId, commentId), data).then(() =>
+      Toast({
+        message: '칵플로우 댓글을 작성하여 +30점을 획득하였습니다!',
+        isSuccess: true,
+      }),
+    );
+  };
 
   const repliedCommentsPuts = async () => {
     const data = {
@@ -55,7 +60,9 @@ export const CockflowCommentPost = ({
   const onSubmit: SubmitHandler<FormValue> = (data) => {
     repliedCommentsGets(data);
     reset();
-    window.location.replace(`/cockflow/detail/${cockflowId}`);
+    setTimeout(() => {
+      window.location.replace(`/cockflow/detail/${cockflowId}`);
+    }, 1000);
   };
 
   const onCommentChange = (
@@ -94,17 +101,12 @@ export const CockflowCommentPost = ({
 
   useEffect(() => {
     if (item.subComments.length > 0) {
-      console.log(item);
       const contArr = item.subComments.map((items: Comment) => items.content);
       setMoreComments(contArr);
     }
     setCommentValue(item.content);
-    const owner = {
-      id: 15,
-    };
 
-    if (user && user.id === owner.id) {
-      console.log(user.id);
+    if (user && user.id === item.owner.id) {
       setMyComment(true);
     }
   }, [item]);

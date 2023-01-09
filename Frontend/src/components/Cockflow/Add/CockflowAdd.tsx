@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CockflowEnrollBtns } from '../Buttons/CockflowEnrollBtns';
 import { COCKFLOW } from '../../../constants/api';
+import { Toast } from '../../../common/Toast';
+import { useNavigate } from 'react-router-dom';
 
 interface FormValue {
   title: string;
@@ -11,11 +13,16 @@ interface FormValue {
 
 export const CockflowGetPost = () => {
   const { register, handleSubmit, reset } = useForm<FormValue>();
+
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormValue> = (data): void => {
     if (data.title && data.content) {
-      alert('등록되었습니다');
       postCockflowList(data);
-      window.location.replace(`/cockflow`);
+      Toast({
+        message: '칵플로우 질문을 작성하여 +50점을 획득하였습니다!',
+        isSuccess: true,
+      });
+      navigate('/cockflow');
     } else {
       data.title ? alert(`본문을 입력해주세요`) : alert(`제목을 입력해주세요`);
     }
