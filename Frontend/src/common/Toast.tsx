@@ -4,13 +4,14 @@ import 'react-toastify/dist/ReactToastify.css';
 interface ToastProps {
   message: string;
   isSuccess: boolean;
+  duration?: number;
 }
 
-export const Toast = ({ message, isSuccess }: ToastProps) =>
+export const Toast = ({ message, isSuccess, duration = 1000 }: ToastProps) =>
   isSuccess
     ? toast.success(message, {
         position: 'bottom-center',
-        autoClose: 2000,
+        autoClose: duration,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
@@ -20,7 +21,7 @@ export const Toast = ({ message, isSuccess }: ToastProps) =>
       })
     : toast.error(message, {
         position: 'bottom-center',
-        autoClose: 2000,
+        autoClose: duration,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,

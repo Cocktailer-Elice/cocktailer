@@ -13,6 +13,7 @@ import { HomeCocktailRankingSection } from './../../components/Home/HomeCocktail
 import { HomeUserRankingSection } from './../../components/Home/HomeUserRankingSection';
 import { Rankings } from './../../../../types/cocktailsType';
 import { transDate } from '../../utils/timeFormat';
+import { Toast } from '../../common/Toast';
 
 const cocktailRankingList_mock: CocktailRanking[] = [
   {
@@ -75,7 +76,15 @@ export const Home = () => {
             <LastUpdated>
               {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
             </LastUpdated>
-            <CustomRefreshIcon onClick={() => refetch()} />
+            <CustomRefreshIcon
+              onClick={() => {
+                refetch();
+                Toast({
+                  message: '랭킹 업데이트 완료',
+                  isSuccess: true,
+                });
+              }}
+            />
           </SectionHeader>
           <HomeCocktailRankingSection
             cocktailRankingList={
@@ -89,7 +98,15 @@ export const Home = () => {
             <LastUpdated>
               {rankings ? `마지막 업데이트 : ${lastUpdatedTime}` : ''}
             </LastUpdated>
-            <CustomRefreshIcon onClick={() => refetch()} />
+            <CustomRefreshIcon
+              onClick={() => {
+                refetch();
+                Toast({
+                  message: '랭킹 업데이트 완료',
+                  isSuccess: true,
+                });
+              }}
+            />
           </SectionHeader>
 
           <HomeUserRankingSection

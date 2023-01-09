@@ -55,6 +55,7 @@ export const HomeMainCarousel = () => {
             <Span>칵시피 작성 시 +50점</Span>
             <Span>칵플로우 질문 작성 시 +50점</Span>
             <Span>칵플로우 댓글 작성 시 +30점</Span>
+            <Span>칵고리즘 수행 시 +10점</Span>
           </CarouselTextTopRight>
         </CustomSwiperSlide>
         <CustomSwiperSlide>
