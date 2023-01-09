@@ -1,6 +1,6 @@
 import cachingEvents from './events/cachingEvents';
 import cron from 'node-cron';
-import devEvents from './events/devEvents';
+// import devEvents from './events/devEvents';
 import logger from './winston';
 
 class Scheduler {
@@ -23,19 +23,19 @@ class Scheduler {
     // );
   };
 
-  private setScrumAlarmScheduler = () => {
-    cron.schedule(
-      '0 30 13 * * MON,WED,FRI',
-      () => {
-        devEvents.emit('scrumTimeArrive');
-      },
-      { timezone: 'Asia/Seoul' },
-    );
-  };
+  // private setScrumAlarmScheduler = () => {
+  //   cron.schedule(
+  //     '0 30 13 * * MON,WED,FRI',
+  //     () => {
+  //       devEvents.emit('scrumTimeArrive');
+  //     },
+  //     { timezone: 'Asia/Seoul' },
+  //   );
+  // };
 
   public setSchedule = () => {
     this.setDeleteCachingScheduler();
-    this.setScrumAlarmScheduler();
+    // this.setScrumAlarmScheduler();
     logger.info('⏰ 스케줄링 세팅 완료');
   };
 }
