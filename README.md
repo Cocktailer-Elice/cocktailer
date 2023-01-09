@@ -25,7 +25,7 @@
 
 <img src="https://media.discordapp.net/attachments/1051429000888713260/1058040844965396591/image.png" width="800"/>
 
-[데모 동영상!](www.youtube.com)
+[4분 데모 동영상!](https://youtu.be/w7ak3pRqzkI)
 
 # <strong>Description</strong>
 
