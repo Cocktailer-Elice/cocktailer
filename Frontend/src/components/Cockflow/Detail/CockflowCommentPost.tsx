@@ -12,6 +12,7 @@ import { useAuthentication } from '../../../hooks/useAuthentication';
 import { Comment } from '../../../../../types/commentType';
 import { useCurrentUser } from '../../../hooks/useCurrentUser';
 import { ownerDocument } from '@mui/material';
+import { Toast } from '../../../common/Toast';
 
 interface FormValue {
   content: string;
@@ -33,8 +34,13 @@ export const CockflowCommentPost = ({
   const isLoggedIn = useAuthentication();
   const user = useCurrentUser();
 
-  const repliedCommentsGets = async (data: FormValue) => {
-    await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data);
+  const repliedCommentsGets = (data: FormValue) => {
+    axios.post(COCKFLOW_TWOID(cockflowId, commentId), data).then(() =>
+      Toast({
+        message: '칵플로우 댓글을 작성하여 +30점을 획득하였습니다!',
+        isSuccess: true,
+      }),
+    );
   };
 
   const repliedCommentsPuts = async () => {
@@ -54,7 +60,9 @@ export const CockflowCommentPost = ({
   const onSubmit: SubmitHandler<FormValue> = (data) => {
     repliedCommentsGets(data);
     reset();
-    window.location.replace(`/cockflow/detail/${cockflowId}`);
+    setTimeout(() => {
+      window.location.replace(`/cockflow/detail/${cockflowId}`);
+    }, 1000);
   };
 
   const onCommentChange = (
