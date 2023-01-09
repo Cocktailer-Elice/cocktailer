@@ -29,7 +29,7 @@ const questionType = {
       question: '베이스 술은 뭐가 좋아요?',
       filterName: 'alcohol',
       options: [
-        { optionName: '잔', filterValue: '잔' },
+        { optionName: '진', filterValue: '진' },
         { optionName: '럼', filterValue: '럼' },
         { optionName: '보드카', filterValue: '보드카' },
         { optionName: '위스키', filterValue: '위스키' },
@@ -174,14 +174,14 @@ export const gameDatas: IGame[] = [
   },
   {
     gameEmoji: '❄️',
-    gameTitle: '눈 오는 추운 날, 칵테일 한 잔 하고 싶다면?',
+    gameTitle: '눈 오는 추운 날, 칵테일 한 진 하고 싶다면?',
     gameColor: getRandomColor(),
     message: '칵테일러가 몸이 따뜻해지는 칵테일을 추천해드릴께요!',
     questions: questionType.deepVersion,
   },
   {
     gameEmoji: '🕚',
-    gameTitle: '늦은 밤, 연인과 분위기 있게 칵테일 한 잔 하고 싶다면?',
+    gameTitle: '늦은 밤, 연인과 분위기 있게 칵테일 한 진 하고 싶다면?',
     gameColor: getRandomColor(),
     message: '칵테일러가 분위기 있는 칵테일을 추천해드릴께요!',
     questions: questionType.deepVersion,
@@ -202,7 +202,7 @@ export const gameDatas: IGame[] = [
   },
   {
     gameEmoji: '🌘',
-    gameTitle: '늦은 새벽 고독하게 한 잔 즐기고 싶다면?',
+    gameTitle: '늦은 새벽 고독하게 한 진 즐기고 싶다면?',
     gameColor: getRandomColor(),
     message: '고.독.러를 위한 칵테일을 추천해드릴께요.',
     questions: questionType.deepVersion,

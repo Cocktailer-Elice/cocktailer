@@ -5,6 +5,7 @@ import { CockflowBoxTitle } from '../Common/CockflowBoxTitle';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { POST_COCKFLOW_COMMENTS } from '../../../constants/api';
+import { Toast } from '../../../common/Toast';
 
 interface Type {
   cockflowId: string;
@@ -20,13 +21,19 @@ export const CockflowAdd = ({ cockflowId }: Type) => {
       .post(POST_COCKFLOW_COMMENTS(cockflowId), data)
       .then(function (response) {})
       .catch(function (error) {});
+    Toast({
+      message: '칵플로우 댓글을 작성하여 +30점을 획득하였습니다!',
+      isSuccess: true,
+    });
   };
 
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data: any) => {
     if (cockflowId) gets(data);
     reset();
-    window.location.replace(`/cockflow/detail/${cockflowId}`);
+    setTimeout(() => {
+      window.location.replace(`/cockflow/detail/${cockflowId}`);
+    }, 1000);
   };
 
   return (
