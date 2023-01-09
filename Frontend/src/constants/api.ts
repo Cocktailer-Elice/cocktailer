@@ -20,7 +20,8 @@ export const WITHDRAWAL = `${API_BASE}/users`;
 export const APPLY_BARTENDER = `${API_BASE}/users/apply`;
 
 // S3
-export const GET_S3_URL = `${API_BASE}/image-upload`;
+export const GET_S3_URL = (folder: string) =>
+  `https://g3o2xpxswgqp3cyj6scyairg740skgtv.lambda-url.ap-northeast-2.on.aws/?folder=${folder}`;
 
 // mypage
 export const GET_MY_COMMENTS = `${API_BASE}/users/my-comments`;
@@ -57,17 +58,20 @@ export const PATCH_COCKTAIL = (cocktailId: number) =>
   `${API_BASE}/cocktails/updatecocktail/${cocktailId}`;
 export const GET_INDEGRIENT = `${API_BASE}/ingredients`;
 export const SHARE_KAKAO = (id: number) => `cockcipe/detail/${id}`;
-export const COCKFLOW_ID = (pageId: number | string | undefined) => `${API_BASE}/cockflow/${pageId}`;
+export const COCKFLOW_ID = (pageId: number | string | undefined) =>
+  `${API_BASE}/cockflow/${pageId}`;
 export const LIKE_COCKTAIL = (cocktailId: number) =>
   `${API_BASE}/cocktails/likes/${cocktailId}`;
-  
+
 // Cockgorithm
 export const GET_COCKGORITHM_COCKTAIL = `${API_BASE}/cocktails/cockgorithm`;
 
 export const COCKFLOW = () => `${API_BASE}/cockflow`;
-export const COCKFLOW_DETAIL = (id: string) => `${API_BASE}/cockflow/detail/${id}`;
+export const COCKFLOW_DETAIL = (id: string) =>
+  `${API_BASE}/cockflow/detail/${id}`;
 export const GET_COCKFLOW = (page: number) => `${API_BASE}/cockflow/?q=${page}`;
-export const POST_COCKFLOW_COMMENTS = (cockflowId: string) => `${API_BASE}/cockflow/${cockflowId}/comments`;
+export const POST_COCKFLOW_COMMENTS = (cockflowId: string) =>
+  `${API_BASE}/cockflow/${cockflowId}/comments`;
 export const COCKFLOW_TWOID = (cockflowId: string, commentId: number) => {
   return `${API_BASE}/cockflow/${cockflowId}/comments/${commentId}`;
 };
