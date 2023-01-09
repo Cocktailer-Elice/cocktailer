@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { CockflowCommentDepth } from './CockflowCommentDepth';
 import { Adopted, FlexLeft, FlexRight, IconWrap } from '../Style/style';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import EditIcon from '@mui/icons-material/Edit';
 import { COCKFLOW_DETAIL, COCKFLOW_TWOID } from '../../../constants/api';
 import { useAuthentication } from '../../../hooks/useAuthentication';
@@ -31,12 +30,12 @@ export const CockflowCommentPost = ({
   const [subComment, setSubComment] = useState(false);
   const [moreComments, setMoreComments] = useState([]);
 
+  const isLoggedIn = useAuthentication();
+  const user = useCurrentUser();
+
   const repliedCommentsGets = async (data: FormValue) => {
     await axios.post(COCKFLOW_TWOID(cockflowId, commentId), data);
   };
-
-  const isLoggedIn = useAuthentication();
-  const user = useCurrentUser();
 
   const repliedCommentsPuts = async () => {
     const data = {
@@ -94,17 +93,12 @@ export const CockflowCommentPost = ({
 
   useEffect(() => {
     if (item.subComments.length > 0) {
-      console.log(item);
       const contArr = item.subComments.map((items: Comment) => items.content);
       setMoreComments(contArr);
     }
     setCommentValue(item.content);
-    const owner = {
-      id: 15,
-    };
 
-    if (user && user.id === owner.id) {
-      console.log(user.id);
+    if (user && user.id === item.owner.id) {
       setMyComment(true);
     }
   }, [item]);
